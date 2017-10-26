@@ -1,0 +1,94 @@
+\documentclass[12pt, letterpaper, oneside, onecolumn]{report}
+\author{William Baskin}
+\title{Thesis}
+\title{
+	{Thesis Title}\\
+	{\large Institution Name}%\\
+%	{\includegraphics{university.jpg}}
+}
+% \date{Day Month Year}
+\date{\today}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+
+%%% math %%%
+\usepackage{amsmath, amssymb, amsthm}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+%%% Code %%%
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{listings}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+%%% Packages for the future %%%
+% \usepackage{parskip}
+% \usepackage{textcomp}
+% \usepackage{soul}
+
+\begin{document}
+\maketitle
+
+\chapter*{Abstract}
+Abstract!
+
+\chapter*{Dedication}
+Dedicated!
+
+\chapter*{Declaration}
+Declared!
+
+\chapter*{Acknowledgments}
+Acknowledged!
+
+\tableofcontents
+
+\chapter{Introduction}
+\input{chapters/introduction}
+
+\chapter{Chapter One Title}
+\input{chapters/chapter01}
+
+\chapter{Chapter Two Title}
+\input{chapters/chapter02}
+
+\chapter{Chapter Three Title}
+\input{chapters/chapter03}
+
+\chapter{Conclusion}
+\input{chapters/conclusion}
+
+\appendix
+\chapter{Appendix Title}
+\input{chapters/appendix}
+
+\end{document}
