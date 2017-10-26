@@ -15,14 +15,13 @@
 \graphicspath{ {images/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
 
-% \usepackage{fancyhdr}
-% \pagestyle{fancy}
+\usepackage{biblatex}
+\addbibresource{references.bib}
 
 %%% math %%%
 \usepackage{amsmath, amssymb, amsthm}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
-
 
 %%% Code %%%
 \usepackage{color}
@@ -58,37 +57,46 @@
 \begin{document}
 \maketitle
 
+% approval pdf
+
+\tableofcontents
+
+\listoffigures
+
 \chapter*{Abstract}
 Abstract!
-
-\chapter*{Dedication}
-Dedicated!
-
-\chapter*{Declaration}
-Declared!
 
 \chapter*{Acknowledgments}
 Acknowledged!
 
-\tableofcontents
-
 \chapter{Introduction}
 \input{chapters/introduction}
 
-\chapter{Chapter One Title}
-\input{chapters/chapter01}
+\chapter{Literature Review}
+\input{chapters/lit_review}
 
-\chapter{Chapter Two Title}
-\input{chapters/chapter02}
+\chapter{Simulation Environments and Models}
+\input{chapters/simulation}
 
-\chapter{Chapter Three Title}
-\input{chapters/chapter03}
+% TODO change. Based on Nick's MS thesis
+\chapter{Robust Robotic Stepping}
+\input{chapters/robot_stepping}
 
-\chapter{Conclusion}
+% TODO change. Based on Nick's MS thesis
+\chapter{Low Level Transitions}
+\input{chapters/low_level}
+
+% TODO change. Based on Nick's MS thesis
+\chapter{Behavioral Transitions}
+\input{chapters/behavior}
+
+\chapter{Conclusions and Future Work}
 \input{chapters/conclusion}
 
 \appendix
-\chapter{Appendix Title}
+\chapter{Network Topologies}
 \input{chapters/appendix}
+
+\printbibliography
 
 \end{document}
