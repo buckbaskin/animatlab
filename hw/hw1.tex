@@ -1,0 +1,104 @@
+\documentclass[12pt, letterpaper, oneside, notitlepage, onecolumn]{article}
+\author{William Baskin}
+\title{Homework 1 - EMAE477}
+\pagestyle{plain}
+
+\usepackage{parskip}
+
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{soul}
+\usepackage[margin=0.69in]{geometry}
+
+% math
+\usepackage{amsmath, amssymb, amsthm, gensymb}
+
+\usepackage{graphicx}
+\graphicspath{ {images/hw1/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+\maketitle
+
+\section*{Question 1}
+
+% \includegraphics[width=7in,angle=0]{hw1p7_2}
+
+$E_{r} = -60mV$
+$R = 20mV$
+
+\subsection{Signal Transmission Design Equations}
+
+$g_{syn} = \dfrac{k_{syn} * R}{\Delta E_{syn} - k_{syn} * U_{pre}}$
+
+$U_{pre} = R$
+
+$\Delta E_{syn} - k_{syn} * U_{pre} = \dfrac{k_{syn} * R}{g_{syn}}$
+
+$\Delta E_{syn} = \dfrac{k_{syn} * R}{g_{syn}} + k_{syn} * U_{pre}$
+
+Choosing $k_{syn} = 1$ for now because its a value used on the slides and I
+don't have a reason to change it. 
+
+\subsubsection{$g = 0.1$}
+
+$\Delta E_{syn} = \dfrac{k_{syn} * 20}{0.1} + k_{syn} * R$
+
+$\Delta E_{syn} = k_{syn} * (200 + R)$
+
+\subsubsection{$g = 0.5$}
+
+$\Delta E_{syn} = \dfrac{k_{syn} * 20}{0.5} + k_{syn} * R$
+
+$\Delta E_{syn} = k_{syn} * (40 + R)$
+
+\subsubsection{$g = 2.5$}
+
+$\Delta E_{syn} = \dfrac{k_{syn} * 20}{2.5} + k_{syn} * R$
+
+$\Delta E_{syn} = k_{syn} * (8 + R)$
+
+Increasing $g_{syn}$ decreases the relative effect of $R$ on $\Delta E_{syn}$
+
+\subsection{Plot of Output Neurons}
+
+% TODO(buckbaskin)
+
+\subsubsection{Analysis}
+
+Do they all have the same accuracy? Does one synaptic property or another
+correlate to the error? Are they all the least accurate at the same voltage 
+of the input neuron? Can you manipulate the signal transmission design 
+equations to calculate where the maximum error occurs (i.e. at what input 
+neuron voltage), and/or what the maximum error amount will be?
+
+\end{document}
