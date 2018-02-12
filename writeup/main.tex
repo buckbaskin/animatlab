@@ -1,0 +1,102 @@
+\documentclass[12pt, letterpaper, oneside, onecolumn]{report}
+\author{William Baskin}
+\title{Thesis}
+\title{
+	{Thesis Title}\\
+	{\large Institution Name}%\\
+%	{\includegraphics{university.jpg}}
+}
+% \date{Day Month Year}
+\date{\today}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+\usepackage[style=ieee, backend=biber]]{biblatex}
+\addbibresource{references.bib}
+
+%%% math %%%
+\usepackage{amsmath, amssymb, amsthm}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%%% Code %%%
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{listings}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+%%% Packages for the future %%%
+% \usepackage{parskip}
+% \usepackage{textcomp}
+% \usepackage{soul}
+
+\begin{document}
+\maketitle
+
+% approval pdf
+
+\tableofcontents
+
+\listoffigures
+
+\chapter*{Abstract}
+Synthetic nervous system control for the Puppy robot. Leverages work done for the previous leg system and new work done exploring distributed optimization models.
+
+\chapter*{Acknowledgments}
+Acknowledged!
+
+\chapter{Introduction}
+\input{chapters/introduction}
+
+\chapter{Literature Review}
+\input{chapters/lit_review}
+
+\chapter{Simulation Environments and Models}
+\input{chapters/simulation}
+
+% TODO change. Based on Nick's MS thesis
+\chapter{Robust Robotic Stepping}
+\input{chapters/robot_stepping}
+
+% TODO change. Based on Nick's MS thesis
+\chapter{Low Level Transitions}
+\input{chapters/low_level}
+
+% TODO change. Based on Nick's MS thesis
+\chapter{Behavioral Transitions}
+\input{chapters/behavior}
+
+\chapter{Conclusions and Future Work}
+\input{chapters/conclusion}
+
+\appendix
+\chapter{Network Topologies}
+\input{chapters/appendix}
+
+\printbibliography
+
+\end{document}
