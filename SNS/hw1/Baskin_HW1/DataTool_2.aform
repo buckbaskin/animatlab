@@ -40,12 +40,12 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Output 6</Name>
-<ID>3df81965-a494-4bc1-8195-fd0d98410716</ID>
+<Name>Mod 1</Name>
+<ID>86596bf6-5542-4a94-b531-c86bebc7a2b3</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</StructureID>
-<DataItemID>0a337f9f-bfd0-4e9e-9fd7-4a0c7183e79a</DataItemID>
+<DataItemID>537348e8-91d1-447a-962f-1f2e7afd4018</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>1</DataSubSet>
 <PrevDataSubset>1</PrevDataSubset>
@@ -53,17 +53,17 @@
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-256</LineColor>
+<LineColor>-65281</LineColor>
 </DataColumn>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Output 4</Name>
-<ID>58b685b4-6eee-4f2d-be7e-4444246a4dd5</ID>
+<Name>Mod 2</Name>
+<ID>a988e164-ba55-4d6c-811f-0e6bebc2e1a9</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</StructureID>
-<DataItemID>44357280-6760-4408-969d-371662e50c6a</DataItemID>
+<DataItemID>2c516796-a14b-428d-b585-5884ab379024</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>2</DataSubSet>
 <PrevDataSubset>2</PrevDataSubset>
@@ -71,17 +71,17 @@
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-16711936</LineColor>
+<LineColor>-10496</LineColor>
 </DataColumn>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Output 5</Name>
-<ID>8f0d7e67-179d-4ddc-a09b-3c6b4e30bbf5</ID>
+<Name>Mod 3</Name>
+<ID>dab814e8-f022-4ef4-b614-8bc31e2ce007</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</StructureID>
-<DataItemID>2d5fd8c9-e199-465f-b5d6-bcf97ddd7ebf</DataItemID>
+<DataItemID>d77d4418-d9a7-43e8-b15d-c35789a34767</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>3</DataSubSet>
 <PrevDataSubset>3</PrevDataSubset>
@@ -89,7 +89,7 @@
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-16776961</LineColor>
+<LineColor>-12525360</LineColor>
 </DataColumn>
 </DataColumns>
 </Axis>
@@ -98,6 +98,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8959"/>
+<GraphConfig ByteCount="8950"/>
 </Form>
 </Form>
