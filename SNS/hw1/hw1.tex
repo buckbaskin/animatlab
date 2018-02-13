@@ -88,8 +88,7 @@ $\Delta E_{syn} = \dfrac{k_{syn} * 20}{2.5} + k_{syn} * 20$
 
 $\Delta E_{syn} = k_{syn} * (28)$
 
-% TODO(buckbaskin) check if the following holds water
-Increasing $g_{syn}$ decreases the relative effect of $R$ on $\Delta E_{syn}$
+Increasing $g_{syn}$ decreases the relative effect of $R$ on $\Delta E_{syn}$. This would make sense if the $\Delta E$ in question is coming from some higher voltage? I'm not quite sure how this analysis lines up with my results below.
 
 \subsection{Plot of Output Neurons}
 
@@ -101,13 +100,17 @@ The axis on the left is membrane voltage in Volts. The three outputs have increa
 
 Do they all have the same accuracy? Does one synaptic property or another
 correlate to the error? Are they all the least accurate at the same voltage 
-of the input neuron? Can you manipulate the signal transmission design 
-equations to calculate where the maximum error occurs (i.e. at what input 
-neuron voltage), and/or what the maximum error amount will be?
+of the input neuron?
 
 Output 1 and Output 2 linearly track the input, with Output 2 tracking at approximately 5-5.5x the input. Output 3 shows a significant component that is not proportional to the input, going from 25x in the first second to less than 10x in the last second plotted. This would indicate their are some likely non-proportional components to Output 2 as well, but they are much smaller in the range studied. If error is the measured difference between the expected proportional output and the actual output, error increases with conductivity/the proportional gain (its sign is negative).
 
 The proportional gain appears to be approximately $\dfrac{g_{syn}}{0.1}$.
+
+Can you manipulate the signal transmission design 
+equations to calculate where the maximum error occurs (i.e. at what input 
+neuron voltage), and/or what the maximum error amount will be?
+
+% TODO(buckbaskin)
 
 \section{Question 2}
 
@@ -123,13 +126,12 @@ $0 < c < 1$
 
 \subsubsection{$\Delta E_{syn} = 0$}
 
-$g_{syn} = \dfrac{c_{syn} * 20 - 20}{0 - c_{syn} * 20}$
+$g_{syn} = \dfrac{c_{syn} * R - R}{0 - c_{syn} * R}$
 
-$g_{syn} = -R * \dfrac{1 - c_{syn}}{c_{syn}}$
+$g_{syn} = R * \dfrac{1 - c_{syn}}{c_{syn}}$
 
-$c_{syn} < 1$ so the top portion of the fraction is less than 1 and positive.
-This makes the entire expression (and the value for $g_{syn}$) negative
-regardless of the exact value of $c_{syn}$.
+$c_{syn} < 1$ so the top portion of the fraction is less than 1 and positive, making the expression positive.
+By varying $0 < c < 1 \rightarrow \infty > g_{syn} > 0$. $g_{syn} = 1$ when $c_{syn} = 0.5$.
 
 \subsubsection{$\Delta E_{syn} = c_{syn} * R$}
 
@@ -143,13 +145,14 @@ This value for $\Delta E_{syn} = c_{syn} * R$ causes a divide-by-zero.
 
 $g_{syn} = \dfrac{c_{syn} * R - R}{-c_{syn} * R - c_{syn} * R}$
 
-$g_{syn} = -R * \dfrac{1 - c_{syn}}{2 c_{syn}}$
+$g_{syn} = R * \dfrac{1 - c_{syn}}{2 c_{syn}}$
 
-The value for $g_{syn}$ is negative.
+The value for $g_{syn}$ is positive, but less than when $\Delta E_{syn} = 0$.
+By varying $0 < c < 1 \rightarrow \infty > g_{syn} > 0$. $g_{syn} = 0.5$ when $c_{syn} = 0.5$.
 
 \subsubsection{Keeping $g_{syn} > 0$}
 
-$0 < \dfrac{c_{syn} * R - R}{\Delta E_{syn} - c_{syn} * R}$
+$g_{syn} = \dfrac{c_{syn} * R - R}{\Delta E_{syn} - c_{syn} * R} > 0$
 
 To ensure $g_{syn}$ is valid.
 
@@ -157,36 +160,94 @@ $0 \neq \Delta E_{syn} - c_{syn} * R$
 
 $\Delta E_{syn} \neq c_{syn} * R$
 
-To ensure $g_{syn} > 0$
+To ensure $g_{syn} > 0$, with $0 < c_{syn} < 1$ and $R > 0 \rightarrow$
 
-$0 < c_{syn} * R - R$
+Either the numerator and denominator terms are both positive or they are both negative.
 
-$R < c_{syn} * R$
+If the numerator is positive, then $c > 1$, so that is invalid. Therefore both terms must be negative.
 
-$R \neq 0$
+$c*R - R < 0$
 
-$c_{syn} > 1$
+$(c - 1) * R < 0$
 
-% TODO(buckbaskin): check this math because it says that its invalid
+$c < 1, R > 0$
 
-\subsection{Plot of 3 Valid Neurons}
+$\Delta E_{syn} - c_{syn} * R < 0$
 
-% TODO(buckbaskin)
+$\Delta E_{syn} < c_{syn} * R$
+
+Additionally, $\Delta E_{syn} > 0$ because we are talking about increasing potentials from a rest potential.
+
+Therefore, the constraints that force $g_{syn} >0$ are:
+
+$0 < c < 1, R > 0, 0 < \Delta E_{syn} < c_{syn} * R$ (incorporates $\Delta E_{syn} \neq c_{syn} * R$ to avoid divide by 0).
 
 \subsection{Analysis}
 
+\subsubsection{Plot of 3 Valid Neurons (Stimulus = R)}
+
+\includegraphics[width=6.75in,angle=0]{Part2DataR}
+
 What is the ratio between the maximum and minimum voltage of each output
 neuron? Are they all the same? Are there any other differences in the response
-of the output neurons? Next, change the tonic stimulus of each output neuron 
+of the output neurons?
+
+Hint: pay attention to the numerator of $U^{*}_{post}$ (slide 26).
+
+I considered the ratio to be the percentage modulated. This showed that the percentage modulation (from max at 100\% going down) was the same across input stimuli (R and R/2). The magnitude of the drop was different however, and was proportional to the input stimulus. This behavior seems to be working as intended if the modulation were being used for signal division for example.
+
+The signal modulation for Mod 1 when stimulation was R was $\dfrac{40 mV - 42.6 mV}{20 mV} = 13\%$.
+The signal modulation for Mod 2 when stimulation was R was $\dfrac{40 mV - 43.7 mV}{20 mV} = 18.5\%$.
+The signal modulation for Mod 3 when stimulation was R was $\dfrac{40 mV - 46.2 mV}{20 mV} = 31\%$.
+
+\subsubsection{Plot of 3 Valid Neurons (Stimulus = R/2)}
+
+\includegraphics[width=6.75in,angle=0]{Part2DataHalfR}
+
+Next, change the tonic stimulus of each output neuron 
 to R/2, and re-run the simulation. What is the ratio between the maximum and 
 minimum voltage of each output neuron, now? Are they all the same? Can you 
 derive constraint equations to make sure that this ratio is always the
 same, no matter the tonic stimulus of the output neuron?
 
-Hint: pay attention to the numerator of $U^{*}_{post}$ (slide 26).
-
-% TODO(buckbaskin): Do this
+The signal modulation for Mod 1 when stimulation was R/2 was $\dfrac{50 mV - 51.3 mV}{10 mV} = 13\%$.
+The signal modulation for Mod 2 when stimulation was R/2 was $\dfrac{50 mV - 51.8 mV}{10 mV} = 18\%$.
+The signal modulation for Mod 3 when stimulation was R/2 was $\dfrac{50 mV - 53.1 mV}{10 mV} = 31\%$.
 
 \section{Question 3}
+
+\subsection{Proposed Changes}
+
+What would one need to change to make the joint oscillate between -90 degrees and 45
+degrees?
+
+After reading the paper, I decided to change the linear relationship between the actual position and the perceived position. By changing the ratio and the limits, the changes propagated through the network to the velocity controller. This mostly worked, except that the default position was at the middle of the new range (-22.5 degrees). To adjust for this, I added a stimulus of 3.333 nA of current when the control network was inactive so that the resting position was at 0 instead of a negative position. In the output data tool, this accomplished my goal of making the rest position 0; however, it corresponds to a non-zero input required for maintaining a ``rest'' position.
+
+Another option I considered was to only change the slope of the relationship for the negative half of converting to the perceived position. This would mean that the ``rest'' condition was still 0 and 0, but there would be a different proportional control for negative and positive angles. I instead went with the solution above that had no instantaneous change from a piecewise evaluation function.
+
+\subsection{Observed Changes}
+
+Does this change the motion in any other way? In particular, does the apparent speed or stiffness of
+the servo change? Can anything be done to compensate for this change?
+
+As implemented, the maximum commanded velocity didn't need to change, even for a larger proportional error term. This means that the control is likely less stiff in practice. This change can be compensated by changing the conversion from the membrane voltage to velocity control step by increasing the velocity at the saturation points of the neuron so that the velocity returns to the same ratio relative to the proportional error. By changing the adapter properties, the network's output and control properties changes without changing the network itself.
+
+\includegraphics[width=3.25in,angle=0]{Q3_Unshifted}
+\includegraphics[width=3.25in,angle=0]{Q3_Shifted}
+
+The shifted controller is on the right.
+
+\subsection{Asymmetric Servo}
+
+Does an asymmetrically stiff servo lead to any other functional differences? Conceptually, how could one resolve these issues?
+
+\includegraphics[width=3.25in,angle=0]{Q3_Shifted}
+\includegraphics[width=3.25in,angle=0]{Q3_Asymetric}
+
+The asymmetric-behavior controller is on the right.
+
+The graph shows an asymmetrically stiff servo, where the modulation of the position controller for the greater than error is modulated by a new neuron. This is observable in the commanded velocity (membrane voltage) line chart and the commanded vs. perceived position chart where the last swing to -90 degrees doesn't reach its desired position. As implemented, the modulating neuron also slows down the earlier negative velocity controls before the stimulus is added.
+
+Having different stiffness in a proportional controller could lead to systematic error towards the side of the controller that is less stiff. To compensate for this, an integral term could be added to the controller. This would serve to center the controller at 0 or any other fixed value of control, although in practice it might gradually increase the effective stiffness of the response from the weaker side until it matched the stronger side. Perhaps a better way to generate asymmetric patterns from a periodic neuron input would be to change the pattern formation network to request the positions (for a position control system) that correspond to a faster motion instead of requesting the same positions and adjusting the control to change behavior that would otherwise be the same from the neuron network controller's point of view.
 
 \end{document}

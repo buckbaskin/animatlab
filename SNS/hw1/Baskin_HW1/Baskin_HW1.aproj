@@ -1049,7 +1049,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="114.75" y="281.25"/>
+<Location x="109.5" y="285.75"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1226,8 +1226,8 @@
 <TemplateChangeScript/>
 <InLinks/>
 <OutLinks>
-<ID>754c9793-1f36-4358-940e-1d3293d8a9bf</ID>
 <ID>7dc0f4aa-719d-4101-9008-dc9d0e7344b4</ID>
+<ID>754c9793-1f36-4358-940e-1d3293d8a9bf</ID>
 <ID>f2d86189-047f-45ae-a6f9-9a9671feeee1</ID>
 <ID>0415d5a3-c808-4c21-ab18-de895ace3326</ID>
 <ID>ca7cb3f3-2525-4923-908f-57dcb508d262</ID>
@@ -1282,7 +1282,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="405" y="352"/>
+<Location x="416.25" y="375.25"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2122,28 +2122,6 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_M_3</Name>
-<ID>616a7324-4960-475f-b49c-189413670110</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
-<NodeID>d77d4418-d9a7-43e8-b15d-c35789a34767</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="None" Actual="10"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="10" Scale="None" Actual="10"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Stimulus_M_2</Name>
 <ID>71a8c140-86d2-4dc7-9533-c066a368e973</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
@@ -2155,7 +2133,29 @@
 <Equation>0</Equation>
 <OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
 <NodeID>2c516796-a14b-428d-b585-5884ab379024</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_M_1</Name>
+<ID>482e5884-c1a1-470b-8c3d-6838e9a5125a</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
+<NodeID>537348e8-91d1-447a-962f-1f2e7afd4018</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="10" Scale="None" Actual="10"/>
@@ -2210,8 +2210,8 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_M_1</Name>
-<ID>482e5884-c1a1-470b-8c3d-6838e9a5125a</ID>
+<Name>Stimulus_M_3</Name>
+<ID>616a7324-4960-475f-b49c-189413670110</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -2220,8 +2220,8 @@
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
-<NodeID>537348e8-91d1-447a-962f-1f2e7afd4018</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<NodeID>d77d4418-d9a7-43e8-b15d-c35789a34767</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="10" Scale="None" Actual="10"/>
@@ -2232,8 +2232,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>1575d63e-3a7a-43a5-8c05-7fc3a1d9550c</Name>
-<ID>1575d63e-3a7a-43a5-8c05-7fc3a1d9550c</ID>
+<Name>04ab69fa-b56b-49d3-a67b-a195de2d150c</Name>
+<ID>04ab69fa-b56b-49d3-a67b-a195de2d150c</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -2311,7 +2311,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>2</MajorInterval>
+<MajorInterval>1</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>Seconds</TimeScale>
 </Form>
@@ -2327,7 +2327,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 11:23:35"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 15:09:09"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -2756,7 +2756,7 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="9"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="1" Unique="3" Space="45.205479452054794520547945210"&gt;
