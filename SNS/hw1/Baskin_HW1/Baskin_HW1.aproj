@@ -2133,7 +2133,7 @@
 <Equation>0</Equation>
 <OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
 <NodeID>d77d4418-d9a7-43e8-b15d-c35789a34767</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="10" Scale="None" Actual="10"/>
@@ -2155,7 +2155,7 @@
 <Equation>0</Equation>
 <OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
 <NodeID>2c516796-a14b-428d-b585-5884ab379024</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="10" Scale="None" Actual="10"/>
@@ -2221,7 +2221,7 @@
 <Equation>0</Equation>
 <OrganismID>f4f48bd4-ae95-424e-bb42-487c6b17b9cc</OrganismID>
 <NodeID>537348e8-91d1-447a-962f-1f2e7afd4018</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="10" Scale="None" Actual="10"/>
@@ -2327,7 +2327,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 11:13:59"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 11:18:00"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
