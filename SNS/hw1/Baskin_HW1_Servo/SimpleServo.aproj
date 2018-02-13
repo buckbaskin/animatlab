@@ -1184,7 +1184,7 @@
 <DataTypeID>MembraneVoltage</DataTypeID>
 <TargetDataTypeID>DesiredVelocity</TargetDataTypeID>
 <Gain>
-<ID>2f4427e9-2960-4fab-846c-79545a249d82</ID>
+<ID>08c9d51e-4516-46ef-bea5-5009aadd32a3</ID>
 <Type>Polynomial</Type>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
@@ -1479,7 +1479,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -1523,7 +1523,7 @@
 <DelayBufferMode>NoDelayBuffer</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <RobotIOScale>1</RobotIOScale>
 <SynchWithRobot>True</SynchWithRobot>
 <SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
@@ -1869,7 +1869,7 @@
 <DataTypeID>JointRotation</DataTypeID>
 <TargetDataTypeID>ExternalCurrent</TargetDataTypeID>
 <Gain>
-<ID>0ca50451-b5f8-49bd-b00b-50c1c30c4492</ID>
+<ID>ec7850a9-731b-4b24-b77d-cc45fce7e276</ID>
 <Type>Polynomial</Type>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
@@ -1877,16 +1877,16 @@
 <LimitsReadOnly>False</LimitsReadOnly>
 <LimitOutputsReadOnly>False</LimitOutputsReadOnly>
 <UseParentIncomingDataType>True</UseParentIncomingDataType>
-<LowerLimitScale Value="-0.78" Scale="None" Actual="-0.78"/>
-<UpperLimitScale Value="0.78" Scale="None" Actual="0.78"/>
+<LowerLimitScale Value="-1.57" Scale="None" Actual="-1.57"/>
+<UpperLimitScale Value="0.786" Scale="None" Actual="0.786"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
 <IndependentUnits/>
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
-<C Value="12.82" Scale="nano" Actual="1.282e-008"/>
-<D Value="0" Scale="None" Actual="0"/>
+<C Value="8.488" Scale="nano" Actual="8.488e-009"/>
+<D Value="3.333" Scale="nano" Actual="3.333e-009"/>
 </Gain>
 <DelayBufferMode>NoDelayBuffer</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
@@ -2533,13 +2533,14 @@
     <Tag>9027ae1d-dd7a-4aa5-be21-5d70c54f4939</Tag>
   </Node>
   <Node Left="111.5" Top="69.625" Width="40" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Display" Orientation="so_0" />
     <FillColor>-360334</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>3</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>657b1157-c058-4059-b030-a19b9053b2ca</Tag>
   </Node>
@@ -3127,7 +3128,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 11:33:53"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 12:38:20"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -3556,11 +3557,11 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="4"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
-    &lt;Leaf Count="1" Unique="3" Space="50"&gt;
-      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+    &lt;Leaf Count="2" Unique="8" Space="50"&gt;
+      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;cfa1b4e4-dcd4-43d1-92c0-113bcbada8a0&lt;/ID&gt;
@@ -3569,35 +3570,6 @@
 &lt;AssemblyFile&gt;AnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;AnimatGUI.Forms.SimulationWindow&lt;/ClassName&gt;
 &lt;TrackCamera&gt;True&lt;/TrackCamera&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-    &lt;/Leaf&gt;
-    &lt;Leaf Count="3" Unique="4" Space="50"&gt;
-      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;ff40a0d6-13d2-4826-b91c-6ee4f573b2e5&lt;/ID&gt;
-&lt;Title&gt;DataTool_1&lt;/Title&gt;
-&lt;TabPageName&gt;DataTool_1&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;DataTool_1.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;104fffe6-0f4b-42fe-a49c-046660663f2b&lt;/ID&gt;
-&lt;Title&gt;Neural Subsystem&lt;/Title&gt;
-&lt;TabPageName&gt;Neural Subsystem&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram&lt;/ClassName&gt;
-&lt;OrganismID&gt;304bd1cd-e422-45e4-9ad7-b9317221608d&lt;/OrganismID&gt;
-&lt;SubSystemID&gt;98614764-0846-4f97-9bc9-faf2e30512c6&lt;/SubSystemID&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
@@ -3611,6 +3583,35 @@
 &lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
 &lt;ExternalFile&gt;DataTool_2.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+    &lt;/Leaf&gt;
+    &lt;Leaf Count="2" Unique="4" Space="50"&gt;
+      &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;ff40a0d6-13d2-4826-b91c-6ee4f573b2e5&lt;/ID&gt;
+&lt;Title&gt;DataTool_1&lt;/Title&gt;
+&lt;TabPageName&gt;DataTool_1&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
+&lt;ExternalFile&gt;DataTool_1.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;104fffe6-0f4b-42fe-a49c-046660663f2b&lt;/ID&gt;
+&lt;Title&gt;Neural Subsystem&lt;/Title&gt;
+&lt;TabPageName&gt;Neural Subsystem&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram&lt;/ClassName&gt;
+&lt;OrganismID&gt;304bd1cd-e422-45e4-9ad7-b9317221608d&lt;/OrganismID&gt;
+&lt;SubSystemID&gt;98614764-0846-4f97-9bc9-faf2e30512c6&lt;/SubSystemID&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
