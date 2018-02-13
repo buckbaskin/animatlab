@@ -6,7 +6,7 @@
 <Physics>Bullet</Physics>
 <LibraryVersion>Double</LibraryVersion>
 <Simulation>
-<ProjectPath>C:\Users\nszczeci\Google Drive\2018 SNS\SimpleServo\</ProjectPath>
+<ProjectPath>E:\GitHub\Animatlab\SNS\hw1\Baskin_HW1_Servo\</ProjectPath>
 <AnimatModule>BulletAnimatSim_VC10_double.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -284,7 +284,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>9460d354-49d3-4f1a-b9b6-1827be21e248</ID>
+<ID>7a1038a1-1345-434b-bccf-c731a8ec9950</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -293,7 +293,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>7a1038a1-1345-434b-bccf-c731a8ec9950</ID>
+<ID>8d0d425a-b38d-464f-ad66-52517364908e</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -1079,7 +1079,7 @@
 <ID>86ed2f52-3856-41a9-8dac-ce854d8fca2d</ID>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Behavior.PhysicsModule</ClassName>
-<TimeStep Value="0.6" Scale="milli" Actual="0.0006"/>
+<TimeStep Value="60" Scale="micro" Actual="6e-005"/>
 </Node>
 </NeuralModules>
 <Node>
@@ -2842,7 +2842,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,-2.1684e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -2988,28 +2988,6 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
-<Name>Stimulus_1</Name>
-<ID>16f7f2af-70a2-4d2e-8361-dbc2268b6912</ID>
-<StartTime Value="2" Scale="None" Actual="2"/>
-<EndTime Value="8" Scale="None" Actual="8"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>3ae3a6d0-1767-4ee7-9cef-76175315dfbc</NodeID>
-<CurrentOn Value="5" Scale="nano" Actual="5e-009"/>
-<CurrentOff Value="-5" Scale="nano" Actual="-5e-009"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1" Scale="None" Actual="1"/>
-<CycleOffDuration Value="1" Scale="None" Actual="1"/>
-<BurstOnDuration Value="6" Scale="None" Actual="6"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
 <Name>Stimulus_2</Name>
 <ID>35b09a61-965e-44cc-8177-72da21724575</ID>
 <StartTime Value="2" Scale="None" Actual="2"/>
@@ -3029,11 +3007,33 @@
 <BurstOnDuration Value="6" Scale="None" Actual="6"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Stimulus_1</Name>
+<ID>16f7f2af-70a2-4d2e-8361-dbc2268b6912</ID>
+<StartTime Value="2" Scale="None" Actual="2"/>
+<EndTime Value="8" Scale="None" Actual="8"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
+<NodeID>3ae3a6d0-1767-4ee7-9cef-76175315dfbc</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-009"/>
+<CurrentOff Value="-5" Scale="nano" Actual="-5e-009"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="1" Scale="None" Actual="1"/>
+<BurstOnDuration Value="6" Scale="None" Actual="6"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>8762855d-d709-4df9-a9c3-df2bcac6a8a3</Name>
-<ID>8762855d-d709-4df9-a9c3-df2bcac6a8a3</ID>
+<Name>1effd05e-20ff-410b-8cc4-4b78f42314e3</Name>
+<ID>1effd05e-20ff-410b-8cc4-4b78f42314e3</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -3127,7 +3127,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="01/25/2018 12:16:29"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 11:33:53"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -3556,7 +3556,7 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="4"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="1" Unique="3" Space="50"&gt;
@@ -3588,7 +3588,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;104fffe6-0f4b-42fe-a49c-046660663f2b&lt;/ID&gt;
@@ -3602,7 +3602,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_2" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_2" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;84170165-62e9-4fd5-aaf9-d66b3b2ba8a6&lt;/ID&gt;
