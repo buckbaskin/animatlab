@@ -19,7 +19,7 @@
 %, amsthm, gensymb}
 
 \usepackage{graphicx}
-\graphicspath{ {images/hw1/} }
+\graphicspath{ {Baskin_HW1/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -93,7 +93,9 @@ Increasing $g_{syn}$ decreases the relative effect of $R$ on $\Delta E_{syn}$
 
 \subsection{Plot of Output Neurons}
 
-% TODO(buckbaskin)
+\includegraphics[width=6.75in,angle=0]{Part1Data}
+
+The axis on the left is membrane voltage in Volts. The three outputs have increasing conductivity for the synapse connecting the input neuron to the output neuron.
 
 \subsubsection{Analysis}
 
@@ -102,6 +104,10 @@ correlate to the error? Are they all the least accurate at the same voltage
 of the input neuron? Can you manipulate the signal transmission design 
 equations to calculate where the maximum error occurs (i.e. at what input 
 neuron voltage), and/or what the maximum error amount will be?
+
+Output 1 and Output 2 linearly track the input, with Output 2 tracking at approximately 5-5.5x the input. Output 3 shows a significant component that is not proportional to the input, going from 25x in the first second to less than 10x in the last second plotted. This would indicate their are some likely non-proportional components to Output 2 as well, but they are much smaller in the range studied. If error is the measured difference between the expected proportional output and the actual output, error increases with conductivity/the proportional gain (its sign is negative).
+
+The proportional gain appears to be approximately $\dfrac{g_{syn}}{0.1}$.
 
 \section{Question 2}
 

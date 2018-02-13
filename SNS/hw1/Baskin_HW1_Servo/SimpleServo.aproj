@@ -3010,6 +3010,28 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Static_Zero</Name>
+<ID>62e11e2d-6f5d-44ce-a7f1-4ee5022c30b5</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="2" Scale="None" Actual="2"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
+<NodeID>6d0ae871-7891-4493-9b90-edcf81c04b27</NodeID>
+<CurrentOn Value="3.333" Scale="nano" Actual="3.333e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
 <Name>Stimulus_1</Name>
 <ID>16f7f2af-70a2-4d2e-8361-dbc2268b6912</ID>
@@ -3028,6 +3050,28 @@
 <CycleOnDuration Value="1" Scale="None" Actual="1"/>
 <CycleOffDuration Value="1" Scale="None" Actual="1"/>
 <BurstOnDuration Value="6" Scale="None" Actual="6"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_2</Name>
+<ID>1b0d2204-a5df-4f12-a080-fc9e78b0a440</ID>
+<StartTime Value="8" Scale="None" Actual="8"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
+<NodeID>6d0ae871-7891-4493-9b90-edcf81c04b27</NodeID>
+<CurrentOn Value="3.333" Scale="nano" Actual="3.333e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 </Stimuli>
@@ -3128,7 +3172,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 12:38:20"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 13:09:19"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
