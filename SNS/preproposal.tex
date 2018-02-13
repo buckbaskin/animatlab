@@ -1,0 +1,90 @@
+\documentclass[12pt, letterpaper, oneside, notitlepage, onecolumn]{article}
+\author{William Baskin}
+\title{Pre-Proposal - EMAE477}
+\pagestyle{plain}
+
+\usepackage{parskip}
+
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{soul}
+\usepackage[margin=0.69in]{geometry}
+
+% math
+\usepackage{amsmath, amssymb}
+%, amsthm, gensymb}
+
+\usepackage{graphicx}
+\graphicspath{ {Baskin_HW1/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Abstract text here
+\end{abstract}
+
+\newpage
+
+\section*{Specific Aim}
+
+Develop a controller that effectively walks the front legs of Puppy in simulation using the functional subnetworks approach [2].
+
+\section{Background}
+
+Alex Hunt's PhD thesis [1] focused on developing a controller for the hind legs and front legs based on global model-based optimization. By developing a controller using the functional subnetworks approach [Citation!], one can specifically tune the network to solve control challenges in a way that a global optimization approach fails to do, perhaps because of local optima or other limitations. The functional subnetworks approach will allow for better analysis of the control at multiple levels (individual joints, left-to-right leg coordination and potentially front-to-back leg coordination) and tuning to address specific concerns through simulation.
+
+\section{Hypothesis}
+
+A multi-layer central pattern generator and pattern formation network architecture tuned from the joints up will lead to a stable gait for simulated quadruped walking based on proprioceptive and sensory feedback.
+
+\section{Research Approach}
+
+I will use a biological model based on research [Hunt continuation and paper that that cites for 1b, etc] as a basis for a starting point for joint central pattern generation. This may include work to emulate research that shows that animals exhibit different control behavior in different phases of motion (ex. faster motion in swing). From there, the architecture of leg coordination will be based on models shown to be effective in previous research [Nick's thesis? there's something]. Some of these models may come from insects but, at a high level, the leg coordination problem is similar.
+
+Another area of improvement and a change in the design from the [Hunt continuation paper] may be the inclusion of sensory feedback beyond proprioception. The paper primarily focuses on using information about joint state (position, velocity) in the control; however, it may be advantageous to use afferent sensory feedback to modify the pace or phase of the gate. [Citation needed]
+
+From there, I anticipate needing to add reflexes and/or event-based control system changes for adapting to uneven surfaces or similar situations. For example, research shows that there is a neuron reaction that corresponds to tripping (?) or stepping in a hole (?) where a sensory-based pathway may override the central pattern motion to take a saving action, which may or may not reset the gait depending on the magnitude of the response.
+
+\section{Broader Impact}
+
+A functional sub-networks controller will allow for the implementation of a control network for rear legs and front to hind leg coordination or integration with an existing model for control of the hind legs. This will allow for the application of the controller to hardware control and make the process of extending the controller into 3 dimensional control from a planar control problem easier. This will lead to a more functional and adaptable control for walking or running of a quadruped robot that can be used for many applications, especially on uneven ground where wheeled vehicles are limited.
+
+
+\newpage
+
+\section{Works Cited}
+
+%TODO(buckbaskin)
+
+\end{document}
