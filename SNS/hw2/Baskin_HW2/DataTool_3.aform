@@ -6,17 +6,62 @@
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
 <AutoCollectInterval>True</AutoCollectInterval>
-<CollectDataInterval Value="60" Scale="micro" Actual="6e-005"/>
+<CollectDataInterval Value="0.18" Scale="milli" Actual="0.00018"/>
 <CollectTimeWindow Value="11" Scale="None" Actual="11"/>
 <UpdateDataInterval Value="200" Scale="milli" Actual="0.2"/>
 <SetStartEndTime>True</SetStartEndTime>
 <CollectStartTime Value="0" Scale="None" Actual="0"/>
 <CollectEndTime Value="10" Scale="None" Actual="10"/>
-<AxisList/>
+<AxisList>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>CPG Oscillation</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Exte HC?</Name>
+<ID>7263cf05-9cca-4694-ac94-8b24075465fc</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
+<DataItemID>76c7c9c6-8dd6-4d6f-b60d-3217f0988d01</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>0</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Flex HC?</Name>
+<ID>8f0a5744-6520-4bac-be9a-b83fb26604da</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
+<DataItemID>0e4e7554-7478-41e1-9eef-4f2a26f1b465</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16711936</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+</AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
-<PointsToKeep>183334</PointsToKeep>
+<PointsToKeep>61112</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8927"/>
+<GraphConfig ByteCount="8951"/>
 </Form>
 </Form>
