@@ -1370,6 +1370,80 @@
 <OutLinks/>
 <Nodes>
 <Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>0e4e7554-7478-41e1-9eef-4f2a26f1b465</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="467.75" y="123.5"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>Flex HC?</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks/>
+<OutLinks/>
+<Enabled>True</Enabled>
+<RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>84394f44-16ae-4afb-98e1-8d94bdf2c7e3</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>d987e9f6-c78f-4e87-b811-c569d49402df</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter</ClassName>
 <ID>0e8ab49b-99b9-4b5c-ae91-008a684395e8</ID>
@@ -1847,6 +1921,154 @@
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>76c7c9c6-8dd6-4d6f-b60d-3217f0988d01</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="362" y="123.5"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>Exte HC?</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks/>
+<OutLinks/>
+<Enabled>True</Enabled>
+<RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>48a411c7-1acc-4a2e-84ac-c7e31abb86a8</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>d100c451-39f0-48db-8793-47cc4027d900</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>7fad9dbe-5038-4db5-b07b-65030e1c566e</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="464.75" y="35"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>Flex IN</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks/>
+<OutLinks/>
+<Enabled>True</Enabled>
+<RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>c709be28-f56c-438f-bd40-e73c1eb069a6</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>5b0029d3-491d-40fa-90d1-fe898a3572ab</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Behavior.Nodes.RigidBody</ClassName>
 <ID>9027ae1d-dd7a-4aa5-be21-5d70c54f4939</ID>
@@ -2136,6 +2358,80 @@
 <SynchWithRobot>True</SynchWithRobot>
 <SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
 <SynchUpdateStartInterval Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>d72e0ac3-870a-4ee5-8378-06b13b65bfe1</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="361.75" y="38.25"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="40" Height="40"/>
+<Text>Exte IN</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks/>
+<OutLinks/>
+<Enabled>True</Enabled>
+<RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>61b9a164-51f3-496c-9b09-b629701de836</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>8764a007-e146-45c8-8010-7e8469eb0707</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
@@ -2747,8 +3043,41 @@
 <GridStyle>DottedLines</GridStyle>
 <JumpSize>Medium</JumpSize>
 <SnapToGrid>False</SnapToGrid>
-<AddFlow Nodes="11" Links="12">
+<AddFlow Nodes="15" Links="12">
   <Version>1.5.0.1</Version>
+  <Node Left="464.75" Top="35" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Flex IN</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>7fad9dbe-5038-4db5-b07b-65030e1c566e</Tag>
+  </Node>
+  <Node Left="467.75" Top="123.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Flex HC?</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>0e4e7554-7478-41e1-9eef-4f2a26f1b465</Tag>
+  </Node>
+  <Node Left="361.75" Top="38.25" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Exte IN</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>d72e0ac3-870a-4ee5-8378-06b13b65bfe1</Tag>
+  </Node>
   <Node Left="42" Top="68" Width="40" Height="40">
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
@@ -2783,7 +3112,7 @@
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>657b1157-c058-4059-b030-a19b9053b2ca</Tag>
   </Node>
-  <Link Org="1" Dst="2">
+  <Link Org="4" Dst="5">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="None" Size="Small" Angle="deg15" Filled="False" />
@@ -2795,7 +3124,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>d30a0b17-a1d6-46bd-abdf-c2ee8823e662</Tag>
   </Link>
-  <Link Org="2" Dst="0">
+  <Link Org="5" Dst="3">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
@@ -2842,7 +3171,7 @@
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>0e8ab49b-99b9-4b5c-ae91-008a684395e8</Tag>
   </Node>
-  <Link Org="6" Dst="7">
+  <Link Org="9" Dst="10">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="None" Size="Small" Angle="deg15" Filled="False" />
@@ -2854,7 +3183,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>59392865-eeb5-44f0-8b30-c3e82b902ee4</Tag>
   </Link>
-  <Link Org="7" Dst="5">
+  <Link Org="10" Dst="8">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
@@ -2887,7 +3216,7 @@
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ccfb68fc-d8e7-4ae7-80d5-0b08fa3531f3</Tag>
   </Node>
-  <Link Org="5" Dst="11">
+  <Link Org="8" Dst="14">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="None" Size="Small" Angle="deg15" Filled="False" />
@@ -2899,7 +3228,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ccdcb2f9-8dec-471e-a66e-8d6f22a15f9d</Tag>
   </Link>
-  <Link Org="11" Dst="10">
+  <Link Org="14" Dst="13">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
@@ -2933,7 +3262,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>32db8122-2b31-4821-a21f-500222ee9166</Tag>
   </Node>
-  <Link Org="15" Dst="6">
+  <Link Org="18" Dst="9">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -2945,7 +3274,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>697b1506-1a63-4c28-ab7f-b47de12bb728</Tag>
   </Link>
-  <Link Org="10" Dst="15">
+  <Link Org="13" Dst="18">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -2957,7 +3286,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>a71a9289-0e0c-4093-b6c5-6d73913f03b9</Tag>
   </Link>
-  <Link Org="14" Dst="15">
+  <Link Org="17" Dst="18">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -2979,7 +3308,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>a5197d37-6dab-4315-b9df-eed37eddb70b</Tag>
   </Node>
-  <Link Org="14" Dst="19">
+  <Link Org="17" Dst="22">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -2991,7 +3320,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>8da09fb3-1f28-4346-bc03-538ed4070998</Tag>
   </Link>
-  <Link Org="10" Dst="19">
+  <Link Org="13" Dst="22">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -3002,7 +3331,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>37fb69a6-02ca-42e4-9343-3268338d4649</Tag>
   </Link>
-  <Link Org="19" Dst="6">
+  <Link Org="22" Dst="9">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -3014,6 +3343,17 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ca9a5874-adc8-424d-9e65-ec2358657fef</Tag>
   </Link>
+  <Node Left="362" Top="123.5" Width="40" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Exte HC?</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>76c7c9c6-8dd6-4d6f-b60d-3217f0988d01</Tag>
+  </Node>
 </AddFlow>
 </Diagram>
 </Root>
@@ -3080,7 +3420,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -3221,6 +3561,13 @@
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
 <ToolFormID>84170165-62e9-4fd5-aaf9-d66b3b2ba8a6</ToolFormID>
 </ToolHolder>
+<ToolHolder>
+<ID>4cfe86c7-6285-4005-940d-b8597f84fd9a</ID>
+<Name>DataTool_3</Name>
+<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+<ToolFormID>74315423-f321-41b3-b7bb-3852ca0b2e6c</ToolFormID>
+</ToolHolder>
 </ToolViewers>
 <Stimuli/>
 <HudItems>
@@ -3304,9 +3651,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>500</MajorInterval>
+<MajorInterval>2</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>MilliSeconds</TimeScale>
+<TimeScale>Seconds</TimeScale>
 </Form>
 <Form>
 <ID>98034b77-b48a-4f3b-bb60-684e7b5a67c7</ID>
@@ -3320,7 +3667,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/21/2018 12:53:27"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/21/2018 13:06:12"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -3749,7 +4096,7 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="4"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="1" Unique="3" Space="43.583227445997458703939008890"&gt;
@@ -3767,8 +4114,8 @@
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
     &lt;/Leaf&gt;
-    &lt;Leaf Count="2" Unique="4" Space="56.416772554002541296060991110"&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+    &lt;Leaf Count="3" Unique="4" Space="56.416772554002541296060991110"&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;104fffe6-0f4b-42fe-a49c-046660663f2b&lt;/ID&gt;
@@ -3782,7 +4129,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_2" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_2" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;84170165-62e9-4fd5-aaf9-d66b3b2ba8a6&lt;/ID&gt;
@@ -3791,6 +4138,19 @@
 &lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
 &lt;ExternalFile&gt;DataTool_2.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="DataTool_3" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;74315423-f321-41b3-b7bb-3852ca0b2e6c&lt;/ID&gt;
+&lt;Title&gt;DataTool_3&lt;/Title&gt;
+&lt;TabPageName&gt;DataTool_3&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
+&lt;ExternalFile&gt;DataTool_3.aform&lt;/ExternalFile&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
