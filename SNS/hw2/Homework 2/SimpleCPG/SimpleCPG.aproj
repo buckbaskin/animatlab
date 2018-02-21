@@ -1927,7 +1927,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>1</MajorInterval>
+<MajorInterval>5</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>Seconds</TimeScale>
 </Form>
@@ -1943,7 +1943,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/21/2018 12:53:23"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/21/2018 13:56:00"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -2060,8 +2060,8 @@
       &lt;State Value="DockLeft" /&gt;
       &lt;Position Size="265, 150" Location="150, 150" /&gt;
       &lt;Best Count="2"&gt;
-        &lt;Item Name="Workspace" /&gt;
         &lt;Item Name="Properties" /&gt;
+        &lt;Item Name="Workspace" /&gt;
       &lt;/Best&gt;
       &lt;Next Count="0" /&gt;
       &lt;Previous Count="0" /&gt;
@@ -2069,17 +2069,18 @@
       &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
         &lt;Content Name="Workspace" UniqueName="" /&gt;
-        &lt;Space Value="50" /&gt;
-        &lt;Best Count="1"&gt;
+        &lt;Space Value="100" /&gt;
+        &lt;Best Count="2"&gt;
           &lt;Item Name="Workspace" /&gt;
-        &lt;/Best&gt;
-        &lt;Next Count="1"&gt;
           &lt;Item Name="Properties" /&gt;
-        &lt;/Next&gt;
+        &lt;/Best&gt;
+        &lt;Next Count="0" /&gt;
         &lt;Previous Count="0" /&gt;
         &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreWindowContent"&gt;
           &lt;Content Name="Workspace" UniqueName="" /&gt;
-          &lt;Next Count="0" /&gt;
+          &lt;Next Count="1"&gt;
+            &lt;Item Name="Properties" /&gt;
+          &lt;/Next&gt;
           &lt;Previous Count="0" /&gt;
           &lt;Selected Value="True" /&gt;
           &lt;Child Type="null" /&gt;
