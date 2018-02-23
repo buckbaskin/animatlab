@@ -16,7 +16,7 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Com. v Perc. Position</Name>
+<Name>Com. v Perc. Position (V)</Name>
 <WorkingAxis>2</WorkingAxis>
 <DataColumns>
 <DataColumn>
@@ -60,7 +60,7 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Comm. Vel.</Name>
+<Name>Comm. Vel. (V)</Name>
 <WorkingAxis>0</WorkingAxis>
 <DataColumns>
 <DataColumn>
@@ -86,7 +86,7 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>GrT, LeT Activation</Name>
+<Name>GrT, LeT Activation (V)</Name>
 <WorkingAxis>3</WorkingAxis>
 <DataColumns>
 <DataColumn>
@@ -130,7 +130,7 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Joint Angle</Name>
+<Name>Joint Angle (rad)</Name>
 <WorkingAxis>1</WorkingAxis>
 <DataColumns>
 <DataColumn>
@@ -158,6 +158,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>116667</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9074"/>
+<GraphConfig ByteCount="9092"/>
 </Form>
 </Form>
