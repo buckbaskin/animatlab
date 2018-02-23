@@ -1576,16 +1576,16 @@
 <MaxCaConductance Value="1" Scale="micro" Actual="1e-006"/>
 <CaActivation>
 <ID>84394f44-16ae-4afb-98e1-8d94bdf2c7e3</ID>
-<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
-<Slope Value="0.1" Scale="None" Actual="0.1"/>
-<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<MidPoint Value="-40" Scale="milli" Actual="-0.04"/>
+<Slope Value="0.046" Scale="None" Actual="0.046"/>
+<TimeConstant Value="2" Scale="milli" Actual="0.002"/>
 <ActivationType>True</ActivationType>
 </CaActivation>
 <CaDeactivation>
 <ID>d987e9f6-c78f-4e87-b811-c569d49402df</ID>
-<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
-<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
-<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<MidPoint Value="-60" Scale="milli" Actual="-0.06"/>
+<Slope Value="-0.046" Scale="None" Actual="-0.046"/>
+<TimeConstant Value="1000" Scale="milli" Actual="1"/>
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>False</InitAtBottom>
@@ -2285,16 +2285,16 @@
 <MaxCaConductance Value="1" Scale="micro" Actual="1e-006"/>
 <CaActivation>
 <ID>48a411c7-1acc-4a2e-84ac-c7e31abb86a8</ID>
-<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
-<Slope Value="0.1" Scale="None" Actual="0.1"/>
-<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<MidPoint Value="-40" Scale="milli" Actual="-0.04"/>
+<Slope Value="0.046" Scale="None" Actual="0.046"/>
+<TimeConstant Value="2" Scale="milli" Actual="0.002"/>
 <ActivationType>True</ActivationType>
 </CaActivation>
 <CaDeactivation>
 <ID>d100c451-39f0-48db-8793-47cc4027d900</ID>
-<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
-<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
-<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<MidPoint Value="-60" Scale="milli" Actual="-0.06"/>
+<Slope Value="-0.046" Scale="None" Actual="-0.046"/>
+<TimeConstant Value="1000" Scale="milli" Actual="1"/>
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>False</InitAtBottom>
@@ -4463,7 +4463,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 12:25:27"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 12:59:18"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
