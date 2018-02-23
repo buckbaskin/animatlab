@@ -153,11 +153,37 @@
 </DataColumn>
 </DataColumns>
 </Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Joint Vel (rad/s)</Name>
+<WorkingAxis>4</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Joint_1 Vel</Name>
+<ID>8635654b-ab14-4d81-92b9-b911f99b2026</ID>
+<DataItemAssemblyFile>AnimatGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>AnimatGUI.DataObjects.Physical.Joints.Hinge</DataItemClassName>
+<StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
+<DataItemID>1e57e72a-43e3-4656-bb25-b8bf611b6928</DataItemID>
+<SelectedDataType>JointActualVelocity</SelectedDataType>
+<DataSubSet>6</DataSubSet>
+<PrevDataSubset>6</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16711936</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>116667</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9092"/>
+<GraphConfig ByteCount="9120"/>
 </Form>
 </Form>

@@ -1614,7 +1614,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="80.375" y="272"/>
+<Location x="109.625" y="366.5"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1826,7 +1826,7 @@
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
-<TonicStimulus Value="1.5" Scale="nano" Actual="1.5e-009"/>
+<TonicStimulus Value="2" Scale="nano" Actual="2e-009"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -2335,7 +2335,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -2351,7 +2351,7 @@
 <ID>8da09fb3-1f28-4346-bc03-538ed4070998</ID>
 <ID>e4a9d035-7028-466b-b187-03b021c17ee6</ID>
 </OutLinks>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
@@ -4566,13 +4566,14 @@
     <Tag>da6cd583-6dc8-4a72-a751-bc5c66f2b94b</Tag>
   </Link>
   <Node Left="353.5" Top="320.5" Width="92.25" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
     <FillColor>-7876870</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Comm. Position Ext</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6d0ae871-7891-4493-9b90-edcf81c04b27</Tag>
   </Node>
@@ -4946,7 +4947,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.424" Scale="milli" Actual="-0.094424"/>
 </Rotation>
-<LocalMatrix>0.999999,3.35621e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.35622e-007,0.00164801,0,0.00164801,-0.000203653,-0.999999,0,-1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -5099,13 +5100,13 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_3</Name>
+<Name>Stim_ROM</Name>
 <ID>e0be6989-febc-4670-b628-e67ab0250211</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
@@ -5282,7 +5283,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 14:39:16"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 14:54:19"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -5712,7 +5713,7 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="4"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="12"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="2" Unique="12" Space="50.461741424802110817941952510"&gt;
