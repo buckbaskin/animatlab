@@ -22,7 +22,7 @@
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
 <MouseSpringStiffness Value="0.5" Scale="None" Actual="0.5"/>
 <MouseSpringDamping Value="200" Scale="None" Actual="200"/>
-<StabilityScale>1</StabilityScale>
+<StabilityScale>100</StabilityScale>
 <LinearCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
 <AngularCompliance Value="0.1" Scale="nano" Actual="1e-010"/>
 <LinearDamping Value="50" Scale="Giga" Actual="5e+010"/>
@@ -33,8 +33,8 @@
 <BackgroundColor Red="0.2" Green="0.2" Blue="0.6" Alpha="1"/>
 <AlphaThreshold>0.2</AlphaThreshold>
 <SimulateHydrodynamics>False</SimulateHydrodynamics>
-<MassUnits>Kilograms</MassUnits>
-<DistanceUnits>Meters</DistanceUnits>
+<MassUnits>Grams</MassUnits>
+<DistanceUnits>Millimeters</DistanceUnits>
 <AutoGenerateRandomSeed>True</AutoGenerateRandomSeed>
 <ManualRandomSeed>12345</ManualRandomSeed>
 <MaterialTypes>
@@ -1742,7 +1742,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1,2,1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,1000,2000,1000,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -1779,7 +1779,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1,2,-1,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,0,1,0,0,0,0,1,0,-1000,2000,-1000,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Enabled>True</Enabled>
 <Radius Value="50" Scale="milli" Actual="0.05"/>
@@ -1848,8 +1848,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>8d267524-c1eb-4857-96b7-da07daacab78</Name>
-<ID>8d267524-c1eb-4857-96b7-da07daacab78</ID>
+<Name>f0188575-ac57-408b-8d85-85240141d1ed</Name>
+<ID>f0188575-ac57-408b-8d85-85240141d1ed</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -1927,7 +1927,7 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>5</MajorInterval>
+<MajorInterval>2</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
 <TimeScale>Seconds</TimeScale>
 </Form>
@@ -1943,7 +1943,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/21/2018 13:56:00"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 12:25:29"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -2082,7 +2082,7 @@
             &lt;Item Name="Properties" /&gt;
           &lt;/Next&gt;
           &lt;Previous Count="0" /&gt;
-          &lt;Selected Value="True" /&gt;
+          &lt;Selected Value="False" /&gt;
           &lt;Child Type="null" /&gt;
         &lt;/Child&gt;
       &lt;/Child&gt;

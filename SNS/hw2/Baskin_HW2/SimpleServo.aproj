@@ -17,7 +17,7 @@
 <PlaybackControlMode>FastestPossible</PlaybackControlMode>
 <PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
 <Environment>
-<PhysicsTimeStep Value="60" Scale="micro" Actual="6e-005"/>
+<PhysicsTimeStep Value="0.54" Scale="milli" Actual="0.00054"/>
 <PhysicsSubsteps>1</PhysicsSubsteps>
 <Gravity Value="-9.81" Scale="None" Actual="-9.81"/>
 <MouseSpringStiffness Value="0.5" Scale="None" Actual="0.5"/>
@@ -4463,7 +4463,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/21/2018 13:55:50"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 12:25:27"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -4602,7 +4602,7 @@
           &lt;Previous Count="1"&gt;
             &lt;Item Name="Properties" /&gt;
           &lt;/Previous&gt;
-          &lt;Selected Value="True" /&gt;
+          &lt;Selected Value="False" /&gt;
           &lt;Child Type="null" /&gt;
         &lt;/Child&gt;
       &lt;/Child&gt;

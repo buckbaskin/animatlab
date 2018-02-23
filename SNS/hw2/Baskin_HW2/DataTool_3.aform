@@ -35,7 +35,7 @@
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-65536</LineColor>
+<LineColor>-16776961</LineColor>
 </DataColumn>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
@@ -53,7 +53,7 @@
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-16711936</LineColor>
+<LineColor>-16728064</LineColor>
 </DataColumn>
 </DataColumns>
 </Axis>
@@ -74,12 +74,12 @@
 <DataItemID>482300e7-a38e-4595-8e6e-70146d6b1be6</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>2</DataSubSet>
-<PrevDataSubset>-1</PrevDataSubset>
+<PrevDataSubset>2</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-256</LineColor>
+<LineColor>-4194112</LineColor>
 </DataColumn>
 </DataColumns>
 </Axis>
