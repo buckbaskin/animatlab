@@ -29,13 +29,31 @@
 <StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
 <DataItemID>6d0ae871-7891-4493-9b90-edcf81c04b27</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>2</DataSubSet>
-<PrevDataSubset>2</PrevDataSubset>
+<DataSubSet>3</DataSubSet>
+<PrevDataSubset>3</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Comm. Pos. Ext 2</Name>
+<ID>8706c3e2-1e5b-47ee-aea5-166c28b72669</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
+<DataItemID>a983bba4-abf9-4087-8cf3-384d7b35fd06</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>4</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-8388480</LineColor>
 </DataColumn>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
@@ -47,8 +65,8 @@
 <StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
 <DataItemID>c38f1b00-3e35-40b9-b781-59342ebd00d2</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>3</DataSubSet>
-<PrevDataSubset>3</PrevDataSubset>
+<DataSubSet>5</DataSubSet>
+<PrevDataSubset>5</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -81,6 +99,24 @@
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-65536</LineColor>
 </DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Comm. Vel. 2</Name>
+<ID>e11eea8d-bf6a-4956-9b60-b62a0338aa9e</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
+<DataItemID>122884e1-f9d9-48d6-9c06-8227bd318c99</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-8388480</LineColor>
+</DataColumn>
 </DataColumns>
 </Axis>
 <Axis>
@@ -99,8 +135,8 @@
 <StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
 <DataItemID>32db8122-2b31-4821-a21f-500222ee9166</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>4</DataSubSet>
-<PrevDataSubset>4</PrevDataSubset>
+<DataSubSet>6</DataSubSet>
+<PrevDataSubset>6</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -117,8 +153,8 @@
 <StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
 <DataItemID>a5197d37-6dab-4315-b9df-eed37eddb70b</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>5</DataSubSet>
-<PrevDataSubset>5</PrevDataSubset>
+<DataSubSet>7</DataSubSet>
+<PrevDataSubset>7</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -143,8 +179,8 @@
 <StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
 <DataItemID>1e57e72a-43e3-4656-bb25-b8bf611b6928</DataItemID>
 <SelectedDataType>JointRotation</SelectedDataType>
-<DataSubSet>1</DataSubSet>
-<PrevDataSubset>1</PrevDataSubset>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -158,6 +194,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>350001</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9070"/>
+<GraphConfig ByteCount="9100"/>
 </Form>
 </Form>
