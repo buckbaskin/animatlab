@@ -83,11 +83,55 @@
 </DataColumn>
 </DataColumns>
 </Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Y Axis 3</Name>
+<WorkingAxis>2</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Flx IN</Name>
+<ID>3eaf81a7-7298-4040-ab7a-26b603901ef9</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>656b0a6a-3c8f-4038-bb49-6af2f0d3fa4c</StructureID>
+<DataItemID>7da69580-6674-4658-bc6b-0042b41b7117</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>3</DataSubSet>
+<PrevDataSubset>-1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16711936</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Ext IN</Name>
+<ID>4e3bea5a-e8a1-4ff6-8d74-9f6483a99fd4</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>656b0a6a-3c8f-4038-bb49-6af2f0d3fa4c</StructureID>
+<DataItemID>9253cbc4-97cb-4a75-a1d8-f58e5320c156</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>-1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8953"/>
+<GraphConfig ByteCount="8974"/>
 </Form>
 </Form>

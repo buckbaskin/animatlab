@@ -5432,7 +5432,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.35621e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.35621e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,-1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -5615,7 +5615,7 @@
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>HC Start</Name>
-<ID>6e1081c9-5286-4724-afb2-554e7ad19fc2</ID>
+<ID>f8ef95f1-06b7-4d07-a3c5-f3a623ead50e</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="0.1" Scale="None" Actual="0.1"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
@@ -5624,7 +5624,7 @@
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>bf8209ff-5c01-44fe-8e03-02fa592d7b48</NodeID>
+<NodeID>82d1f864-8b5c-4199-9fa5-b24eb05ab1a4</NodeID>
 <CurrentOn Value="0.1" Scale="nano" Actual="1e-010"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
@@ -5731,7 +5731,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 13:39:02"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 13:43:10"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -6160,7 +6160,7 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="4"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="4" Unique="3" Space="41.468253968253968253968253970"&gt;
