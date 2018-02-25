@@ -14,7 +14,7 @@
 <SetSimEnd>True</SetSimEnd>
 <APIFile/>
 <SimEndTime Value="20.02" Scale="None" Actual="20.02"/>
-<PlaybackControlMode>FastestPossible</PlaybackControlMode>
+<PlaybackControlMode>MatchPhysicsStep</PlaybackControlMode>
 <PresetPlaybackTimeStep Value="0" Scale="milli" Actual="0"/>
 <Environment>
 <PhysicsTimeStep Value="60" Scale="micro" Actual="6e-005"/>
@@ -1594,7 +1594,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -1638,7 +1638,7 @@
 <DelayBufferMode>NoDelayBuffer</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <RobotIOScale>1</RobotIOScale>
 <SynchWithRobot>True</SynchWithRobot>
 <SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
@@ -2230,7 +2230,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>True</Transparent>
+<Transparent>False</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -2252,7 +2252,7 @@
 <DataTypeID>MembraneVoltage</DataTypeID>
 <TargetDataTypeID>DesiredVelocity</TargetDataTypeID>
 <Gain>
-<ID>ee8df66d-37e2-438d-b926-c0e3d4e28be1</ID>
+<ID>4fb11efe-5b55-49ac-96c1-13a95f567040</ID>
 <Type>Polynomial</Type>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Gains.Polynomial</ClassName>
@@ -2274,7 +2274,7 @@
 <DelayBufferMode>NoDelayBuffer</DelayBufferMode>
 <DelayBufferInterval Value="100" Scale="milli" Actual="0.1"/>
 <InitIODisableDuration Value="0" Scale="milli" Actual="0"/>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <RobotIOScale>1</RobotIOScale>
 <SynchWithRobot>True</SynchWithRobot>
 <SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
@@ -5051,13 +5051,14 @@
     <Tag>3ae3a6d0-1767-4ee7-9cef-76175315dfbc</Tag>
   </Node>
   <Node Left="80.375" Top="272" Width="40" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Display" Orientation="so_0" />
     <FillColor>-360334</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>6</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>0e8ab49b-99b9-4b5c-ae91-008a684395e8</Tag>
   </Node>
@@ -5258,14 +5259,13 @@
     <Tag>0423d5be-03ac-493c-b32f-e410df390309</Tag>
   </Link>
   <Node Left="49.5" Top="344.875" Width="40" Height="40">
-    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Display" Orientation="so_0" />
     <FillColor>-360334</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Disabled</Text>
+    <Text>10</Text>
     <Font Name="Arial" Size="12" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>67061985-cf86-47d0-84c5-0d8d053e9b0d</Tag>
   </Node>
@@ -5556,7 +5556,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,-2.1684e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -5862,7 +5862,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 14:14:03"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 14:15:59"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -6295,7 +6295,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="5" Unique="3" Space="41.468253968253968253968253970"&gt;
-      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;cfa1b4e4-dcd4-43d1-92c0-113bcbada8a0&lt;/ID&gt;
@@ -6347,7 +6347,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Ref v Debug" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Ref v Debug" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;666ebf3e-bf1f-4ae0-8fc3-036adfba0e7f&lt;/ID&gt;

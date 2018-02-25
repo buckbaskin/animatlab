@@ -30,7 +30,7 @@
 <DataItemID>3ae3a6d0-1767-4ee7-9cef-76175315dfbc</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>6</DataSubSet>
-<PrevDataSubset>-1</PrevDataSubset>
+<PrevDataSubset>6</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -48,7 +48,7 @@
 <DataItemID>122884e1-f9d9-48d6-9c06-8227bd318c99</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>7</DataSubSet>
-<PrevDataSubset>-1</PrevDataSubset>
+<PrevDataSubset>7</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
