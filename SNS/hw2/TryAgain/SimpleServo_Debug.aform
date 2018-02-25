@@ -66,12 +66,12 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Comm. Pos. Ext 2</Name>
-<ID>ec0fa142-091b-423e-9f01-bc8c73cb48f7</ID>
+<Name>Flx MN</Name>
+<ID>8e0790de-b210-4c20-8040-a68b9774730a</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>304bd1cd-e422-45e4-9ad7-b9317221608d</StructureID>
-<DataItemID>a983bba4-abf9-4087-8cf3-384d7b35fd06</DataItemID>
+<DataItemID>edbce5ce-8e56-4dfe-8f23-fb35ed9732ff</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>1</DataSubSet>
 <PrevDataSubset>1</PrevDataSubset>
@@ -150,6 +150,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>116667</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9015"/>
+<GraphConfig ByteCount="9005"/>
 </Form>
 </Form>
