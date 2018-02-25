@@ -284,7 +284,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>8d0d425a-b38d-464f-ad66-52517364908e</ID>
+<ID>eabca9d1-ad40-4945-b120-3467a99db2e7</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -293,7 +293,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>eabca9d1-ad40-4945-b120-3467a99db2e7</ID>
+<ID>0e4fcbfd-ccd6-48ac-bad2-caa55f5e364d</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -1598,7 +1598,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="373.5" y="176.5"/>
+<Location x="411.75" y="145"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1687,7 +1687,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -1702,7 +1702,7 @@
 <OutLinks>
 <ID>92b3cc8e-c721-469f-ba72-72e3ade1b0d2</ID>
 </OutLinks>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
@@ -1881,7 +1881,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="381.25" y="291.5"/>
+<Location x="418" y="293"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2950,13 +2950,14 @@
     <Tag>ca9a5874-adc8-424d-9e65-ec2358657fef</Tag>
   </Link>
   <Node Left="373.5" Top="57" Width="59.25" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
     <FillColor>-7876870</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Asym. Control</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>8df1fc85-e2a3-4b9f-a63a-050865eb29e4</Tag>
   </Node>
@@ -3038,7 +3039,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.35621e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,-1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -3228,18 +3229,18 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Asym Response</Name>
-<ID>2eea6000-2ff9-43ba-82c3-ec693666c015</ID>
-<StartTime Value="6" Scale="None" Actual="6"/>
-<EndTime Value="8" Scale="None" Actual="8"/>
+<Name>Static_End</Name>
+<ID>1b0d2204-a5df-4f12-a080-fc9e78b0a440</ID>
+<StartTime Value="8" Scale="None" Actual="8"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>8df1fc85-e2a3-4b9f-a63a-050865eb29e4</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<NodeID>6d0ae871-7891-4493-9b90-edcf81c04b27</NodeID>
+<CurrentOn Value="3.333" Scale="nano" Actual="3.333e-009"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="2" Scale="None" Actual="2"/>
@@ -3272,18 +3273,18 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Static_End</Name>
-<ID>1b0d2204-a5df-4f12-a080-fc9e78b0a440</ID>
-<StartTime Value="8" Scale="None" Actual="8"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
+<Name>Asym Response</Name>
+<ID>2eea6000-2ff9-43ba-82c3-ec693666c015</ID>
+<StartTime Value="6" Scale="None" Actual="6"/>
+<EndTime Value="8" Scale="None" Actual="8"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>6d0ae871-7891-4493-9b90-edcf81c04b27</NodeID>
-<CurrentOn Value="3.333" Scale="nano" Actual="3.333e-009"/>
+<NodeID>8df1fc85-e2a3-4b9f-a63a-050865eb29e4</NodeID>
+<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="2" Scale="None" Actual="2"/>
@@ -3294,8 +3295,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>72c70d53-3886-4ada-8e62-26212a38d64b</Name>
-<ID>72c70d53-3886-4ada-8e62-26212a38d64b</ID>
+<Name>1baccd9d-5395-4c71-af82-8c356c67f16d</Name>
+<ID>1baccd9d-5395-4c71-af82-8c356c67f16d</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -3389,7 +3390,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/13/2018 15:09:13"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/23/2018 16:39:54"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
