@@ -1772,7 +1772,7 @@
 </InLinks>
 <OutLinks/>
 <Enabled>True</Enabled>
-<RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
@@ -2495,7 +2495,7 @@
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
 <AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
 <AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
-<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<MaxCaConductance Value="1" Scale="micro" Actual="1e-006"/>
 <CaActivation>
 <ID>a1ee6c5d-5519-4373-815e-5b62c71cd77b</ID>
 <MidPoint Value="-40" Scale="milli" Actual="-0.04"/>
@@ -3376,7 +3376,7 @@
 </InLinks>
 <OutLinks/>
 <Enabled>True</Enabled>
-<RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
@@ -5731,7 +5731,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 13:43:10"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 13:52:39"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
