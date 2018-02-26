@@ -75,13 +75,14 @@ x = gScan(:,1);
 y = gScan(:,2);
 
 p = polyfit(x, y, 1);
-x1 = linspace(0,4*pi);
+x1 = linspace(0,1);
 y1 = polyval(p,x1);
 
 for i=1:numK
     for j=1:4
         subplot(1,1,1)
         plot(x, y,'o')
+        plot(x1, y1)
     end
 end
 
