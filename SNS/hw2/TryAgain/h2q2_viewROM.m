@@ -23,7 +23,7 @@ userObjectiveFunction = {'plotResponse'};
 
 
 % name of the graph to export every time
-simOutputDataFile = 'DataTool_SimOuput';
+simOutputDataFile = 'DataTool_SimOutput';
 
 % string property_type, string id, string property_name
 % see list in Tune_animatlab line 150
