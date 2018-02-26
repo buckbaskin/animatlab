@@ -64,38 +64,26 @@ gScan = tune.scan_parameter(1:1,[ROM_stim],1);
 %point separately.
 gFig = figure;
 subplot(1,1,1)
+title('ROM Input vs. Output');
 hold on
-xlabel('ROM Input (%)')
-ylabel('ROM Out (%)')
+xlabel('ROM Input (% V above rest)')
+ylabel('ROM Out (% V)')
 
 hold on
+
+x = gScan(:,1);
+y = gScan(:,2);
+
+p = polyfit(x, y, 1);
+x1 = linspace(0,4*pi);
+y1 = polyval(p,x1);
+
 for i=1:numK
     for j=1:4
         subplot(1,1,1)
-        % I don't know what's going on here, but it runs until here
-        plot(ROM_stim(i),gScan{1,i}(j),'o')
+        plot(x, y,'o')
     end
 end
-
-% tcFig = figure;
-% subplot(2,1,1)
-% hold on
-% ylabel('percent overshoot (%)')
-% subplot(2,1,2)
-% hold on
-% xlabel('\tau_{Comm. Velocity} (ms)')
-% ylabel('rise time (s)')
-% 
-% hold on
-% for i=1:numK
-%     for j=1:4
-%         subplot(2,1,1)
-%         plot(velTC(i),tcScan{1,i}(j),'o')
-%         
-%         subplot(2,1,2)
-%         plot(velTC(i),tcScan{2,i}(j),'o')
-%     end
-% end
 
 tune.save_all_figures;
 

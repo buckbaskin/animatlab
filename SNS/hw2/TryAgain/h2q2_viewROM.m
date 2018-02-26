@@ -70,10 +70,19 @@ xlabel('ROM Input (% V above rest)')
 ylabel('ROM Out (% V)')
 
 hold on
+
+x = gScan(:,1);
+y = gScan(:,2);
+
+p = polyfit(x, y, 1);
+x1 = linspace(0,1);
+y1 = polyval(p,x1);
+
 for i=1:numK
     for j=1:4
         subplot(1,1,1)
-        plot(gScan(:,1), gScan(:,2),'o')
+        plot(x, y,'o')
+        plot(x1, y1)
     end
 end
 
