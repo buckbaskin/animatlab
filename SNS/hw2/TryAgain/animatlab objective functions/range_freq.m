@@ -1,6 +1,6 @@
 function objective = range(simDataCell, colHeaders, desiredData)
     numTrials = length(simDataCell);
-    objective = NaN(numTrials,2);
+    objective = NaN(numTrials,4);
 
     Er = -60e-3;
     R = 20e-3;
@@ -43,13 +43,21 @@ function objective = range(simDataCell, colHeaders, desiredData)
             thisROM = rom(indStart:indEnd);
             thisCPG = cpg(indStart:indEnd);
             
-            maxPerc = max(max(thisPerc));
-            minPerc = min(min(thisPerc));
+            [maxPerc, maxIndex] = max(thisPerc);
+            max_time = thisTime(maxIndex);
+            [minPerc, minIndex] = min(thisPerc);
+            min_time = thisTime(minIndex);
             avgROM = mean2(thisROM);
             avgCPG = mean2(thisCPG);
+            
             measured_ROM = maxPerc - minPerc;
-            objective(i,1) = avgROM;
-            objective(i,2) = measured_ROM;
+            rise_time = abs(max_time - min_time);
+            cpgFreq = 1.0 / rise_time;
+            
+            objective(i, 1) = avgROM;
+            objective(i, 2) = measured_ROM;
+            objective(i, 3) = avgCPG;
+            objective(i, 4) = cpgFreq;
         end
     end
 end
