@@ -1,25 +1,32 @@
 function objective = plotResponse(simDataCell, colHeaders, desiredData)
     numTrials = length(simDataCell);
     objective = NaN(numTrials,1);
+    return;
+    
+    Er = -60e-3;
+    R = 20e-3
     
     for i=1:numTrials
         data = simDataCell{i}(1:end-10,:);
         timeCol = strcmp(colHeaders{i},'Time');
-        commCol = strcmp(colHeaders{i},'Comm. Position');
         percCol = strcmp(colHeaders{i},'Perc. Position');
+        romCol = strcmp(colHeaders{i},'Range of Motion 2');
+        cpgCol = strcmp(colHeaders{i},'CPG Speed 2');
         
         time = data(:,timeCol);
-        comm = data(:,commCol);
         perc = data(:,percCol);
+        rom = data(:,romCol);
+        cpg = data(:,cpgCol);
         
         %Transform the input/output into percent of range of motion, rather
         %than mV.
-        comm = (comm - -60e-3)/20e-3;
-        perc = (perc - -60e-3)/20e-3;
+        perc = (perc - Er)/R;
+        rom = (rom - Er)/R;
+        cpg = (cpg - Er)/R;
         
         %These are the start times of the stimuli we added to
         %SimpleServo.aproj.
-        tStimulus = [2,4,6,8];
+        tStimulus = [3];
         
         %This is how long each stimulus is.
         stimDuration = 2;
@@ -33,27 +40,21 @@ function objective = plotResponse(simDataCell, colHeaders, desiredData)
             [~,indEnd] = min( abs( time - (tStimulus(j)+stimDuration) ) );
             
             thisTime = time(indStart:indEnd);
-            thisComm = comm(indStart:indEnd);
             thisPerc = perc(indStart:indEnd);
-            
-            %Find the signed range of the commanded angle.
-            rComm = comm(indEnd) - comm(indStart);
-            
-            %Normalize the response such that each trial starts at -1, with
-            %the commanded position of 0.
-            normResponse = (thisPerc - thisComm)/rComm;
+            thisROM = rom(indStart:indEnd);
+            thisCPG = cpg(indStart:indEnd);
             
             figure(h)
             hold on
             subplot(1,2,1)
             hold on
-            plot(thisTime - thisTime(1),normResponse,'linewidth',2,'color',h.CurrentAxes.ColorOrder(j,:))
+            % plot(thisTime - thisTime(1),thisPerc,'linewidth',2,'color',h.CurrentAxes.ColorOrder(j,:))
             hold off
             
             subplot(1,2,2)
             hold on
             plot(thisTime,thisPerc,'linewidth',2,'color',h.CurrentAxes.ColorOrder(j,:));
-            plot(thisTime,thisComm,'--','color',h.CurrentAxes.ColorOrder(j,:))
+            plot(thisTime,thisROM,'--','color',h.CurrentAxes.ColorOrder(j,:))
             hold off
         end
         

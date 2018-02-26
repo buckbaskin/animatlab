@@ -18,8 +18,8 @@ performanceFolder = 'E:\GitHub\Animatlab\SNS\hw2\Performance';
 % location of animatlab2 binary (.exe)
 sourceFolder = 'C:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin';
 
-% userObjectiveFunction = {   'percentOvershoot','percentOvershootMat','plotResponse'};
-userObjectiveFunction = {'plotResponse'};
+% userObjectiveFunction = {'percentOvershoot', 'percentOvershootMat', 'plotResponse'};
+userObjectiveFunction = {@plotResponse};
 
 
 % name of the graph to export every time
@@ -50,20 +50,13 @@ numStim = 4;
 R = 20;
 kSyn = 1;
 
-delEadd = 220;
-delEsub = -40;
-
-% from slides last time (class 1/29)
-depAddGbaseline = kSyn*R./(delEadd - kSyn*R);
-hypSubGbaseline = delEadd/delEsub*-depAddGbaseline;
-
 ROM_stim = linspace(0,R,numK);
 
 %Put the parameters that we want to sweep in a matrix. Each column is
 %another set to test.
 
 %Change the synaptic gain
-gVals = [depAddG];
+gVals = [ROM_stim];
 gScan = tune.scan_parameter(1:1,gVals,1);
 
 %Plot the results. Because this is not a linear system, multiple different
@@ -82,32 +75,33 @@ hold on
 for i=1:numK
     for j=1:4
         subplot(2,1,1)
-        plot(depAddG(i),gScan{1,i}(j),'o')
+        % I don't know what's going on here, but it runs until here
+        plot(ROM_stim(i),gScan{1,i}(j),'o')
         
         subplot(2,1,2)
-        plot(depAddG(i),gScan{2,i}(j),'o')
+        plot(ROM_stim(i),gScan{2,i}(j),'o')
     end
 end
 
-tcFig = figure;
-subplot(2,1,1)
-hold on
-ylabel('percent overshoot (%)')
-subplot(2,1,2)
-hold on
-xlabel('\tau_{Comm. Velocity} (ms)')
-ylabel('rise time (s)')
-
-hold on
-for i=1:numK
-    for j=1:4
-        subplot(2,1,1)
-        plot(velTC(i),tcScan{1,i}(j),'o')
-        
-        subplot(2,1,2)
-        plot(velTC(i),tcScan{2,i}(j),'o')
-    end
-end
+% tcFig = figure;
+% subplot(2,1,1)
+% hold on
+% ylabel('percent overshoot (%)')
+% subplot(2,1,2)
+% hold on
+% xlabel('\tau_{Comm. Velocity} (ms)')
+% ylabel('rise time (s)')
+% 
+% hold on
+% for i=1:numK
+%     for j=1:4
+%         subplot(2,1,1)
+%         plot(velTC(i),tcScan{1,i}(j),'o')
+%         
+%         subplot(2,1,2)
+%         plot(velTC(i),tcScan{2,i}(j),'o')
+%     end
+% end
 
 tune.save_all_figures;
 
