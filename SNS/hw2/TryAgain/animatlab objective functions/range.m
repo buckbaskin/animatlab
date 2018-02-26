@@ -1,4 +1,4 @@
-function objective = plotResponse(simDataCell, colHeaders, desiredData)
+function objective = range(simDataCell, colHeaders, desiredData)
     numTrials = length(simDataCell);
     objective = NaN(numTrials,2);
 
@@ -48,38 +48,8 @@ function objective = plotResponse(simDataCell, colHeaders, desiredData)
             avgROM = mean2(thisROM);
             avgCPG = mean2(thisCPG);
             measured_ROM = maxPerc - minPerc;
-            
-%             figure(h)
-%             hold on
-%             subplot(1,2,1)
-%             hold on
-%             % plot(thisTime - thisTime(1),thisPerc,'linewidth',2,'color',h.CurrentAxes.ColorOrder(j,:))
-%             hold off
-%             
-%             subplot(1,2,2)
-%             hold on
-%             plot(thisTime,thisPerc,'linewidth',2,'color',h.CurrentAxes.ColorOrder(j,:));
-%             plot(thisTime,thisROM,'--','color',h.CurrentAxes.ColorOrder(j,:))
-%             hold off
+            objective(i,1) = avgROM;
+            objective(i,2) = measured_ROM;
         end
-        
-%         figure(h)
-%         subplot(1,2,1)
-%         hold on
-%         title(sprintf('Trial %i',i))
-%         xlim([0,stimDuration])
-%         ylabel('Norm. to comm. rotation')
-%         xlabel('Time (s)')
-%         grid on
-%         hold off
-%         
-%         subplot(1,2,2)
-%         hold on
-%         ylabel('Norm. to range of motion')
-%         xlabel('Time (s)')
-%         grid on
-%         hold off
-%         
-%         objective(i) = h;
     end
 end

@@ -1053,11 +1053,12 @@ classdef Tune_animatlab < hgsetget
                 elseif iscell(obj.user_objective_function)
                     try objective = obj.user_objective_function{obj_func_num}(data_cell,new_col_headers,obj.desired_output);
                     catch ME
-                        if strcmp(ME.identifier,'MATLAB:UndefinedFunction') && contains(ME.message,obj.user_objective_function{obj_func_num})
-                            error('Function "%s%s" not found on the path. Add this function to the path, or create a function with this name.',obj.user_objective_function{obj_func_num},'.m');
-                        else
-                            error(ME.message)
-                        end
+%                         if strcmp(ME.identifier,'MATLAB:UndefinedFunction') && contains(ME.message,obj.user_objective_function{obj_func_num})
+%                             error('Function "%s%s" not found on the path. Add this function to the path, or create a function with this name.',obj.user_objective_function{obj_func_num},'.m');
+%                         else
+%                             error(ME.message)
+%                         end
+                        error(ME.message)
                     end
                 end
             end
