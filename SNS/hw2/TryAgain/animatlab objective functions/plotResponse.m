@@ -1,10 +1,9 @@
 function objective = plotResponse(simDataCell, colHeaders, desiredData)
     numTrials = length(simDataCell);
     objective = NaN(numTrials,1);
-    return;
-    
+
     Er = -60e-3;
-    R = 20e-3
+    R = 20e-3;
     
     for i=1:numTrials
         data = simDataCell{i}(1:end-10,:);
