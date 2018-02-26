@@ -1,8 +1,8 @@
 <Form>
 <Form>
 <ID>9dd73055-e205-4532-abec-b755ca15d407</ID>
-<Title>DataTool_SimOuput</Title>
-<TabPageName>DataTool_SimOuput</TabPageName>
+<Title>DataTool_SimOutput</Title>
+<TabPageName>DataTool_SimOutput</TabPageName>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
 <AutoCollectInterval>True</AutoCollectInterval>

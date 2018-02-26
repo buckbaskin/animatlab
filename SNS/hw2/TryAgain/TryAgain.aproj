@@ -8223,7 +8223,7 @@
 </ToolHolder>
 <ToolHolder>
 <ID>0084e2ec-f7bb-4c72-94e2-4b00a3420924</ID>
-<Name>DataTool_SimOuput</Name>
+<Name>DataTool_SimOutput</Name>
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
 <ToolFormID>9dd73055-e205-4532-abec-b755ca15d407</ToolFormID>
@@ -8399,7 +8399,7 @@
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Equation</ValueType>
 <Equation>20 * (t / 10)</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
@@ -8532,7 +8532,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 23:22:10"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 23:36:25"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -9056,15 +9056,15 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_SimOuput" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_SimOutput" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9dd73055-e205-4532-abec-b755ca15d407&lt;/ID&gt;
-&lt;Title&gt;DataTool_SimOuput&lt;/Title&gt;
-&lt;TabPageName&gt;DataTool_SimOuput&lt;/TabPageName&gt;
+&lt;Title&gt;DataTool_SimOutput&lt;/Title&gt;
+&lt;TabPageName&gt;DataTool_SimOutput&lt;/TabPageName&gt;
 &lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;DataTool_SimOuput.aform&lt;/ExternalFile&gt;
+&lt;ExternalFile&gt;DataTool_SimOutput.aform&lt;/ExternalFile&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;

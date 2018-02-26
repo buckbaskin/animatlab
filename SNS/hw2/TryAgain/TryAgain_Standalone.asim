@@ -2366,7 +2366,7 @@
 <ID>e87f26ef-5ba4-46f0-8cb4-d5489b6c8ed2</ID>
 <Name>Stimulus_ROM</Name>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <Type>Current</Type>
 <CurrentType>Tonic</CurrentType>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
@@ -2786,8 +2786,8 @@
 <DataChart>
 <ID>9dd73055-e205-4532-abec-b755ca15d407</ID>
 <Type>FileChart</Type>
-<OutputFilename>DataTool_SimOuput.txt</OutputFilename>
-<Name>DataTool_SimOuput</Name>
+<OutputFilename>DataTool_SimOutput.txt</OutputFilename>
+<Name>DataTool_SimOutput</Name>
 <SetStartEndTime>True</SetStartEndTime>
 <CollectTimeWindow>-1</CollectTimeWindow>
 <AlwaysActive>False</AlwaysActive>
