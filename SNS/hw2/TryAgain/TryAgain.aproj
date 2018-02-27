@@ -839,9 +839,57 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Hyp Sub Deriv</Name>
+<Name>Sub Deriv Out k=-1</Name>
 <EquilibriumPotential Value="-100" Scale="milli" Actual="-0.1"/>
-<MaxSynapticConductance Value="0.55" Scale="micro" Actual="5.5e-007"/>
+<MaxSynapticConductance Value="0.45" Scale="micro" Actual="4.5e-007"/>
+<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
+<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
+<ID>6645b4e3-62c1-4c07-92a8-cec92705e3b5</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Fork</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID/>
+<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID/>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<Name>Add Deriv Out k=1</Name>
+<EquilibriumPotential Value="160" Scale="milli" Actual="0.16"/>
+<MaxSynapticConductance Value="0.1053" Scale="micro" Actual="1.053e-007"/>
 <PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
 <PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
@@ -1187,7 +1235,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<Name>Dep Add Deriv</Name>
+<Name>Add Deriv In k=1</Name>
 <EquilibriumPotential Value="160" Scale="milli" Actual="0.16"/>
 <MaxSynapticConductance Value="0.1" Scale="micro" Actual="1e-007"/>
 <PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
@@ -3944,7 +3992,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>a1f39f86-2db6-4641-993c-25ffd3c6c1e7</SynapticTypeID>
+<SynapticTypeID>6645b4e3-62c1-4c07-92a8-cec92705e3b5</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -4633,7 +4681,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>a1f39f86-2db6-4641-993c-25ffd3c6c1e7</SynapticTypeID>
+<SynapticTypeID>6645b4e3-62c1-4c07-92a8-cec92705e3b5</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -6059,7 +6107,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.35621e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,-1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.35621e-007,0.00164801,0,0.00164801,-0.000203653,-0.999999,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -6237,20 +6285,20 @@
 <Name>Stimulus_TDiff1</Name>
 <ID>e1ab3836-0524-4336-8a52-f3914e6cb549</ID>
 <StartTime Value="1" Scale="None" Actual="1"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
+<EndTime Value="2" Scale="None" Actual="2"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>20 * t / 4</Equation>
+<Equation>20 * t / 1</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
 <NodeID>7f0b916a-f129-4db1-a802-9d0b1850a9f0</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="4" Scale="None" Actual="4"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="4" Scale="None" Actual="4"/>
+<BurstOnDuration Value="1" Scale="None" Actual="1"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -6280,7 +6328,7 @@
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Stimulus_TDiff2</Name>
 <ID>6413b6c3-6726-493f-90ee-bce2fcee97b3</ID>
-<StartTime Value="5" Scale="None" Actual="5"/>
+<StartTime Value="2" Scale="None" Actual="2"/>
 <EndTime Value="6" Scale="None" Actual="6"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
@@ -6292,31 +6340,31 @@
 <CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOnDuration Value="4" Scale="None" Actual="4"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="1" Scale="None" Actual="1"/>
+<BurstOnDuration Value="4" Scale="None" Actual="4"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_4</Name>
+<Name>Stimulus_TDiff3</Name>
 <ID>e57e22f1-428d-4a18-a4d8-16bcb8521373</ID>
 <StartTime Value="6" Scale="None" Actual="6"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
+<EndTime Value="7" Scale="None" Actual="7"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>20 - ((20 / 4)*t)</Equation>
+<Equation>20 - ((20 / 1)*t)</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
 <NodeID>7f0b916a-f129-4db1-a802-9d0b1850a9f0</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="4" Scale="None" Actual="4"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="4" Scale="None" Actual="4"/>
+<BurstOnDuration Value="1" Scale="None" Actual="1"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -6483,7 +6531,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/27/2018 17:22:35"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/27/2018 17:51:38"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -6912,7 +6960,7 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="4"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="4" Unique="3" Space="37.632275132275132275132275130"&gt;
