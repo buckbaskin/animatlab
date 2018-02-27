@@ -7,11 +7,11 @@
 <ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
 <AutoCollectInterval>True</AutoCollectInterval>
 <CollectDataInterval Value="0.18" Scale="milli" Actual="0.00018"/>
-<CollectTimeWindow Value="21" Scale="None" Actual="21"/>
+<CollectTimeWindow Value="11" Scale="None" Actual="11"/>
 <UpdateDataInterval Value="200" Scale="milli" Actual="0.2"/>
 <SetStartEndTime>True</SetStartEndTime>
 <CollectStartTime Value="0" Scale="None" Actual="0"/>
-<CollectEndTime Value="20" Scale="None" Actual="20"/>
+<CollectEndTime Value="10" Scale="None" Actual="10"/>
 <AxisList>
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
@@ -22,7 +22,7 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Flx HC</Name>
+<Name>Flx HC 2</Name>
 <ID>1322506a-3327-4b1a-8854-c9461e53eed7</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
@@ -40,7 +40,7 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Ext HC</Name>
+<Name>Ext HC 2</Name>
 <ID>b3820923-0852-485a-8997-51d70a60cb47</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
@@ -66,7 +66,7 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Ext IN</Name>
+<Name>Ext IN 2</Name>
 <ID>8e0d2c5d-7cbb-469f-8cf8-4b628aab4a04</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
@@ -84,7 +84,7 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Flx IN</Name>
+<Name>Flx IN 2</Name>
 <ID>8f17551a-9cd8-4ff0-9644-854376d099f2</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
@@ -110,7 +110,7 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Flx MN</Name>
+<Name>Flx MN 2</Name>
 <ID>4288ea0a-d2f6-487f-adc6-652d5f665fe8</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
@@ -128,7 +128,7 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Ext MN</Name>
+<Name>Ext MN 2</Name>
 <ID>beb77834-c4fa-4c4f-910e-eae7f6901195</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
@@ -148,8 +148,8 @@
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
-<PointsToKeep>116667</PointsToKeep>
+<PointsToKeep>61112</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9006"/>
+<GraphConfig ByteCount="9018"/>
 </Form>
 </Form>
