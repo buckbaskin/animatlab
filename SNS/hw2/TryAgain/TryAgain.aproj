@@ -284,7 +284,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>18708851-5c8a-4762-96ea-7a751e3df1a9</ID>
+<ID>1291c0cc-f6ac-4d13-9890-10f96cb7c966</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -293,7 +293,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>bac7de9e-eb67-40a4-900a-824c97fea9b9</ID>
+<ID>72e8c8ad-9509-43b2-8519-907af659684b</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -1582,7 +1582,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="665.5" y="1039.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1658,7 +1658,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="413.25" y="942.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1736,7 +1736,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="80.375" y="272"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1819,7 +1819,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="143.25" y="505.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -1898,14 +1898,14 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="459" y="438"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
 <ShadowSize Width="0" Height="0"/>
 <Shape>Termination</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
-<Size Width="40" Height="40"/>
+<Size Width="52.75" Height="40"/>
 <Text>Ext MN 2</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
@@ -1926,8 +1926,8 @@
 <ID>1edf9b29-2dda-44cd-96c1-e9b05f13ac7e</ID>
 </InLinks>
 <OutLinks>
-<ID>9f9333fe-0bff-4c16-b653-7d1d2e731c16</ID>
 <ID>c8682ccc-963a-4228-a44b-2e521402dcc2</ID>
+<ID>9f9333fe-0bff-4c16-b653-7d1d2e731c16</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
@@ -1978,7 +1978,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="639.75" y="851.75"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2054,7 +2054,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="317.25" y="745.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2133,7 +2133,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="196.75" y="351.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2212,7 +2212,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="338.25" y="546"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2291,7 +2291,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="504.5" y="939.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2371,7 +2371,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="154.75" y="271.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2450,7 +2450,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="597.5" y="933.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2528,7 +2528,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="185.5" y="951.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2607,7 +2607,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="593.5" y="796.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2686,7 +2686,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="730.25" y="1133.88"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2769,7 +2769,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="631" y="570"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2847,7 +2847,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="49.5" y="344.875"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2930,7 +2930,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="538" y="576"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3010,7 +3010,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="324.25" y="226"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3087,7 +3087,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="181.75" y="801.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3166,7 +3166,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="542" y="434"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3246,7 +3246,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="339.75" y="671.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3322,7 +3322,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="794.75" y="1130.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3372,7 +3372,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="571.5" y="1039.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3449,7 +3449,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="193" y="201.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3528,7 +3528,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="330" y="584"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3605,7 +3605,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="194.25" y="589.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3685,7 +3685,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="699" y="675.75"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3761,7 +3761,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="627" y="433"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3840,7 +3840,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="347.75" y="393.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3921,7 +3921,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="190.5" y="439.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3945,8 +3945,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>cfc8ff6a-688b-4cf7-a36c-14b5b1076dc2</ID>
 <ID>0423d5be-03ac-493c-b32f-e410df390309</ID>
+<ID>cfc8ff6a-688b-4cf7-a36c-14b5b1076dc2</ID>
 <ID>9f9333fe-0bff-4c16-b653-7d1d2e731c16</ID>
 </InLinks>
 <OutLinks>
@@ -4001,7 +4001,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="604.5" y="675.75"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4078,7 +4078,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="5.375" y="393.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4161,7 +4161,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="416.25" y="801.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4239,7 +4239,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="508.5" y="797.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4319,7 +4319,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="0" y="269.25"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4373,7 +4373,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="49.5" y="683.875"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4419,7 +4419,7 @@
 <UpperLimitScale Value="0.78" Scale="None" Actual="0.78"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits>Input Variable</IndependentUnits>
+<IndependentUnits/>
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
@@ -4456,7 +4456,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="134.5" y="867.5"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4533,14 +4533,14 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="459" y="579"/>
+<Location x="0" y="0"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
 <ShadowSize Width="0" Height="0"/>
 <Shape>Termination</Shape>
 <ShapeOrientation>Angle0</ShapeOrientation>
-<Size Width="40" Height="40"/>
+<Size Width="52" Height="40"/>
 <Text>Flx MN 2</Text>
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
@@ -6951,7 +6951,7 @@
 </Links>
 <DiagramXml><![CDATA[<Root>
 <Diagram>
-<ID>104fffe6-0f4b-42fe-a49c-046660663f2b</ID>
+<ID>382c48b0-4893-4256-ae6c-5f13be89e893</ID>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram</ClassName>
 <PageName>Neural Subsystem</PageName>
@@ -8073,7 +8073,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="-94.444" Scale="milli" Actual="-0.094444"/>
 </Rotation>
-<LocalMatrix>0.999999,3.35621e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,0,1,-0.000203653,0,0,0,0,1</LocalMatrix>
+<LocalMatrix>0.999999,3.3562e-007,0.001648,0,0.001648,-0.000203653,-0.999999,0,1.0842e-019,1,-0.000203653,0,0,0,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Plane</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Plane</PartType>
@@ -8260,24 +8260,24 @@
 <Stimuli>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
-<Name>Stimulus_Reference</Name>
-<ID>19e0ec27-e1f5-4ee8-9add-ee8564040b46</ID>
-<StartTime Value="0.45" Scale="None" Actual="0.45"/>
-<EndTime Value="20" Scale="None" Actual="20"/>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_CPG_Speed</Name>
+<ID>871f5fb7-d9bc-4d6e-913b-79fe7e1ba818</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
+<Enabled>False</Enabled>
+<ValueType>Equation</ValueType>
+<Equation>(18/10)*t - 2</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>6d0ae871-7891-4493-9b90-edcf81c04b27</NodeID>
+<NodeID>cbf6c814-2288-43d2-a1be-8759f65fef73</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
-<CurrentOff Value="-10" Scale="nano" Actual="-1e-008"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1.4" Scale="None" Actual="1.4"/>
-<CycleOffDuration Value="1.4" Scale="None" Actual="1.4"/>
-<BurstOnDuration Value="19.55" Scale="None" Actual="19.55"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -8305,28 +8305,6 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_Div_IN_App</Name>
-<ID>0d162aba-8b75-4205-aa46-28819ca81206</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>32df847f-eb91-4bb5-8fff-848720e9e177</NodeID>
-<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="None" Actual="10"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="10" Scale="None" Actual="10"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Stimulus_FeelsBad</Name>
 <ID>7f732b3b-bd2b-42b0-9dbb-466dd6692280</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
@@ -8349,17 +8327,61 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_CPG_Speed</Name>
-<ID>871f5fb7-d9bc-4d6e-913b-79fe7e1ba818</ID>
+<Name>HC Start</Name>
+<ID>f8ef95f1-06b7-4d07-a3c5-f3a623ead50e</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="0.1" Scale="None" Actual="0.1"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
+<NodeID>82d1f864-8b5c-4199-9fa5-b24eb05ab1a4</NodeID>
+<CurrentOn Value="0.1" Scale="nano" Actual="1e-010"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_Div_IN_App</Name>
+<ID>0d162aba-8b75-4205-aa46-28819ca81206</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="10" Scale="None" Actual="10"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
+<NodeID>32df847f-eb91-4bb5-8fff-848720e9e177</NodeID>
+<CurrentOn Value="20" Scale="nano" Actual="2e-008"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="10" Scale="None" Actual="10"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_ROM</Name>
+<ID>e87f26ef-5ba4-46f0-8cb4-d5489b6c8ed2</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="10" Scale="None" Actual="10"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>False</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>(18/10)*t - 2</Equation>
+<Equation>20 * (t / 10)</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>cbf6c814-2288-43d2-a1be-8759f65fef73</NodeID>
+<NodeID>8620bf1e-8320-43ed-8a40-c8920d7996bf</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
@@ -8392,53 +8414,31 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_ROM</Name>
-<ID>e87f26ef-5ba4-46f0-8cb4-d5489b6c8ed2</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="10" Scale="None" Actual="10"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Equation</ValueType>
-<Equation>20 * (t / 10)</Equation>
-<OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>8620bf1e-8320-43ed-8a40-c8920d7996bf</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="None" Actual="10"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="10" Scale="None" Actual="10"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>HC Start</Name>
-<ID>f8ef95f1-06b7-4d07-a3c5-f3a623ead50e</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="0.1" Scale="None" Actual="0.1"/>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Stimulus_Reference</Name>
+<ID>19e0ec27-e1f5-4ee8-9add-ee8564040b46</ID>
+<StartTime Value="0.45" Scale="None" Actual="0.45"/>
+<EndTime Value="20" Scale="None" Actual="20"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>304bd1cd-e422-45e4-9ad7-b9317221608d</OrganismID>
-<NodeID>82d1f864-8b5c-4199-9fa5-b24eb05ab1a4</NodeID>
-<CurrentOn Value="0.1" Scale="nano" Actual="1e-010"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<NodeID>6d0ae871-7891-4493-9b90-edcf81c04b27</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<CurrentOff Value="-10" Scale="nano" Actual="-1e-008"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="10" Scale="centi" Actual="0.1"/>
+<CycleOnDuration Value="1.4" Scale="None" Actual="1.4"/>
+<CycleOffDuration Value="1.4" Scale="None" Actual="1.4"/>
+<BurstOnDuration Value="19.55" Scale="None" Actual="19.55"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>581676a3-5fc3-4556-a555-3043de018260</Name>
-<ID>581676a3-5fc3-4556-a555-3043de018260</ID>
+<Name>fec31488-c767-455d-a36e-ee7b13726b82</Name>
+<ID>fec31488-c767-455d-a36e-ee7b13726b82</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -8516,9 +8516,9 @@
 <AutomaticTimeScale>True</AutomaticTimeScale>
 <DivisionMarkFactor>4</DivisionMarkFactor>
 <Divisions>10</Divisions>
-<MajorInterval>2</MajorInterval>
+<MajorInterval>500</MajorInterval>
 <MiddleMarkFactor>3</MiddleMarkFactor>
-<TimeScale>Seconds</TimeScale>
+<TimeScale>MilliSeconds</TimeScale>
 </Form>
 <Form>
 <ID>98034b77-b48a-4f3b-bb60-684e7b5a67c7</ID>
@@ -8532,7 +8532,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/25/2018 23:36:25"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="02/27/2018 16:13:54"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -8963,129 +8963,6 @@
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
 &lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
   &lt;CustomGlobalData /&gt;
-  &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
-    &lt;Leaf Count="8" Unique="3" Space="40.410052910052910052910052910"&gt;
-      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;cfa1b4e4-dcd4-43d1-92c0-113bcbada8a0&lt;/ID&gt;
-&lt;Title&gt;Organism_1 Body&lt;/Title&gt;
-&lt;TabPageName&gt;Page 1&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;AnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;AnimatGUI.Forms.SimulationWindow&lt;/ClassName&gt;
-&lt;TrackCamera&gt;True&lt;/TrackCamera&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="SimpleServo_Reference" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;84170165-62e9-4fd5-aaf9-d66b3b2ba8a6&lt;/ID&gt;
-&lt;Title&gt;SimpleServo_Reference&lt;/Title&gt;
-&lt;TabPageName&gt;SimpleServo_Reference&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;SimpleServo_Reference.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="LineChart" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;78b84115-e3ea-4e4e-bad7-bee6ad0cd605&lt;/ID&gt;
-&lt;Title&gt;LineChart&lt;/Title&gt;
-&lt;TabPageName&gt;LineChart&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;LineChart.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="SimpleServo_Debug" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;a07e456d-baab-47fc-843b-bd9ed8835ad8&lt;/ID&gt;
-&lt;Title&gt;SimpleServo_Debug&lt;/Title&gt;
-&lt;TabPageName&gt;SimpleServo_Debug&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;SimpleServo_Debug.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="Ref v Debug" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;666ebf3e-bf1f-4ae0-8fc3-036adfba0e7f&lt;/ID&gt;
-&lt;Title&gt;Ref v Debug&lt;/Title&gt;
-&lt;TabPageName&gt;Ref v Debug&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;Ref_v_Debug.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="LineChart" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;2220bc79-c2b7-4e2c-abb7-9b537e8470df&lt;/ID&gt;
-&lt;Title&gt;LineChart&lt;/Title&gt;
-&lt;TabPageName&gt;LineChart&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;LineChart.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="RangeData" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;6e4afdca-43cd-4b0b-9be5-14f0c8639f85&lt;/ID&gt;
-&lt;Title&gt;RangeData&lt;/Title&gt;
-&lt;TabPageName&gt;RangeData&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;RangeData.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="DataTool_SimOutput" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;9dd73055-e205-4532-abec-b755ca15d407&lt;/ID&gt;
-&lt;Title&gt;DataTool_SimOutput&lt;/Title&gt;
-&lt;TabPageName&gt;DataTool_SimOutput&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;DataTool_SimOutput.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-    &lt;/Leaf&gt;
-    &lt;Leaf Count="1" Unique="4" Space="59.589947089947089947089947090"&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;104fffe6-0f4b-42fe-a49c-046660663f2b&lt;/ID&gt;
-&lt;Title&gt;Neural Subsystem&lt;/Title&gt;
-&lt;TabPageName&gt;Neural Subsystem&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram&lt;/ClassName&gt;
-&lt;OrganismID&gt;304bd1cd-e422-45e4-9ad7-b9317221608d&lt;/OrganismID&gt;
-&lt;SubSystemID&gt;98614764-0846-4f97-9bc9-faf2e30512c6&lt;/SubSystemID&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-    &lt;/Leaf&gt;
-  &lt;/Sequence&gt;
+  &lt;Sequence Count="0" Unique="0" Space="100" Direction="Horizontal" /&gt;
 &lt;/TabbedGroups&gt;</TabbedGroupsConfig>
 </Project>
