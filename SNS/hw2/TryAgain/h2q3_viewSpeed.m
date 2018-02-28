@@ -79,14 +79,17 @@ ROM_measured = gScan(:,2);
 CPG_in = gScan(:,3);
 CPG_freq = gScan(:,4);
 
-p = polyfit(CPG_in, CPG_freq, 1);
+x = CPG_in;
+y = ROM_measured;
+
+p = polyfit(x, y, 1);
 x1 = linspace(0,1);
 y1 = polyval(p,x1);
 
 for i=1:numK
     for j=1:4
         subplot(1,1,1)
-        plot(CPG_in, CPG_freq,'o')
+        plot(x, y,'o')
         plot(x1, y1)
     end
 end
