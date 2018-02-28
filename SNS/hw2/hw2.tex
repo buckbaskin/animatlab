@@ -1,0 +1,98 @@
+\documentclass[12pt, letterpaper, oneside, notitlepage, onecolumn]{article}
+\author{William Baskin}
+\title{Homework 2 - EMAE477}
+\pagestyle{plain}
+
+\usepackage{parskip}
+
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{soul}
+\usepackage[margin=0.69in]{geometry}
+
+% math
+\usepackage{amsmath, amssymb}
+%, amsthm, gensymb}
+
+\usepackage{graphicx}
+\graphicspath{ {TryAgain/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+
+\maketitle
+
+\section{Question 1}
+
+% \includegraphics[width=3.25in,angle=0]{Q3_Shifted}
+
+I got the CPG to oscillate as long as there is a minimal current in the CPG Speed neuron. It took some exploring of Animatlab to finally find all the critical parameters for oscillation. The asymmetric input was copied from the example CPG project.
+
+The project was frozen at this state via a zip file for questions 1.
+
+\section{Question 2}
+
+In the process of connecting the network, the successful configuration was to functionally replace the Commanded Position Neuron with the Extensor MotorNeuron InterNeuron. 
+
+\includegraphics[width=6.25in,angle=0]{Network_Annotated}
+
+Using Matlab and tune\_animatlab, the range of motion changed as follows:
+
+\includegraphics[width=6.25in,angle=0]{ROM_IO_png}
+
+Code to generate this will be included in the zip of the project submission. The project was frozen at this state via a zip file for questions 2 and 3.
+
+\section{Question 3}
+
+CPG oscillation frequency increased roughly linearly with CPG\_Speed percent activation. A line (2 term polynomial) fit is provided for reference.
+
+\includegraphics[width=6.25in,angle=0]{CPG_IO_png}
+
+The range of motion was observed to drop with increasing CPG\_Speed activity. This is explored in Question 4.
+
+\includegraphics[width=6.25in,angle=0]{CPG_ROM_png}
+
+The linear fit is a bad fit because there is 0 range of motion with no oscillation at 0 CPG\_Speed activity.
+
+\section{Question 4}
+
+A differentiator network was tested. Its oscillation values are smaller but of the same sign as the actual measured and the relative magnitude of differences in time is qualitatively the same (greater output for greater actual velocity, etc). Due to the exact time constants chosen for the neurons, the derivative lags the actual velocity by a small but visible margin. See the third plot for the actual (Gold) vs estimated (Yellow) output. The actual position is shown at the top and the Fast vs. Slow neurons are plotted in the second plot.
+
+\includegraphics[width=6.25in,angle=0]{Diff_DataTool}
+
+The network was verified on actual constant values, increasing, decreasing and trapezoidal profiles along with sin-like simulated data.
+
+\subsection{Feedback}
+
+During experimentation, the feedback wasn't implemented directly as given. Instead, pseudo-Add (extension) and pseudo-Sub (flexion) synapses were used as bases and the values were tuned to the edge of where individual feedback would cause the CPG to fail to oscillate. From there, the relative conductivities of the synapses were adjusted using binary search to find values that balanced the flexion and extension cycles. This design actually offers insight into how to continuously adjust the relative lengths of the periods of flexion and extension by changing feedback (potentially modulated by another set of neurons). The end effect was to have robust range of motion in the joint even for large CPG\_Speed activity. This was qualitatively most obvious at 20 nA of stimulus for CPG\_Speed where the oscillation would not fully complete causing systematic error in joint position when the Est. V positive feedback neuron was not enabled.
+
+\end{document}
