@@ -2,7 +2,7 @@
 <Form>
 <ID>78988527-d323-41fc-aa08-e6af9a7a3868</ID>
 <Title>DataTool_1</Title>
-<TabPageName>Page 1</TabPageName>
+<TabPageName>DataTool_1</TabPageName>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.Forms.Tools.ScriptedSimulationWindow</ClassName>
 <Position>
