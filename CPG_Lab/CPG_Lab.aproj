@@ -284,7 +284,7 @@
 <Relaxation5>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>6563a28c-39c0-44d9-97c4-5ad7efb31f29</ID>
+<ID>cc6fa704-d60f-46eb-a79c-2e12f7457037</ID>
 <Enabled>False</Enabled>
 <CoordinateID>4</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -293,7 +293,7 @@
 <Relaxation6>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationBullet</ClassName>
-<ID>cc6fa704-d60f-46eb-a79c-2e12f7457037</ID>
+<ID>ea269844-1daf-42a8-b787-c0cc02cc9f87</ID>
 <Enabled>False</Enabled>
 <CoordinateID>5</CoordinateID>
 <Stiffness Value="100" Scale="Kilo" Actual="100000"/>
@@ -1640,8 +1640,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>a5d15e35-9595-43bb-822b-740afb08dfa9</ID>
 <ID>8eabd18d-9d5f-4489-880e-4799da33f9bb</ID>
+<ID>a5d15e35-9595-43bb-822b-740afb08dfa9</ID>
 </InLinks>
 <OutLinks>
 <ID>6d3f1058-e797-45b9-a874-c2b421569629</ID>
@@ -2788,8 +2788,8 @@
 <TemplateChangeScript/>
 <InLinks/>
 <OutLinks>
-<ID>e1d49def-09d4-4e07-af90-0930966b3c44</ID>
 <ID>7f04459c-f789-489f-96ad-a10fd17dbfbe</ID>
+<ID>e1d49def-09d4-4e07-af90-0930966b3c44</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
@@ -3764,8 +3764,8 @@
 <TemplateChangeScript/>
 <InLinks/>
 <OutLinks>
-<ID>8eabd18d-9d5f-4489-880e-4799da33f9bb</ID>
 <ID>8472efcf-7ced-4ed0-89f7-ccbbb4707779</ID>
+<ID>8eabd18d-9d5f-4489-880e-4799da33f9bb</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
@@ -4225,8 +4225,8 @@
 <InLinks>
 <ID>dd4d5da1-4111-4df2-8007-dc1eb29f6711</ID>
 <ID>6d3f1058-e797-45b9-a874-c2b421569629</ID>
-<ID>bd335e99-52ae-4f9d-8057-4b14ee75adb7</ID>
 <ID>5c6c298a-744c-497e-9178-7c483a0fc3b1</ID>
+<ID>bd335e99-52ae-4f9d-8057-4b14ee75adb7</ID>
 </InLinks>
 <OutLinks>
 <ID>a24ae133-d017-42a7-aa0f-18ec0075f3d0</ID>
@@ -4304,8 +4304,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>dac0d4fd-0a90-4f81-8ca2-ad54b6d17613</ID>
 <ID>77839202-24a2-4c3d-ba6e-8c18dea09c9d</ID>
+<ID>dac0d4fd-0a90-4f81-8ca2-ad54b6d17613</ID>
 </InLinks>
 <OutLinks/>
 <Enabled>True</Enabled>
@@ -6638,8 +6638,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>17eeb4a1-069d-47e6-8e5d-9d289d4295d1</Name>
-<ID>17eeb4a1-069d-47e6-8e5d-9d289d4295d1</ID>
+<Name>07293898-dc80-4842-9846-94007f02615f</Name>
+<ID>07293898-dc80-4842-9846-94007f02615f</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -6733,7 +6733,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="03/01/2018 00:51:08"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="03/01/2018 14:07:53"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -7162,11 +7162,11 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="5"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="3"&gt;
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
-    &lt;Leaf Count="2" Unique="5" Space="50"&gt;
-      &lt;Page Title="DataTool_Tuner" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+    &lt;Leaf Count="2" Unique="5" Space="5.893416927899686520376175550"&gt;
+      &lt;Page Title="DataTool_Tuner" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;aca25e8b-d793-482b-b684-a531b8b7ce05&lt;/ID&gt;
@@ -7179,7 +7179,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_Tune_Deriv" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_Tune_Deriv" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;a23fa50b-3747-44df-894f-583e1fd759d1&lt;/ID&gt;
@@ -7193,8 +7193,8 @@
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
     &lt;/Leaf&gt;
-    &lt;Leaf Count="3" Unique="3" Space="50"&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+    &lt;Leaf Count="3" Unique="3" Space="94.10658307210031347962382445"&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;a1aa8d32-650e-4e8c-ae07-f59c09dc2379&lt;/ID&gt;
@@ -7208,7 +7208,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="3" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;bc9c5e58-f7dc-433d-b03a-6a07bb400b76&lt;/ID&gt;
@@ -7221,7 +7221,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="3" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;80578c84-d87d-466f-982a-01a32246ebbb&lt;/ID&gt;
