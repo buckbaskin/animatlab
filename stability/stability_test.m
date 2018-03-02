@@ -1,3 +1,11 @@
+% - Is proportional control stable?
+% - Can you, given the matrix of a system or its computed eigen values and
+% eigen vectors, perturb the values of the system to try and find the
+% nearest small change that makes the system stable?
+% - Can you quantify how stable? By my checks below, the system is as stable
+% as its smallest, eigen value.
+% 
+
 
 % Build up a matrix with negative eigen values
 % write out column vectors, then transpose
@@ -9,8 +17,11 @@ D = diag([-2 -1+1i -0.5]);
 % rebuild the system
 rebuild = P*D/P;
 
+K_p = 1;
+K_v = 0.1;
+
 % System will be defined by linear system analysis
-system = rebuild;
+system = [[0 1]; [-K_p -K_v]];
 disp('System:');
 disp(system);
 [eigen_vectors, eigen_valuesD] = eig(system);
