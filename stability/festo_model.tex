@@ -1,0 +1,109 @@
+\documentclass[12pt, letterpaper, oneside, notitlepage, onecolumn]{article}
+\author{William Baskin}
+\title{Festo Model}
+\pagestyle{plain}
+
+\usepackage{parskip}
+
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+% \usepackage{soul}
+\usepackage[margin=0.69in]{geometry}
+
+% math
+\usepackage{amsmath, amssymb, amsthm}
+% \usepackage{amsmath, amssymb, amsthm, gensymb}
+
+\usepackage{graphicx}
+\graphicspath{ {a1/e1/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\subsubsubsection}{\paragraph}
+\newcommand{\bbs}[1]{\section{#1}}
+\newcommand{\bbss}[1]{\subsection{#1}}
+\newcommand{\bbsss}[1]{\subsubsection{#1}}
+\newcommand{\bbssss}[1]{\subsubsubsection{#1}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\usepackage{hyperref}
+
+\begin{document}
+\maketitle
+
+\section{$L_{angle}$}
+\begin{equation}
+l_{0} + l_{1} \cos{\left (\alpha + \theta_{des} \right )}
+\end{equation}
+\section{$k$}
+\begin{equation}
+\frac{1}{l_{rest}} \left(- l_{0} - l_{1} \cos{\left (\alpha + \theta_{des}
+\right )} + l_{rest}\right)
+\end{equation}
+\section{$F$}
+\begin{equation}
+\frac{Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}}
+\end{equation}
+\section{Pressure Model}
+\begin{equation}
+S a_{6} + \frac{Torque_{des} a_{5}}{d \cos{\left (\beta + \theta_{des} \right
+)}} + a_{0} + a_{1} \tan{\left (a_{2} \left(a_{3} + \frac{- l_{0} - l_{1}
+\cos{\left (\alpha + \theta_{des} \right )} + l_{rest}}{l_{rest}
+\left(\frac{Torque_{des} a_{4}}{d \cos{\left (\beta + \theta_{des} \right )}} +
+k_{max}\right)}\right) \right )}
+\end{equation}
+\section{Empirical Pressure Model (subs a*)}
+\begin{equation}
+15.6 S + \frac{1.23 Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}}
+- 192.0 \tan{\left (0.9342165 - \frac{2.0265 \left(- l_{0} - l_{1} \cos{\left
+  (\alpha + \theta_{des} \right )} + l_{rest}\right)}{l_{rest} \left(-
+  \frac{0.331 Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}} +
+  k_{max}\right)} \right )} + 254.3
+  \end{equation}
+\section{$\dfrac{\partial P}{\partial \theta}$}
+\begin{equation}
+\frac{1.23 Torque_{des} \sin{\left (\beta + \theta_{des} \right )}}{d
+\cos^{2}{\left (\beta + \theta_{des} \right )}} - 192.0 \left(-
+\frac{0.6707715 Torque_{des} \left(- l_{0} - l_{1} \cos{\left (\alpha +
+\theta_{des} \right )} + l_{rest}\right) \sin{\left (\beta + \theta_{des}
+\right )}}{d l_{rest} \left(- \frac{0.331 Torque_{des}}{d \cos{\left (\beta +
+\theta_{des} \right )}} + k_{max}\right)^{2} \cos^{2}{\left (\beta +
+\theta_{des} \right )}} - \frac{2.0265 l_{1} \sin{\left (\alpha + \theta_{des}
+\right )}}{l_{rest} \left(- \frac{0.331 Torque_{des}}{d \cos{\left (\beta +
+\theta_{des} \right )}} + k_{max}\right)}\right) \left(\tan^{2}{\left
+(0.9342165 - \frac{2.0265 \left(- l_{0} - l_{1} \cos{\left (\alpha +
+\theta_{des} \right )} + l_{rest}\right)}{l_{rest} \left(- \frac{0.331
+Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}} + k_{max}\right)}
+\right )} + 1\right)
+\end{equation}
+
+\end{document}
