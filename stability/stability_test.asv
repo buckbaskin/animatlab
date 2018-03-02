@@ -1,5 +1,0 @@
-example = [[1, 2];[3, 4]];
-[eigen_vectors, eigen_values] = eig([[1, 2]; [3, 4]]);
-eigen_values = diag(eigen_values);
-
-stable = all
