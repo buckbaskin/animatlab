@@ -171,7 +171,9 @@ So, I don't think there's a neat and tidy way to solve for F. However, if my end
 goal is to solve for torque and theta, then I could do a linear approximation to
 estimate the spring-like properties. If I know the derivative of the pressure
 function with respect to $\theta$ and $\tau$, then I can approximate the
-relationship between the two for constant pressure near the approximation point.
+relationship between the two for constant pressure near the approximation point
+where the only two changing variables are assumed to be the joint angle and
+torque.
 
 \begin{equation}
 P(\theta, \tau) \approx P(\theta^{*}, \tau^{*}) + '
