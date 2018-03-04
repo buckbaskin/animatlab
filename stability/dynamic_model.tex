@@ -193,6 +193,9 @@ angle, approximates proportional control if constant pressure is maintained.
 
 \section{Dual Actuator Model}
 
+% TODO(buckbaskin): come back when I have a labeled model of how this fits
+% together
+
 \section{Dynamic Model}
 
 From the paper "Modeling the Dynamic Characteristics of Pneumatic Muscle" by
@@ -281,5 +284,19 @@ For slightly larger $K_{v}$, the system is just damped enough to converge.
 \begin{center}
 \includegraphics[width=3in,angle=0]{linear_pd_mediumV}
 \end{center}
+
+\subsubsection{Estimating $K_{v}$}
+
+So, how does the $K_{v}$ for a pneumatic muscle compare? Based on the intuition
+above, it can fit in one of many cases (stable/unstable, oscillating/not).
+
+From Reynolds et. al. 2003, the damping increases with pressure on contraction
+and decreases with pressure on relaxation. 
+
+For a given pressure, one can linearize the change in $\dfrac{\partial
+P}{\partial t}$ w.r.t. $\theta$ and $\tau$. The pressure is assumed to remain
+constant, so the left side of the equation is assumed to be 0.
+
+% TODO(buckbaskin): insert the equation
 
 \end{document}
