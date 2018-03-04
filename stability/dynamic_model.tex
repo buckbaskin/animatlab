@@ -256,6 +256,30 @@ The eigenvalues of the system as defined have a real component of 0 and
 imaginary components. Therefore the system is unstable and oscillating with the
 proportional linearized analysis.
 
-\includegraphics[width=3in,angle=0]{linear_unstable}
+For large $K_{v}$, the system is damped enough to be stable and converge.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_bigV}
+\end{center}
+
+For small $K_{v}$, the system is not damped enough to be stable and converge.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_smallV}
+\end{center}
+
+For medium $K_{v}$, the system is damped just enough to be stable and
+converge. For the example system, $K_{v} = 0.2$ the system oscillates back
+through its starting point.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_circleV}
+\end{center}
+
+For slightly larger $K_{v}$, the system is just damped enough to converge.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_mediumV}
+\end{center}
 
 \end{document}

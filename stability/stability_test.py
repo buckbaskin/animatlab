@@ -3,7 +3,7 @@ import numpy as np
 from numpy import linalg as LA
 
 K_p = 2
-K_v = .01
+K_v = 4
 A = np.matrix([[0, 1], [-K_p, -K_v]])
 print(A)
 
@@ -18,22 +18,20 @@ print(v)
 system = np.matrix([3.0,2.0]).T
 states = []
 
-steps = 100
+steps = 1000
+fig_title = 'linear_system.png'
 ax_title = 'Linear System, '
-if np.any(np.real(w) >= 0):
+if np.any(np.real(w) >= -0.05):
     ax_title += 'Unstable'
 else:
     ax_title += 'Stable'
 
 if np.any(np.imag(w) != 0):
-    ax_title += ', Oscillating (Underdamped)'
-else:
-    ax_title += ', Damped'
+    ax_title += ', Oscillating'
 
 for i in range(steps):
     system_delta = 0.1 * A * system
     system += system_delta
-    print(i, system)
     states.append(system.copy())
 
 import matplotlib
@@ -56,5 +54,6 @@ ax.spines['top'].set_color('none')
 
 plt.plot(X, y)
 plt.plot(X[:1], y[:1], 'ro')
+plt.savefig(fig_title, bbox_inches='tight')
 plt.show()
 
