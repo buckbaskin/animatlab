@@ -136,7 +136,9 @@ tracking performance definitions, maximum gains determined by controller rate or
 other effects.
 
 Further considerations: Can an outside observer detect these "failure modes"?
-And if so, are they recoverable by changes in controller parameters.
+And if so, are they recoverable by changes in controller parameters. The
+controller could also be given the desired velocity of the trajectory to help
+with tracking. The current assumption is desired 0 velocity at the given point.
 
 \bbss{Mass/Dynamics Model}
 
@@ -244,17 +246,103 @@ The pressures are calculated from the current position ($\theta$) and the
 desired torque at this point. The pressure calculations are equivalent but with
 different constants representing the mirrored geometry.
 
+\bbss{Dynamics}
+
 Assuming the pressure update and sensor measurement are continuous and the joint
 exactly fits the model, the controller can be thought of as directly controlling
 the torque on the joint. 
 
-For some joint and the above assumptions, the behavior of the joint can be
-described as follows:
+For some joint, the above assumptions and the mass model, the behavior of the
+joint can be described as follows:
 
 \begin{equation}
 M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta) \theta = 
 \tau_{controller}
 \end{equation}
+
+$\mathcal{M}$ is the moment of inertia term. $\mathcal{C}$ is the combined term
+of $\mathcal{C}_{I}$ and $\mathcal{C}_{G}$ based on the current position and
+velocity (which determines $\frac{\partial V}{\partial t}$ for each actuator's
+$\mathcal{C}_{G}$ term). $N$ is the conservative forces (ex. gravity) acting on
+the limb. The $\tau$ in this case is exactly the desired torque for the current
+state as calculated as $\tau_{des}$ in the controller. Substituting for the
+desired torque:
+
+\begin{equation}
+M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta) \theta = 
+\tau_{des} = -\mathcal{K}_{p} \theta_{err} + -\mathcal{K}_{v} \dot{\theta}_{err}
+\end{equation}
+
+Assuming the joint is moving relative to a reference at $\theta_{des}$ and a
+velocity of $\dot{\theta}_{des}$ at that point ($\dot{\theta}_{des}$):
+
+\begin{equation}
+M(\theta) \ddot{\theta}
++ C(\theta, \dot{\theta}) (\dot{\theta} - \dot{\theta}_{des}) 
++ N(\theta)(\theta - \theta_{des}) = 
+-\mathcal{K}_{p} (\theta - \theta_{des})
++ -\mathcal{K}_{v} (\dot{\theta} - \dot{\theta}_{des})
+\end{equation}
+
+Collecting terms
+
+\begin{equation}
+M(\theta) \ddot{\theta}
+= 
+-(C(\theta, \dot{\theta})
++ \mathcal{K}_{v}) (\dot{\theta} - \dot{\theta}_{des})
+- (N(\theta)
++ \mathcal{K}_{p}) (\theta - \theta_{des})
+\end{equation}
+
+\begin{equation}
+\ddot{\theta}
+= 
+-\dfrac{(C(\theta, \dot{\theta})
++ \mathcal{K}_{v})}{M(\theta)}
+(\dot{\theta} - \dot{\theta}_{des})
+-\dfrac{(N(\theta)
++ \mathcal{K}_{p})}{M(\theta)} (\theta - \theta_{des})
+\end{equation}
+
+\begin{equation}
+\ddot{\theta}
+= 
+-\mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\dot{\theta}_{err}
+-\mathcal{K}_{p}^{*}(\theta)
+\theta_{err}
+\end{equation}
+
+The acceleration is generally negative in sign compared with errors. When there
+is 0 positional error, there is acceleration to decrease the velocity error.
+When there is 0 velocity error, there is acceleration in the direction to
+correct the positional error.
+
+The acceleration is 0 when the two proportional terms cancel each other out:
+
+\begin{equation}
+0
+= 
+-\mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\dot{\theta}_{err}
+-\mathcal{K}_{p}^{*}(\theta)
+\theta_{err}
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{err}
+= 
+-\dfrac{\mathcal{K}_{p}^{*}(\theta)}{\mathcal{K}_{v}^{*}(\theta, \dot{\theta})}
+\theta_{err}
+\end{equation}
+
+This indicates that, in this situation, if there is a positive velocity error, 
+it occurs when there is a negative position error or vice versa. This means that
+the control scheme will, as a result at a future time step, have a less negative
+position error and the same velocity error. Then the acceleration will be
+negative because the proportional term will have decreased leaving a larger
+negative velocity correction term.
 
 \bbs{Sensitivity to Parameters}
 
