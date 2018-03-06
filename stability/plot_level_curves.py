@@ -3,6 +3,10 @@
 Plot Level curve (Desired Torque)
 ======================
 Based on matplotlib 3D surface (color map) demo
+https://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html
+
+And level curve plotting
+https://matplotlib.org/gallery/mplot3d/contour3d.html
 '''
 from math import pi
 
