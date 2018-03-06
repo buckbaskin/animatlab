@@ -344,6 +344,15 @@ position error and the same velocity error. Then the acceleration will be
 negative because the proportional term will have decreased leaving a larger
 negative velocity correction term.
 
+This control also decreases the energy with respect to the reference state
+(desired position and velocity). Assuming the mass is at the center of mass and
+the joint is similar to a pendulum:
+
+\begin{equation}
+\dfrac{1}{2}\mathcal{I}(\dot{\theta}^{2} - \dot{\theta}_{des}^{2})
++ ( -Mglcos(\theta) + Mglcos(\theta_{des}))
+\end{equation}
+
 \bbs{Sensitivity to Parameters}
 
 Bang-bang, controller hz, mass estimate, damping estimate, as a function of gain
