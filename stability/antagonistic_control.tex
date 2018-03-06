@@ -208,7 +208,7 @@ increases joint angle)
 \item $\mathcal{K}_{p}$ Proportional Gain
 \item $\mathcal{K}_{v}$ Velocity Gain
 
-\item $\mathcal{J}$ Moment of Inertia
+\item $\mathcal{I}$ Moment of Inertia
 \item $\mathcal{M}$ Mass of Joint
 \item $C_{I}$ Internal Damping of Actuator (based on position change)
 \item $C_{G}$ Gaseous Damping of Actuator in motion (based on volume change)
@@ -246,7 +246,7 @@ The pressures are calculated from the current position ($\theta$) and the
 desired torque at this point. The pressure calculations are equivalent but with
 different constants representing the mirrored geometry.
 
-\bbss{Dynamics}
+\bbss{Dynamic Stability}
 
 Assuming the pressure update and sensor measurement are continuous and the joint
 exactly fits the model, the controller can be thought of as directly controlling
@@ -344,14 +344,127 @@ position error and the same velocity error. Then the acceleration will be
 negative because the proportional term will have decreased leaving a larger
 negative velocity correction term.
 
+
+\bbss{Linear Stability}
+
+\begin{equation}
+\dot{x} = Ax
+\end{equation}
+
+Where $x$ is the state and A is the characteristic matrix. In this case, the
+state is a simple vector:
+\begin{equation}
+x =
+\begin{bmatrix}
+\theta \\
+\dot{\theta}
+\end{bmatrix}
+\end{equation}
+
+The characteristic is easy enough to find for this system, assuming no issues
+with the controller.
+
+\begin{equation}
+\dot{x[0]} = \dot{\theta}
+\end{equation}
+
+\begin{equation}
+\dot{x[1]}
+=
+\ddot{\theta}
+=
+-\mathcal{K}_{p}^{*}(\theta) \theta 
+- \mathcal{K}_{v}^{*}(\theta, \dot{\theta}) \dot{\theta}
+\end{equation}
+
+\begin{equation}
+A =
+\begin{bmatrix}
+0 & 1 \\
+-\mathcal{K}_{p}^{*}(\theta) & - \mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\end{bmatrix}
+\end{equation}
+
+This assumes a linearization of the control behavior around the current state
+$\theta, \dot{\theta}$ that accounts for the control parameters, mass
+properties, damping and conservative forces in the system.
+
+\begin{equation}
+\mathcal{K}_{v}^{*}
+= 
+\dfrac{C(\theta, \dot{\theta})
++ \mathcal{K}_{v}}{M(\theta)}
+\end{equation}
+\begin{equation}
+\mathcal{K}_{p}^{*}
+=
+\dfrac{N(\theta) + \mathcal{K}_{p}}{M(\theta)}
+\end{equation}
+
+Based on previous analysis, this system will converge with oscillation beyond a
+certain $\mathcal{K}_{v}^{*}$ threshold and a non-zero $\mathcal{K}_{p}^{*}$. The
+oscillation disappears with a sufficiently large $\mathcal{K}_{v}^{*}$. The
+magnitude of the two values can be adjusted with the internal gains.
+
+Of interesting note, the "stiffness" value used earlier doesn't affect the
+dynamic performance in this formulation (it is expected to in later modeling).
+This means that the trajectory tracking for large angles is independent of the
+maintenance of angle at small constant angles. This suggests the controller can
+be tuned by setting a stiffness that maintains static posture and,
+independenly, gains for the controller that maintain sufficiently stable
+trajectory tracking. The stiffness would play a part if external forces attempt
+to perturb the limb motion during a swing. A higher stiffness will resist the
+change with more force and, generally, maintain posture during the stance phase.
+
+\bbs{Nonlinear Stability}
+
+\bbss{Energy}
+
 This control also decreases the energy with respect to the reference state
 (desired position and velocity). Assuming the mass is at the center of mass and
 the joint is similar to a pendulum:
 
 \begin{equation}
+E(\theta, \dot{\theta})
+= 
 \dfrac{1}{2}\mathcal{I}(\dot{\theta}^{2} - \dot{\theta}_{des}^{2})
 + ( -Mglcos(\theta) + Mglcos(\theta_{des}))
 \end{equation}
+
+\begin{equation}
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial t} = 
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial \dot{\theta}} \ddot{\theta}
++ \dfrac{\partial E(\theta, \dot{\theta})}{\partial \theta} \dot{\theta}
+=
+(\mathcal{I}\dot{\theta}) \ddot{\theta}
++ Mglsin(\theta) \dot{\theta}
+\end{equation}
+
+Substituting the equation for $\ddot{\theta}$
+
+\begin{equation}
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial t} = 
+(\mathcal{I}\dot{\theta}) 
+(-\mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\dot{\theta}_{err}
+-\mathcal{K}_{p}^{*}(\theta)
+\theta_{err})
++ Mglsin(\theta) \dot{\theta}
+\end{equation}
+
+\begin{equation}
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial t} = 
+-\mathcal{I} \mathcal{K}_{v}^{*} \dot{\theta} 
+\dot{\theta}_{err}
+-\mathcal{I}
+\mathcal{K}_{p}^{*}
+\dot{\theta}_{err}
+\theta_{err}
++ Mglsin(\theta) \dot{\theta}
+\end{equation}
+
+% TODO(buckbaskin): This got a little messy becuase the pendulum isn't
+% necessarily at minimum energy at the reference desired position
 
 \bbs{Sensitivity to Parameters}
 
