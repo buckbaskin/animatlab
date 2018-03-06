@@ -215,7 +215,12 @@ increases joint angle)
 \bbss{High Level Model}
 
 \begin{equation}
-\tau_{des} = PD matrix
+\theta_{err} = \theta - \theta_{des},
+\dot{\theta}_{err} = \dot{\theta} - \dot{\theta}_{des}
+\end{equation}
+
+\begin{equation}
+\tau_{des} = -\mathcal{K}_{p} \theta_{err} + -\mathcal{K}_{v} \dot{\theta}_{err}
 \end{equation}
 
 % TODO(buckbaskin): Can I write this in a more elegant way?
@@ -239,8 +244,20 @@ The pressures are calculated from the current position ($\theta$) and the
 desired torque at this point. The pressure calculations are equivalent but with
 different constants representing the mirrored geometry.
 
+Assuming the pressure update and sensor measurement are continuous and the joint
+exactly fits the model, the controller can be thought of as directly controlling
+the torque on the joint. 
+
+For some joint and the above assumptions, the behavior of the joint can be
+described as follows:
+
+\begin{equation}
+M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta) \theta = 
+\tau_{controller}
+\end{equation}
+
 \bbs{Sensitivity to Parameters}
 
-Bang-bang, controller hz, as a function of gain
+Bang-bang, controller hz, mass estimate, damping estimate, as a function of gain
 
 \end{document}
