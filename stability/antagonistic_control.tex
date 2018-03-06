@@ -161,6 +161,15 @@ as a function of strain and desired force.
 
 Based on desired controller parameters, how is pressure calculated?
 
+\begin{equation}
+P_{actuator} = P(\theta_{des}, \tau_{des}) = P(\kappa_{des}, F_{des})
+\end{equation}
+
+The desired position and torque are converted into a desired strain and force.
+The position determines the normalized length of the actuator relative to the 
+relaxed length and the angle at which the actuator applies a torque. This
+determines the required force to exert the torque.
+
 \bbss{Inverse Pressure Model}
 
 Based on linearized pressure model for two antagonistic actuators, desired 
@@ -172,5 +181,66 @@ This work was previously done, and shows that the joint behaves as a
 proportional torsion spring when the correct pressures are set for the desired
 joint angle and holding torque. The damping effects of the actuators themselves
 are currently assumed to lead to joint stability in this case.
+
+\bbs{Linear Stability for Large Joint Angles}
+
+For large joint angles, a proportional-derivative control layer is added on top
+of the pressure calculations for a given joint torque to control the joint to a
+desired angle.
+
+\bbss{Model Parameters and Terms}
+
+\begin{itemize}
+\item $\theta_{des}$ Desired Joint Position
+\item $\theta$ Current Joint Position
+\item $\dot{\theta}$ Current Joint Velocity
+\item $\tau$ Current Joint Torque
+\item $\tau_{des}$ Desired Joint Torque
+\item $\tau_{max}$ Maximum Joint Torque Limit
+\item $\tau_{min}$ Minimum Joint Torque Limit
+\item $P_{+}$ Pressure of the defined-positive direction actuator (contract
+increases joint angle)
+\item $P_{-}$ Pressure of the negative actuator
+
+\item $\mathcal{S}_{des}$ Desired Stiffness of the joint
+\item $\mathcal{K}_{p}$ Proportional Gain
+\item $\mathcal{K}_{v}$ Velocity Gain
+
+\item $\mathcal{J}$ Moment of Inertia
+\item $\mathcal{M}$ Mass of Joint
+\item $C_{I}$ Internal Damping of Actuator (based on position change)
+\item $C_{G}$ Gaseous Damping of Actuator in motion (based on volume change)
+\end{itemize}
+
+\bbss{High Level Model}
+
+\begin{equation}
+\tau_{des} = PD matrix
+\end{equation}
+
+% TODO(buckbaskin): Can I write this in a more elegant way?
+\begin{equation}
+\tau_{des, +} = max(\tau_{des}, 0) + \mathcal{S}_{des}
+\end{equation}
+
+\begin{equation}
+\tau_{des, -} = min(\tau_{des}, 0) + \mathcal{S}_{des}
+\end{equation}
+
+\begin{equation}
+P_{+} = P_{+}(\theta, \tau_{des, +})
+\end{equation}
+
+\begin{equation}
+P_{-} = P_{-}(\theta, \tau_{des, -})
+\end{equation}
+
+The pressures are calculated from the current position ($\theta$) and the
+desired torque at this point. The pressure calculations are equivalent but with
+different constants representing the mirrored geometry.
+
+\bbs{Sensitivity to Parameters}
+
+Bang-bang, controller hz, as a function of gain
 
 \end{document}
