@@ -19,11 +19,12 @@ import numpy as np
 
 ### Search Parameters ###
 
-max_torque = 2
+max_torque = 2.001
 min_torque = -2
-max_theta = pi / 4
+torque_resolution = 1
+max_theta = pi / 4 + .001
 min_theta = -pi / 4
-resolution = 0.1
+angle_resolution = pi / 8.00
 
 ### Model Parameters ###
 
@@ -48,6 +49,14 @@ offset = 0.015 # m
 l1 = round(sqrt(d**2 + offset**2), 3)
 l0 = floor((l_max - l1) * 1000.0) / 1000.0
 
+### Saftey Limits
+
+MAX_STIFFNESS = 2
+MIN_STIFFNESS = 0
+
+MAX_FORCE = 15 * 9.81 # Newtons, about 15 kg
+MIN_FORCE = -15 * 9.81 # N
+
 ### Specific Actuator Parameters ###
 # Actuator L is the negative actuator, Actuator R is the positive actuator
 # /////////////
@@ -69,15 +78,21 @@ beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meter
 # Make data
 stiffness = 1 # N-m (torque)
 
-T = np.arange(min_torque, max_torque, resolution) # N-m, net torque
-T_l = (0.5 * T) + stiffness
-T_r = (0.5 * T) - stiffness
-A = np.arange(min_theta, max_theta, resolution) # radians, angle1
+stiffness = max(0, min(2, stiffness)) # force boundary limits
+
+T = np.arange(min_torque, max_torque, torque_resolution) # N-m, net torque
+T_r = (0.5 * T) + stiffness
+T_l = (0.5 * T) - stiffness
+
+print('Torques (des, r, l)')
+print(T)
+print(T_r)
+print(T_l)
+
+A = np.arange(min_theta, max_theta, angle_resolution) # radians, angle1
 A2 = A.copy()
 T_l, A = np.meshgrid(T_l, A)
 T_r, A2 = np.meshgrid(T_r, A2)
-
-fail = 1/0
 
 ### calculate the torque here
 # Iterate through a grid of net torques and angles at a given stiffness
@@ -85,10 +100,22 @@ fail = 1/0
 # the mirroed actuators. Write down the two pressures in Xp, Yp, and two values
 # Z_torque, Z_angle. Plot XYZ surface for both at different stiffness
 
-L_angle_l = l0_l + l1_l * np.cos(alpha_l + A)
-L_angle_r = l0_r + l1_r * np.cos(alpha_r + A)
-F_l = T_l / (d_l * np.cos(beta_l + A))
-F_r = T_r / (d_r * np.cos(beta_r + A))
+L_angle_l = l0 + l1 * np.cos(alpha_l + A)
+L_angle_r = l0 + l1 * np.cos(alpha_r + A)
+F_l = T_l / (d * np.cos(beta_l + A))
+F_r = T_r / (d * np.cos(beta_r + A))
+
+# F_l = np.threshold, np.trim?
+# F_r = np.trim(F_r, MIN_FORCE, MAX_FORCE)
+
+print('T_l')
+print(T_l)
+print('A')
+print(A)
+print('F_l')
+print(F_l) # , F_r)
+fail = 1/0
+
 K_l = (l_rest - L_angle_l) / l_rest
 K_r = (l_rest - L_angle_l) / l_rest
 
