@@ -67,9 +67,15 @@ alpha_r = -atan(offset / d) # radians
 beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
 
 # Make data
-T = np.arange(min_torque, max_torque, resolution)
-A = np.arange(min_theta, max_theta, resolution)
-T, A = np.meshgrid(T, A)
+stiffness = 1 # N-m (torque)
+
+T = np.arange(min_torque, max_torque, resolution) # N-m, net torque
+T_l = (0.5 * T) + stiffness
+T_r = (0.5 * T) - stiffness
+A = np.arange(min_theta, max_theta, resolution) # radians, angle1
+A2 = A.copy()
+T_l, A = np.meshgrid(T_l, A)
+T_r, A2 = np.meshgrid(T_r, A2)
 
 fail = 1/0
 
@@ -81,8 +87,8 @@ fail = 1/0
 
 L_angle_l = l0_l + l1_l * np.cos(alpha_l + A)
 L_angle_r = l0_r + l1_r * np.cos(alpha_r + A)
-F_l = (-T) / (d_l * np.cos(beta_l + A))
-F_r = T / (d_r * np.cos(beta_r + A))
+F_l = T_l / (d_l * np.cos(beta_l + A))
+F_r = T_r / (d_r * np.cos(beta_r + A))
 K_l = (l_rest - L_angle_l) / l_rest
 K_r = (l_rest - L_angle_l) / l_rest
 
