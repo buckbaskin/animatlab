@@ -89,7 +89,7 @@ def pressure(T, A):
     P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
     return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
-def pressure2(F, K, S=0):
+def pressure2(F, K, S=1):
     assert np.all(0 <= K) and np.all(K <= 1)
     P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F + a6 * S# kpa
     return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
