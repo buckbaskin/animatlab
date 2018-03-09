@@ -109,8 +109,8 @@ dPdT = (pressure(state_t+delt, state_a) - pressure(state_t-delt, state_a)) / (de
 # plt.plot(state_a, dPdT)
 # plt.plot(state_a, dPdA)
 
-for F in [0.16, 0, 0.07,]: # What are these units? Supposedly Nm? 24 lb, 0 lb, 12 lb respectively 
-    K = np.arange(0, 0.1701, 0.0025)
+for F in [0.14, 0, 0.07,]: # What are these units? Supposedly Nm? 24 lb, 0 lb, 12 lb respectively 
+    K = np.arange(0, 0.1701, 0.0001)
     print(a4 * F)
     # plt.plot(K, a2*(K / (a4 * F + k_max) + a3))
     plt.plot(K, pressure2(F, K))
