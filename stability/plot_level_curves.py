@@ -5,8 +5,20 @@ Plot Level curve (Desired Torque)
 Based on matplotlib 3D surface (color map) demo
 https://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html
 
-And level curve plotting
+And level curve/contour plotting
 https://matplotlib.org/gallery/mplot3d/contour3d.html
+
+So, how does this help? I can figure out the torques that I want for a desired 
+stiffness. 
+The goal is an inversion question: At a current position, etc. I want to PD
+drive the joint to the desired position by setting a joint torque. I can do this
+with the antagonistic torque model calculated below. Stiffness here doesn't
+change net torque on the joint (behavior might change later).
+
+DesTorque = -K_p * p + -K_v * v
+
+T_r =  0.5 * T_des + stiffness
+T_l =  -(0.5 * T_des - stiffness) # positive from the point of view of the actuator
 '''
 print('---=== plot_level_curves.py ===---')
 from math import atan, floor, pi, sqrt
