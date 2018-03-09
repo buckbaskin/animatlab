@@ -8,6 +8,7 @@ https://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html
 And level curve plotting
 https://matplotlib.org/gallery/mplot3d/contour3d.html
 '''
+print('---=== plot_level_curves.py ===---')
 from math import atan, floor, pi, sqrt
 
 from mpl_toolkits.mplot3d import Axes3D
@@ -23,10 +24,10 @@ import numpy as np
 
 max_torque = 2.001
 min_torque = -2
-torque_resolution = 0.5
+torque_resolution = 0.01
 max_theta = pi / 4 + .001
 min_theta = -pi / 4
-angle_resolution = pi / 8.0
+angle_resolution = pi / 16
 
 ### Model Parameters ###
 
@@ -76,14 +77,24 @@ PRESSURE_MIN = 0
 
 alpha_l = atan(offset / d) # radians
 beta_l = -pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+beta_l = 0 # for now
 
 alpha_r = -atan(offset / d) # radians
 beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+beta_r = 0 # for now
 
 
-def pressure(T, A):
+def pressurel(T, A):
     F = T / (d * np.cos(beta_l + A))
     L_angle = l0 + l1 * np.cos(alpha_l + A)
+    K = (l_rest - L_angle) / l_rest
+    assert np.all(0 <= K) and np.all(K <= 1)
+    P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
+    return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
+
+def pressurer(T, A):
+    F = T / (d * np.cos(beta_r + A))
+    L_angle = l0 + l1 * np.cos(alpha_r + A)
     K = (l_rest - L_angle) / l_rest
     assert np.all(0 <= K) and np.all(K <= 1)
     P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
@@ -94,13 +105,12 @@ def pressure2(F, K, S=1):
     P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F + a6 * S# kpa
     return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
-
-delt = 0.01
-state_a = np.arange(-pi/2, pi/2+.001, 0.05)
-state_t = 0
-# state_a = pi/8
-dPdA = (pressure(state_t, state_a+delt) - pressure(state_t, state_a-delt)) / (delt - (-delt))
-dPdT = (pressure(state_t+delt, state_a) - pressure(state_t-delt, state_a)) / (delt - (-delt))
+# delt = 0.01
+# state_a = np.arange(-pi/2, pi/2+.001, 0.05)
+# state_t = 0
+# # state_a = pi/8
+# dPdA = (pressure(state_t, state_a+delt) - pressure(state_t, state_a-delt)) / (delt - (-delt))
+# dPdT = (pressure(state_t+delt, state_a) - pressure(state_t-delt, state_a)) / (delt - (-delt))
 # print('P(%.1f, %.1f)' % (state_t, state_a), pressure(T=state_t, A=state_a))
 # print('dPdA', dPdA)
 # print('dPdT', dPdT)
@@ -109,24 +119,46 @@ dPdT = (pressure(state_t+delt, state_a) - pressure(state_t-delt, state_a)) / (de
 # plt.plot(state_a, dPdT)
 # plt.plot(state_a, dPdA)
 
-for F in [0.14, 0, 0.07,]: # What are these units? Supposedly Nm? 24 lb, 0 lb, 12 lb respectively 
-    K = np.arange(0, 0.1701, 0.0001)
-    print(a4 * F)
-    # plt.plot(K, a2*(K / (a4 * F + k_max) + a3))
-    plt.plot(K, pressure2(F, K))
-    # plt.plot(K, pressure2(F, K))
-plt.show()
-import sys
-sys.exit(0)
+def plot_K_by_F():
+    for F in [0.14, 0, 0.07,]: # What are these units? Supposedly Nm? 24 lb, 0 lb, 12 lb respectively 
+        K = np.arange(0, 0.1701, 0.0001)
+        print(a4 * F)
+        # plt.plot(K, a2*(K / (a4 * F + k_max) + a3))
+        plt.plot(K, pressure2(F, K))
+        # plt.plot(K, pressure2(F, K))
+    plt.show()
+    import sys
+    sys.exit(0)
 
+def plot_A_by_T():
+    beta = 0
+    alpha = alpha_r
+    def pressure3(T, A):
+        F = T / (d * np.cos(beta + A))
+        L_angle = l0 + l1 * np.cos(alpha + A)
+        K = (l_rest - L_angle) / l_rest
+        print('K', np.max(K), np.mean(K), np.min(K))
+        print('F', np.max(F), np.mean(F), np.min(F))
+        assert np.all(0 <= K) and np.all(K <= 1)
+        P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
+        return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
+    for T in [0.01, 0.5, 1.0, 1.5, 2.0]:
+        A = np.arange(-pi/4, pi/4+0.001, 0.01)
+        P = pressure3(T, A)
+        plt.plot(A, P)
+    plt.show()
+
+# plot_A_by_T()
 
 ### Make data ###
-stiffness = 1 # N-m (torque)
+stiffness = 0.5 # N-m (torque)
 stiffness = np.clip(stiffness, 0, 2) # force boundary limits
 
 T = np.arange(min_torque, max_torque, torque_resolution) # N-m, net torque
 T_r = (0.5 * T) + stiffness
-T_l = (0.5 * T) - stiffness
+T_r[T_r == 0] += torque_resolution
+T_l = -((0.5 * T) - stiffness)
+T_l[T_l == 0] -= torque_resolution
 
 A = np.arange(min_theta, max_theta, angle_resolution) # radians, angle1
 A2 = A.copy()
@@ -139,34 +171,43 @@ T_r, A2 = np.meshgrid(T_r, A2)
 # the mirroed actuators. Write down the two pressures in Xp, Yp, and two values
 # Z_torque, Z_angle. Plot XYZ surface for both at different stiffness
 
-L_angle_l = l0 + l1 * np.cos(alpha_l + A)
-L_angle_r = l0 + l1 * np.cos(alpha_r + A)
-F_l = T_l / (d * np.cos(beta_l + A))
-F_r = T_r / (d * np.cos(beta_r + A))
-np.clip(F_l, FORCE_MIN, FORCE_MAX, out=F_l)
-np.clip(F_r, FORCE_MIN, FORCE_MAX, out=F_r)
+def extra():
+    L_angle_l = l0 + l1 * np.cos(alpha_l + A)
+    L_angle_r = l0 + l1 * np.cos(alpha_r + A)
+    F_l = T_l / (d * np.cos(beta_l + A))
+    F_r = T_r / (d * np.cos(beta_r + A))
+    np.clip(F_l, FORCE_MIN, FORCE_MAX, out=F_l)
+    np.clip(F_r, FORCE_MIN, FORCE_MAX, out=F_r)
 
-K_l = (l_rest - L_angle_l) / l_rest
-K_r = (l_rest - L_angle_l) / l_rest
+    K_l = (l_rest - L_angle_l) / l_rest
+    K_r = (l_rest - L_angle_l) / l_rest
 
-P_l = a0 + a1 * np.tan(a2 * (K_l / (a4 * F_l + k_max)) + a3) + a5 * F_l # kpa
-P_r = a0 + a1 * np.tan(a2 * (K_r / (a4 * F_r + k_max)) + a3) + a5 * F_r # kpa
+P_l = pressurel(T_l, A) # kpa
+P_r = pressurer(T_r, A2) # kpa
 np.clip(P_l, PRESSURE_MIN, PRESSURE_MAX, out=P_l)
 np.clip(P_r, PRESSURE_MIN, PRESSURE_MAX, out=P_r)
 
+print('T_l')
+print(T_l)
+print('A')
+print(A)
+print('P_l')
+print(P_l)
+print('P_r')
 print(P_r)
-1/0
 
 # Plot the surface.
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-tsurf = ax.plot_surface(P_l, P_r, T, cmap=cm.coolwarm,
+tsurf = ax.plot_surface(P_l, P_r, T_r - T_l, cmap=cm.coolwarm,
                         linewidth=0, antialiased=False)
 # asurf = ax.plot_surface(P_l, P_r, A, cmap=cm.coolwarm,
 #                         linewidth=0, antialiased=False)
 
 # # Add a color bar which maps values to colors.
 # fig.colorbar(surf, shrink=0.5, aspect=6)
+
+plt.title('Net Torque')
 
 plt.show()
