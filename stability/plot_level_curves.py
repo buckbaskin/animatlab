@@ -22,10 +22,10 @@ import numpy as np
 
 max_torque = 2.001
 min_torque = -2
-torque_resolution = 0.1
+torque_resolution = 0.01
 max_theta = pi / 4 + .001
 min_theta = -pi / 4
-angle_resolution = pi / 16
+angle_resolution = pi / 32
 
 ### Model Parameters ###
 
@@ -130,14 +130,27 @@ P_l = pressurel(T_l, A) # kpa
 P_r = pressurer(T_r, A2) # kpa
 
 # Plot the surfaces
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-tasurf = ax.plot_surface(A, T_r, P_r)
-plt.title('P(T, A) for the Right Actuator')
+if False:
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    tarsurf = ax.plot_surface(A, T_r, P_r)
+    plt.title('P(T, A) for the Right Actuator')
 
-fig = plt.figure()
-ax = plt.gca(projection='3d')
-tasurf = ax.plot_surface(A, T_l, P_l)
-plt.title('P(T, A) for the Left Actuator')
+if False:
+    fig = plt.figure()
+    ax = plt.gca(projection='3d')
+    talsurf = ax.plot_surface(A, T_l, P_l)
+    plt.title('P(T, A) for the Left Actuator')
 
-plt.show()
+if False:
+    # I really need/want that level curves thingy
+    # also masked np arrays (if they work with this) would be great
+    # I'd like to trim the parts of the plot out where the pressure is clipped
+    netT = T_r - T_l
+
+    fig = plt.figure()
+    ax = plt.gca(projection='3d')
+    nT = ax.plot_surface(P_r, P_l, netT)
+    plt.title('Net Torque from Pressures')
+
+# plt.show()
