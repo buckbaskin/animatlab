@@ -40,8 +40,8 @@ ROBOT_MASS = 0.3 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 1.0
-K_v = 2.0
+K_p = 1.6
+K_v = 2.4
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 MAX_TORQUE = 3
@@ -143,27 +143,13 @@ def motion_evolution(state, desired_state, stiffness, time_step):
     ddot theta = 1 / M * (torque - C * dot theta - N) 
     '''
     net_Torque = control(state, desired_state, stiffness)
-    # net_Torque = 0
-    
+
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
     N = conservative_effects(state[0])
     
-    # print('des', desired_state)
-    # print('state', state)
-    # print('control T', net_Torque)
-    # print('conserv', N)
-    
-    # print('state', state)
-    # print('des', desired_state)
-    # print('nT', net_Torque)
-    # print('nT-C', net_Torque - C * state[1])
-    # print('nT-C-N', net_Torque - C * state[1] - N)
-
     accel = (net_Torque - C * state[1] - N) / M
-    # print('MnT-C-N', accel)
-    # 1/0
-
+    
     # accelration happens over the time step
     start_vel = state[1]
     end_vel = state[1] + accel * time_step
@@ -191,6 +177,7 @@ if __name__ == '__main__':
     ax_pos.set_title('Position')
     ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
 
+    print('calculating...')
     for stiffness in [1.0,]:
         state = np.ones((time.shape[0], start_state.shape[0]))
         state[0,:] = start_state
@@ -217,5 +204,6 @@ if __name__ == '__main__':
         ax_tor.plot(time, T)
         ax_tor.plot(time, - K_p * (delta[:,0]))
         ax_tor.plot(time, - K_v * (delta[:,1]))
-    # plt.title('Torque Components')
+    
+    print('show for the dough')
     plt.show()
