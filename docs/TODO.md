@@ -5,8 +5,8 @@
 ### Next Steps
 - [x] Linear stability analysis of PD angle/torque control for large angles
 - [x] Level curve for stiffness -> pick stiffness -> select angle from there
-- [.] Build a dynamic model, 2 different Festos, negative feedback based on pressure/position curves. This is a numerical model where everything happens nicely. 
-- [ ] Incorporate a discrete pressure update, update frequency of the controllers. Limits stability at high stiffness
+- [x] Build a dynamic model, 2 different Festos, negative feedback based on pressure/position curves. This is a numerical model where everything happens nicely. 
+- [.] Incorporate a discrete pressure update, update frequency of the controllers. Limits stability at high stiffness
 - [ ] Then do lagging mass models that show how low stiffness can get
 - [ ] Control input, desired position, sin wave of frequency, Bode plot, analyze
 - [ ] Numerically analyze nonlinear system, doing the same stuff as for a linear system

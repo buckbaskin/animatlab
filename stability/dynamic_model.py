@@ -33,6 +33,9 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+LINK_LENGTH = 1.0 # meters
+LINK_MASS = 2 # kg
+
 K_p = 0.5
 K_v = 2
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
@@ -41,6 +44,18 @@ MAX_TORQUE = 2
 MIN_TORQUE = -0.5
 
 def control(state, desired_state, stiffness):
+    '''
+    Control Model
+    Implements: PD Control
+    Complications:
+        - [x] Torque Limits
+        - [.] Force Limts -> Torque Limits based on geometry
+        - [ ] Pressure Limits -> Force Limits -> Torque Limits
+        - [ ] Max Pressure Fill Rate -> dynamic pressure change
+        - [ ] Control only updates at X Hz
+        - [ ] Control does bang-bang pressure control
+        - [ ] Simulate Pressure Fill from regulated supply, venting to atmos.
+    '''
     # TODO(buckbaskin): make a more complex control model with pressure
     # Use numerical derivative of Torque and Theta for computed pressure to adjust 
     #   torque
@@ -58,12 +73,33 @@ def force(state):
     return x, y
 
 def mass_model(theta):
-    return 1
+    '''
+    Mass Model
+    ma -> I theta_ddot
+
+    Implements: mass at a rigid point half of link length
+    Complications:
+        - [ ] Uniform mass distribution on the link
+    '''
+    M = LINK_MASS
+    R = LINK_LENGTH / 2
+    return M * (R**2)
 
 def vel_effects(theta, theta_dot):
+    '''
+    Damping/Velocity based effects on the system
+    Complications:
+        - [ ] ?
+    '''
     return 0
 
 def conservative_effects(theta):
+    '''
+    Conservative Forces on the system, converted to torques (for now)
+    Complications:
+        - [ ] Gravity from link mass
+        - [ ] Gravity from robot/Normal force from ground at end
+    '''
     return 0
 
 def motion_evolution(state, desired_state, stiffness, time_step):
@@ -103,7 +139,7 @@ if __name__ == '__main__':
     desired_state[:,2] = -math.pi/4 * np.sin(time)
     plt.plot(time,  desired_state[:,0])
 
-    for stiffness in [0, 1.0, 2.0,]:
+    for stiffness in [1.0,]:
         state = np.ones((time.shape[0], start_state.shape[0]))
         state[0,:] = start_state
         for i in range(state.shape[0] - 1):
