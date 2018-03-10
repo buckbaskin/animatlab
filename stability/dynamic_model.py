@@ -40,12 +40,20 @@ ROBOT_MASS = 0.3 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 1.6
-K_v = 2.4
+K_p = 1.0
+K_v = 1.3
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 MAX_TORQUE = 3
 MIN_TORQUE = -1.0
+
+time_resolution = 0.001
+time_start = 0
+time_end = 60
+
+# control_rate = 0.0
+control_resolution = 0.02
+controlled_torque = 0.0
 
 def control(state, desired_state, stiffness):
     '''
@@ -53,10 +61,10 @@ def control(state, desired_state, stiffness):
     Implements: PD Control
     Complications:
         - [x] Torque Limits
-        - [.] Force Limts -> Torque Limits based on geometry
+        - [ ] Force Limts -> Torque Limits based on geometry
         - [ ] Pressure Limits -> Force Limits -> Torque Limits
         - [ ] Max Pressure Fill Rate -> dynamic pressure change
-        - [ ] Control only updates at X Hz
+        - [.] Control only updates at X Hz
         - [ ] Control does bang-bang pressure control
         - [ ] Simulate Pressure Fill from regulated supply, venting to atmos.
     '''
@@ -137,12 +145,16 @@ def conservative_effects(theta):
 
     return link_gravity + normal_force
 
-def motion_evolution(state, desired_state, stiffness, time_step):
+def motion_evolution(state, desired_state, stiffness, time_step,
+    last_control, control_active):
     '''
     M * ddot theta + C * dot theta + N * theta = torque
     ddot theta = 1 / M * (torque - C * dot theta - N) 
     '''
-    net_Torque = control(state, desired_state, stiffness)
+    if control_active:
+        net_Torque = control(state, desired_state, stiffness)
+    else:
+        net_Torque = last_control
 
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
@@ -158,16 +170,20 @@ def motion_evolution(state, desired_state, stiffness, time_step):
     start_theta = state[0]
     end_theta = state[0] + avg_vel * time_step
 
-    return np.array([end_theta, end_vel, accel]).flatten()
+    return np.array([end_theta, end_vel, accel]).flatten(), net_Torque
 
 
 if __name__ == '__main__':
     start_state = np.array([0.02, 0, 0])
     
-    time_resolution = 0.01
-    time_start = 0
-    time_end = 60
     time = np.arange(time_start, time_end, time_resolution)
+    dividiv = time / control_resolution
+    dividiv = dividiv % 1
+    print(dividiv)
+    dividiv[dividiv <= 0.01] = 1
+    dividiv[dividiv != 1] = 0
+    print(dividiv)
+    
     desired_state = np.zeros((time.shape[0],3))
     desired_state[:,0] = MAX_AMPLITUDE * np.sin(time)
     desired_state[:,1] = MAX_AMPLITUDE * np.cos(time)
@@ -178,16 +194,18 @@ if __name__ == '__main__':
     ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
 
     print('calculating...')
-    for stiffness in [1.0,]:
+    for stiffness in [0.0,]:
         state = np.ones((time.shape[0], start_state.shape[0]))
         state[0,:] = start_state
         for i in range(state.shape[0] - 1):
-            val = motion_evolution(
+            new_state, controlled_torque = motion_evolution(
                 state[i,:],
                 desired_state[i+1,:],
                 stiffness,
-                time_resolution)
-            state[i+1,:] = val
+                time_resolution,
+                controlled_torque,
+                dividiv[i])
+            state[i+1,:] = new_state
         ax_pos.plot(time, state[:,0] / MAX_AMPLITUDE)
         delta = state - desired_state
 
@@ -207,3 +225,4 @@ if __name__ == '__main__':
     
     print('show for the dough')
     plt.show()
+    print('all done')
