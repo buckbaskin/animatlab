@@ -189,9 +189,9 @@ if __name__ == '__main__':
         print(dividiv)
         
         desired_state = np.zeros((time.shape[0],3))
-        desired_state[:,0] = MAX_AMPLITUDE * np.sin(time)
-        desired_state[:,1] = MAX_AMPLITUDE * np.cos(time)
-        desired_state[:,2] = -MAX_AMPLITUDE * np.sin(time)
+        desired_state[time.shape[0] // 2:,0] = MAX_AMPLITUDE * np.ones(time.shape[0] // 2)
+        # desired_state[:,1] = MAX_AMPLITUDE * np.cos(time)
+        # desired_state[:,2] = -MAX_AMPLITUDE * np.sin(time)
         fig = plt.figure()
         ax_pos = fig.add_subplot(2, 1, 1)
         ax_pos.set_title('Position')
