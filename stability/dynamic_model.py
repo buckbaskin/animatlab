@@ -40,14 +40,14 @@ ROBOT_MASS = 0.3 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 0.9
-K_v = 1.1
+K_p = 2.0
+K_v = 0.1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 MAX_TORQUE = 3
 MIN_TORQUE = -1.0
 
-time_resolution = 0.0001
+time_resolution = 0.001
 time_start = 0
 time_end = 60
 
@@ -208,7 +208,7 @@ if __name__ == '__main__':
                     stiffness,
                     time_resolution,
                     controlled_torque,
-                    dividiv[i])
+                    True)
                 state[i+1,:] = new_state
             ax_pos.plot(time, state[:,0] / MAX_AMPLITUDE)
 
