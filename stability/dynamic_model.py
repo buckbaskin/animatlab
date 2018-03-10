@@ -105,7 +105,7 @@ def conservative_effects(theta):
     '''
     Conservative Forces on the system, converted to torques (for now)
     Complications:
-        - [,] Gravity from link mass
+        - [x] Gravity from link mass
                 /////////////
                     (o)
                      .\
