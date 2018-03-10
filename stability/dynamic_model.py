@@ -24,6 +24,10 @@ N: gravity on the point mass at a distance
 Calculate forces on joint (mass accerleration, gravity) and torque from outside 
 forces
 Tracking forces on joint is just nice, torque is the N term
+
+Notes:
+- Pushing Stiffness too high causes clipping for the primary actuator, so less 
+    net torque is achieved and decreased line following is achieved
 '''
 import math
 import numpy as np
@@ -34,7 +38,7 @@ K_v = 2
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 MAX_TORQUE = 2
-MIN_TORQUE = -2
+MIN_TORQUE = -0.5
 
 def control(state, desired_state, stiffness):
     # TODO(buckbaskin): make a more complex control model with pressure
@@ -42,7 +46,7 @@ def control(state, desired_state, stiffness):
     #   torque
     Torque_des = control_matrix * np.matrix(state - desired_state).T
     T_r = 0.5 * Torque_des + stiffness
-    T_l = -(0.5 * Torque_des - stiffness)
+    T_l = -0.5 * Torque_des + stiffness
     T_r = np.clip(T_r, MIN_TORQUE, MAX_TORQUE)
     T_l = np.clip(T_l, MIN_TORQUE, MAX_TORQUE)
     net_Torque = T_r - T_l
@@ -88,25 +92,27 @@ def motion_evolution(state, desired_state, stiffness, time_step):
 
 if __name__ == '__main__':
     start_state = np.array([0, 0, 0])
-    stiffness = np.arange(0, 2, 0.5)
-    stiffness = 1.5
+    
     time_resolution = 0.01
     time_start = 0
     time_end = 10
-    #start_state, stiffness = np.meshgrid(start_state, stiffness)
     time = np.arange(time_start, time_end, time_resolution)
-    state = np.ones((time.shape[0], start_state.shape[0]))
-    state[0,:] = start_state
     desired_state = np.zeros((time.shape[0],3))
     desired_state[:,0] = math.pi/4 * np.sin(time)
     desired_state[:,1] = math.pi/4 * np.cos(time)
-    for i in range(state.shape[0] - 1):
-        val = motion_evolution(
-            state[i,:],
-            desired_state[i+1,:],
-            stiffness,
-            time_resolution)
-        state[i+1,:] = val
-    plt.plot(desired_state[:,0])
-    plt.plot(state[:,0])
+    desired_state[:,2] = -math.pi/4 * np.sin(time)
+    plt.plot(time,  desired_state[:,0])
+
+    for stiffness in [0, 1.0, 2.0,]:
+        state = np.ones((time.shape[0], start_state.shape[0]))
+        state[0,:] = start_state
+        for i in range(state.shape[0] - 1):
+            val = motion_evolution(
+                state[i,:],
+                desired_state[i+1,:],
+                stiffness,
+                time_resolution)
+            state[i+1,:] = val
+        plt.plot(time, state[:,0])
+    plt.title('Position(time)')
     plt.show()
