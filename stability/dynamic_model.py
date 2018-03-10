@@ -35,17 +35,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 LINK_LENGTH = 0.5 # meters
-LINK_MASS = 0.5 # kg
-ROBOT_MASS = 20 # kg
+LINK_MASS = 0.25 # kg
+ROBOT_MASS = 0.3 # kg
 
-MAX_AMPLITUDE = math.pi / 4
+MAX_AMPLITUDE = math.pi / 16
 
-K_p = 70.0
-K_v = 100.0
+K_p = 1.0
+K_v = 2.0
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
-MAX_TORQUE = 2
-MIN_TORQUE = -0.5
+MAX_TORQUE = 3
+MIN_TORQUE = -1.0
 
 def control(state, desired_state, stiffness):
     '''
@@ -114,7 +114,7 @@ def conservative_effects(theta):
                      .  :\
                      .  : \
                      .  v
-        - [ ] Gravity from robot/Suppoting Normal force from ground at end
+        - [x] Gravity from robot/Suppoting Normal force from ground at end
                 /////////////
                     (o)
                      .\
@@ -125,11 +125,17 @@ def conservative_effects(theta):
                      .   
     '''
     g = 9.81
-    M = LINK_MASS
-    F = M * g
-    R = LINK_LENGTH / 2
+    M_l = LINK_MASS
+    F_g = M_l * g
+    R_g = LINK_LENGTH / 2
 
-    return F * R * math.sin(theta)
+    M_r = ROBOT_MASS
+    F_r = M_r * g
+    R_n = LINK_LENGTH
+    link_gravity = F_g * R_g * math.sin(theta)
+    normal_force = - F_r * R_n * math.sin(theta)
+
+    return link_gravity + normal_force
 
 def motion_evolution(state, desired_state, stiffness, time_step):
     '''
@@ -170,11 +176,11 @@ def motion_evolution(state, desired_state, stiffness, time_step):
 
 
 if __name__ == '__main__':
-    start_state = np.array([0.2, 0, 0])
+    start_state = np.array([0.02, 0, 0])
     
     time_resolution = 0.01
     time_start = 0
-    time_end = 10
+    time_end = 60
     time = np.arange(time_start, time_end, time_resolution)
     desired_state = np.zeros((time.shape[0],3))
     desired_state[:,0] = MAX_AMPLITUDE * np.sin(time)
