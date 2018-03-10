@@ -40,19 +40,19 @@ ROBOT_MASS = 0.3 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 1.0
-K_v = 1.3
+K_p = 0.9
+K_v = 1.1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 MAX_TORQUE = 3
 MIN_TORQUE = -1.0
 
-time_resolution = 0.001
+time_resolution = 0.0001
 time_start = 0
 time_end = 60
 
 # control_rate = 0.0
-control_resolution = 0.02
+control_resolution = 0.022
 controlled_torque = 0.0
 
 def control(state, desired_state, stiffness):
@@ -177,52 +177,62 @@ if __name__ == '__main__':
     start_state = np.array([0.02, 0, 0])
     
     time = np.arange(time_start, time_end, time_resolution)
-    dividiv = time / control_resolution
-    dividiv = dividiv % 1
-    print(dividiv)
-    dividiv[dividiv <= 0.01] = 1
-    dividiv[dividiv != 1] = 0
-    print(dividiv)
-    
-    desired_state = np.zeros((time.shape[0],3))
-    desired_state[:,0] = MAX_AMPLITUDE * np.sin(time)
-    desired_state[:,1] = MAX_AMPLITUDE * np.cos(time)
-    desired_state[:,2] = -MAX_AMPLITUDE * np.sin(time)
-    fig = plt.figure()
-    ax_pos = fig.add_subplot(2, 1, 1)
-    ax_pos.set_title('Position')
-    ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
+    stable = True
+    while stable:
+        control_resolution += time_resolution
+        print('control_resolution: ', control_resolution)
+        dividiv = time / control_resolution
+        dividiv = dividiv % 1
+        print(dividiv)
+        dividiv[dividiv <= 0.01] = 1
+        dividiv[dividiv != 1] = 0
+        print(dividiv)
+        
+        desired_state = np.zeros((time.shape[0],3))
+        desired_state[:,0] = MAX_AMPLITUDE * np.sin(time)
+        desired_state[:,1] = MAX_AMPLITUDE * np.cos(time)
+        desired_state[:,2] = -MAX_AMPLITUDE * np.sin(time)
+        fig = plt.figure()
+        ax_pos = fig.add_subplot(2, 1, 1)
+        ax_pos.set_title('Position')
+        ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
 
-    print('calculating...')
-    for stiffness in [0.0,]:
-        state = np.ones((time.shape[0], start_state.shape[0]))
-        state[0,:] = start_state
-        for i in range(state.shape[0] - 1):
-            new_state, controlled_torque = motion_evolution(
-                state[i,:],
-                desired_state[i+1,:],
-                stiffness,
-                time_resolution,
-                controlled_torque,
-                dividiv[i])
-            state[i+1,:] = new_state
-        ax_pos.plot(time, state[:,0] / MAX_AMPLITUDE)
-        delta = state - desired_state
+        print('calculating...')
+        for stiffness in [0.0,]:
+            state = np.ones((time.shape[0], start_state.shape[0]))
+            state[0,:] = start_state
+            for i in range(state.shape[0] - 1):
+                new_state, controlled_torque = motion_evolution(
+                    state[i,:],
+                    desired_state[i+1,:],
+                    stiffness,
+                    time_resolution,
+                    controlled_torque,
+                    dividiv[i])
+                state[i+1,:] = new_state
+            ax_pos.plot(time, state[:,0] / MAX_AMPLITUDE)
 
-        accum_pos_error = sum(delta[:,0])
-        accum_vel_error = sum(delta[:,1])
-        print('pos_error', accum_pos_error)
-        print('vel_error', accum_vel_error)
+            if np.max(state[:,0] / MAX_AMPLITUDE) > 3:
+                print('Unstable')
+                stable = False
+            else:
+                stable = True
+            delta = state - desired_state
 
-        T = -K_p * (delta[:,0])
-        T += -K_v * (delta[:,1])
+            accum_pos_error = sum(delta[:,0])
+            accum_vel_error = sum(delta[:,1])
+            print('pos_error', accum_pos_error)
+            print('vel_error', accum_vel_error)
 
-        ax_tor = fig.add_subplot(2, 1, 2)
-        ax_tor.set_title('Torque Components')
-        ax_tor.plot(time, T)
-        ax_tor.plot(time, - K_p * (delta[:,0]))
-        ax_tor.plot(time, - K_v * (delta[:,1]))
-    
-    print('show for the dough')
-    plt.show()
-    print('all done')
+            T = -K_p * (delta[:,0])
+            T += -K_v * (delta[:,1])
+
+            ax_tor = fig.add_subplot(2, 1, 2)
+            ax_tor.set_title('Torque Components')
+            ax_tor.plot(time, T)
+            ax_tor.plot(time, - K_p * (delta[:,0]))
+            ax_tor.plot(time, - K_v * (delta[:,1]))
+        
+        print('show for the dough')
+        plt.show()
+        print('all done')
