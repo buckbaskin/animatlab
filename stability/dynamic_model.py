@@ -34,8 +34,8 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-LINK_LENGTH = 1.0 # meters
-LINK_MASS = 2 # kg
+LINK_LENGTH = 0.5 # meters
+LINK_MASS = 0.5 # kg
 ROBOT_MASS = 20 # kg
 
 MAX_AMPLITUDE = math.pi / 4
@@ -141,12 +141,8 @@ def motion_evolution(state, desired_state, stiffness, time_step):
     
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
-    C = 0
     N = conservative_effects(state[0])
-    N = 0
-    # TODO(remove this)
-    # N = 0
-
+    
     # print('des', desired_state)
     # print('state', state)
     # print('control T', net_Torque)
