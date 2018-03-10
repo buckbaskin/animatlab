@@ -19,6 +19,8 @@ DesTorque = -K_p * p + -K_v * v
 
 T_r =  0.5 * T_des + stiffness
 T_l =  -(0.5 * T_des - stiffness) # positive from the point of view of the actuator
+
+Then look at current angle, and calculate pressure for each actuator
 '''
 print('---=== plot_level_curves.py ===---')
 from math import atan, floor, pi, sqrt
