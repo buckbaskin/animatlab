@@ -36,7 +36,7 @@ import matplotlib.pyplot as plt
 
 LINK_LENGTH = 0.25 # meters
 LINK_MASS = 0.25 # kg
-ROBOT_MASS = 1 # kg
+ROBOT_MASS = 0.54300863 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
@@ -79,7 +79,7 @@ def vel_effects(theta, theta_dot):
         - [ ] Estimated Hysterisis effect of filling or empty actuators applying
                 a torque opposite the motion
     '''
-    return 0.01 * theta_dot
+    return 0.1 * theta_dot
 
 def conservative_effects(theta):
     '''
@@ -109,6 +109,7 @@ def conservative_effects(theta):
     F_g = M_l * g
     R_g = LINK_LENGTH / 2
 
+    # this assumes that the robot mass is solely balanced on top of the robot
     M_r = ROBOT_MASS
     F_r = M_r * g
     R_n = LINK_LENGTH
@@ -121,8 +122,7 @@ def conservative_effects(theta):
         raise
     normal_force = - F_r * R_n * math.sin(theta)
 
-    return link_gravity
-    # return link_gravity + normal_force
+    return link_gravity + normal_force
 
 def motion_evolution(state, desired_state, stiffness, time_step,
     last_control, control_active):
