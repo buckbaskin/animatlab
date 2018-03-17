@@ -56,7 +56,7 @@ control_resolution = 0.022
 controlled_torque = 0.0
 
 def control(state, desired_state, stiffness):
-    return 0.305
+    return -0.2
 
 def mass_model(theta):
     '''
@@ -79,7 +79,7 @@ def vel_effects(theta, theta_dot):
         - [ ] Estimated Hysterisis effect of filling or empty actuators applying
                 a torque opposite the motion
     '''
-    return 0.1 * theta_dot
+    return 0.01 * theta_dot
 
 def conservative_effects(theta):
     '''
@@ -153,7 +153,7 @@ def motion_evolution(state, desired_state, stiffness, time_step,
 
 
 if __name__ == '__main__':
-    start_state = np.array([0.02, 0, 0])
+    start_state = np.array([math.pi / 16, 0, 0])
     
     time = np.arange(time_start, time_end, time_resolution)
     fig = plt.figure()
