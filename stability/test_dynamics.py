@@ -36,16 +36,16 @@ import matplotlib.pyplot as plt
 
 LINK_LENGTH = 0.25 # meters
 LINK_MASS = 0.25 # kg
-ROBOT_MASS = 0.54300863 # kg
+ROBOT_MASS = 0.6 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 2.0
+K_p = 1.2
 K_v = 0.1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 MAX_TORQUE = 3
-MIN_TORQUE = -1.0
+MIN_TORQUE = -3.0
 
 time_resolution = 0.001
 time_start = 0
@@ -56,7 +56,15 @@ control_resolution = 0.022
 controlled_torque = 0.0
 
 def control(state, desired_state, stiffness):
-    return -0.2
+    theta = state[0]
+    des_theta = desired_state[0]
+
+    theta_err = des_theta - theta
+    theta_torque = K_p * theta_err
+
+    theta_torque = np.clip(theta_torque, MIN_TORQUE, MAX_TORQUE)
+
+    return theta_torque
 
 def mass_model(theta):
     '''
@@ -153,13 +161,15 @@ def motion_evolution(state, desired_state, stiffness, time_step,
 
 
 if __name__ == '__main__':
-    start_state = np.array([math.pi / 16, 0, 0])
+    start_state = np.array([math.pi / 8, 0, 0])
     
     time = np.arange(time_start, time_end, time_resolution)
+    desired_state = np.zeros((time.shape[0], start_state.shape[0],))
+
     fig = plt.figure()
     ax_pos = fig.add_subplot(2, 1, 1)
     ax_pos.set_title('Position')
-    # ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
+    ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
 
     print('calculating...')
     for stiffness in [0.0,]:
@@ -168,7 +178,7 @@ if __name__ == '__main__':
         for i in range(state.shape[0] - 1):
             new_state, controlled_torque = motion_evolution(
                 state[i,:],
-                None, # desired_state[i+1,:],
+                desired_state[i+1,:],
                 stiffness,
                 time_resolution,
                 controlled_torque,
