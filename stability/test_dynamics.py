@@ -41,7 +41,7 @@ ROBOT_MASS = 0.6 # kg
 MAX_AMPLITUDE = math.pi / 16
 
 K_p = 8
-K_v = 0.1
+K_v = 1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
@@ -64,9 +64,17 @@ def control(state, desired_state, stiffness):
     theta_err = des_theta - theta
     theta_torque = K_p * theta_err
 
-    theta_torque = np.clip(theta_torque, MIN_TORQUE, MAX_TORQUE)
+    theta_dot = state[1]
+    des_theta_dot = desired_state[1]
 
-    return theta_torque
+    vel_err = des_theta_dot - theta_dot
+    vel_torque = K_v * vel_err
+
+    des_torque = theta_torque + vel_torque
+
+    req_torque = np.clip(des_torque, MIN_TORQUE, MAX_TORQUE)
+
+    return req_torque
 
 def mass_model(theta):
     '''
