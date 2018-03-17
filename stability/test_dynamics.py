@@ -40,12 +40,14 @@ ROBOT_MASS = 0.6 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 1.2
+K_p = 8
 K_v = 0.1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
-MAX_TORQUE = 3
-MIN_TORQUE = -3.0
+start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
+
+MAX_TORQUE = 10.0
+MIN_TORQUE = -10.0
 
 time_resolution = 0.001
 time_start = 0
@@ -161,15 +163,13 @@ def motion_evolution(state, desired_state, stiffness, time_step,
 
 
 if __name__ == '__main__':
-    start_state = np.array([math.pi / 8, 0, 0])
-    
     time = np.arange(time_start, time_end, time_resolution)
-    desired_state = np.zeros((time.shape[0], start_state.shape[0],))
+    desired_state = np.ones((time.shape[0], start_state.shape[0],)) * MAX_AMPLITUDE
 
     fig = plt.figure()
     ax_pos = fig.add_subplot(2, 1, 1)
     ax_pos.set_title('Position')
-    ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
+    ax_pos.plot(time,  desired_state[:,0] / math.pi)
 
     print('calculating...')
     for stiffness in [0.0,]:
