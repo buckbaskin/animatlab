@@ -34,9 +34,9 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-LINK_LENGTH = 0.5 # meters
-LINK_MASS = 0.5 # kg
-ROBOT_MASS = 0.3 # kg
+LINK_LENGTH = 0.25 # meters
+LINK_MASS = 0.25 # kg
+ROBOT_MASS = 1 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
@@ -56,7 +56,7 @@ control_resolution = 0.022
 controlled_torque = 0.0
 
 def control(state, desired_state, stiffness):
-    return 0.01
+    return 0.305
 
 def mass_model(theta):
     '''
@@ -75,10 +75,11 @@ def vel_effects(theta, theta_dot):
     '''
     Damping/Velocity based effects on the system
     Complications:
+        - [ ] Small damping from flexing of actuators based on change in length
         - [ ] Estimated Hysterisis effect of filling or empty actuators applying
                 a torque opposite the motion
     '''
-    return 0
+    return 0.1 * theta_dot
 
 def conservative_effects(theta):
     '''
@@ -111,7 +112,13 @@ def conservative_effects(theta):
     M_r = ROBOT_MASS
     F_r = M_r * g
     R_n = LINK_LENGTH
-    link_gravity = F_g * R_g * math.sin(theta)
+
+    try:
+        link_gravity = F_g * R_g * math.sin(theta)
+    except ValueError:
+        print(type(theta))
+        print(theta)
+        raise
     normal_force = - F_r * R_n * math.sin(theta)
 
     return link_gravity
@@ -131,9 +138,8 @@ def motion_evolution(state, desired_state, stiffness, time_step,
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
     N = conservative_effects(state[0])
-    N = 0
-    
-    accel = (net_Torque - C * state[1] - N) / M
+
+    accel = (net_Torque - C - N) / M
     
     # accelration happens over the time step
     start_vel = state[1]
@@ -167,8 +173,12 @@ if __name__ == '__main__':
                 time_resolution,
                 controlled_torque,
                 control_active=True)
+            # while new_state[0] > math.pi:
+            #     new_state[0] -= 2 * math.pi
+            # while new_state[0] < math.pi:
+            #     new_state += 2 * math.pi
             state[i+1,:] = new_state
-        ax_pos.plot(time, state[:,0] / MAX_AMPLITUDE)
+        ax_pos.plot(time, state[:,0] / math.pi)
 
         # delta = state - desired_state
 
