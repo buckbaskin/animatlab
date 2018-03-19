@@ -34,6 +34,8 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+from math import pi
+
 LINK_LENGTH = 0.25 # meters
 LINK_MASS = 0.25 # kg
 ROBOT_MASS = 0.6 # kg
@@ -184,10 +186,13 @@ if __name__ == '__main__':
     # so set desired velocity to 0
     desired_state[:,1] = 0
     desired_state[:,2] = 0
-    # add an in place step change to the other joint angle
-    desired_state[len(time)//4:len(time)//2,0] *= -0.5
-    desired_state[len(time)//2:3*len(time)//4,0] *= 0.5
-    desired_state[3*len(time)//4:,0] *= -1
+    # # add an in place step change to the other joint angle
+    # desired_state[len(time)//4:len(time)//2,0] *= -0.5
+    # desired_state[len(time)//2:3*len(time)//4,0] *= 0.5
+    # desired_state[3*len(time)//4:,0] *= -1
+
+    # Try following a sin curve
+    desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time / (pi * 2))
 
     fig = plt.figure()
     ax_pos = fig.add_subplot(2, 1, 1)
