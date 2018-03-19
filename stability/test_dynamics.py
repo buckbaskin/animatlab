@@ -57,6 +57,9 @@ start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
 MAX_TORQUE = 10.0
 MIN_TORQUE = -10.0
 
+# Simplified Proxy for bang-bang control of pressure 
+TORQUE_RESOLUTION = 1.0
+
 time_resolution = 0.001
 time_start = 0
 time_end = 60
@@ -81,6 +84,8 @@ def control(state, desired_state, stiffness):
     des_torque = theta_torque + vel_torque
 
     req_torque = np.clip(des_torque, MIN_TORQUE, MAX_TORQUE)
+
+    req_torque = TORQUE_RESOLUTION * np.round(req_torque / TORQUE_RESOLUTION)
 
     return req_torque
 
@@ -200,7 +205,9 @@ if __name__ == '__main__':
     fig = plt.figure()
     ax_pos = fig.add_subplot(1, 1, 1)
     ax_pos.set_title('Position')
-    ax_pos.plot(time,  desired_state[:,0] / math.pi)
+    ax_pos.set_ylabel('Position (% of circle)')
+    ax_pos.set_xlabel('Time (sec)')
+    ax_pos.plot(time,  desired_state[:,0] / (2 * math.pi))
 
     print('calculating...')
     for stiffness in [0.0,]:
@@ -219,7 +226,7 @@ if __name__ == '__main__':
             # while new_state[0] < math.pi:
             #     new_state += 2 * math.pi
             state[i+1,:] = new_state
-        ax_pos.plot(time, state[:,0] / math.pi)
+        ax_pos.plot(time, state[:,0] / (2 * pi))
 
         # delta = state - desired_state
 
