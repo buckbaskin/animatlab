@@ -285,18 +285,34 @@ def conservative_effects(theta):
 
     return link_gravity + normal_force
 
-def motion_evolution(state, desired_state, stiffness, time_step,
-    last_control, control_active):
+def pressure_model(des_pressure, current_pressure, time_step):
+    '''
+    For now, set the pressure to the desired pressure
+    In the future, use airflow model to restrict maximum pressure change
+    Complications:
+    - [x] Set pressure to desired pressure
+    - [ ] Set maximum pressure change per time state
+    - [ ] Develop airflow model to more accurately limit pressure changes
+    '''
+    return des_pressure
+
+def motion_evolution(state, desired_state, hidden_state,
+    stiffness, time_step, last_control, control_active):
     '''
     M * ddot theta + C * dot theta + N * theta = torque
     ddot theta = 1 / M * (torque - C * dot theta - N) 
     '''
+    ext_pres = hidden_state[0]
+    flx_pres = hidden_state[1]
+
     if control_active:
         des_ext_pres, des_flx_pres = control(state, desired_state, stiffness)
     else:
         des_ext_pres, des_flx_pres = last_control
 
-    Torque_net = pressures_to_torque(des_ext_pres, des_flx_pres, state)
+    ext_pres = pressure_model(des_ext_pres, ext_pres, time_step)
+    flx_pres = pressure_model(des_flx_pres, flx_pres, time_step)
+    Torque_net = pressures_to_torque(ext_pres, flx_pres, state)
 
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
