@@ -63,6 +63,9 @@ start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
 MAX_TORQUE = 5.0
 MIN_TORQUE = 0.0
 
+MAX_PRESSURE = 620
+MIN_PRESSURE = 0
+
 # Simplified Proxy for bang-bang control of pressure 
 TORQUE_RESOLUTION = 1.0
 
@@ -72,7 +75,15 @@ time_end = 60
 
 # control_rate = 0.0
 control_resolution = 0.022
-controlled_torque = 0.0
+last_control = (0.0, 0.0)
+
+def flx_torque_to_pressure(torque, state):
+    # TODO(buckbaskin): convert desired torque to pressures aka implement
+    return 0
+
+def ext_torque_to_pressure(torque, state):
+    # TODO(buckbaskin): convert desired torque to pressures aka implement
+    return 0
 
 def control(state, desired_state, stiffness):
     '''
@@ -91,9 +102,12 @@ def control(state, desired_state, stiffness):
     # Use numerical derivative of Torque and Theta for computed pressure to adjust 
     #   torque
     '''
+
+    ### Current State ###
     theta = state[0]
     des_theta = desired_state[0]
 
+    ### PD Control ###
     theta_err = des_theta - theta
     theta_torque = K_p * theta_err
 
@@ -105,13 +119,15 @@ def control(state, desired_state, stiffness):
 
     des_torque = theta_torque + vel_torque
 
+    ### Convert Torque to Left and Right Torques ###
     # extension is positive rotation
     ext_torque = des_torque / 2 + antagonistic_stiffness
-    ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
-
+    
     # flexion is negative rotation
     flx_torque = -des_torque / 2 + antagonistic_stiffness
-    flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
+    
+    '''
+    # Torque correction that doesn't work (as implemented) in the pressure-torque world
 
     current_net = ext_torque - flx_torque
     err = des_torque - current_net
@@ -122,16 +138,17 @@ def control(state, desired_state, stiffness):
     ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
     flx_torque += -neg_err
     flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
+    '''
 
-    req_torque = ext_torque - flx_torque
+    des_ext_pres = ext_torque_to_pressure(ext_torque, state)
+    des_ext_pres = np.clip(des_ext_pres, MIN_PRESSURE, MAX_PRESSURE)
 
-    # TODO(buckbaskin): convert desired torque to pressures
-    # TODO(buckbaskin): clip pressures instead of torques
-    # TODO(buckbaskin): return requested pressures instead of requested torque
+    des_flx_pres = flx_torque_to_pressure(flx_torque, state)
+    des_flx_pres = np.clip(des_flx_pres, MIN_PRESSURE, MAX_PRESSURE)
 
-    return req_torque
+    return des_ext_pres, des_flx_pres
 
-def pressures_to_torque(leftp, rightp, state):
+def pressures_to_torque(extp, flxp, state):
     '''
     Inverse model: given the pressures of the left and right actuator, estimate
     the torque on the joint
@@ -212,15 +229,17 @@ def motion_evolution(state, desired_state, stiffness, time_step,
     ddot theta = 1 / M * (torque - C * dot theta - N) 
     '''
     if control_active:
-        net_Torque = control(state, desired_state, stiffness)
+        des_ext_pres, des_flx_pres = control(state, desired_state, stiffness)
     else:
-        net_Torque = last_control
+        des_ext_pres, des_flx_pres = last_control
+
+    Torque_net = pressures_to_torque(des_ext_pres, des_flx_pres, state)
 
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
     N = conservative_effects(state[0])
 
-    accel = (net_Torque - C - N) / M
+    accel = (Torque_net - C - N) / M
     
     # accelration happens over the time step
     start_vel = state[1]
@@ -230,7 +249,7 @@ def motion_evolution(state, desired_state, stiffness, time_step,
     start_theta = state[0]
     end_theta = state[0] + avg_vel * time_step
 
-    return np.array([end_theta, end_vel, accel]).flatten(), net_Torque
+    return np.array([end_theta, end_vel, accel]).flatten(), (des_ext_pres, des_flx_pres)
 
 
 if __name__ == '__main__':
@@ -257,35 +276,23 @@ if __name__ == '__main__':
     ax_pos.set_title('Position')
     ax_pos.set_ylabel('Position (% of circle)')
     ax_pos.set_xlabel('Time (sec)')
-    ax_pos.plot(time,  desired_state[:,0] / (2 * math.pi))
+    ax_pos.plot(time,  desired_state[:,0] / (pi))
 
     print('calculating...')
     for stiffness in [0.0,]:
         state = np.ones((time.shape[0], start_state.shape[0]))
         state[0,:] = start_state
         for i in range(state.shape[0] - 1):
-            new_state, controlled_torque = motion_evolution(
+            new_state, last_control = motion_evolution(
                 state[i,:],
                 desired_state[i+1,:],
                 stiffness,
                 time_resolution,
-                controlled_torque,
+                last_control,
                 control_active=True)
-            # while new_state[0] > math.pi:
-            #     new_state[0] -= 2 * math.pi
-            # while new_state[0] < math.pi:
-            #     new_state += 2 * math.pi
             state[i+1,:] = new_state
-        ax_pos.plot(time, state[:,0] / (2 * pi))
+        ax_pos.plot(time, state[:,0] / (pi))
 
-        # delta = state - desired_state
-
-        # ax_tor = fig.add_subplot(2, 1, 2)
-        # ax_tor.set_title('Torque Components')
-        # ax_tor.plot(time, T)
-        # ax_tor.plot(time, - K_p * (delta[:,0]))
-        # ax_tor.plot(time, - K_v * (delta[:,1]))
-        
         print('show for the dough')
         plt.show()
         print('all done')
