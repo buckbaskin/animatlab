@@ -192,10 +192,13 @@ if __name__ == '__main__':
     # desired_state[3*len(time)//4:,0] *= -1
 
     # Try following a sin curve
-    desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time / (pi * 2))
+    period = 10
+    adjust = (pi * 2) / period 
+    desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
+    desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
 
     fig = plt.figure()
-    ax_pos = fig.add_subplot(2, 1, 1)
+    ax_pos = fig.add_subplot(1, 1, 1)
     ax_pos.set_title('Position')
     ax_pos.plot(time,  desired_state[:,0] / math.pi)
 
