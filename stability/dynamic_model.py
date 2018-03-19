@@ -49,7 +49,7 @@ MAX_AMPLITUDE = math.pi / 16
 #   desired torque works. On the other hand, decreasing the stiffness increases
 #   the range of total torques that are output before the desired torque
 #   saturates.
-antagonistic_stiffness = 1.0
+antagonistic_stiffness = 0.1
 
 # Together K_p, K_v constitute "Dynamic" Stiffness
 # Not quite sure how to align static holding mode with dyanmic mode right now.
@@ -61,7 +61,7 @@ control_matrix = np.matrix([[-K_p, -K_v, 0]])
 start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
 
 MAX_TORQUE = 5.0
-MIN_TORQUE = -1.0
+MIN_TORQUE = 0.0
 
 # Simplified Proxy for bang-bang control of pressure 
 TORQUE_RESOLUTION = 1.0
@@ -108,7 +108,7 @@ def control(state, desired_state, stiffness):
     # extension is positive rotation
     ext_torque = des_torque / 2 + antagonistic_stiffness
     ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
-    
+
     # flexion is negative rotation
     flx_torque = -des_torque / 2 + antagonistic_stiffness
     flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
@@ -116,20 +116,18 @@ def control(state, desired_state, stiffness):
     current_net = ext_torque - flx_torque
     err = des_torque - current_net
     pos_err = np.clip(err, 0, None)
-    print(pos_err)
     neg_err = np.clip(err, None, 0)
-    print(neg_err)
 
     ext_torque += pos_err
     ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
     flx_torque += -neg_err
     flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
 
+    req_torque = ext_torque - flx_torque
+
     # TODO(buckbaskin): convert desired torque to pressures
     # TODO(buckbaskin): clip pressures instead of torques
     # TODO(buckbaskin): return requested pressures instead of requested torque
-
-    req_torque = np.clip(des_torque, MIN_TORQUE, MAX_TORQUE)
 
     return req_torque
 
@@ -237,34 +235,6 @@ def motion_evolution(state, desired_state, stiffness, time_step,
 
 if __name__ == '__main__':
     time = np.arange(time_start, time_end, time_resolution)
-
-    des_torque = np.arange(-10, 10, 0.1)
-    ext_torque = des_torque / 2 + antagonistic_stiffness
-    ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
-    flx_torque = -des_torque / 2 + antagonistic_stiffness
-    flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
-
-    current_net = ext_torque - flx_torque
-    err = des_torque - current_net
-    pos_err = np.clip(err, 0, None)
-    print(pos_err)
-    neg_err = np.clip(err, None, 0)
-    print(neg_err)
-
-    ext_torque += pos_err
-    ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
-    flx_torque += -neg_err
-    flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
-
-    net_torque = ext_torque - flx_torque
-
-    plt.plot(des_torque, ext_torque)
-    plt.plot(des_torque, flx_torque)
-    plt.plot(des_torque, net_torque)
-    plt.ylabel('Actuator Torques')
-    plt.xlabel('Desired Torque')
-    plt.show()
-    1/0
 
     # the desired state velocity and acceleration are positive here
     desired_state = np.ones((time.shape[0], start_state.shape[0],)) * MAX_AMPLITUDE
