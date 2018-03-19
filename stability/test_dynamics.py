@@ -40,9 +40,15 @@ ROBOT_MASS = 0.6 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
+# Static Stiffness
+stiffness = 0
+
+# Together K_p, K_v constitute "dynamic stiffness"
+# Not quite sure how to align static holding mode with dyanmic mode right now.
 K_p = 8
 K_v = 1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
+
 
 start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
 
@@ -172,7 +178,16 @@ def motion_evolution(state, desired_state, stiffness, time_step,
 
 if __name__ == '__main__':
     time = np.arange(time_start, time_end, time_resolution)
+
+    # the desired state velocity and acceleration are positive here
     desired_state = np.ones((time.shape[0], start_state.shape[0],)) * MAX_AMPLITUDE
+    # so set desired velocity to 0
+    desired_state[:,1] = 0
+    desired_state[:,2] = 0
+    # add an in place step change to the other joint angle
+    desired_state[len(time)//4:len(time)//2,0] *= -0.5
+    desired_state[len(time)//2:3*len(time)//4,0] *= 0.5
+    desired_state[3*len(time)//4:,0] *= -1
 
     fig = plt.figure()
     ax_pos = fig.add_subplot(2, 1, 1)
