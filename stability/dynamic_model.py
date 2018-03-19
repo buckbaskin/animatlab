@@ -100,9 +100,21 @@ def control(state, desired_state, stiffness):
 
     des_torque = theta_torque + vel_torque
 
+    # TODO(buckbaskin): convert desired torque to pressures
+    # TODO(buckbaskin): clip pressures instead of torques
+    # TODO(buckbaskin): return requested pressures instead of requested torque
+
     req_torque = np.clip(des_torque, MIN_TORQUE, MAX_TORQUE)
 
     return req_torque
+
+def pressures_to_torque(leftp, rightp, state):
+    '''
+    Inverse model: given the pressures of the left and right actuator, estimate
+    the torque on the joint
+    '''
+    # TODO(buckbaskin): implement
+    return 0
 
 def mass_model(theta):
     '''
