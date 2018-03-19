@@ -85,8 +85,6 @@ def control(state, desired_state, stiffness):
 
     req_torque = np.clip(des_torque, MIN_TORQUE, MAX_TORQUE)
 
-    req_torque = TORQUE_RESOLUTION * np.round(req_torque / TORQUE_RESOLUTION)
-
     return req_torque
 
 def mass_model(theta):
