@@ -79,10 +79,12 @@ last_control = (0.0, 0.0)
 
 def flx_torque_to_pressure(torque, state):
     # TODO(buckbaskin): convert desired torque to pressures aka implement
+    raise NotImplementedError()
     return 0
 
 def ext_torque_to_pressure(torque, state):
     # TODO(buckbaskin): convert desired torque to pressures aka implement
+    raise NotImplementedError()
     return 0
 
 def control(state, desired_state, stiffness):
@@ -154,6 +156,7 @@ def pressures_to_torque(extp, flxp, state):
     the torque on the joint
     '''
     # TODO(buckbaskin): implement
+    raise NotImplementedError()
     return 0
 
 def mass_model(theta):
