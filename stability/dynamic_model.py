@@ -37,6 +37,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from math import pi
+from numpy import arctan, sqrt, floor, ceil
 
 LINK_LENGTH = 0.25 # meters
 LINK_MASS = 0.25 # kg
@@ -60,11 +61,11 @@ control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
 start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
 
-MAX_TORQUE = 5.0
-MIN_TORQUE = 0.0
+TORQUE_MAX = 5.0
+TORQUE_MIN = 0.0
 
-MAX_PRESSURE = 620
-MIN_PRESSURE = 0
+PRESSURE_MAX = 620
+PRESSURE_MIN = 0
 
 # Simplified Proxy for bang-bang control of pressure 
 TORQUE_RESOLUTION = 1.0
@@ -73,19 +74,78 @@ time_resolution = 0.001
 time_start = 0
 time_end = 60
 
-# control_rate = 0.0
 control_resolution = 0.022
 last_control = (0.0, 0.0)
 
+### Model Parameters ###
+
+a0 = 254.3 # kpa
+a1 = 192.0 # kpa
+a2 = 2.0625
+a3 = -0.461
+a4 = -0.331 # 1 / Nm
+a5 = 1.230
+a6 = 15.6 # kpa
+
+### Mutual Actuator Parameters ### 
+
+l_rest = .189 # m
+l_620 = round(-((.17 * l_rest) - l_rest), 3)
+k_max = 0.17
+l_max = l_rest
+l_min = l_620
+
+d = 0.005 # m
+offset = 0.015 # m
+l1 = round(sqrt(d**2 + offset**2), 3)
+l0 = floor((l_max - l1) * 1000.0) / 1000.0
+
+### Specific Actuator Parameters ###
+# Actuator L is the negative actuator, Actuator R is the positive actuator
+# /////////////
+#    l  |   r
+#    l  |   r
+#     l |  r
+#     l(o) r
+#      x>\<x
+#       . \
+#       .  \
+#       .   \
+
+alpha_l = arctan(offset / d) # radians
+beta_l = -pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+beta_l = 0 # for now
+
+alpha_r = -arctan(offset / d) # radians
+beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+beta_r = 0 # for now
+
+
 def flx_torque_to_pressure(torque, state):
-    # TODO(buckbaskin): convert desired torque to pressures aka implement
-    raise NotImplementedError()
-    return 0
+    T = torque
+    A = state[0]
+    F = T / (d * np.cos(beta_l + A))
+    # print('pressurel:T', T)
+    # print('pressurel:A', A)
+    # print('pressurel:F', F)
+    L_angle = l0 + l1 * np.cos(alpha_l + A)
+    K = (l_rest - L_angle) / l_rest
+    assert np.all(0 <= K) and np.all(K <= 1)
+    P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
+    return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
 def ext_torque_to_pressure(torque, state):
-    # TODO(buckbaskin): convert desired torque to pressures aka implement
-    raise NotImplementedError()
-    return 0
+    T = torque
+    A = state[0]
+    F = T / (d * np.cos(beta_r + A))
+    # print('pressurer:T', T)
+    # print('pressurer:A', A)
+    # print('pressurer:F', F)
+    L_angle = l0 + l1 * np.cos(alpha_r + A)
+    K = (l_rest - L_angle) / l_rest
+    assert np.all(0 <= K) and np.all(K <= 1)
+    P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
+    return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
 def control(state, desired_state, stiffness):
     '''
@@ -143,10 +203,10 @@ def control(state, desired_state, stiffness):
     '''
 
     des_ext_pres = ext_torque_to_pressure(ext_torque, state)
-    des_ext_pres = np.clip(des_ext_pres, MIN_PRESSURE, MAX_PRESSURE)
+    des_ext_pres = np.clip(des_ext_pres, PRESSURE_MIN, PRESSURE_MAX)
 
     des_flx_pres = flx_torque_to_pressure(flx_torque, state)
-    des_flx_pres = np.clip(des_flx_pres, MIN_PRESSURE, MAX_PRESSURE)
+    des_flx_pres = np.clip(des_flx_pres, PRESSURE_MIN, PRESSURE_MAX)
 
     return des_ext_pres, des_flx_pres
 
