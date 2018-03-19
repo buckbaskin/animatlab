@@ -58,8 +58,8 @@ K_p = 8
 K_v = 1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
-
-start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
+hidden_state_start = np.array([0, 0]) # pressures of actuators
+state_start = np.array([-MAX_AMPLITUDE / 2, 0, 0]) # position, vel, accel
 
 TORQUE_MAX = 5.0
 TORQUE_MIN = 0.0
@@ -208,16 +208,68 @@ def control(state, desired_state, stiffness):
     des_flx_pres = flx_torque_to_pressure(flx_torque, state)
     des_flx_pres = np.clip(des_flx_pres, PRESSURE_MIN, PRESSURE_MAX)
 
-    return des_ext_pres, des_flx_pres
+    return des_ext_pres, des_flx_pres, des_torque
 
-def pressures_to_torque(extp, flxp, state):
+def pressures_to_torque(extp, flxp, state, est_torque, stiffness,
+    actual_torque=None):
     '''
     Inverse model: given the pressures of the left and right actuator, estimate
     the torque on the joint
     '''
-    # TODO(buckbaskin): implement
-    raise NotImplementedError()
-    return 0
+    ### Split Torque into Two Components ###
+    etorque = 0
+    ftorque = 0
+    if est_torque >= 0:
+        etorque = est_torque / 2 + stiffness
+    else:
+        ftorque = -est_torque / 2 + stiffness
+
+    ### Calculate relative error and gradient ###
+    resolution = 0.01
+
+    extp_guess0 = ext_torque_to_pressure(etorque-resolution, state)
+    extp_guess1 = ext_torque_to_pressure(etorque+resolution, state)
+    flxp_guess0 = flx_torque_to_pressure(ftorque-resolution, state)
+    flxp_guess1 = flx_torque_to_pressure(ftorque+resolution, state)
+
+    if actual_torque is not None:
+        actual_torques = np.ones((5,)) * actual_torque
+        etorques = np.zeros((5,))
+        ftorques = np.zeros((5,))
+
+    ### Iterate through updates to attempt to converge on actual torque ###
+    for i in range(0, 5):
+        if actual_torque is not None:
+            etorques[i] = etorque
+            ftorques[i] = ftorque
+
+        extp_err = extp - (extp_guess0 + extp_guess1) / 2
+        flxp_err = flxp - (flxp_guess0 + flxp_guess1) / 2
+
+        dep_dtq = (extp_guess1 - extp_guess0) / (2 * resolution)
+        dfp_dtq = (flxp_guess1 - flxp_guess0) / (2 * resolution)
+
+        ### Estimate the required change in torque to minimize relative errors ###
+        full_ext_correction = extp_err / dep_dtq
+        full_flx_correction = flxp_err / dfp_dtq
+
+        average_correction = (full_ext_correction + full_flx_correction) / 2
+        step_ratio = 0.5
+        torque_correction = average_correction * 0.5
+
+        etorque += torque_correction
+        ftorque -= torque_correction
+
+    if actual_torque is not None:
+        plt.plot(actual_torques) # blue
+        plt.plot(etorques) # orgnge
+        plt.plot(ftorques) # green
+        net_torques = etorques - ftorques
+        plt.plot(net_torques) # red
+        print('plotting etorques')
+        plt.show()
+        1/0
+    return etorque - ftorque
 
 def mass_model(theta):
     '''
@@ -306,13 +358,18 @@ def motion_evolution(state, desired_state, hidden_state,
     flx_pres = hidden_state[1]
 
     if control_active:
-        des_ext_pres, des_flx_pres = control(state, desired_state, stiffness)
+        des_ext_pres, des_flx_pres, intended_torque = control(state, desired_state, stiffness)
     else:
-        des_ext_pres, des_flx_pres = last_control
+        des_ext_pres, des_flx_pres, intended_torque = last_control
 
     ext_pres = pressure_model(des_ext_pres, ext_pres, time_step)
     flx_pres = pressure_model(des_flx_pres, flx_pres, time_step)
-    Torque_net = pressures_to_torque(ext_pres, flx_pres, state)
+
+    # TODO(buckbaskin): currently estimating from 0 torque. Could memoize last
+    #   calculated torque and start from there. This isn't necessarily helpful
+    #   yet because the pressure change is arbitrary
+    Torque_net = pressures_to_torque(ext_pres, flx_pres, state, 0, stiffness,
+        actual_torque=intended_torque)
 
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
@@ -328,17 +385,24 @@ def motion_evolution(state, desired_state, hidden_state,
     start_theta = state[0]
     end_theta = state[0] + avg_vel * time_step
 
-    return np.array([end_theta, end_vel, accel]).flatten(), (des_ext_pres, des_flx_pres)
+    state = np.array([end_theta, end_vel, accel]).flatten()
+    hidden_state = np.array([ext_pres, flx_pres]).flatten()
+    last_control = (des_ext_pres, des_flx_pres, intended_torque,)
+
+    return state, hidden_state, last_control
 
 
 if __name__ == '__main__':
+    ### Set up time ###
     time = np.arange(time_start, time_end, time_resolution)
 
+    ### Set up desired state ###
     # the desired state velocity and acceleration are positive here
-    desired_state = np.ones((time.shape[0], start_state.shape[0],)) * MAX_AMPLITUDE
+    desired_state = np.ones((time.shape[0], state_start.shape[0],)) * MAX_AMPLITUDE
     # so set desired velocity to 0
     desired_state[:,1] = 0
     desired_state[:,2] = 0
+
     # # add an in place step change to the other joint angle
     # desired_state[len(time)//4:len(time)//2,0] *= -0.5
     # desired_state[len(time)//2:3*len(time)//4,0] *= 0.5
@@ -350,28 +414,44 @@ if __name__ == '__main__':
     desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
     desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
 
-    fig = plt.figure()
-    ax_pos = fig.add_subplot(1, 1, 1)
-    ax_pos.set_title('Position')
-    ax_pos.set_ylabel('Position (% of circle)')
-    ax_pos.set_xlabel('Time (sec)')
-    ax_pos.plot(time,  desired_state[:,0] / (pi))
+    plot_position = False
+
+    if plot_position:
+        fig = plt.figure()
+        ax_pos = fig.add_subplot(1, 1, 1)
+        ax_pos.set_title('Position')
+        ax_pos.set_ylabel('Position (% of circle)')
+        ax_pos.set_xlabel('Time (sec)')
+        ax_pos.plot(time,  desired_state[:,0] / (pi))
 
     print('calculating...')
-    for stiffness in [0.0,]:
-        state = np.ones((time.shape[0], start_state.shape[0]))
-        state[0,:] = start_state
+    for stiffness in [0.1,]:
+        print('stiffness: %.2f' % (stiffness,))
+        ### Set up Hidden State ###
+        hidden_state = np.zeros((time.shape[0], hidden_state_start.shape[0]))
+        hidden_state[0,:] = hidden_state_start
+
+        ### Set up State ###
+        state = np.ones((time.shape[0], state_start.shape[0]))
+        state[0,:] = state_start
         for i in range(state.shape[0] - 1):
-            new_state, last_control = motion_evolution(
-                state[i,:],
-                desired_state[i+1,:],
-                stiffness,
-                time_resolution,
-                last_control,
+            '''
+            state, desired_state, hidden_state,
+    stiffness, time_step, last_control, control_active
+            '''
+            new_state, new_hidden_state, last_control = motion_evolution(
+                state=state[i,:],
+                desired_state=desired_state[i+1,:],
+                hidden_state=hidden_state[i,:],
+                stiffness=stiffness,
+                time_step=time_resolution,
+                last_control=last_control,
                 control_active=True)
             state[i+1,:] = new_state
-        ax_pos.plot(time, state[:,0] / (pi))
+            hidden_state[i+1,:] = new_hidden_state
 
-        print('show for the dough')
-        plt.show()
-        print('all done')
+        if plot_position:
+            ax_pos.plot(time, state[:,0] / (pi))
+            print('show for the dough')
+            plt.show()
+            print('all done')
