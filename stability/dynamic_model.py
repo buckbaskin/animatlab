@@ -29,23 +29,38 @@ Notes:
 - Pushing Stiffness too high causes clipping for the primary actuator, so less 
     net torque is achieved and decreased line following is achieved
 '''
-print('--- dynamic_model.py ---')
+import sys
+print('--- %s ---' % (sys.argv[0],))
+
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-LINK_LENGTH = 0.5 # meters
+from math import pi
+
+LINK_LENGTH = 0.25 # meters
 LINK_MASS = 0.25 # kg
-ROBOT_MASS = 0.3 # kg
+ROBOT_MASS = 0.6 # kg
 
 MAX_AMPLITUDE = math.pi / 16
 
-K_p = 2.0
-K_v = 0.1
+# Static Stiffness
+stiffness = 0
+
+# Together K_p, K_v constitute "dynamic stiffness"
+# Not quite sure how to align static holding mode with dyanmic mode right now.
+K_p = 8
+K_v = 1
 control_matrix = np.matrix([[-K_p, -K_v, 0]])
 
-MAX_TORQUE = 3
-MIN_TORQUE = -1.0
+
+start_state = np.array([-MAX_AMPLITUDE / 2, 0, 0])
+
+MAX_TORQUE = 10.0
+MIN_TORQUE = -10.0
+
+# Simplified Proxy for bang-bang control of pressure 
+TORQUE_RESOLUTION = 1.0
 
 time_resolution = 0.001
 time_start = 0
@@ -71,21 +86,23 @@ def control(state, desired_state, stiffness):
     # TODO(buckbaskin): make a more complex control model with pressure
     # Use numerical derivative of Torque and Theta for computed pressure to adjust 
     #   torque
-    delta = state - desired_state
-    Torque_des = -K_p * delta[0] - K_v * delta[1]
-    
-    T_r = 0.5 * Torque_des + stiffness
-    T_l = -0.5 * Torque_des + stiffness
-    T_r = np.clip(T_r, MIN_TORQUE, MAX_TORQUE)
-    T_l = np.clip(T_l, MIN_TORQUE, MAX_TORQUE)
-    net_Torque = T_r - T_l
+    theta = state[0]
+    des_theta = desired_state[0]
 
-    return net_Torque
+    theta_err = des_theta - theta
+    theta_torque = K_p * theta_err
 
-def force(state):
-    x = 0
-    y = 0
-    return x, y
+    theta_dot = state[1]
+    des_theta_dot = desired_state[1]
+
+    vel_err = des_theta_dot - theta_dot
+    vel_torque = K_v * vel_err
+
+    des_torque = theta_torque + vel_torque
+
+    req_torque = np.clip(des_torque, MIN_TORQUE, MAX_TORQUE)
+
+    return req_torque
 
 def mass_model(theta):
     '''
@@ -104,10 +121,11 @@ def vel_effects(theta, theta_dot):
     '''
     Damping/Velocity based effects on the system
     Complications:
+        - [ ] Small damping from flexing of actuators based on change in length
         - [ ] Estimated Hysterisis effect of filling or empty actuators applying
                 a torque opposite the motion
     '''
-    return 0
+    return 0.1 * theta_dot
 
 def conservative_effects(theta):
     '''
@@ -137,10 +155,17 @@ def conservative_effects(theta):
     F_g = M_l * g
     R_g = LINK_LENGTH / 2
 
+    # this assumes that the robot mass is solely balanced on top of the robot
     M_r = ROBOT_MASS
     F_r = M_r * g
     R_n = LINK_LENGTH
-    link_gravity = F_g * R_g * math.sin(theta)
+
+    try:
+        link_gravity = F_g * R_g * math.sin(theta)
+    except ValueError:
+        print(type(theta))
+        print(theta)
+        raise
     normal_force = - F_r * R_n * math.sin(theta)
 
     return link_gravity + normal_force
@@ -159,8 +184,8 @@ def motion_evolution(state, desired_state, stiffness, time_step,
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
     N = conservative_effects(state[0])
-    
-    accel = (net_Torque - C * state[1] - N) / M
+
+    accel = (net_Torque - C - N) / M
     
     # accelration happens over the time step
     start_vel = state[1]
@@ -174,64 +199,57 @@ def motion_evolution(state, desired_state, stiffness, time_step,
 
 
 if __name__ == '__main__':
-    start_state = np.array([0.02, 0, 0])
-    
     time = np.arange(time_start, time_end, time_resolution)
-    stable = True
-    while stable:
-        control_resolution += time_resolution
-        print('control_resolution: ', control_resolution)
-        dividiv = time / control_resolution
-        dividiv = dividiv % 1
-        print(dividiv)
-        dividiv[dividiv <= 0.01] = 1
-        dividiv[dividiv != 1] = 0
-        print(dividiv)
-        
-        desired_state = np.zeros((time.shape[0],3))
-        desired_state[time.shape[0] // 2:,0] = MAX_AMPLITUDE * np.ones(time.shape[0] // 2)
-        # desired_state[:,1] = MAX_AMPLITUDE * np.cos(time)
-        # desired_state[:,2] = -MAX_AMPLITUDE * np.sin(time)
-        fig = plt.figure()
-        ax_pos = fig.add_subplot(2, 1, 1)
-        ax_pos.set_title('Position')
-        ax_pos.plot(time,  desired_state[:,0] / MAX_AMPLITUDE)
 
-        print('calculating...')
-        for stiffness in [0.0,]:
-            state = np.ones((time.shape[0], start_state.shape[0]))
-            state[0,:] = start_state
-            for i in range(state.shape[0] - 1):
-                new_state, controlled_torque = motion_evolution(
-                    state[i,:],
-                    desired_state[i+1,:],
-                    stiffness,
-                    time_resolution,
-                    controlled_torque,
-                    True)
-                state[i+1,:] = new_state
-            ax_pos.plot(time, state[:,0] / MAX_AMPLITUDE)
+    # the desired state velocity and acceleration are positive here
+    desired_state = np.ones((time.shape[0], start_state.shape[0],)) * MAX_AMPLITUDE
+    # so set desired velocity to 0
+    desired_state[:,1] = 0
+    desired_state[:,2] = 0
+    # # add an in place step change to the other joint angle
+    # desired_state[len(time)//4:len(time)//2,0] *= -0.5
+    # desired_state[len(time)//2:3*len(time)//4,0] *= 0.5
+    # desired_state[3*len(time)//4:,0] *= -1
 
-            if np.max(state[:,0] / MAX_AMPLITUDE) > 3:
-                print('Unstable')
-                stable = False
-            else:
-                stable = True
-            delta = state - desired_state
+    # Try following a sin curve
+    period = 10
+    adjust = (pi * 2) / period 
+    desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
+    desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
 
-            accum_pos_error = sum(delta[:,0])
-            accum_vel_error = sum(delta[:,1])
-            print('pos_error', accum_pos_error)
-            print('vel_error', accum_vel_error)
+    fig = plt.figure()
+    ax_pos = fig.add_subplot(1, 1, 1)
+    ax_pos.set_title('Position')
+    ax_pos.set_ylabel('Position (% of circle)')
+    ax_pos.set_xlabel('Time (sec)')
+    ax_pos.plot(time,  desired_state[:,0] / (2 * math.pi))
 
-            T = -K_p * (delta[:,0])
-            T += -K_v * (delta[:,1])
+    print('calculating...')
+    for stiffness in [0.0,]:
+        state = np.ones((time.shape[0], start_state.shape[0]))
+        state[0,:] = start_state
+        for i in range(state.shape[0] - 1):
+            new_state, controlled_torque = motion_evolution(
+                state[i,:],
+                desired_state[i+1,:],
+                stiffness,
+                time_resolution,
+                controlled_torque,
+                control_active=True)
+            # while new_state[0] > math.pi:
+            #     new_state[0] -= 2 * math.pi
+            # while new_state[0] < math.pi:
+            #     new_state += 2 * math.pi
+            state[i+1,:] = new_state
+        ax_pos.plot(time, state[:,0] / (2 * pi))
 
-            ax_tor = fig.add_subplot(2, 1, 2)
-            ax_tor.set_title('Torque Components')
-            ax_tor.plot(time, T)
-            ax_tor.plot(time, - K_p * (delta[:,0]))
-            ax_tor.plot(time, - K_v * (delta[:,1]))
+        # delta = state - desired_state
+
+        # ax_tor = fig.add_subplot(2, 1, 2)
+        # ax_tor.set_title('Torque Components')
+        # ax_tor.plot(time, T)
+        # ax_tor.plot(time, - K_p * (delta[:,0]))
+        # ax_tor.plot(time, - K_v * (delta[:,1]))
         
         print('show for the dough')
         plt.show()
