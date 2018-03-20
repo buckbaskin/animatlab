@@ -214,7 +214,10 @@ def pressures_to_torque(extp, flxp, state, stiffness, actual_torque=None):
     Inverse model: given the pressures of the left and right actuator, estimate
     the torque on the joint
     Complications:
-        - [.] Getting the numerical method to work
+        - [x] Linear search through torque
+        - [ ] Binary search through torque for speedup. If I make an array-like
+            that calculates the value for torque at each location, I can use the
+            Python bisect module to do the binary search for me.
     '''
     
     ### Calculate errors from guessing torque ###
