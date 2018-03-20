@@ -29,10 +29,12 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 
 class Simulator(object):
-    def __init__(self, **kwargs):
+    def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
         '''
         Set defaults, and override extras with kwargs
         '''
+        self.bang_bang = bang_bang
+        self.limit_pressure = limit_pressure
         ### Simulation Parameters and Constants ###
         self.MAX_AMPLITUDE = math.pi / 16
 
@@ -54,7 +56,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 10
 
-        self.CONTROL_RATE = 50
+        self.CONTROL_RATE = 500
 
         ## Actuator Model Parameters ##
 
@@ -245,13 +247,23 @@ class Simulator(object):
         #   near side of the bang-bang window (close enough). This ignores details 
         #   of filling rate and pressure differential from the air supply to the
         #   actuator.
+        if not self.bang_bang and not self.limit_pressure:
+            return des_pressure
+        if not self.bang_bang:
+            return np.clip(des_pressure,
+                current_pressure - self.PRESSURE_RATE_MAX,
+                current_pressure + self.PRESSURE_RATE_MAX)
         if (float(abs(des_pressure - current_pressure)) < 
             float(self.PRESSURE_RESOLUTION)):
             return current_pressure
         elif des_pressure > current_pressure:
+            if not self.limit_pressure:
+                return des_pressure - self.PRESSURE_RESOLUTION
             return np.min([des_pressure - self.PRESSURE_RESOLUTION,
                 current_pressure + self.PRESSURE_RATE_MAX * time_step])
         else: # des_pressure < current_pressure
+            if not self.limit_pressure:
+                return des_pressure + self.PRESSURE_RESOLUTION
             return np.max([des_pressure + self.PRESSURE_RESOLUTION,
                 current_pressure - self.PRESSURE_RATE_MAX * time_step])
 
@@ -317,6 +329,8 @@ class Simulator(object):
                 control_stiffness=controller.antagonistic_stiffness)
             full_state[i+1,:] = new_state
 
+        return full_state
+
 class Controller(object):
     def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
@@ -371,6 +385,7 @@ class Controller(object):
             - [x] Control uses linear time scaling of control rate
             - [ ] Control uses a model to project forward to choose accel/torque
         '''
+        desired_state=None
 
         ### Current State ###
         theta = state[0]
@@ -412,7 +427,7 @@ class Controller(object):
 
 if __name__ == '__main__':
     ### Set up time ###
-    S = Simulator()
+    S = Simulator(bang_bang=False, limit_pressure=False)
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
