@@ -68,7 +68,7 @@ PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
 # Simplified Proxy for bang-bang control of pressure 
-TORQUE_RESOLUTION = 1.0
+PRESSURE_RESOLUTION = 17.0 # hysterisis gap
 
 time_resolution = 0.001
 time_start = 0
@@ -153,14 +153,11 @@ def control(state, desired_state, stiffness):
     Implements: PD Control
     Complications:
         - [x] Torque Limits
-        - [ ] Force Limts -> Torque Limits based on geometry
-        - [ ] Pressure Limits -> Force Limits -> Torque Limits
-        - [ ] Max Pressure Fill Rate -> dynamic pressure change
-        - [.] Control only updates at X Hz
-        - [ ] Control does bang-bang pressure control
-        - [ ] Simulate Pressure Fill from regulated supply, venting to atmos.
+        - [x] Force Limts -> Torque Limits based on geometry
+        - [x] Pressure Limits -> Force Limits -> Torque Limits
+        - [x] Control does bang-bang pressure control
+        - [ ] Control only updates at X Hz
 
-    # TODO(buckbaskin): make a more complex control model with pressure
     # Use numerical derivative of Torque and Theta for computed pressure to adjust 
     #   torque
     '''
@@ -215,6 +212,8 @@ def pressures_to_torque(extp, flxp, state, est_torque, stiffness,
     '''
     Inverse model: given the pressures of the left and right actuator, estimate
     the torque on the joint
+    Complications:
+        - [.] Getting the numerical method to work
     '''
     ### Split Torque into Two Components ###
     etorque = 0
@@ -343,10 +342,20 @@ def pressure_model(des_pressure, current_pressure, time_step):
     In the future, use airflow model to restrict maximum pressure change
     Complications:
     - [x] Set pressure to desired pressure
+    - [x] Bang-bang control
     - [ ] Set maximum pressure change per time state
-    - [ ] Develop airflow model to more accurately limit pressure changes
+    - [ ] Develop airflow model to more accurately limit pressure changes 
+          (pressure differential, airflow limits)
     '''
-    return des_pressure
+    # As implemented, controller either doesn't change if close or moves to the
+    #   near side of the bang-bang window (close enough). This ignores filling
+    #   rate and pressure differential from the air supply to the actuator.
+    if np.abs(des_pressure - current_pressure) < PRESSURE_RESOLUTION:
+        return current_pressure
+    elif des_pressure > current_pressure:
+        return des_pressure - PRESSURE_RESOLUTION
+    else: # des_pressure < current_pressure
+        return des_pressure + PRESSURE_RESOLUTION
 
 def motion_evolution(state, desired_state, hidden_state,
     stiffness, time_step, last_control, control_active):
