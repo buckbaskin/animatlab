@@ -245,7 +245,6 @@ class Simulator(object):
         #   near side of the bang-bang window (close enough). This ignores details 
         #   of filling rate and pressure differential from the air supply to the
         #   actuator.
-        print(des_pressure)
         if (float(abs(des_pressure - current_pressure)) < 
             float(self.PRESSURE_RESOLUTION)):
             return current_pressure
@@ -285,9 +284,7 @@ class Simulator(object):
         start_theta = state[0]
         end_theta = state[0] + avg_vel * time_step
 
-        state = np.array([end_theta, end_vel, accel]).flatten()
-        hidden_state = np.array([ext_pres, flx_pres]).flatten()
-        last_control = (des_ext_pres, des_flx_pres, intended_torque,)
+        state = np.array([end_theta, end_vel, accel, ext_pres, flx_pres]).flatten()
 
         return state
 
