@@ -27,6 +27,7 @@ import matplotlib.pyplot as plt
 
 from math import pi
 from numpy import arctan, sqrt, floor, ceil
+from functools import partial
 
 class Simulator(object):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
@@ -54,9 +55,9 @@ class Simulator(object):
 
         self.TIME_RESOLUTION = 0.001
         self.TIME_START = 0
-        self.TIME_END = 10
+        self.TIME_END = 0.5
 
-        self.CONTROL_RATE = 500
+        self.CONTROL_RATE = 100
 
         ## Actuator Model Parameters ##
 
@@ -312,7 +313,7 @@ class Simulator(object):
         full_state = np.ones((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
         for i in range(full_state.shape[0] - 1):
-            if i % 1000 == 0:
+            if i % 10 == 0:
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
@@ -369,7 +370,7 @@ class Controller(object):
         '''
         des_ext_pres, des_flx_pres = self._convert_to_pressure(desired_torque, state)
         # print('des_ext_pres', des_ext_pres, 'des_flx_pres', des_flx_pres)
-        full_state = np.zeros((len(times), len(state),))
+        full_state = np.zeros((times.shape[0], state.shape[0],))
         full_state[0,:] = state
         for i in range(len(times) - 1):
             new_state = self.sim.motion_evolution(
@@ -383,6 +384,12 @@ class Controller(object):
 
     def optimize_this(self, guess_torque, state, desired_states, times):
         projected_states = self.internal_model(state, guess_torque, times)
+        # plt.plot(times, desired_states[:,0])
+        # plt.plot(times, projected_states[:,0])
+        # plt.title('Position (des and projected)')
+        # plt.ylabel('Angle (rad)')
+        # plt.xlabel('Time (sec)')
+        # plt.show()
         delta = desired_states[-1:] - projected_states[-1,:]
         simple_err = np.dot(delta.flatten(), np.ones(delta.shape).flatten())
         return simple_err
@@ -396,33 +403,23 @@ class Controller(object):
         accel = state[2]
 
         ### Optimizing Control ###
-        guess_torque = self._pick_proportional_torque(state, desired_states, times)
-        last_guess_error = 0.0
-        for _ in range(0):
-            guess_error = self.optimize_this(guess_torque, state, desired_states, times)
-            # print('guess_torque', guess_torque, 'guess_error', guess_error)
-            if abs(guess_error) < 0.001:
-                break
-            elif guess_error > 0:
-                guess_torque += 0.2
-            else: # guess_error < 0
-                guess_torque -= 0.2
-            if guess_error == last_guess_error:
-                # print('done early. probably clipped or rate limited')
-                break
-            last_guess_error = guess_error
-        guess_error = self.optimize_this(guess_torque, state, desired_states, times)
-        # print('guess_torque', guess_torque, 'guess_error', guess_error)
+        guess_torques = np.arange(-1, 1, 0.001)
+        # guess_torque = self._pick_proportional_torque(state, desired_states, times)
+        optim = np.vectorize(partial(self.optimize_this, state=state, desired_states=desired_states, times=times))
+        guess_errors = optim(guess_torques)
         
-        des_torque = guess_torque
+        # plt.plot(guess_torques, guess_errors)
+        # plt.show()
+
+        des_torque = guess_torques[np.argmin(guess_errors)]
 
         return des_torque
 
     def _pick_proportional_torque(self, state, desired_states, times):
         theta = state[0]
-        des_theta = desired_states[-1, 0]
+        des_theta = desired_states[0, 0]
         theta_dot = state[1]
-        des_theta_dot = desired_states[-1, 1]
+        des_theta_dot = desired_states[0, 1]
 
         # vel = state[1]
 
@@ -505,7 +502,7 @@ if __name__ == '__main__':
     desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
     desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
 
-    plot_position = True
+    plot_position = False
 
     if plot_position:
         fig = plt.figure()

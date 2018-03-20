@@ -1,8 +1,6 @@
 # TODO
 
-## Talking w/ Nick 3/5
-
-### Next Steps
+## Next Steps
 - [x] Linear stability analysis of PD angle/torque control for large angles
 - [x] Level curve for stiffness -> pick stiffness -> select angle from there
 - [x] Build a dynamic model, 2 different Festos, negative feedback based on pressure/position curves. This is a numerical model where everything happens nicely. 
@@ -15,5 +13,9 @@
 - [ ] Control input, desired position, sin wave of frequency, Bode plot, analyze
 - [ ] Numerically analyze nonlinear system, doing the same stuff as for a linear system
 
-### Future Thoughts
+## Building a Better Controller
+- [ ] Does it look close to linear for constant pressures?
+- [ ] Also, related: what does the motion update do for constant control pressure?
+
+## Future Thoughts
 - [ ] Update stiffness in a 3 joint model in simulation adding or removing weights
