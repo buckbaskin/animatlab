@@ -144,15 +144,15 @@ class Simulator(object):
         ### Calculate errors from guessing torque ###
 
         # TODO(buckbaskin): this is slow
-        maximum_torque = np.max([np.abs(TORQUE_MAX), np.abs(TORQUE_MIN)])    
+        maximum_torque = np.max([np.abs(self.TORQUE_MAX), np.abs(self.TORQUE_MIN)])
         torque_guesses = np.arange(-maximum_torque, maximum_torque, 0.05)
         ext_guess = torque_guesses / 2 + stiffness
         flx_guess = -torque_guesses / 2 + stiffness
 
-        extp_guesses = ext_torque_to_pressure(ext_guess, state)
-        extp_guesses = np.clip(extp_guesses, PRESSURE_MIN, PRESSURE_MAX)
-        flxp_guesses = flx_torque_to_pressure(flx_guess, state)
-        flxp_guesses = np.clip(flxp_guesses, PRESSURE_MIN, PRESSURE_MAX)
+        extp_guesses = self.ext_torque_to_pressure(ext_guess, state)
+        extp_guesses = np.clip(extp_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        flxp_guesses = self.flx_torque_to_pressure(flx_guess, state)
+        flxp_guesses = np.clip(flxp_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
         extp_err = np.abs(extp_guesses - extp)
         flxp_err = np.abs(flxp_guesses - flxp)
@@ -173,8 +173,8 @@ class Simulator(object):
         Complications:
             - [ ] Uniform mass distribution on the link
         '''
-        M = LINK_MASS
-        R = LINK_LENGTH / 2
+        M = self.LINK_MASS
+        R = self.LINK_LENGTH / 2
         return M * (R**2)
 
     def vel_effects(self, theta, theta_dot):
@@ -211,14 +211,14 @@ class Simulator(object):
                          .   
         '''
         g = 9.81
-        M_l = LINK_MASS
+        M_l = self.LINK_MASS
         F_g = M_l * g
-        R_g = LINK_LENGTH / 2
+        R_g = self.LINK_LENGTH / 2
 
         # this assumes that the robot mass is solely balanced on top of the joint
-        M_r = ROBOT_MASS
+        M_r = self.ROBOT_MASS
         F_r = M_r * g
-        R_n = LINK_LENGTH
+        R_n = self.LINK_LENGTH
 
         try:
             link_gravity = F_g * R_g * math.sin(theta)
@@ -256,7 +256,7 @@ class Simulator(object):
             return np.max([des_pressure + self.PRESSURE_RESOLUTION,
                 current_pressure - self.PRESSURE_RATE_MAX * time_step])
 
-    def motion_evolution(self, state, time_step, control):
+    def motion_evolution(self, state, time_step, control, control_stiffness):
         '''
         M * ddot theta + C * dot theta + N * theta = torque
         ddot theta = 1 / M * (torque - C * dot theta - N) 
@@ -269,12 +269,11 @@ class Simulator(object):
         ext_pres = self.pressure_model(des_ext_pres, ext_pres, time_step)
         flx_pres = self.pressure_model(des_flx_pres, flx_pres, time_step)
 
-        Torque_net = pressures_to_torque(ext_pres, flx_pres, state, stiffness,
-            actual_torque=None)
+        Torque_net = self.pressures_to_torque(ext_pres, flx_pres, state, control_stiffness)
 
-        M = mass_model(state[0])
-        C = vel_effects(state[0], state[1])
-        N = conservative_effects(state[0])
+        M = self.mass_model(state[0])
+        C = self.vel_effects(state[0], state[1])
+        N = self.conservative_effects(state[0])
 
         accel = (Torque_net - C - N) / M
         
@@ -290,7 +289,7 @@ class Simulator(object):
         hidden_state = np.array([ext_pres, flx_pres]).flatten()
         last_control = (des_ext_pres, des_flx_pres, intended_torque,)
 
-        return state, hidden_state, last_control
+        return state
 
     def timeline(self):
         return np.arange(self.TIME_START, self.TIME_END, self.TIME_RESOLUTION)
@@ -314,10 +313,11 @@ class Simulator(object):
                     state=full_state[i,:],
                     desired_states=desired_state[i:i+steps_to_next_ctrl,:],
                     times=time[i:i+steps_to_next_ctrl])
-            new_state, self.last_control = self.motion_evolution(
+            new_state = self.motion_evolution(
                 state=full_state[i,:],
                 time_step=self.TIME_RESOLUTION,
-                control=self.last_control)
+                control=self.last_control,
+                control_stiffness=controller.antagonistic_stiffness)
             full_state[i+1,:] = new_state
 
 class Controller(object):
