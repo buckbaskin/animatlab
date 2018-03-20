@@ -111,22 +111,26 @@ class Simulator(object):
     def flx_torque_to_pressure(self, torque, state):
         T = torque
         A = state[0]
-        F = T / (d * np.cos(beta_l + A))
-        L_angle = l0 + l1 * np.cos(alpha_l + A)
-        K = (l_rest - L_angle) / l_rest
+        F = T / (self.d * np.cos(self.beta_l + A))
+        L_angle = self.l0 + self.l1 * np.cos(self.alpha_l + A)
+        K = (self.l_rest - L_angle) / self.l_rest
         assert np.all(0 <= K) and np.all(K <= 1)
-        P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
-        return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
+        P = (self.a0 + self.a1 *
+            np.tan(self.a2 * (K / (self.a4 * F + self.k_max)+ self.a3))
+            + self.a5 * F) # kpa
+        return np.clip(P, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
     def ext_torque_to_pressure(self, torque, state):
         T = torque
         A = state[0]
-        F = T / (d * np.cos(beta_r + A))
-        L_angle = l0 + l1 * np.cos(alpha_r + A)
-        K = (l_rest - L_angle) / l_rest
+        F = T / (self.d * np.cos(self.beta_r + A))
+        L_angle = self.l0 + self.l1 * np.cos(self.alpha_r + A)
+        K = (self.l_rest - L_angle) / self.l_rest
         assert np.all(0 <= K) and np.all(K <= 1)
-        P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
-        return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
+        P = (self.a0 + self.a1 *
+            np.tan(self.a2 * (K / (self.a4 * F + self.k_max)+ self.a3))
+            + self.a5 * F) # kpa
+        return np.clip(P, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
     def pressures_to_torque(self, extp, flxp, state, stiffness, actual_torque=None):
         '''
@@ -250,7 +254,7 @@ class Simulator(object):
             return np.max([des_pressure + PRESSURE_RESOLUTION,
                 current_pressure - PRESSURE_RATE_MAX * time_step])
 
-    def motion_evolution(self, state, desired_state, time_step, control):
+    def motion_evolution(self, state, time_step, control):
         '''
         M * ddot theta + C * dot theta + N * theta = torque
         ddot theta = 1 / M * (torque - C * dot theta - N) 
@@ -260,8 +264,8 @@ class Simulator(object):
 
         des_ext_pres, des_flx_pres, intended_torque = control
 
-        ext_pres = pressure_model(des_ext_pres, ext_pres, time_step)
-        flx_pres = pressure_model(des_flx_pres, flx_pres, time_step)
+        ext_pres = self.pressure_model(des_ext_pres, ext_pres, time_step)
+        flx_pres = self.pressure_model(des_flx_pres, flx_pres, time_step)
 
         Torque_net = pressures_to_torque(ext_pres, flx_pres, state, stiffness,
             actual_torque=None)
@@ -310,17 +314,15 @@ class Simulator(object):
                     times=time[i:i+steps_to_next_ctrl])
             new_state, self.last_control = self.motion_evolution(
                 state=full_state[i,:],
-                desired_state=desired_state[i+1,:],
-                stiffness=stiffness,
                 time_step=self.TIME_RESOLUTION,
                 control=self.last_control)
             full_state[i+1,:] = new_state
 
 class Controller(object):
-    def __init__(self, stiffness, **kwargs):
+    def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
-
-        self.internal_sim = Simulator()
+        self.control_rate = control_rate
+        self.sim = Simulator()
         ## "Static" Stiffness ##
         # Increasing the stiffness increases the range around 0 where the complete
         #   desired torque works. On the other hand, decreasing the stiffness increases
@@ -382,30 +384,30 @@ class Controller(object):
         ### PD Control ###
         theta_err = des_theta - theta
         magic_number1 = 115
-        theta_torque = (K_p * np.min([1, (1 + control_rate) / magic_number1])) * theta_err
+        theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
 
         theta_dot = state[1]
         des_theta_dot = desired_state[1]
 
         vel_err = des_theta_dot - theta_dot
-        vel_torque = (K_v * np.min([1, (1 + control_rate) / magic_number1])) * vel_err
+        vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
 
         des_torque = theta_torque + vel_torque
 
         ### Convert Torque to Left and Right Torques ###
         # extension is positive rotation
-        ext_torque = des_torque / 2 + antagonistic_stiffness
+        ext_torque = des_torque / 2 + self.antagonistic_stiffness
         
         # flexion is negative rotation
-        flx_torque = -des_torque / 2 + antagonistic_stiffness
+        flx_torque = -des_torque / 2 + self.antagonistic_stiffness
         
         # TODO(buckbaskin): I did the math here so clipping had less effect, but I
         #   deleted it
-        des_ext_pres = ext_torque_to_pressure(ext_torque, state)
-        des_ext_pres = np.clip(des_ext_pres, PRESSURE_MIN, PRESSURE_MAX)
+        des_ext_pres = self.sim.ext_torque_to_pressure(ext_torque, state)
+        des_ext_pres = np.clip(des_ext_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
 
-        des_flx_pres = flx_torque_to_pressure(flx_torque, state)
-        des_flx_pres = np.clip(des_flx_pres, PRESSURE_MIN, PRESSURE_MAX)
+        des_flx_pres = self.sim.flx_torque_to_pressure(flx_torque, state)
+        des_flx_pres = np.clip(des_flx_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
 
         return des_ext_pres, des_flx_pres, des_torque
 
@@ -446,7 +448,7 @@ if __name__ == '__main__':
     print('calculating...')
     for stiffness in [0.1,]:
         print('stiffness: %.2f' % (stiffness,))
-        C = Controller(stiffness=stiffness)
+        C = Controller(control_rate=S.CONTROL_RATE, stiffness=stiffness)
         
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
