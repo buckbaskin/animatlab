@@ -389,7 +389,7 @@ class Controller(object):
 
         ### Current State ###
         theta = state[0]
-        des_theta = desired_state[-1,0]
+        des_theta = desired_states[-1,0]
 
         vel = state[1]
 
@@ -401,7 +401,7 @@ class Controller(object):
         theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
 
         theta_dot = state[1]
-        des_theta_dot = desired_state[-1,1]
+        des_theta_dot = desired_states[-1,1]
 
         vel_err = des_theta_dot - theta_dot
         vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
@@ -427,7 +427,7 @@ class Controller(object):
 
 if __name__ == '__main__':
     ### Set up time ###
-    S = Simulator(bang_bang=False, limit_pressure=False)
+    S = Simulator(bang_bang=True, limit_pressure=True)
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
