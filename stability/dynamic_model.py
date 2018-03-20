@@ -171,13 +171,14 @@ def control(state, desired_state, stiffness, control_rate):
 
     ### PD Control ###
     theta_err = des_theta - theta
-    theta_torque = K_p * theta_err
+    magic_number1 = 115
+    theta_torque = (K_p * np.min([1, (1 + control_rate) / magic_number1])) * theta_err
 
     theta_dot = state[1]
     des_theta_dot = desired_state[1]
 
     vel_err = des_theta_dot - theta_dot
-    vel_torque = K_v * vel_err
+    vel_torque = (K_v * np.min([1, (1 + control_rate) / magic_number1])) * vel_err
 
     des_torque = theta_torque + vel_torque
 
