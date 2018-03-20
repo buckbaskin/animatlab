@@ -13,8 +13,10 @@ C: A small damping factor is assumed
 N: gravity on the point mass at a distance, weight of robot
 
 Notes:
-- Pushing Stiffness too high causes clipping for the primary actuator, so less 
+- Pushing static stiffness too high causes clipping for the primary actuator, so less 
     net torque is achieved and decreased line following is achieved
+- Dynamic gains that are too high cause sawtooth oscillation and instability
+- Dynamic gains that are too low cause lagging trajectory execution
 '''
 import sys
 print('--- %s ---' % (sys.argv[0],))
@@ -118,9 +120,6 @@ def flx_torque_to_pressure(torque, state):
     T = torque
     A = state[0]
     F = T / (d * np.cos(beta_l + A))
-    # print('pressurel:T', T)
-    # print('pressurel:A', A)
-    # print('pressurel:F', F)
     L_angle = l0 + l1 * np.cos(alpha_l + A)
     K = (l_rest - L_angle) / l_rest
     assert np.all(0 <= K) and np.all(K <= 1)
@@ -131,9 +130,6 @@ def ext_torque_to_pressure(torque, state):
     T = torque
     A = state[0]
     F = T / (d * np.cos(beta_r + A))
-    # print('pressurer:T', T)
-    # print('pressurer:A', A)
-    # print('pressurer:F', F)
     L_angle = l0 + l1 * np.cos(alpha_r + A)
     K = (l_rest - L_angle) / l_rest
     assert np.all(0 <= K) and np.all(K <= 1)
@@ -178,20 +174,6 @@ def control(state, desired_state, stiffness, control_rate):
     # flexion is negative rotation
     flx_torque = -des_torque / 2 + antagonistic_stiffness
     
-    '''
-    # Torque correction that doesn't work (as implemented) in the pressure-torque world
-
-    current_net = ext_torque - flx_torque
-    err = des_torque - current_net
-    pos_err = np.clip(err, 0, None)
-    neg_err = np.clip(err, None, 0)
-
-    ext_torque += pos_err
-    ext_torque = np.clip(ext_torque, TORQUE_MIN, TORQUE_MAX)
-    flx_torque += -neg_err
-    flx_torque = np.clip(flx_torque, TORQUE_MIN, TORQUE_MAX)
-    '''
-
     # TODO(buckbaskin): I did the math here so clipping had less effect, but I
     #   deleted it
     des_ext_pres = ext_torque_to_pressure(ext_torque, state)
@@ -285,7 +267,7 @@ def conservative_effects(theta):
     F_g = M_l * g
     R_g = LINK_LENGTH / 2
 
-    # this assumes that the robot mass is solely balanced on top of the robot
+    # this assumes that the robot mass is solely balanced on top of the joint
     M_r = ROBOT_MASS
     F_r = M_r * g
     R_n = LINK_LENGTH
@@ -312,8 +294,9 @@ def pressure_model(des_pressure, current_pressure, time_step):
           (pressure differential, airflow limits)
     '''
     # As implemented, controller either doesn't change if close or moves to the
-    #   near side of the bang-bang window (close enough). This ignores filling
-    #   rate and pressure differential from the air supply to the actuator.
+    #   near side of the bang-bang window (close enough). This ignores details 
+    #   of filling rate and pressure differential from the air supply to the
+    #   actuator.
     if np.abs(des_pressure - current_pressure) < PRESSURE_RESOLUTION:
         return current_pressure
     elif des_pressure > current_pressure:
@@ -374,15 +357,7 @@ if __name__ == '__main__':
 
     ### Set up desired state ###
     # the desired state velocity and acceleration are positive here
-    desired_state = np.ones((time.shape[0], state_start.shape[0],)) * MAX_AMPLITUDE
-    # so set desired velocity to 0
-    desired_state[:,1] = 0
-    desired_state[:,2] = 0
-
-    # # add an in place step change to the other joint angle
-    # desired_state[len(time)//4:len(time)//2,0] *= -0.5
-    # desired_state[len(time)//2:3*len(time)//4,0] *= 0.5
-    # desired_state[3*len(time)//4:,0] *= -1
+    desired_state = np.zeros((time.shape[0], state_start.shape[0],))
 
     # Try following a sin curve
     period = 10
