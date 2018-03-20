@@ -194,9 +194,9 @@ def control(state, desired_state, stiffness):
     neg_err = np.clip(err, None, 0)
 
     ext_torque += pos_err
-    ext_torque = np.clip(ext_torque, MIN_TORQUE, MAX_TORQUE)
+    ext_torque = np.clip(ext_torque, TORQUE_MIN, TORQUE_MAX)
     flx_torque += -neg_err
-    flx_torque = np.clip(flx_torque, MIN_TORQUE, MAX_TORQUE)
+    flx_torque = np.clip(flx_torque, TORQUE_MIN, TORQUE_MAX)
     '''
 
     des_ext_pres = ext_torque_to_pressure(ext_torque, state)
@@ -216,15 +216,14 @@ def pressures_to_torque(extp, flxp, state, est_torque, stiffness,
         - [.] Getting the numerical method to work
     '''
     ### Split Torque into Two Components ###
-    etorque = 0
-    ftorque = 0
-    if est_torque >= 0:
-        etorque = est_torque / 2 + stiffness
-    else:
-        ftorque = -est_torque / 2 + stiffness
+    etorque = est_torque / 2 + stiffness
+    ftorque = -est_torque / 2 + stiffness
 
     ### Calculate relative error and gradient ###
-    resolution = 0.01
+    # TODO(buckbaskin): I think this gradient method is failing
+    # TODO(buckbaskin): step through torques? binary search? I'm not sure binary
+    #   search works here and step through at a resolution is easier to code.
+    extp_guesses = np.arange(PRESSURE_MIN)
 
     extp_guess0 = ext_torque_to_pressure(etorque-resolution, state)
     extp_guess1 = ext_torque_to_pressure(etorque+resolution, state)
@@ -235,9 +234,13 @@ def pressures_to_torque(extp, flxp, state, est_torque, stiffness,
         actual_torques = np.ones((5,)) * actual_torque
         etorques = np.zeros((5,))
         ftorques = np.zeros((5,))
+        print(('actual torque', actual_torque,))
+        print(('stiffness', stiffness,))
+        print(('starting torques', etorque, ftorque,))
 
     ### Iterate through updates to attempt to converge on actual torque ###
     for i in range(0, 5):
+        print('\n+++ Iteration %d +++' % (i +1,))
         if actual_torque is not None:
             etorques[i] = etorque
             ftorques[i] = ftorque
@@ -245,29 +248,78 @@ def pressures_to_torque(extp, flxp, state, est_torque, stiffness,
         extp_err = extp - (extp_guess0 + extp_guess1) / 2
         flxp_err = flxp - (flxp_guess0 + flxp_guess1) / 2
 
+        print(('extp', extp,))
+        print(('extp_guesses', extp_guess0, extp_guess1,))
+        print(('errors', extp_err, flxp_err,))
+        
         dep_dtq = (extp_guess1 - extp_guess0) / (2 * resolution)
         dfp_dtq = (flxp_guess1 - flxp_guess0) / (2 * resolution)
 
+        print(('gradient', dep_dtq, dfp_dtq,))
+
         ### Estimate the required change in torque to minimize relative errors ###
-        full_ext_correction = extp_err / dep_dtq
-        full_flx_correction = flxp_err / dfp_dtq
+        if np.abs(extp_err) < 0.001:
+            full_ext_correction = 0
+        elif np.abs(dep_dtq) < 0.001:
+            extp_guess0 = ext_torque_to_pressure(etorque-2*resolution, state)
+            extp_guess1 = ext_torque_to_pressure(etorque+2*resolution, state)
+            dep_dtq = (extp_guess1 - extp_guess0) / (4 * resolution)
+            if np.abs(dep_dtq) < 0.001:
+                full_ext_correction = 0
+            else:
+                full_ext_correction = extp_err / dep_dtq
+        else:
+            full_ext_correction = extp_err / dep_dtq
+        if np.isnan(full_ext_correction):
+            print('full_ext_correction')
+            print('extp_err', extp_err)
+            print('dep_dtq', dep_dtq)
+            raise ValueError('full_ext_correction is nan')
+
+        if np.abs(flxp_err) < 0.001:
+            full_flx_correction = 0
+        elif np.abs(dfp_dtq) < 0.001:
+            flxp_guess0 = flx_torque_to_pressure(ftorque-2*resolution, state)
+            flxp_guess1 = flx_torque_to_pressure(ftorque+2*resolution, state)
+            dfp_dtq = (flxp_guess1 - flxp_guess0) / (4 * resolution)
+            if np.abs(dfp_dtq) < 0.001:
+                full_flx_correction = 0
+            else:
+                full_flx_correction = flxp_err / dfp_dtq
+        else:
+            full_flx_correction = flxp_err / dfp_dtq
+        if np.isnan(full_flx_correction):
+            print('full_flx_correction')
+            print('flxp_err', flxp_err)
+            print('dfp_dtq', dfp_dtq)
+            raise ValueError('full_flx_correction is nan')
+
 
         average_correction = (full_ext_correction + full_flx_correction) / 2
         step_ratio = 0.5
         torque_correction = average_correction * 0.5
 
+        print(('correction', full_ext_correction, full_flx_correction, torque_correction))
+
         etorque += torque_correction
         ftorque -= torque_correction
 
+        print(('new torques', etorque, ftorque,))
+        print(('net torque', etorque - ftorque, 'stiffness', (etorque + ftorque)/2))
+
+        extp_guess0 = ext_torque_to_pressure(etorque-resolution, state)
+        extp_guess1 = ext_torque_to_pressure(etorque+resolution, state)
+        flxp_guess0 = flx_torque_to_pressure(ftorque-resolution, state)
+        flxp_guess1 = flx_torque_to_pressure(ftorque+resolution, state)
+
     if actual_torque is not None:
         plt.plot(actual_torques) # blue
-        plt.plot(etorques) # orgnge
+        plt.plot(etorques) # orange
         plt.plot(ftorques) # green
         net_torques = etorques - ftorques
         plt.plot(net_torques) # red
         print('plotting etorques')
         plt.show()
-        1/0
     return etorque - ftorque
 
 def mass_model(theta):
