@@ -68,7 +68,7 @@ PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
 # Simplified Proxy for bang-bang control of pressure 
-PRESSURE_RESOLUTION = 2.0 # hysterisis gap
+PRESSURE_RESOLUTION = 17.0 # hysterisis gap
 
 time_resolution = 0.001
 time_start = 0
