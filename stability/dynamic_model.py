@@ -218,10 +218,10 @@ def pressures_to_torque(extp, flxp, state, stiffness, actual_torque=None):
     '''
     
     ### Calculate errors from guessing torque ###
-    print('extp', extp, 'flxp', flxp)
 
+    # TODO(buckbaskin): this is slow and I think binary search would work ok
     maximum_torque = np.max([np.abs(TORQUE_MAX), np.abs(TORQUE_MIN)])    
-    torque_guesses = np.arange(-maximum_torque, maximum_torque, 0.01)
+    torque_guesses = np.arange(-maximum_torque, maximum_torque, 0.05)
     ext_guess = torque_guesses / 2 + stiffness
     flx_guess = -torque_guesses / 2 + stiffness
 
@@ -237,14 +237,8 @@ def pressures_to_torque(extp, flxp, state, stiffness, actual_torque=None):
     best_guess = torque_guesses[np.argmin(total_err)]
 
     if actual_torque is not None:
-        for i in range(0, len(torque_guesses)):
-            if 0.75 < torque_guesses[i] < 1.00:
-                print('guess', torque_guesses[i], 'error', total_err[i],
-                    '    e', extp_guesses[i], ' f', flxp_guesses[i])
-        print('actual', actual_torque, 'guess', best_guess)
-
-    1/0
-    return etorque - ftorque
+        print('attempted', actual_torque, 'actual', best_guess)
+    return best_guess
 
 def mass_model(theta):
     '''
@@ -318,7 +312,7 @@ def pressure_model(des_pressure, current_pressure, time_step):
     In the future, use airflow model to restrict maximum pressure change
     Complications:
     - [x] Set pressure to desired pressure
-    - [x] Bang-bang control
+    - [ ] Bang-bang control
     - [ ] Set maximum pressure change per time state
     - [ ] Develop airflow model to more accurately limit pressure changes 
           (pressure differential, airflow limits)
@@ -326,6 +320,8 @@ def pressure_model(des_pressure, current_pressure, time_step):
     # As implemented, controller either doesn't change if close or moves to the
     #   near side of the bang-bang window (close enough). This ignores filling
     #   rate and pressure differential from the air supply to the actuator.
+    return des_pressure
+
     if np.abs(des_pressure - current_pressure) < PRESSURE_RESOLUTION:
         return current_pressure
     elif des_pressure > current_pressure:
@@ -351,7 +347,7 @@ def motion_evolution(state, desired_state, hidden_state,
     flx_pres = pressure_model(des_flx_pres, flx_pres, time_step)
 
     Torque_net = pressures_to_torque(ext_pres, flx_pres, state, stiffness,
-        actual_torque=intended_torque)
+        actual_torque=None)
 
     M = mass_model(state[0])
     C = vel_effects(state[0], state[1])
@@ -396,7 +392,7 @@ if __name__ == '__main__':
     desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
     desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
 
-    plot_position = False
+    plot_position = True
 
     if plot_position:
         fig = plt.figure()
@@ -417,10 +413,8 @@ if __name__ == '__main__':
         state = np.ones((time.shape[0], state_start.shape[0]))
         state[0,:] = state_start
         for i in range(state.shape[0] - 1):
-            '''
-            state, desired_state, hidden_state,
-    stiffness, time_step, last_control, control_active
-            '''
+            if i % 1000 == 0:
+                print('...calculating step % 6d / %d' % (i, state.shape[0] - 1,))
             new_state, new_hidden_state, last_control = motion_evolution(
                 state=state[i,:],
                 desired_state=desired_state[i+1,:],
