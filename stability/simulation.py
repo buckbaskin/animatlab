@@ -367,46 +367,80 @@ class Controller(object):
             - [ ] Call the motion evolution repeatedly and build up the states here
             - [ ] Return the states array
         '''
-        internal_rotational_inertia = 1
+        des_ext_pres, des_flx_pres = self._convert_to_pressure(desired_torque, state)
+        # print('des_ext_pres', des_ext_pres, 'des_flx_pres', des_flx_pres)
+        full_state = np.zeros((len(times), len(state),))
+        full_state[0,:] = state
+        for i in range(len(times) - 1):
+            new_state = self.sim.motion_evolution(
+                state=full_state[i,:],
+                time_step=self.sim.TIME_RESOLUTION,
+                control=(des_ext_pres, des_flx_pres, desired_torque,),
+                control_stiffness=self.antagonistic_stiffness)
+            full_state[i+1,:] = new_state
 
-    def control(self, state, desired_states, times):
-        '''
-        Control Model
-        Implements: 
-            Formerly: PD Control
-            WIP: Chooses a torque/acceleration that best matches desired states at 
-                the given times
-        Complications:
-            - [x] Torque Limits
-            - [x] Force Limts -> Torque Limits based on geometry
-            - [x] Pressure Limits -> Force Limits -> Torque Limits
-            - [x] Control does bang-bang pressure control
-            - [x] Control only updates at X Hz
-            - [x] Control uses linear time scaling of control rate
-            - [ ] Control uses a model to project forward to choose accel/torque
-        '''
-        desired_state=None
+        return full_state
+
+    def optimize_this(self, guess_torque, state, desired_states, times):
+        projected_states = self.internal_model(state, guess_torque, times)
+        delta = desired_states[-1:] - projected_states[-1,:]
+        simple_err = np.dot(delta.flatten(), np.ones(delta.shape).flatten())
+        return simple_err
+
+    def _pick_torque(self, state, desired_states, times):
+        desired_state=None # clear polluting global scope
 
         ### Current State ###
         theta = state[0]
-        des_theta = desired_states[-1,0]
-
         vel = state[1]
-
         accel = state[2]
 
-        ### PD Control ###
-        theta_err = des_theta - theta
-        magic_number1 = 115
-        theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
+        ### Optimizing Control ###
+        guess_torque = self._pick_proportional_torque(state, desired_states, times)
+        last_guess_error = 0.0
+        for _ in range(0):
+            guess_error = self.optimize_this(guess_torque, state, desired_states, times)
+            # print('guess_torque', guess_torque, 'guess_error', guess_error)
+            if abs(guess_error) < 0.001:
+                break
+            elif guess_error > 0:
+                guess_torque += 0.2
+            else: # guess_error < 0
+                guess_torque -= 0.2
+            if guess_error == last_guess_error:
+                # print('done early. probably clipped or rate limited')
+                break
+            last_guess_error = guess_error
+        guess_error = self.optimize_this(guess_torque, state, desired_states, times)
+        # print('guess_torque', guess_torque, 'guess_error', guess_error)
+        
+        des_torque = guess_torque
 
+        return des_torque
+
+    def _pick_proportional_torque(self, state, desired_states, times):
+        theta = state[0]
+        des_theta = desired_states[-1, 0]
         theta_dot = state[1]
-        des_theta_dot = desired_states[-1,1]
+        des_theta_dot = desired_states[-1, 1]
+
+        # vel = state[1]
+
+        # accel = state[2]
+
+        ### PD Control ###
+        magic_number1 = 115
+
+        theta_err = des_theta - theta
+        theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
 
         vel_err = des_theta_dot - theta_dot
         vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
 
         des_torque = theta_torque + vel_torque
+        return des_torque
+
+    def _convert_to_pressure(self, des_torque, state):
 
         ### Convert Torque to Left and Right Torques ###
         # extension is positive rotation
@@ -422,6 +456,28 @@ class Controller(object):
 
         des_flx_pres = self.sim.flx_torque_to_pressure(flx_torque, state)
         des_flx_pres = np.clip(des_flx_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
+
+        return des_ext_pres, des_flx_pres
+
+    def control(self, state, desired_states, times):
+        '''
+        Control Model
+        Implements: (see _pick_torque)
+            Formerly: PD Control
+            WIP: Chooses a torque/acceleration that best matches desired states at 
+                the given times
+        Complications:
+            - [x] Torque Limits
+            - [x] Force Limts -> Torque Limits based on geometry
+            - [x] Pressure Limits -> Force Limits -> Torque Limits
+            - [x] Control does bang-bang pressure control
+            - [x] Control only updates at X Hz
+            - [x] Control uses linear time scaling of control rate
+            - [ ] Control uses a model to project forward to choose accel/torque
+        '''
+
+        des_torque = self._pick_torque(state, desired_states, times)
+        des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         return des_ext_pres, des_flx_pres, des_torque
 
