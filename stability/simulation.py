@@ -29,17 +29,12 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 
 class Simulator(object):
-    def __init__(self, controller, **kwargs):
+    def __init__(self, **kwargs):
         '''
         Set defaults, and override extras with kwargs
         '''
-        self.controller = controller
-
         ### Simulation Parameters and Constants ###
         self.MAX_AMPLITUDE = math.pi / 16
-
-        self.hidden_state_start = np.array([0, 0]) # pressures of actuators
-        self.state_start = np.array([-MAX_AMPLITUDE / 2, 0, 0]) # position, vel, accel
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
@@ -74,15 +69,15 @@ class Simulator(object):
         ## Mutual Actuator Parameters ##
 
         self.l_rest = .189 # m
-        self.l_620 = round(-((.17 * l_rest) - l_rest), 3)
+        self.l_620 = round(-((.17 * self.l_rest) - self.l_rest), 3)
         self.k_max = 0.17
-        self.l_max = l_rest
-        self.l_min = l_620
+        self.l_max = self.l_rest
+        self.l_min = self.l_620
 
         self.d = 0.005 # m
         self.offset = 0.015 # m
-        self.l1 = round(sqrt(d**2 + offset**2), 3)
-        self.l0 = floor((l_max - l1) * 1000.0) / 1000.0
+        self.l1 = round(sqrt(self.d**2 + self.offset**2), 3)
+        self.l0 = floor((self.l_max - self.l1) * 1000.0) / 1000.0
 
         ## Specific Actuator Parameters ##
         # Actuator L is the negative (flexion) actuator
@@ -97,15 +92,17 @@ class Simulator(object):
         #       .  \
         #       .   \
 
-        self.alpha_l = arctan(offset / d) # radians
+        self.alpha_l = arctan(self.offset / self.d) # radians
         self.beta_l = -pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
         self.beta_l = 0 # for now
 
-        self.alpha_r = -arctan(offset / d) # radians
+        self.alpha_r = -arctan(self.offset / self.d) # radians
         self.beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
         self.beta_r = 0 # for now
 
-        for arg, val in kwargs:
+        self.last_control = (0.0, 0.0, 0.0,)
+
+        for arg, val in kwargs.items():
             if hasattr(self, arg):
                 setattr(self, arg, val)
             else:
@@ -253,21 +250,15 @@ class Simulator(object):
             return np.max([des_pressure + PRESSURE_RESOLUTION,
                 current_pressure - PRESSURE_RATE_MAX * time_step])
 
-    def motion_evolution(self, state, desired_state, hidden_state,
-        stiffness, time_step, last_control, control_rate, control_active):
+    def motion_evolution(self, state, desired_state, time_step, control):
         '''
         M * ddot theta + C * dot theta + N * theta = torque
         ddot theta = 1 / M * (torque - C * dot theta - N) 
         '''
-        ext_pres = hidden_state[0]
-        flx_pres = hidden_state[1]
+        ext_pres = state[3]
+        flx_pres = state[4]
 
-        if control_active:
-            des_ext_pres, des_flx_pres, intended_torque = self.controller.control(
-                state=state, desired_state=desired_state,
-                stiffness=stiffness, control_rate=control_rate)
-        else:
-            des_ext_pres, des_flx_pres, intended_torque = last_control
+        des_ext_pres, des_flx_pres, intended_torque = control
 
         ext_pres = pressure_model(des_ext_pres, ext_pres, time_step)
         flx_pres = pressure_model(des_flx_pres, flx_pres, time_step)
@@ -298,36 +289,38 @@ class Simulator(object):
     def timeline(self):
         return np.arange(self.TIME_START, self.TIME_END, self.TIME_RESOLUTION)
 
-    def simulate(self, controller, starting_state, desired_state):
+    def simulate(self, controller, state_start, desired_state):
         time = self.timeline()
-        control_resolution = 1.0 / CONTROL_RATE
+        control_resolution = 1.0 / self.CONTROL_RATE
+        steps_to_next_ctrl = int(np.ceil(control_resolution / self.TIME_RESOLUTION))
         last_control_time = -9001
 
         full_state = np.ones((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
-        for i in range(state.shape[0] - 1):
+        for i in range(full_state.shape[0] - 1):
             if i % 1000 == 0:
-                print('...calculating step % 6d / %d' % (i, state.shape[0] - 1,))
+                print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
-            new_state, last_control = motion_evolution(
-                state=state[i,:],
-                desired_state=desired_state[i+1,:],
-                hidden_state=hidden_state[i,:],
-                stiffness=stiffness,
-                time_step=TIME_RESOLUTION,
-                last_control=last_control,
-                control_rate=CONTROL_RATE,
-                control_active=control_should_update)
             if control_should_update:
                 last_control_time = this_time
+                self.last_control = controller.control(
+                    state=full_state[i,:],
+                    desired_states=desired_state[i:i+steps_to_next_ctrl,:],
+                    times=time[i:i+steps_to_next_ctrl])
+            new_state, self.last_control = self.motion_evolution(
+                state=full_state[i,:],
+                desired_state=desired_state[i+1,:],
+                stiffness=stiffness,
+                time_step=self.TIME_RESOLUTION,
+                control=self.last_control)
             full_state[i+1,:] = new_state
 
 class Controller(object):
     def __init__(self, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
 
-        self.internal_sim = Simulator(controller=self)
+        self.internal_sim = Simulator()
         ## "Static" Stiffness ##
         # Increasing the stiffness increases the range around 0 where the complete
         #   desired torque works. On the other hand, decreasing the stiffness increases
@@ -341,9 +334,7 @@ class Controller(object):
         self.K_p = 8
         self.K_v = 1
 
-        self.last_control = (0.0, 0.0, 0.0,)
-
-        for arg, val in kwargs:
+        for arg, val in kwargs.items():
             if hasattr(self, arg):
                 setattr(self, arg, val)
 
@@ -363,7 +354,7 @@ class Controller(object):
         '''
         internal_rotational_inertia = 1
 
-    def control(self, state, desired_states, times, stiffness):
+    def control(self, state, desired_states, times):
         '''
         Control Model
         Implements: 
@@ -423,6 +414,15 @@ if __name__ == '__main__':
     S = Simulator()
     time = S.timeline()
 
+    MAX_AMPLITUDE = S.MAX_AMPLITUDE
+
+    state_start = np.array([
+        -MAX_AMPLITUDE / 2, # position
+        0, # vel
+        0, # accel
+        0, # ext pressure
+        0,]) # flx pressure
+
     ### Set up desired state ###
     # the desired state velocity and acceleration are positive here
     desired_state = np.zeros((time.shape[0], state_start.shape[0],))
@@ -448,7 +448,7 @@ if __name__ == '__main__':
         print('stiffness: %.2f' % (stiffness,))
         C = Controller(stiffness=stiffness)
         
-        full_state = S.simulate(state=state_start, desired_state=desired_state, controller=C)
+        full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
         if plot_position:
             ax_pos.plot(time, full_state[:,0] / (pi))
