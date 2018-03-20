@@ -6,24 +6,11 @@ nicely.
 M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta) \theta
 = Torque
 
-Control:
-PD
-Torque_{des} = -K_v \dot{\theta} + -K_p \theta
-Convert to T_r, T_l
-~~Calculate Pressures~~
-
-For now, assume that the pressures just work, eventually clipping pressure,
-so just torque works
-
 Mass Model:
 Joint is hung vertically for now
-M: A point mass at a distance from the joint
-C: ? Might come in when multiple joints come together
-N: gravity on the point mass at a distance
-
-Calculate forces on joint (mass accerleration, gravity) and torque from outside 
-forces
-Tracking forces on joint is just nice, torque is the N term
+M: A point mass at a distance from the joint (rotational inertia)
+C: A small damping factor is assumed
+N: gravity on the point mass at a distance, weight of robot
 
 Notes:
 - Pushing Stiffness too high causes clipping for the primary actuator, so less 
@@ -39,27 +26,16 @@ import matplotlib.pyplot as plt
 from math import pi
 from numpy import arctan, sqrt, floor, ceil
 
-LINK_LENGTH = 0.25 # meters
-LINK_MASS = 0.25 # kg
-ROBOT_MASS = 0.6 # kg
+### Simulation Parameters and Constants ###
 
 MAX_AMPLITUDE = math.pi / 16
 
-# "Static" Stiffness
-# So, increasing the stiffness increases the range around 0 where the complete
-#   desired torque works. On the other hand, decreasing the stiffness increases
-#   the range of total torques that are output before the desired torque
-#   saturates.
-antagonistic_stiffness = 0.1
-
-# Together K_p, K_v constitute "Dynamic" Stiffness
-# Not quite sure how to align static holding mode with dyanmic mode right now.
-K_p = 8
-K_v = 1
-control_matrix = np.matrix([[-K_p, -K_v, 0]])
-
 hidden_state_start = np.array([0, 0]) # pressures of actuators
 state_start = np.array([-MAX_AMPLITUDE / 2, 0, 0]) # position, vel, accel
+
+LINK_LENGTH = 0.25 # meters
+LINK_MASS = 0.25 # kg
+ROBOT_MASS = 0.6 # kg
 
 TORQUE_MAX = 5.0
 TORQUE_MIN = 0.0
@@ -67,19 +43,31 @@ TORQUE_MIN = 0.0
 PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
-PRESSURE_RATE_MAX = 2000 # 200 kPa per sec works, TODO(buckbaskin): setting to 2000 to minimize effects for now
+PRESSURE_RATE_MAX = 500 # 200 kPa per sec works
 
-# Simplified Proxy for bang-bang control of pressure 
-PRESSURE_RESOLUTION = 1.0 # hysterisis gap, # 17 works, TODO(buckbaskin): setting to 1 to minimize effects for now
+PRESSURE_RESOLUTION = 17.0 # hysterisis gap, # 17 works
+
+## "Static" Stiffness ##
+# Increasing the stiffness increases the range around 0 where the complete
+#   desired torque works. On the other hand, decreasing the stiffness increases
+#   the range of total torques that are output before the desired torque
+#   saturates.
+antagonistic_stiffness = 0.1
+
+## "Dynamic" Stiffness ##
+# Together K_p, K_v constitute "Dynamic" Stiffness
+# Not quite sure how to align static holding mode with dyanmic mode right now.
+K_p = 8
+K_v = 1
 
 TIME_RESOLUTION = 0.001
 TIME_START = 0
 TIME_END = 10
 
-CONTROL_RATE = 30
+CONTROL_RATE = 50
 last_control = (0.0, 0.0, 0.0,)
 
-### Model Parameters ###
+## Actuator Model Parameters ##
 
 a0 = 254.3 # kpa
 a1 = 192.0 # kpa
@@ -89,7 +77,7 @@ a4 = -0.331 # 1 / Nm
 a5 = 1.230
 a6 = 15.6 # kpa
 
-### Mutual Actuator Parameters ### 
+## Mutual Actuator Parameters ##
 
 l_rest = .189 # m
 l_620 = round(-((.17 * l_rest) - l_rest), 3)
@@ -102,8 +90,9 @@ offset = 0.015 # m
 l1 = round(sqrt(d**2 + offset**2), 3)
 l0 = floor((l_max - l1) * 1000.0) / 1000.0
 
-### Specific Actuator Parameters ###
-# Actuator L is the negative actuator, Actuator R is the positive actuator
+## Specific Actuator Parameters ##
+# Actuator L is the negative (flexion) actuator
+# Actuator R is the positive (extension) actuator
 # /////////////
 #    l  |   r
 #    l  |   r
@@ -121,6 +110,8 @@ beta_l = 0 # for now
 alpha_r = -arctan(offset / d) # radians
 beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
 beta_r = 0 # for now
+
+
 
 
 def flx_torque_to_pressure(torque, state):
@@ -159,11 +150,9 @@ def control(state, desired_state, stiffness, control_rate):
         - [x] Pressure Limits -> Force Limits -> Torque Limits
         - [x] Control does bang-bang pressure control
         - [x] Control only updates at X Hz
-        - [.] Control uses linear time scaling of control rate
-        - [ ] Control uses a model to project forward to choose accel/torque
+        - [x] Control uses linear time scaling of control rate
+        - [.] Control uses a model to project forward to choose accel/torque
     '''
-    # TODO(buckbaskin): currently, this doesn't consider known control rate and
-    #   it makes a sawtooth pattern as currently tuned
 
     ### Current State ###
     theta = state[0]
