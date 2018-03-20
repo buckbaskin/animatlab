@@ -68,11 +68,11 @@ PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
 # Simplified Proxy for bang-bang control of pressure 
-PRESSURE_RESOLUTION = 17.0 # hysterisis gap
+PRESSURE_RESOLUTION = 2.0 # hysterisis gap
 
 time_resolution = 0.001
 time_start = 0
-time_end = 60
+time_end = 10
 
 control_resolution = 0.022
 last_control = (0.0, 0.0)
@@ -215,14 +215,12 @@ def pressures_to_torque(extp, flxp, state, stiffness, actual_torque=None):
     the torque on the joint
     Complications:
         - [x] Linear search through torque
-        - [ ] Binary search through torque for speedup. If I make an array-like
-            that calculates the value for torque at each location, I can use the
-            Python bisect module to do the binary search for me.
+        - [ ] Search through torque for speedup
     '''
     
     ### Calculate errors from guessing torque ###
 
-    # TODO(buckbaskin): this is slow and I think binary search would work ok
+    # TODO(buckbaskin): this is slow
     maximum_torque = np.max([np.abs(TORQUE_MAX), np.abs(TORQUE_MIN)])    
     torque_guesses = np.arange(-maximum_torque, maximum_torque, 0.05)
     ext_guess = torque_guesses / 2 + stiffness
@@ -323,8 +321,6 @@ def pressure_model(des_pressure, current_pressure, time_step):
     # As implemented, controller either doesn't change if close or moves to the
     #   near side of the bang-bang window (close enough). This ignores filling
     #   rate and pressure differential from the air supply to the actuator.
-    return des_pressure
-
     if np.abs(des_pressure - current_pressure) < PRESSURE_RESOLUTION:
         return current_pressure
     elif des_pressure > current_pressure:
