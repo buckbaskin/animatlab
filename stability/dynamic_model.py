@@ -158,7 +158,9 @@ def control(state, desired_state, stiffness, control_rate):
         - [x] Force Limts -> Torque Limits based on geometry
         - [x] Pressure Limits -> Force Limits -> Torque Limits
         - [x] Control does bang-bang pressure control
-        - [.] Control only updates at X Hz
+        - [x] Control only updates at X Hz
+        - [.] Control uses linear time scaling of control rate
+        - [ ] Control uses a model to project forward to choose accel/torque
     '''
     # TODO(buckbaskin): currently, this doesn't consider known control rate and
     #   it makes a sawtooth pattern as currently tuned
