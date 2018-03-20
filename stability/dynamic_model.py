@@ -67,6 +67,8 @@ TORQUE_MIN = 0.0
 PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
+PRESSURE_RATE_MAX = 200 # kPa per sec
+
 # Simplified Proxy for bang-bang control of pressure 
 PRESSURE_RESOLUTION = 17.0 # hysterisis gap
 
@@ -313,8 +315,8 @@ def pressure_model(des_pressure, current_pressure, time_step):
     In the future, use airflow model to restrict maximum pressure change
     Complications:
     - [x] Set pressure to desired pressure
-    - [ ] Bang-bang control
-    - [ ] Set maximum pressure change per time state
+    - [x] Bang-bang control
+    - [x] Set maximum pressure change per time step
     - [ ] Develop airflow model to more accurately limit pressure changes 
           (pressure differential, airflow limits)
     '''
@@ -324,9 +326,11 @@ def pressure_model(des_pressure, current_pressure, time_step):
     if np.abs(des_pressure - current_pressure) < PRESSURE_RESOLUTION:
         return current_pressure
     elif des_pressure > current_pressure:
-        return des_pressure - PRESSURE_RESOLUTION
+        return np.min([des_pressure - PRESSURE_RESOLUTION,
+            current_pressure + PRESSURE_RATE_MAX * time_step])
     else: # des_pressure < current_pressure
-        return des_pressure + PRESSURE_RESOLUTION
+        return np.max([des_pressure + PRESSURE_RESOLUTION,
+            current_pressure - PRESSURE_RATE_MAX * time_step])
 
 def motion_evolution(state, desired_state, hidden_state,
     stiffness, time_step, last_control, control_active):
