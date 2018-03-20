@@ -67,17 +67,17 @@ TORQUE_MIN = 0.0
 PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
-PRESSURE_RATE_MAX = 200 # kPa per sec
+PRESSURE_RATE_MAX = 2000 # 200 kPa per sec works, TODO(buckbaskin): setting to 2000 to minimize effects for now
 
 # Simplified Proxy for bang-bang control of pressure 
-PRESSURE_RESOLUTION = 17.0 # hysterisis gap
+PRESSURE_RESOLUTION = 1.0 # hysterisis gap, # 17 works, TODO(buckbaskin): setting to 1 to minimize effects for now
 
-time_resolution = 0.001
-time_start = 0
-time_end = 10
+TIME_RESOLUTION = 0.001
+TIME_START = 0
+TIME_END = 10
 
-control_resolution = 0.022
-last_control = (0.0, 0.0)
+CONTROL_RATE = 30
+last_control = (0.0, 0.0, 0.0,)
 
 ### Model Parameters ###
 
@@ -149,7 +149,7 @@ def ext_torque_to_pressure(torque, state):
     P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
     return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
-def control(state, desired_state, stiffness):
+def control(state, desired_state, stiffness, control_rate):
     '''
     Control Model
     Implements: PD Control
@@ -158,11 +158,10 @@ def control(state, desired_state, stiffness):
         - [x] Force Limts -> Torque Limits based on geometry
         - [x] Pressure Limits -> Force Limits -> Torque Limits
         - [x] Control does bang-bang pressure control
-        - [ ] Control only updates at X Hz
-
-    # Use numerical derivative of Torque and Theta for computed pressure to adjust 
-    #   torque
+        - [.] Control only updates at X Hz
     '''
+    # TODO(buckbaskin): currently, this doesn't consider known control rate and
+    #   it makes a sawtooth pattern as currently tuned
 
     ### Current State ###
     theta = state[0]
@@ -333,7 +332,7 @@ def pressure_model(des_pressure, current_pressure, time_step):
             current_pressure - PRESSURE_RATE_MAX * time_step])
 
 def motion_evolution(state, desired_state, hidden_state,
-    stiffness, time_step, last_control, control_active):
+    stiffness, time_step, last_control, control_rate, control_active):
     '''
     M * ddot theta + C * dot theta + N * theta = torque
     ddot theta = 1 / M * (torque - C * dot theta - N) 
@@ -342,7 +341,9 @@ def motion_evolution(state, desired_state, hidden_state,
     flx_pres = hidden_state[1]
 
     if control_active:
-        des_ext_pres, des_flx_pres, intended_torque = control(state, desired_state, stiffness)
+        des_ext_pres, des_flx_pres, intended_torque = control(
+            state=state, desired_state=desired_state,
+            stiffness=stiffness, control_rate=control_rate)
     else:
         des_ext_pres, des_flx_pres, intended_torque = last_control
 
@@ -375,7 +376,9 @@ def motion_evolution(state, desired_state, hidden_state,
 
 if __name__ == '__main__':
     ### Set up time ###
-    time = np.arange(time_start, time_end, time_resolution)
+    time = np.arange(TIME_START, TIME_END, TIME_RESOLUTION)
+    control_resolution = 1.0 / CONTROL_RATE
+    last_control_time = -9001
 
     ### Set up desired state ###
     # the desired state velocity and acceleration are positive here
@@ -418,14 +421,19 @@ if __name__ == '__main__':
         for i in range(state.shape[0] - 1):
             if i % 1000 == 0:
                 print('...calculating step % 6d / %d' % (i, state.shape[0] - 1,))
+            this_time = time[i]
+            control_should_update = (this_time - last_control_time) > control_resolution
             new_state, new_hidden_state, last_control = motion_evolution(
                 state=state[i,:],
                 desired_state=desired_state[i+1,:],
                 hidden_state=hidden_state[i,:],
                 stiffness=stiffness,
-                time_step=time_resolution,
+                time_step=TIME_RESOLUTION,
                 last_control=last_control,
-                control_active=True)
+                control_rate=CONTROL_RATE,
+                control_active=control_should_update)
+            if control_should_update:
+                last_control_time = this_time
             state[i+1,:] = new_state
             hidden_state[i+1,:] = new_hidden_state
 
