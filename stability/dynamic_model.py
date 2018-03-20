@@ -136,10 +136,29 @@ def ext_torque_to_pressure(torque, state):
     P = a0 + a1 * np.tan(a2 * (K / (a4 * F + k_max)+ a3)) + a5 * F # kpa
     return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
-def control(state, desired_state, stiffness, control_rate):
+def internal_model(state, desired_torque, times):
+    '''
+    Implement something like motion_evolution for short forward time periods
+    based on an internal model. The output from this will be used to pick a
+    desired torque to set as the desired control for the next time steps until a
+    new control update.
+    Complications:
+        - [.] Create a parameters object, one for simulation and one internal
+        - [ ] Spend some time reducing code duplication. Prep for multi-joint model
+        - [ ] Make the motion_evolution function operate from object, collect 
+                parameter arguments
+        - [ ] Call the motion evolution repeatedly and build up the states here
+        - [ ] Return the states array
+    '''
+    internal_rotational_inertia = 1
+
+def control(state, desired_states, times, stiffness):
     '''
     Control Model
-    Implements: PD Control
+    Implements: 
+        Formerly: PD Control
+        WIP: Chooses a torque/acceleration that best matches desired states at 
+            the given times
     Complications:
         - [x] Torque Limits
         - [x] Force Limts -> Torque Limits based on geometry
@@ -147,12 +166,16 @@ def control(state, desired_state, stiffness, control_rate):
         - [x] Control does bang-bang pressure control
         - [x] Control only updates at X Hz
         - [x] Control uses linear time scaling of control rate
-        - [.] Control uses a model to project forward to choose accel/torque
+        - [ ] Control uses a model to project forward to choose accel/torque
     '''
 
     ### Current State ###
     theta = state[0]
     des_theta = desired_state[0]
+
+    vel = state[1]
+
+    accel = state[2]
 
     ### PD Control ###
     theta_err = des_theta - theta
