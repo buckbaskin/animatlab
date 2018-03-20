@@ -245,14 +245,16 @@ class Simulator(object):
         #   near side of the bang-bang window (close enough). This ignores details 
         #   of filling rate and pressure differential from the air supply to the
         #   actuator.
-        if np.abs(des_pressure - current_pressure) < PRESSURE_RESOLUTION:
+        print(des_pressure)
+        if (float(abs(des_pressure - current_pressure)) < 
+            float(self.PRESSURE_RESOLUTION)):
             return current_pressure
         elif des_pressure > current_pressure:
-            return np.min([des_pressure - PRESSURE_RESOLUTION,
-                current_pressure + PRESSURE_RATE_MAX * time_step])
+            return np.min([des_pressure - self.PRESSURE_RESOLUTION,
+                current_pressure + self.PRESSURE_RATE_MAX * time_step])
         else: # des_pressure < current_pressure
-            return np.max([des_pressure + PRESSURE_RESOLUTION,
-                current_pressure - PRESSURE_RATE_MAX * time_step])
+            return np.max([des_pressure + self.PRESSURE_RESOLUTION,
+                current_pressure - self.PRESSURE_RATE_MAX * time_step])
 
     def motion_evolution(self, state, time_step, control):
         '''
@@ -375,7 +377,7 @@ class Controller(object):
 
         ### Current State ###
         theta = state[0]
-        des_theta = desired_state[0]
+        des_theta = desired_state[-1,0]
 
         vel = state[1]
 
@@ -387,7 +389,7 @@ class Controller(object):
         theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
 
         theta_dot = state[1]
-        des_theta_dot = desired_state[1]
+        des_theta_dot = desired_state[-1,1]
 
         vel_err = des_theta_dot - theta_dot
         vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
