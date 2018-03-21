@@ -7,9 +7,14 @@
 - [x] Test out dynamic behavior. Ex. for 0 applied torque, no damping, expect oscillation
 - [x] Incorporate a discrete pressure update, update frequency of the controllers. Limits stability at high stiffness
 - [x] Refactoring...
-- [ ] Build a better controller for the slower update
+- [ ] Quantify
+- [ ] Build a better controller for the slower update with fixed values
 - [ ] Explicitly model sensor input as a function of state
-- [ ] Then do lagging mass models that show how low stiffness can get before a certain tolerance isn't maintained
+- [ ] Get a static single joint that works for multiple changing weights
+
+## Potential Analysis
+
+- [ ] Do a model of how fast it can track
 - [ ] Control input, desired position, sin wave of frequency, Bode plot, analyze
 - [ ] Numerically analyze nonlinear system, doing the same stuff as for a linear system
 
