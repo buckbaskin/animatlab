@@ -203,7 +203,7 @@ class Simulator(object):
         deT = dTdeP * deP
         dfP = flxp - flx_p_1
         dfT = dTdfP * dfP
-
+        
         eT0 = 0.5
         eT1 = eT0 + deT
         fT0 = 0.5
@@ -418,17 +418,21 @@ if __name__ == '__main__':
     ### Set up time ###
     S = Simulator(bang_bang=False, limit_pressure=False)
 
-    for pos in np.arange(-1.5, 1.5, 0.499):
-        torques = np.arange(S.TORQUE_MIN, S.TORQUE_MAX, 0.005)
-        state = np.array([pos, 0, 0])
-        pressures = S.flx_torque_to_pressure(torques, state)
-    #     plt.plot(torques, pressures)
-    # plt.title('Relation btwn Torque, Pressure')
-    # plt.ylabel('Pressure (kPa)')
-    # plt.xlabel('Torque (Nm)')
-    # plt.savefig('Linear_TP.png')
-    # plt.show()
-    # 1/0
+    pos = np.arange(S.JOINT_LIMIT_MIN, S.JOINT_LIMIT_MAX, 0.01)
+    for flxp in [0, 100, 200, 300, 400]:
+        torques = np.zeros(pos.shape)
+        for index, position in enumerate(pos):
+            state = np.array([position, 0, 0])
+            extp = 500
+            torque = S.pressures_to_torque(extp, flxp, state)
+            torques[index] = torque
+        plt.plot(pos, torques)
+    plt.title('Position v Torque')
+    plt.ylabel('Torque (Nm)')
+    plt.xlabel('Position (rad)')
+    plt.savefig('Pos_v_Torque2.png')
+    plt.show()
+    1/0
 
     time = S.timeline()
 

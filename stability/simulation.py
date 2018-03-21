@@ -58,7 +58,7 @@ class Simulator(object):
 
         self.TIME_RESOLUTION = 0.001
         self.TIME_START = 0
-        self.TIME_END = 0.5
+        self.TIME_END = 10.0
 
         self.CONTROL_RATE = 100
 
@@ -364,7 +364,7 @@ class Simulator(object):
         full_state = np.ones((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
         for i in range(full_state.shape[0] - 1):
-            if i % 10 == 0:
+            if i % 100 == 0:
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
@@ -524,14 +524,14 @@ class Controller(object):
             - [ ] Control uses a model to project forward to choose accel/torque
         '''
 
-        des_torque = self._pick_torque(state, desired_states, times)
+        des_torque = self._pick_proportional_torque(state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
     ### Set up time ###
-    S = Simulator(bang_bang=True, limit_pressure=True)
+    S = Simulator(bang_bang=False, limit_pressure=False)
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
@@ -553,7 +553,7 @@ if __name__ == '__main__':
     desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
     desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
 
-    plot_position = False
+    plot_position = True
 
     if plot_position:
         fig = plt.figure()
@@ -561,7 +561,7 @@ if __name__ == '__main__':
         ax_pos.set_title('Position')
         ax_pos.set_ylabel('Position (% of circle)')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,0] / (pi))
+        ax_pos.plot(time,  desired_state[:,0])
 
     print('calculating...')
     for stiffness in [0.1,]:
@@ -571,8 +571,9 @@ if __name__ == '__main__':
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0] / (pi))
+            ax_pos.plot(time, full_state[:,0])
     if plot_position:
         print('show for the dough')
+        plt.savefig('Tracking_proportional_ideal.png')
         plt.show()
         print('all done')
