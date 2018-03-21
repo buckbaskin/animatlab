@@ -30,8 +30,8 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 from functools import partial
 
-EXT_PRESSURE = 100
-FLX_PRESSURE = 300
+EXT_PRESSURE = 500
+FLX_PRESSURE = 550
 
 class Simulator(object):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
@@ -47,8 +47,11 @@ class Simulator(object):
         self.LINK_MASS = 0.25 # kg
         self.ROBOT_MASS = 0.6 # kg
 
-        self.TORQUE_MAX = 5.0
-        self.TORQUE_MIN = -1.0
+        self.JOINT_LIMIT_MAX = pi / 4
+        self.JOINT_LIMIT_MIN = -pi / 4
+
+        self.TORQUE_MAX = 2.5
+        self.TORQUE_MIN = 0.1
 
         self.PRESSURE_MAX = 620
         self.PRESSURE_MIN = 0
@@ -147,75 +150,69 @@ class Simulator(object):
             - [x] Linear search through torque
             - [ ] Search through torque for speedup
         '''
-        
+        extp = np.clip(extp, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        flxp = np.clip(flxp, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
         ### Calculate errors from guessing torque ###
 
-        # TODO(buckbaskin): this is slow
-        ext_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 41)
-        flx_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 41)
-        ext_t_guesses, flx_t_guesses = np.meshgrid(ext_t_guesses, flx_t_guesses)
+        base = 0.5
+        step = 0.1
 
-        step = self.TORQUE_MAX - self.TORQUE_MIN
+        ext_p_0 = self.ext_torque_to_pressure(base - step, state)
+        ext_p_1 = self.ext_torque_to_pressure(base, state)
+        condition = (ext_p_1 == ext_p_0 or
+            (not 0.5 <= ext_p_1 <= 619.5) or
+            (not 0.5 <= ext_p_0 <= 619.5))
+        for i in range(10): 
+            if not condition:
+                break
+            if ext_p_1 >= 619.5:
+                base /= 2
+                step /= 2
+                if step < 0.01:
+                    step = 0.01
+            elif ext_p_1 < 0.5:
+                base += 0.1
+                if step < 0.01:
+                    step = 0.01
+            else:
+                raise ValueError()
+            ext_p_0 = self.ext_torque_to_pressure(base - step, state)
+            ext_p_1 = self.ext_torque_to_pressure(base, state)
 
-        fast_start = datetime.datetime.now()
-        for i in range(10):
+            condition = (ext_p_1 == ext_p_0 or
+                (not 0.5 <= ext_p_1 <= 619.5) or
+                (not 0.5 <= ext_p_0 <= 619.5))
         
-            ext_p_guesses = self.ext_torque_to_pressure(ext_t_guesses, state)
-            ext_p_guesses = np.clip(ext_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
-            flx_p_guesses = self.flx_torque_to_pressure(flx_t_guesses, state)
-            flx_p_guesses = np.clip(flx_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+            if condition and i == 9:
+                print('Ps_2_T(', extp, flxp, state, ')')
+                print('failed to fix the problem.')
+                input(('not fixed', base, step, 'got', ext_p_1, ext_p_0))
+            if not condition:
+                print(('fixed', base, step, 'got', ext_p_1, ext_p_0))
 
-            extp_err = np.square(ext_p_guesses - extp)
-            flxp_err = np.square(flx_p_guesses - flxp)
+        if ext_p_1 == 0 and ext_p_0 == 0:
+            dTdeP = 0
+        else:
+            dTdeP = (step) / (ext_p_1 - ext_p_0)
+        flx_p_0 = self.ext_torque_to_pressure(base - step, state)
+        flx_p_1 = self.ext_torque_to_pressure(base, state)
+        if flx_p_1 == 0 and flx_p_0 == 0:
+            dTdfP = 0
+        else:
+            dTdfP = (step) / (flx_p_1 - flx_p_0)
 
-            total_err = extp_err + flxp_err
-            best_guess = np.argmin(total_err.flatten())
+        deP = extp - ext_p_1
+        deT = dTdeP * deP
+        dfP = flxp - flx_p_1
+        dfT = dTdfP * dfP
 
-            ext_t_guess = ext_t_guesses.flatten()[best_guess]
-            flx_t_guess = flx_t_guesses.flatten()[best_guess]
-            print('guess again', ext_t_guess, flx_t_guess)
+        eT0 = 0.5
+        eT1 = eT0 + deT
+        fT0 = 0.5
+        fT1 = fT0 + dfT
 
-            step = step / 10.0
-
-            print('step', step)
-            ext_t_guesses = np.linspace(ext_t_guess - step, ext_t_guess + step, 41)
-            flx_t_guesses = np.linspace(flx_t_guess - step, flx_t_guess - step, 41)
-            ext_t_guesses, flx_t_guesses = np.meshgrid(ext_t_guesses, flx_t_guesses)
-
-        fast_stop = datetime.datetime.now()
-        slow_start = datetime.datetime.now()
-        print('or all at once')
-
-        ext_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 5001)
-        flx_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 5001)
-        ext_t_guesses, flx_t_guesses = np.meshgrid(ext_t_guesses, flx_t_guesses)
-
-        ext_p_guesses = self.ext_torque_to_pressure(ext_t_guesses, state)
-        ext_p_guesses = np.clip(ext_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
-        flx_p_guesses = self.flx_torque_to_pressure(flx_t_guesses, state)
-        flx_p_guesses = np.clip(flx_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
-
-        extp_err = np.square(ext_p_guesses - extp)
-        flxp_err = np.square(flx_p_guesses - flxp)
-
-        total_err = extp_err + flxp_err
-        best_guess = np.argmin(total_err.flatten())
-
-        ext_t_guess = ext_t_guesses.flatten()[best_guess]
-        flx_t_guess = flx_t_guesses.flatten()[best_guess]
-        print('guess again', ext_t_guess, flx_t_guess)
-
-        slow_stop = datetime.datetime.now()
-
-        print('fast %.3f' % (fast_stop - fast_start).total_seconds())
-        print('slow %.3f' % (slow_stop - slow_start).total_seconds())
-
-        if actual_torque is not None:
-            print('attempted', actual_torque, 'actual', ext_guess - flx_guess)
-
-        1/0
-        return ext_t_guess - flx_t_guess
+        return eT1 - fT1
 
     def mass_model(self, theta):
         '''
@@ -280,6 +277,8 @@ class Simulator(object):
             print(theta)
             raise
         normal_force = - F_r * R_n * math.sin(theta)
+        # TODO(buckbaskin): remove this
+        normal_force = 0
 
         return link_gravity + normal_force
 
@@ -348,6 +347,15 @@ class Simulator(object):
         start_theta = state[0]
         end_theta = state[0] + avg_vel * time_step
 
+        if end_theta > self.JOINT_LIMIT_MAX:
+            end_theta = self.JOINT_LIMIT_MAX
+            end_vel = 0
+            accel = 0
+        if end_theta < self.JOINT_LIMIT_MIN:
+            end_theta = self.JOINT_LIMIT_MIN
+            end_vel = 0
+            accel = 0
+
         state = np.array([end_theta, end_vel, accel, ext_pres, flx_pres]).flatten()
 
         return state
@@ -409,14 +417,28 @@ class Controller(object):
         return EXT_PRESSURE, FLX_PRESSURE, 1
 
 if __name__ == '__main__':
+
     ### Set up time ###
     S = Simulator(bang_bang=False, limit_pressure=False)
+
+    for pos in np.arange(-1.5, 1.5, 0.499):
+        torques = np.arange(S.TORQUE_MIN, S.TORQUE_MAX, 0.005)
+        state = np.array([pos, 0, 0])
+        pressures = S.flx_torque_to_pressure(torques, state)
+    #     plt.plot(torques, pressures)
+    # plt.title('Relation btwn Torque, Pressure')
+    # plt.ylabel('Pressure (kPa)')
+    # plt.xlabel('Torque (Nm)')
+    # plt.savefig('Linear_TP.png')
+    # plt.show()
+    # 1/0
+
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
 
     state_start = np.array([
-        -MAX_AMPLITUDE / 2, # position
+        S.JOINT_LIMIT_MAX, # position
         0, # vel
         0, # accel
         0, # ext pressure
@@ -440,7 +462,7 @@ if __name__ == '__main__':
         ax_pos.set_title('Position (e: %.1f, f: %.1f)' % (EXT_PRESSURE, FLX_PRESSURE,))
         ax_pos.set_ylabel('Position (% of circle)')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,0] / (pi))
+        # ax_pos.plot(time,  desired_state[:,0])
 
     print('calculating...')
     for stiffness in [0.1,]:
@@ -450,7 +472,7 @@ if __name__ == '__main__':
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0] / (pi))
+            ax_pos.plot(time, full_state[:,0])
     if plot_position:
         print('show for the dough')
         plt.show()
