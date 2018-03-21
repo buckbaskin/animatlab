@@ -21,6 +21,7 @@ Notes:
 import sys
 print('--- %s ---' % (sys.argv[0],))
 
+import datetime
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,8 +30,8 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 from functools import partial
 
-EXT_PRESSURE = 620
-FLX_PRESSURE = 0
+EXT_PRESSURE = 100
+FLX_PRESSURE = 300
 
 class Simulator(object):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
@@ -47,7 +48,7 @@ class Simulator(object):
         self.ROBOT_MASS = 0.6 # kg
 
         self.TORQUE_MAX = 5.0
-        self.TORQUE_MIN = 0.0
+        self.TORQUE_MIN = -1.0
 
         self.PRESSURE_MAX = 620
         self.PRESSURE_MIN = 0
@@ -58,7 +59,7 @@ class Simulator(object):
 
         self.TIME_RESOLUTION = 0.001
         self.TIME_START = 0
-        self.TIME_END = 0.5
+        self.TIME_END = 2.0
 
         self.CONTROL_RATE = 100
 
@@ -138,7 +139,7 @@ class Simulator(object):
             + self.a5 * F) # kpa
         return np.clip(P, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
-    def pressures_to_torque(self, extp, flxp, state, stiffness, actual_torque=None):
+    def pressures_to_torque(self, extp, flxp, state, actual_torque=None):
         '''
         Inverse model: given the pressures of the left and right actuator, estimate
         the torque on the joint
@@ -147,28 +148,74 @@ class Simulator(object):
             - [ ] Search through torque for speedup
         '''
         
+
         ### Calculate errors from guessing torque ###
 
         # TODO(buckbaskin): this is slow
-        maximum_torque = np.max([np.abs(self.TORQUE_MAX), np.abs(self.TORQUE_MIN)])
-        torque_guesses = np.arange(-maximum_torque, maximum_torque, 0.05)
-        ext_guess = torque_guesses / 2 + stiffness
-        flx_guess = -torque_guesses / 2 + stiffness
+        ext_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 41)
+        flx_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 41)
+        ext_t_guesses, flx_t_guesses = np.meshgrid(ext_t_guesses, flx_t_guesses)
 
-        extp_guesses = self.ext_torque_to_pressure(ext_guess, state)
-        extp_guesses = np.clip(extp_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
-        flxp_guesses = self.flx_torque_to_pressure(flx_guess, state)
-        flxp_guesses = np.clip(flxp_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        step = self.TORQUE_MAX - self.TORQUE_MIN
 
-        extp_err = np.abs(extp_guesses - extp)
-        flxp_err = np.abs(flxp_guesses - flxp)
+        fast_start = datetime.datetime.now()
+        for i in range(10):
+        
+            ext_p_guesses = self.ext_torque_to_pressure(ext_t_guesses, state)
+            ext_p_guesses = np.clip(ext_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+            flx_p_guesses = self.flx_torque_to_pressure(flx_t_guesses, state)
+            flx_p_guesses = np.clip(flx_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+
+            extp_err = np.square(ext_p_guesses - extp)
+            flxp_err = np.square(flx_p_guesses - flxp)
+
+            total_err = extp_err + flxp_err
+            best_guess = np.argmin(total_err.flatten())
+
+            ext_t_guess = ext_t_guesses.flatten()[best_guess]
+            flx_t_guess = flx_t_guesses.flatten()[best_guess]
+            print('guess again', ext_t_guess, flx_t_guess)
+
+            step = step / 10.0
+
+            print('step', step)
+            ext_t_guesses = np.linspace(ext_t_guess - step, ext_t_guess + step, 41)
+            flx_t_guesses = np.linspace(flx_t_guess - step, flx_t_guess - step, 41)
+            ext_t_guesses, flx_t_guesses = np.meshgrid(ext_t_guesses, flx_t_guesses)
+
+        fast_stop = datetime.datetime.now()
+        slow_start = datetime.datetime.now()
+        print('or all at once')
+
+        ext_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 5001)
+        flx_t_guesses = np.linspace(self.TORQUE_MIN, self.TORQUE_MAX, 5001)
+        ext_t_guesses, flx_t_guesses = np.meshgrid(ext_t_guesses, flx_t_guesses)
+
+        ext_p_guesses = self.ext_torque_to_pressure(ext_t_guesses, state)
+        ext_p_guesses = np.clip(ext_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        flx_p_guesses = self.flx_torque_to_pressure(flx_t_guesses, state)
+        flx_p_guesses = np.clip(flx_p_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+
+        extp_err = np.square(ext_p_guesses - extp)
+        flxp_err = np.square(flx_p_guesses - flxp)
 
         total_err = extp_err + flxp_err
-        best_guess = torque_guesses[np.argmin(total_err)]
+        best_guess = np.argmin(total_err.flatten())
+
+        ext_t_guess = ext_t_guesses.flatten()[best_guess]
+        flx_t_guess = flx_t_guesses.flatten()[best_guess]
+        print('guess again', ext_t_guess, flx_t_guess)
+
+        slow_stop = datetime.datetime.now()
+
+        print('fast %.3f' % (fast_stop - fast_start).total_seconds())
+        print('slow %.3f' % (slow_stop - slow_start).total_seconds())
 
         if actual_torque is not None:
-            print('attempted', actual_torque, 'actual', best_guess)
-        return best_guess
+            print('attempted', actual_torque, 'actual', ext_guess - flx_guess)
+
+        1/0
+        return ext_t_guess - flx_t_guess
 
     def mass_model(self, theta):
         '''
@@ -284,7 +331,8 @@ class Simulator(object):
         ext_pres = self.pressure_model(des_ext_pres, ext_pres, time_step)
         flx_pres = self.pressure_model(des_flx_pres, flx_pres, time_step)
 
-        Torque_net = self.pressures_to_torque(ext_pres, flx_pres, state, control_stiffness)
+        Torque_net = self.pressures_to_torque(extp=ext_pres, flxp=flx_pres,
+            state=state, actual_torque=None) # intended_torque)
 
         M = self.mass_model(state[0])
         C = self.vel_effects(state[0], state[1])
@@ -357,114 +405,12 @@ class Controller(object):
             if hasattr(self, arg):
                 setattr(self, arg, val)
 
-    def internal_model(self, state, desired_torque, times):
-        '''
-        Implement something like motion_evolution for short forward time periods
-        based on an internal model. The output from this will be used to pick a
-        desired torque to set as the desired control for the next time steps until a
-        new control update.
-        Complications:
-            - [.] Create a parameters object, one for simulation and one internal
-            - [ ] Spend some time reducing code duplication. Prep for multi-joint model
-            - [ ] Make the motion_evolution function operate from object, collect 
-                    parameter arguments
-            - [ ] Call the motion evolution repeatedly and build up the states here
-            - [ ] Return the states array
-        '''
-        des_ext_pres, des_flx_pres = self._convert_to_pressure(desired_torque, state)
-        # print('des_ext_pres', des_ext_pres, 'des_flx_pres', des_flx_pres)
-        full_state = np.zeros((times.shape[0], state.shape[0],))
-        full_state[0,:] = state
-        for i in range(len(times) - 1):
-            new_state = self.sim.motion_evolution(
-                state=full_state[i,:],
-                time_step=self.sim.TIME_RESOLUTION,
-                control=(des_ext_pres, des_flx_pres, desired_torque,),
-                control_stiffness=self.antagonistic_stiffness)
-            full_state[i+1,:] = new_state
-
-        return full_state
-
-    def optimize_this(self, guess_torque, state, desired_states, times):
-        projected_states = self.internal_model(state, guess_torque, times)
-        # plt.plot(times, desired_states[:,0])
-        # plt.plot(times, projected_states[:,0])
-        # plt.title('Position (des and projected)')
-        # plt.ylabel('Angle (rad)')
-        # plt.xlabel('Time (sec)')
-        # plt.show()
-        delta = desired_states[-1:] - projected_states[-1,:]
-        simple_err = np.dot(delta.flatten(), np.ones(delta.shape).flatten())
-        return simple_err
-
-    def _pick_torque(self, state, desired_states, times):
-        desired_state=None # clear polluting global scope
-
-        ### Current State ###
-        theta = state[0]
-        vel = state[1]
-        accel = state[2]
-
-        ### Optimizing Control ###
-        guess_torques = np.arange(-1, 1, 0.001)
-        # guess_torque = self._pick_proportional_torque(state, desired_states, times)
-        optim = np.vectorize(partial(self.optimize_this, state=state, desired_states=desired_states, times=times))
-        guess_errors = optim(guess_torques)
-        
-        # plt.plot(guess_torques, guess_errors)
-        # plt.show()
-
-        des_torque = guess_torques[np.argmin(guess_errors)]
-
-        return des_torque
-
-    def _pick_proportional_torque(self, state, desired_states, times):
-        theta = state[0]
-        des_theta = desired_states[0, 0]
-        theta_dot = state[1]
-        des_theta_dot = desired_states[0, 1]
-
-        # vel = state[1]
-
-        # accel = state[2]
-
-        ### PD Control ###
-        magic_number1 = 115
-
-        theta_err = des_theta - theta
-        theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
-
-        vel_err = des_theta_dot - theta_dot
-        vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
-
-        des_torque = theta_torque + vel_torque
-        return des_torque
-
-    def _convert_to_pressure(self, des_torque, state):
-
-        ### Convert Torque to Left and Right Torques ###
-        # extension is positive rotation
-        ext_torque = des_torque / 2 + self.antagonistic_stiffness
-        
-        # flexion is negative rotation
-        flx_torque = -des_torque / 2 + self.antagonistic_stiffness
-        
-        # TODO(buckbaskin): I did the math here so clipping had less effect, but I
-        #   deleted it
-        des_ext_pres = self.sim.ext_torque_to_pressure(ext_torque, state)
-        des_ext_pres = np.clip(des_ext_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
-
-        des_flx_pres = self.sim.flx_torque_to_pressure(flx_torque, state)
-        des_flx_pres = np.clip(des_flx_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
-
-        return des_ext_pres, des_flx_pres
-
     def control(self, state, desired_states, times):
-        return 101, 100, 0
+        return EXT_PRESSURE, FLX_PRESSURE, 1
 
 if __name__ == '__main__':
     ### Set up time ###
-    S = Simulator(bang_bang=True, limit_pressure=True)
+    S = Simulator(bang_bang=False, limit_pressure=False)
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
@@ -498,7 +444,7 @@ if __name__ == '__main__':
 
     print('calculating...')
     for stiffness in [0.1,]:
-        print('stiffness: %.2f' % (stiffness,))
+        # print('stiffness: %.2f' % (stiffness,))
         C = Controller(control_rate=S.CONTROL_RATE, stiffness=stiffness)
         
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
