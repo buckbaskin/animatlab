@@ -43,6 +43,9 @@ class Simulator(object):
         self.LINK_MASS = 0.25 # kg
         self.ROBOT_MASS = 0.6 # kg
 
+        self.JOINT_LIMIT_MAX = pi / 4
+        self.JOINT_LIMIT_MIN = -pi / 4
+
         self.TORQUE_MAX = 5.0
         self.TORQUE_MIN = 0.0
 
@@ -139,33 +142,70 @@ class Simulator(object):
         '''
         Inverse model: given the pressures of the left and right actuator, estimate
         the torque on the joint
-        Complications:
-            - [x] Linear search through torque
-            - [ ] Search through torque for speedup
         '''
-        
+        extp = np.clip(extp, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        flxp = np.clip(flxp, self.PRESSURE_MIN, self.PRESSURE_MAX)
+
         ### Calculate errors from guessing torque ###
 
-        # TODO(buckbaskin): this is slow
-        maximum_torque = np.max([np.abs(self.TORQUE_MAX), np.abs(self.TORQUE_MIN)])
-        torque_guesses = np.arange(-maximum_torque, maximum_torque, 0.05)
-        ext_guess = torque_guesses / 2 + stiffness
-        flx_guess = -torque_guesses / 2 + stiffness
+        base = 0.5
+        step = 0.1
 
-        extp_guesses = self.ext_torque_to_pressure(ext_guess, state)
-        extp_guesses = np.clip(extp_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
-        flxp_guesses = self.flx_torque_to_pressure(flx_guess, state)
-        flxp_guesses = np.clip(flxp_guesses, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        ext_p_0 = self.ext_torque_to_pressure(base - step, state)
+        ext_p_1 = self.ext_torque_to_pressure(base, state)
+        condition = (ext_p_1 == ext_p_0 or
+            (not 0.5 <= ext_p_1 <= 619.5) or
+            (not 0.5 <= ext_p_0 <= 619.5))
+        for i in range(10): 
+            if not condition:
+                break
+            if ext_p_1 >= 619.5:
+                base /= 2
+                step /= 2
+                if step < 0.01:
+                    step = 0.01
+            elif ext_p_1 < 0.5:
+                base += 0.1
+                if step < 0.01:
+                    step = 0.01
+            else:
+                raise ValueError()
+            ext_p_0 = self.ext_torque_to_pressure(base - step, state)
+            ext_p_1 = self.ext_torque_to_pressure(base, state)
 
-        extp_err = np.abs(extp_guesses - extp)
-        flxp_err = np.abs(flxp_guesses - flxp)
+            condition = (ext_p_1 == ext_p_0 or
+                (not 0.5 <= ext_p_1 <= 619.5) or
+                (not 0.5 <= ext_p_0 <= 619.5))
+        
+            if condition and i == 9:
+                print('Ps_2_T(', extp, flxp, state, ')')
+                print('failed to fix the problem.')
+                input(('not fixed', base, step, 'got', ext_p_1, ext_p_0))
+            if not condition:
+                print(('fixed', base, step, 'got', ext_p_1, ext_p_0))
 
-        total_err = extp_err + flxp_err
-        best_guess = torque_guesses[np.argmin(total_err)]
+        if ext_p_1 == 0 and ext_p_0 == 0:
+            dTdeP = 0
+        else:
+            dTdeP = (step) / (ext_p_1 - ext_p_0)
+        flx_p_0 = self.ext_torque_to_pressure(base - step, state)
+        flx_p_1 = self.ext_torque_to_pressure(base, state)
+        if flx_p_1 == 0 and flx_p_0 == 0:
+            dTdfP = 0
+        else:
+            dTdfP = (step) / (flx_p_1 - flx_p_0)
 
-        if actual_torque is not None:
-            print('attempted', actual_torque, 'actual', best_guess)
-        return best_guess
+        deP = extp - ext_p_1
+        deT = dTdeP * deP
+        dfP = flxp - flx_p_1
+        dfT = dTdfP * dfP
+
+        eT0 = 0.5
+        eT1 = eT0 + deT
+        fT0 = 0.5
+        fT1 = fT0 + dfT
+
+        return eT1 - fT1
 
     def mass_model(self, theta):
         '''
@@ -230,6 +270,8 @@ class Simulator(object):
             print(theta)
             raise
         normal_force = - F_r * R_n * math.sin(theta)
+        # TODO(buckbaskin): remove this
+        normal_force = 0
 
         return link_gravity + normal_force
 
@@ -296,6 +338,15 @@ class Simulator(object):
 
         start_theta = state[0]
         end_theta = state[0] + avg_vel * time_step
+
+        if end_theta > self.JOINT_LIMIT_MAX:
+            end_theta = self.JOINT_LIMIT_MAX
+            end_vel = 0
+            accel = 0
+        if end_theta < self.JOINT_LIMIT_MIN:
+            end_theta = self.JOINT_LIMIT_MIN
+            end_vel = 0
+            accel = 0
 
         state = np.array([end_theta, end_vel, accel, ext_pres, flx_pres]).flatten()
 

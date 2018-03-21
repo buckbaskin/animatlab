@@ -146,9 +146,6 @@ class Simulator(object):
         '''
         Inverse model: given the pressures of the left and right actuator, estimate
         the torque on the joint
-        Complications:
-            - [x] Linear search through torque
-            - [ ] Search through torque for speedup
         '''
         extp = np.clip(extp, self.PRESSURE_MIN, self.PRESSURE_MAX)
         flxp = np.clip(flxp, self.PRESSURE_MIN, self.PRESSURE_MAX)
