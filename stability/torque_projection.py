@@ -642,7 +642,7 @@ if __name__ == '__main__':
     stiffness = 0.5
     
     start_state = np.array([0.05, 0.5, 0, 0, 0])
-    desired_end_pos = 0.0575
+    desired_end_pos = 0.07
     times = np.linspace(0, 1.0 / control_rate, 50)
 
     oc = OptimizingController(control_rate=control_rate, stiffness=stiffness)
@@ -654,7 +654,7 @@ if __name__ == '__main__':
     mid_torque = 0.0
     min_torque = -2.5
     
-    iterations = 15
+    iterations = 11
     tops = np.zeros((iterations, len(times),))
     guesses = np.zeros((iterations, len(times),))
     bottoms = np.zeros((iterations, len(times),))
@@ -666,7 +666,12 @@ if __name__ == '__main__':
         tops[i,:] = max_traj[:,0]
         guesses[i,:] = mid_traj[:,0]
         bottoms[i,:] = min_traj[:,0]
-        print('%.4f > %.4f > %.4f' % (max_torque, mid_torque, min_torque,))
+        max_pos = max_traj[-1,0]
+        mid_pos = mid_traj[-1,0]
+        min_pos = min_traj[-1,0]
+
+        print('torque: %.4f > %.4f > %.4f' % (max_torque, mid_torque, min_torque,))
+        print('pos: %.4f > %.4f > %.4f' % (max_pos, mid_pos, min_pos,))
         # plt.plot(times, np.ones(times.shape) * desired_end_pos)
         # plt.plot(times, max_traj[:, 0])
         # plt.plot(times, mid_traj[:, 0])
@@ -675,10 +680,6 @@ if __name__ == '__main__':
         # plt.show()
 
         print('max error: %.5f' % (max_traj[-1,0] - min_traj[-1,0],))
-
-        max_pos = max_traj[-1,0]
-        mid_pos = mid_traj[-1,0]
-        min_pos = min_traj[-1,0]
 
         if desired_end_pos >= max_pos:
             print('return %f' % (max_torque,))
@@ -693,26 +694,12 @@ if __name__ == '__main__':
         if desired_end_pos > mid_traj[-1,0]:
             max_torque = max_torque
             min_torque = mid_torque
+            mid_torque = (max_torque + min_torque) / 2.0
 
-            if abs(max_torque - min_torque) < 0.0001 or abs(max_pos - mid_pos) < 0.0001:
-                mid_torque = (max_torque + min_torque) / 2.0
-            else:
-                slope = (max_torque - min_torque) / (max_pos - mid_pos)
-                print('slope', slope)
-                pos_error = desired_end_pos - mid_pos
-                torque_error = (pos_error * slope) * 0.625
-                mid_torque = min_torque + torque_error
         else: # desired_end_pos < mid_traj[-1,0]:
             max_torque = mid_torque
             min_torque = min_torque
-
-            if abs(max_torque - min_torque) < 0.0001 or abs(mid_pos - min_pos) < 0.0001:
-                mid_torque = (max_torque + min_torque) / 2.0
-            else:
-                slope = (max_torque - min_torque) / (mid_pos - min_pos)
-                pos_error = desired_end_pos - mid_pos
-                torque_error = (pos_error * slope) * 0.625
-                mid_torque = min_torque + torque_error
+            mid_torque = (max_torque + min_torque) / 2.0
 
     else:
         print('return %f' % (mid_torque,))
