@@ -29,6 +29,82 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 from functools import partial
 
+def pressures_to_torque(self, extp, flxp, state, stiffness, actual_torque=None):
+        '''
+        Inverse model: given the pressures of the left and right actuator, estimate
+        the torque on the joint
+        '''
+        extp = np.clip(extp, self.PRESSURE_MIN, self.PRESSURE_MAX)
+        flxp = np.clip(flxp, self.PRESSURE_MIN, self.PRESSURE_MAX)
+
+        ### Calculate errors from guessing torque ###
+
+        base = 0.5
+        step = 0.1
+
+        ext_p_0 = self.ext_torque_to_pressure(base - step, state)
+        ext_p_1 = self.ext_torque_to_pressure(base, state)
+        condition = (ext_p_1 == ext_p_0 or
+            (not 0.5 <= ext_p_1 <= 619.5) or
+            (not 0.5 <= ext_p_0 <= 619.5))
+        for i in range(10): 
+            if not condition:
+                break
+            if ext_p_1 >= 619.5:
+                base /= 2
+                step /= 2
+                if step < 0.01:
+                    step = 0.01
+            elif ext_p_1 < 0.5:
+                base += 0.1
+                if step < 0.01:
+                    step = 0.01
+            else:
+                raise ValueError()
+            ext_p_0 = self.ext_torque_to_pressure(base - step, state)
+            ext_p_1 = self.ext_torque_to_pressure(base, state)
+
+            condition = (ext_p_1 == ext_p_0 or
+                (not 0.5 <= ext_p_1 <= 619.5) or
+                (not 0.5 <= ext_p_0 <= 619.5))
+        
+            if condition and i == 9:
+                print('Ps_2_T(', extp, flxp, state, ')')
+                print('failed to fix the problem.')
+                input(('not fixed', base, step, 'got', ext_p_1, ext_p_0))
+            if not condition:
+                print(('fixed', base, step, 'got', ext_p_1, ext_p_0))
+
+        if ext_p_1 == 0 and ext_p_0 == 0:
+            dTdeP = 0
+        else:
+            dTdeP = (step) / (ext_p_1 - ext_p_0)
+        flx_p_0 = self.ext_torque_to_pressure(base - step, state)
+        flx_p_1 = self.ext_torque_to_pressure(base, state)
+        if flx_p_1 == 0 and flx_p_0 == 0:
+            dTdfP = 0
+        else:
+            dTdfP = (step) / (flx_p_1 - flx_p_0)
+
+        deP = extp - ext_p_1
+        deT = dTdeP * deP
+        dfP = flxp - flx_p_1
+        dfT = dTdfP * dfP
+
+        eT0 = 0.5
+        eT1 = eT0 + deT
+        fT0 = 0.5
+        fT1 = fT0 + dfT
+
+        return eT1, fT1
+
+def evaluation(desired_states, states):
+    pos_error = np.abs(desired_states[:,0] - states[:,0])
+    max_pos_error = np.max(pos_error)
+
+
+
+
 class Simulator(object):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
         '''
@@ -138,7 +214,7 @@ class Simulator(object):
             + self.a5 * F) # kpa
         return np.clip(P, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
-    def pressures_to_torque(self, extp, flxp, state, stiffness, actual_torque=None):
+    def pressures_to_torque(self, extp, flxp, state, actual_torque=None):
         '''
         Inverse model: given the pressures of the left and right actuator, estimate
         the torque on the joint
@@ -199,7 +275,7 @@ class Simulator(object):
         deT = dTdeP * deP
         dfP = flxp - flx_p_1
         dfT = dTdfP * dfP
-
+        
         eT0 = 0.5
         eT1 = eT0 + deT
         fT0 = 0.5
@@ -323,7 +399,8 @@ class Simulator(object):
         ext_pres = self.pressure_model(des_ext_pres, ext_pres, time_step)
         flx_pres = self.pressure_model(des_flx_pres, flx_pres, time_step)
 
-        Torque_net = self.pressures_to_torque(ext_pres, flx_pres, state, control_stiffness)
+        Torque_net = self.pressures_to_torque(extp=ext_pres, flxp=flx_pres,
+            state=state, actual_torque=None) # intended_torque)
 
         M = self.mass_model(state[0])
         C = self.vel_effects(state[0], state[1])
@@ -531,7 +608,7 @@ class Controller(object):
 
 if __name__ == '__main__':
     ### Set up time ###
-    S = Simulator(bang_bang=False, limit_pressure=False)
+    S = Simulator(bang_bang=True, limit_pressure=True)
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
