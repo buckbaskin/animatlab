@@ -377,8 +377,8 @@ class Simulator(object):
                 last_control_time = this_time
                 self.last_control = controller.control(
                     state=full_state[i,:],
-                    desired_states=desired_state[i:i+steps_to_next_ctrl,:],
-                    times=time[i:i+steps_to_next_ctrl])
+                    desired_states=desired_state[i:i+2*steps_to_next_ctrl,:],
+                    times=time[i:i+2*steps_to_next_ctrl])
             new_state = self.motion_evolution(
                 state=full_state[i,:],
                 time_step=self.TIME_RESOLUTION,
@@ -662,8 +662,8 @@ if __name__ == '__main__':
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
 
     state_start = np.array([
-        # -MAX_AMPLITUDE / 2, # position
-        0,
+        -MAX_AMPLITUDE / 2, # position
+        # 0,
         0, # vel
         0, # accel
         0, # ext pressure
@@ -700,7 +700,7 @@ if __name__ == '__main__':
         print('Simulation Evaluation:')
         print('Controller: %s' % (str(C),))
         print('Maximum Positional Error: %.3f (rad)' % (result['max_pos_error']))
-        print('Torque Score: %.3f (wasted Nm/sec)' % (result['antag_torque_rate']))
+        print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
             ax_pos.plot(time, full_state[:,0])
