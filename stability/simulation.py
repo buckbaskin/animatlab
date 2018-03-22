@@ -61,7 +61,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 10.0
 
-        self.CONTROL_RATE = 30
+        self.CONTROL_RATE = 10
 
         ## Actuator Model Parameters ##
 

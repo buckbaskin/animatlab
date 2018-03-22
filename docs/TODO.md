@@ -7,8 +7,8 @@
 - [x] Test out dynamic behavior. Ex. for 0 applied torque, no damping, expect oscillation
 - [x] Incorporate a discrete pressure update, update frequency of the controllers. Limits stability at high stiffness
 - [x] Refactoring...
-- [ ] Quantify. Tracking accuracy and internal potential energy
-- [ ] Build a better controller for the slower update with fixed values
+- [x] Quantify. Tracking accuracy and internal potential energy
+- [x] Build a better controller for the slower update with fixed values
 - [ ] Explicitly model sensor input as a function of state
 - [ ] Get a static single joint that works for multiple changing weights
 
