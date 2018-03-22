@@ -654,7 +654,7 @@ if __name__ == '__main__':
     mid_torque = 0.0
     min_torque = -2.5
     
-    iterations = 13
+    iterations = 15
     tops = np.zeros((iterations, len(times),))
     guesses = np.zeros((iterations, len(times),))
     bottoms = np.zeros((iterations, len(times),))
@@ -674,7 +674,7 @@ if __name__ == '__main__':
         # plt.title(title % (i + 1,))
         # plt.show()
 
-        print('max error: %.4f' % (max_traj[-1,0] - min_traj[-1,0],))
+        print('max error: %.5f' % (max_traj[-1,0] - min_traj[-1,0],))
 
         if desired_end_pos >= max_traj[-1,0]:
             print('return %f' % (max_torque,))
