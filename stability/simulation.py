@@ -706,6 +706,6 @@ if __name__ == '__main__':
             ax_pos.plot(time, full_state[:,0])
     if plot_position:
         print('show for the dough')
-        plt.savefig('Tracking_proportional_ideal.png')
+        plt.savefig('Tracking_optimizing.png')
         plt.show()
         print('all done')
