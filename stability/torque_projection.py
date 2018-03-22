@@ -584,17 +584,38 @@ class OptimizingController(BaselineController):
         accel = state[2]
 
         ### Optimizing Control ###
-        guess_torques = np.arange(-1, 1, 0.001)
-        # guess_torque = self._pick_proportional_torque(state, desired_states, times)
-        optim = np.vectorize(partial(self.optimize_this, state=state, desired_states=desired_states, times=times))
-        guess_errors = optim(guess_torques)
+        max_torque = 2.5
+        mid_torque = 0.0
+        min_torque = -2.5
         
-        # plt.plot(guess_torques, guess_errors)
-        # plt.show()
+        iterations = 11
 
-        des_torque = guess_torques[np.argmin(guess_errors)]
+        for i in range(iterations):
+            max_traj = oc.internal_model(start_state, max_torque, times)
+            mid_traj = oc.internal_model(start_state, mid_torque, times)
+            min_traj = oc.internal_model(start_state, min_torque, times)
+            max_pos = max_traj[-1,0]
+            mid_pos = mid_traj[-1,0]
+            min_pos = min_traj[-1,0]
 
-        return des_torque
+            if desired_end_pos >= max_pos:
+                return max_torque
+            elif desired_end_pos <= min_pos:
+                return min_torque
+            elif desired_end_pos == mid_pos:
+                return mid_torque
+            
+            if desired_end_pos > mid_traj[-1,0]:
+                max_torque = max_torque
+                min_torque = mid_torque
+                mid_torque = (max_torque + min_torque) / 2.0
+
+            else: # desired_end_pos < mid_traj[-1,0]:
+                max_torque = mid_torque
+                min_torque = min_torque
+                mid_torque = (max_torque + min_torque) / 2.0
+
+        return mid_torque
 
     def _convert_to_pressure(self, des_torque, state):
 
