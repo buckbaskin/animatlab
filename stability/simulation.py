@@ -29,81 +29,6 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 from functools import partial
 
-def pressures_to_torque(self, extp, flxp, state, stiffness, actual_torque=None):
-        '''
-        Inverse model: given the pressures of the left and right actuator, estimate
-        the torque on the joint
-        '''
-        extp = np.clip(extp, self.PRESSURE_MIN, self.PRESSURE_MAX)
-        flxp = np.clip(flxp, self.PRESSURE_MIN, self.PRESSURE_MAX)
-
-        ### Calculate errors from guessing torque ###
-
-        base = 0.5
-        step = 0.1
-
-        ext_p_0 = self.ext_torque_to_pressure(base - step, state)
-        ext_p_1 = self.ext_torque_to_pressure(base, state)
-        condition = (ext_p_1 == ext_p_0 or
-            (not 0.5 <= ext_p_1 <= 619.5) or
-            (not 0.5 <= ext_p_0 <= 619.5))
-        for i in range(10): 
-            if not condition:
-                break
-            if ext_p_1 >= 619.5:
-                base /= 2
-                step /= 2
-                if step < 0.01:
-                    step = 0.01
-            elif ext_p_1 < 0.5:
-                base += 0.1
-                if step < 0.01:
-                    step = 0.01
-            else:
-                raise ValueError()
-            ext_p_0 = self.ext_torque_to_pressure(base - step, state)
-            ext_p_1 = self.ext_torque_to_pressure(base, state)
-
-            condition = (ext_p_1 == ext_p_0 or
-                (not 0.5 <= ext_p_1 <= 619.5) or
-                (not 0.5 <= ext_p_0 <= 619.5))
-        
-            if condition and i == 9:
-                print('Ps_2_T(', extp, flxp, state, ')')
-                print('failed to fix the problem.')
-                input(('not fixed', base, step, 'got', ext_p_1, ext_p_0))
-            if not condition:
-                print(('fixed', base, step, 'got', ext_p_1, ext_p_0))
-
-        if ext_p_1 == 0 and ext_p_0 == 0:
-            dTdeP = 0
-        else:
-            dTdeP = (step) / (ext_p_1 - ext_p_0)
-        flx_p_0 = self.ext_torque_to_pressure(base - step, state)
-        flx_p_1 = self.ext_torque_to_pressure(base, state)
-        if flx_p_1 == 0 and flx_p_0 == 0:
-            dTdfP = 0
-        else:
-            dTdfP = (step) / (flx_p_1 - flx_p_0)
-
-        deP = extp - ext_p_1
-        deT = dTdeP * deP
-        dfP = flxp - flx_p_1
-        dfT = dTdfP * dfP
-
-        eT0 = 0.5
-        eT1 = eT0 + deT
-        fT0 = 0.5
-        fT1 = fT0 + dfT
-
-        return eT1, fT1
-
-def evaluation(desired_states, states):
-    pos_error = np.abs(desired_states[:,0] - states[:,0])
-    max_pos_error = np.max(pos_error)
-
-
-
 
 class Simulator(object):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
@@ -136,7 +61,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 10.0
 
-        self.CONTROL_RATE = 100
+        self.CONTROL_RATE = 30
 
         ## Actuator Model Parameters ##
 
@@ -219,6 +144,7 @@ class Simulator(object):
         Inverse model: given the pressures of the left and right actuator, estimate
         the torque on the joint
         '''
+
         extp = np.clip(extp, self.PRESSURE_MIN, self.PRESSURE_MAX)
         flxp = np.clip(flxp, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
@@ -281,7 +207,7 @@ class Simulator(object):
         fT0 = 0.5
         fT1 = fT0 + dfT
 
-        return eT1 - fT1
+        return eT1, fT1
 
     def mass_model(self, theta):
         '''
@@ -399,8 +325,10 @@ class Simulator(object):
         ext_pres = self.pressure_model(des_ext_pres, ext_pres, time_step)
         flx_pres = self.pressure_model(des_flx_pres, flx_pres, time_step)
 
-        Torque_net = self.pressures_to_torque(extp=ext_pres, flxp=flx_pres,
+        ext_torque, flx_torque = self.pressures_to_torque(extp=ext_pres, flxp=flx_pres,
             state=state, actual_torque=None) # intended_torque)
+
+        Torque_net = ext_torque - flx_torque
 
         M = self.mass_model(state[0])
         C = self.vel_effects(state[0], state[1])
@@ -441,7 +369,7 @@ class Simulator(object):
         full_state = np.ones((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
         for i in range(full_state.shape[0] - 1):
-            if i % 100 == 0:
+            if i % 1000 == 0 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
@@ -460,7 +388,41 @@ class Simulator(object):
 
         return full_state
 
-class Controller(object):
+    def evaluation(self, states, desired_states, times):
+        '''
+        Evaluate position error and antagonistic torque (wasted effort)
+
+        Tracking performance has a strict bound (staying within a certain error)
+        and a score to minimize (pos_error_rate). Antagonistic torques focus is
+        minimizing the antag_torque_rate. A momentarily high antagonistic torque
+        maybe useful and allowed, but continued unnecessarily high antagonism is
+        wasteful.
+        '''
+        pos_error = np.abs(desired_states[:,0] - states[:,0])
+        pos_error_rate = np.sum(pos_error) / (times[-1] - times[0])
+        max_pos_error = np.max(pos_error[1000:]) # ignore the first bit of time
+
+        extp = states[:,3]
+        flxp = states[:,4]
+        ext_torques = np.zeros(extp.shape)
+        flx_torques = np.zeros(flxp.shape)
+        for i in range(len(extp)):
+            ext_torque, flx_torque = self.pressures_to_torque(extp[i], flxp[i], states[i,:])
+            ext_torques[i] = ext_torque
+            flx_torques[i] = flx_torque
+        antag_torque = np.minimum(ext_torques, flx_torques)
+        antag_torque_rate = np.sum(antag_torque) / (times[-1] - times[0])
+        max_antag_torque = np.max(antag_torque)
+
+        return {
+            'max_pos_error': max_pos_error,
+            'pos_error_rate': pos_error_rate,
+            'max_antag_torque': max_antag_torque,
+            'antag_torque_rate': antag_torque_rate,
+        }
+
+
+class BaselineController(object):
     def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
@@ -475,7 +437,98 @@ class Controller(object):
         ## "Dynamic" Stiffness ##
         # Together K_p, K_v constitute "Dynamic" Stiffness
         # Not quite sure how to align static holding mode with dyanmic mode right now.
-        self.K_p = 8
+        self.K_p = 20
+        self.K_v = 2
+
+        for arg, val in kwargs.items():
+            if hasattr(self, arg):
+                setattr(self, arg, val)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return 'BaselineController(K_p=%.2f, K_v=%.2f)' % (self.K_p, self.K_v)
+
+    def _pick_proportional_torque(self, state, desired_states, times):
+        theta = state[0]
+        des_theta = desired_states[0, 0]
+        theta_dot = state[1]
+        des_theta_dot = desired_states[0, 1]
+
+        # vel = state[1]
+
+        # accel = state[2]
+
+        ### PD Control ###
+        magic_number1 = 115
+
+        theta_err = des_theta - theta
+        theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
+
+        vel_err = des_theta_dot - theta_dot
+        vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
+
+        des_torque = theta_torque + vel_torque
+        return des_torque
+
+    def _convert_to_pressure(self, des_torque, state):
+
+        ### Convert Torque to Left and Right Torques ###
+        # extension is positive rotation
+        ext_torque = des_torque / 2 + self.antagonistic_stiffness
+        
+        # flexion is negative rotation
+        flx_torque = -des_torque / 2 + self.antagonistic_stiffness
+        
+        # TODO(buckbaskin): I did the math here so clipping had less effect, but I
+        #   deleted it
+        des_ext_pres = self.sim.ext_torque_to_pressure(ext_torque, state)
+        des_ext_pres = np.clip(des_ext_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
+
+        des_flx_pres = self.sim.flx_torque_to_pressure(flx_torque, state)
+        des_flx_pres = np.clip(des_flx_pres, self.sim.PRESSURE_MIN, self.sim.PRESSURE_MAX)
+
+        return des_ext_pres, des_flx_pres
+
+    def control(self, state, desired_states, times):
+        '''
+        Control Model
+        Implements: (see _pick_torque)
+            Formerly: PD Control
+            WIP: Chooses a torque/acceleration that best matches desired states at 
+                the given times
+        Complications:
+            - [x] Torque Limits
+            - [x] Force Limts -> Torque Limits based on geometry
+            - [x] Pressure Limits -> Force Limits -> Torque Limits
+            - [x] Control does bang-bang pressure control
+            - [x] Control only updates at X Hz
+            - [x] Control uses linear time scaling of control rate
+            - [ ] Control uses a model to project forward to choose accel/torque
+        '''
+
+        des_torque = self._pick_proportional_torque(state, desired_states, times)
+        des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
+
+        return des_ext_pres, des_flx_pres, des_torque
+
+class OptimizingController(BaselineController):
+    def __init__(self, control_rate, stiffness, **kwargs):
+        # TODO(buckbaskin): this assumes perfect matching parameters for motion model
+        self.control_rate = control_rate
+        self.sim = Simulator()
+        ## "Static" Stiffness ##
+        # Increasing the stiffness increases the range around 0 where the complete
+        #   desired torque works. On the other hand, decreasing the stiffness increases
+        #   the range of total torques that are output before the desired torque
+        #   saturates.
+        self.antagonistic_stiffness = stiffness
+
+        ## "Dynamic" Stiffness ##
+        # Together K_p, K_v constitute "Dynamic" Stiffness
+        # Not quite sure how to align static holding mode with dyanmic mode right now.
+        self.K_p = 9
         self.K_v = 1
 
         for arg, val in kwargs.items():
@@ -541,28 +594,6 @@ class Controller(object):
 
         des_torque = guess_torques[np.argmin(guess_errors)]
 
-        return des_torque
-
-    def _pick_proportional_torque(self, state, desired_states, times):
-        theta = state[0]
-        des_theta = desired_states[0, 0]
-        theta_dot = state[1]
-        des_theta_dot = desired_states[0, 1]
-
-        # vel = state[1]
-
-        # accel = state[2]
-
-        ### PD Control ###
-        magic_number1 = 115
-
-        theta_err = des_theta - theta
-        theta_torque = (self.K_p * np.min([1, (1 + self.control_rate) / magic_number1])) * theta_err
-
-        vel_err = des_theta_dot - theta_dot
-        vel_torque = (self.K_v * np.min([1, (1 + self.control_rate) / magic_number1])) * vel_err
-
-        des_torque = theta_torque + vel_torque
         return des_torque
 
     def _convert_to_pressure(self, des_torque, state):
@@ -641,11 +672,17 @@ if __name__ == '__main__':
         ax_pos.plot(time,  desired_state[:,0])
 
     print('calculating...')
-    for stiffness in [0.1,]:
+    for stiffness in [1.0,]:
         print('stiffness: %.2f' % (stiffness,))
-        C = Controller(control_rate=S.CONTROL_RATE, stiffness=stiffness)
+        C = BaselineController(control_rate=S.CONTROL_RATE, stiffness=stiffness)
         
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
+
+        result = S.evaluation(full_state, desired_state, S.timeline())
+        print('Simulation Evaluation:')
+        print('Controller: %s' % (str(C),))
+        print('Maximum Positional Error: %.3f (rad)' % (result['max_pos_error']))
+        print('Torque Score: %.3f (wasted Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
             ax_pos.plot(time, full_state[:,0])
