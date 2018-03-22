@@ -638,56 +638,67 @@ class OptimizingController(BaselineController):
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
-    ### Set up time ###
-    S = Simulator(bang_bang=True, limit_pressure=True)
-    time = S.timeline()
+    control_rate = 30
+    stiffness = 0.5
+    
+    start_state = np.array([0.05, 0.5, 0, 0, 0])
+    desired_end_pos = 0.0575
+    times = np.linspace(0, 1.0 / control_rate, 50)
 
-    MAX_AMPLITUDE = S.MAX_AMPLITUDE
+    oc = OptimizingController(control_rate=control_rate, stiffness=stiffness)
+    title = 'Position (Torque Optimization %d)'
+    plt.ylabel('Angle (rad)')
+    plt.xlabel('Time (sec)')
 
-    state_start = np.array([
-        -MAX_AMPLITUDE / 2, # position
-        0, # vel
-        0, # accel
-        0, # ext pressure
-        0,]) # flx pressure
+    max_torque = 2.5
+    mid_torque = 0.0
+    min_torque = -2.5
+    
+    iterations = 13
+    tops = np.zeros((iterations, len(times),))
+    guesses = np.zeros((iterations, len(times),))
+    bottoms = np.zeros((iterations, len(times),))
 
-    ### Set up desired state ###
-    # the desired state velocity and acceleration are positive here
-    desired_state = np.zeros((time.shape[0], state_start.shape[0],))
+    for i in range(iterations):
+        max_traj = oc.internal_model(start_state, max_torque, times)
+        mid_traj = oc.internal_model(start_state, mid_torque, times)
+        min_traj = oc.internal_model(start_state, min_torque, times)
+        tops[i,:] = max_traj[:,0]
+        guesses[i,:] = mid_traj[:,0]
+        bottoms[i,:] = min_traj[:,0]
+        print('%.4f > %.4f > %.4f' % (max_torque, mid_torque, min_torque,))
+        # plt.plot(times, np.ones(times.shape) * desired_end_pos)
+        # plt.plot(times, max_traj[:, 0])
+        # plt.plot(times, mid_traj[:, 0])
+        # plt.plot(times, min_traj[:, 0])
+        # plt.title(title % (i + 1,))
+        # plt.show()
 
-    # Try following a sin curve
-    period = 10
-    adjust = (pi * 2) / period 
-    desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
-    desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
+        print('max error: %.4f' % (max_traj[-1,0] - min_traj[-1,0],))
 
-    plot_position = True
+        if desired_end_pos >= max_traj[-1,0]:
+            print('return %f' % (max_torque,))
+            break
+        elif desired_end_pos <= min_traj[-1,0]:
+            print('return %f' % (min_torque,))
+            break
+        elif desired_end_pos == mid_traj[-1,0]:
+            print('return %f' % (mid_torque,))
+            break
+        elif desired_end_pos > mid_traj[-1,0]:
+            max_torque = max_torque
+            min_torque = mid_torque
+            mid_torque = (max_torque + min_torque) / 2.0
+        else: # desired_end_pos < mid_traj[-1,0]:
+            max_torque = mid_torque
+            min_torque = min_torque
+            mid_torque = (max_torque + min_torque) / 2.0
+    else:
+        print('return %f' % (mid_torque,))
 
-    if plot_position:
-        fig = plt.figure()
-        ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Position')
-        ax_pos.set_ylabel('Position (% of circle)')
-        ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,0])
-
-    print('calculating...')
-    for stiffness in [1.0,]:
-        print('stiffness: %.2f' % (stiffness,))
-        C = BaselineController(control_rate=S.CONTROL_RATE, stiffness=stiffness)
-        
-        full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
-
-        result = S.evaluation(full_state, desired_state, S.timeline())
-        print('Simulation Evaluation:')
-        print('Controller: %s' % (str(C),))
-        print('Maximum Positional Error: %.3f (rad)' % (result['max_pos_error']))
-        print('Torque Score: %.3f (wasted Nm/sec)' % (result['antag_torque_rate']))
-
-        if plot_position:
-            ax_pos.plot(time, full_state[:,0])
-    if plot_position:
-        print('show for the dough')
-        plt.savefig('Tracking_proportional_ideal.png')
-        plt.show()
-        print('all done')
+    plt.title('Iterative Guesses')
+    plt.plot(np.ones((i+1,)) * desired_end_pos)
+    plt.plot(tops[:i+1,-1].flatten())
+    plt.plot(guesses[:i+1,-1].flatten())
+    plt.plot(bottoms[:i+1,-1].flatten())
+    plt.show()

@@ -47,8 +47,8 @@ class Simulator(object):
         self.JOINT_LIMIT_MAX = pi / 4
         self.JOINT_LIMIT_MIN = -pi / 4
 
-        self.TORQUE_MAX = 5.0
-        self.TORQUE_MIN = 0.0
+        self.TORQUE_MAX = 2.5
+        self.TORQUE_MIN = 0.25
 
         self.PRESSURE_MAX = 620
         self.PRESSURE_MIN = 0
