@@ -410,7 +410,7 @@ class Simulator(object):
             ext_torque, flx_torque = self.pressures_to_torque(extp[i], flxp[i], states[i,:])
             ext_torques[i] = ext_torque
             flx_torques[i] = flx_torque
-        antag_torque = np.minimum(ext_torques, flx_torques)
+        antag_torque = np.abs(ext_torques) + np.abs(flx_torques)
         antag_torque_rate = np.sum(antag_torque) / (times[-1] - times[0])
         max_antag_torque = np.max(antag_torque)
 
