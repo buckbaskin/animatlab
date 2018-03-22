@@ -513,7 +513,7 @@ class BaselineController(object):
 
         return des_ext_pres, des_flx_pres, des_torque
 
-class OptimizingController(BaselineController):
+class OptimizingController(object):
     def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
@@ -534,6 +534,12 @@ class OptimizingController(BaselineController):
         for arg, val in kwargs.items():
             if hasattr(self, arg):
                 setattr(self, arg, val)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return 'OptimizingController()'
 
     def internal_model(self, state, desired_torque, times):
         '''
@@ -563,18 +569,6 @@ class OptimizingController(BaselineController):
 
         return full_state
 
-    def optimize_this(self, guess_torque, state, desired_states, times):
-        projected_states = self.internal_model(state, guess_torque, times)
-        # plt.plot(times, desired_states[:,0])
-        # plt.plot(times, projected_states[:,0])
-        # plt.title('Position (des and projected)')
-        # plt.ylabel('Angle (rad)')
-        # plt.xlabel('Time (sec)')
-        # plt.show()
-        delta = desired_states[-1:] - projected_states[-1,:]
-        simple_err = np.dot(delta.flatten(), np.ones(delta.shape).flatten())
-        return simple_err
-
     def _pick_torque(self, state, desired_states, times):
         desired_state=None # clear polluting global scope
 
@@ -584,16 +578,18 @@ class OptimizingController(BaselineController):
         accel = state[2]
 
         ### Optimizing Control ###
-        max_torque = 2.5
+        max_torque = 2.25
         mid_torque = 0.0
-        min_torque = -2.5
+        min_torque = -2.25
         
         iterations = 11
 
+        desired_end_pos = desired_states[-1,0]
+
         for i in range(iterations):
-            max_traj = oc.internal_model(start_state, max_torque, times)
-            mid_traj = oc.internal_model(start_state, mid_torque, times)
-            min_traj = oc.internal_model(start_state, min_torque, times)
+            max_traj = self.internal_model(state, max_torque, times)
+            mid_traj = self.internal_model(state, mid_torque, times)
+            min_traj = self.internal_model(state, min_torque, times)
             max_pos = max_traj[-1,0]
             mid_pos = mid_traj[-1,0]
             min_pos = min_traj[-1,0]
@@ -653,7 +649,7 @@ class OptimizingController(BaselineController):
             - [ ] Control uses a model to project forward to choose accel/torque
         '''
 
-        des_torque = self._pick_proportional_torque(state, desired_states, times)
+        des_torque = self._pick_torque(state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         return des_ext_pres, des_flx_pres, des_torque
@@ -666,7 +662,8 @@ if __name__ == '__main__':
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
 
     state_start = np.array([
-        -MAX_AMPLITUDE / 2, # position
+        # -MAX_AMPLITUDE / 2, # position
+        0,
         0, # vel
         0, # accel
         0, # ext pressure
