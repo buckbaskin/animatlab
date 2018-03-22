@@ -676,23 +676,44 @@ if __name__ == '__main__':
 
         print('max error: %.5f' % (max_traj[-1,0] - min_traj[-1,0],))
 
-        if desired_end_pos >= max_traj[-1,0]:
+        max_pos = max_traj[-1,0]
+        mid_pos = mid_traj[-1,0]
+        min_pos = min_traj[-1,0]
+
+        if desired_end_pos >= max_pos:
             print('return %f' % (max_torque,))
             break
-        elif desired_end_pos <= min_traj[-1,0]:
+        elif desired_end_pos <= min_pos:
             print('return %f' % (min_torque,))
             break
-        elif desired_end_pos == mid_traj[-1,0]:
+        elif desired_end_pos == mid_pos:
             print('return %f' % (mid_torque,))
             break
-        elif desired_end_pos > mid_traj[-1,0]:
+        
+        if desired_end_pos > mid_traj[-1,0]:
             max_torque = max_torque
             min_torque = mid_torque
-            mid_torque = (max_torque + min_torque) / 2.0
+
+            if abs(max_torque - min_torque) < 0.0001 or abs(max_pos - mid_pos) < 0.0001:
+                mid_torque = (max_torque + min_torque) / 2.0
+            else:
+                slope = (max_torque - min_torque) / (max_pos - mid_pos)
+                print('slope', slope)
+                pos_error = desired_end_pos - mid_pos
+                torque_error = (pos_error * slope) * 0.625
+                mid_torque = min_torque + torque_error
         else: # desired_end_pos < mid_traj[-1,0]:
             max_torque = mid_torque
             min_torque = min_torque
-            mid_torque = (max_torque + min_torque) / 2.0
+
+            if abs(max_torque - min_torque) < 0.0001 or abs(mid_pos - min_pos) < 0.0001:
+                mid_torque = (max_torque + min_torque) / 2.0
+            else:
+                slope = (max_torque - min_torque) / (mid_pos - min_pos)
+                pos_error = desired_end_pos - mid_pos
+                torque_error = (pos_error * slope) * 0.625
+                mid_torque = min_torque + torque_error
+
     else:
         print('return %f' % (mid_torque,))
 
