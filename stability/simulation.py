@@ -699,14 +699,14 @@ if __name__ == '__main__':
         
     print('calculating...')
     stiffness = 1.0
-    for index, EST_ROBOT_MASS in enumerate([0.2, 0.3, 0.4]):
+    for index, EST_ROBOT_MASS in enumerate([2.0, 0.001]):
         print('Sim Round %d: EST_ROBOT_MASS: %.3f' % (index+1, EST_ROBOT_MASS,))
         estimated_S = Simulator(ROBOT_MASS=EST_ROBOT_MASS)
     
         C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/30, stiffness=stiffness,
             optimization_steps=15, iteration_steps=45)
-        
+
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
         result = S.evaluation(full_state, desired_state, S.timeline())
@@ -720,6 +720,6 @@ if __name__ == '__main__':
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Tracking_Optimizing_Load4.png')
+        plt.savefig('Tracking_Optimizing_Load6.png')
         plt.show()
         print('all done')
