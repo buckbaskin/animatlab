@@ -21,13 +21,14 @@ Notes:
 import sys
 print('--- %s ---' % (sys.argv[0],))
 
+import datetime
 import math
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
+from functools import partial
 from math import pi
 from numpy import arctan, sqrt, floor, ceil
-from functools import partial
 
 
 class Simulator(object):
@@ -368,6 +369,9 @@ class Simulator(object):
 
         full_state = np.ones((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
+
+        start_time = datetime.datetime.now()
+
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 0 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
@@ -385,6 +389,13 @@ class Simulator(object):
                 control=self.last_control,
                 control_stiffness=controller.antagonistic_stiffness)
             full_state[i+1,:] = new_state
+
+        end_time = datetime.datetime.now()
+        sim_time = (end_time - start_time).total_seconds()
+        simulated_time = time[-1] - time[0]
+
+        realtime = min(1.0, simulated_time / sim_time)
+        print('runtime is: %.2f seconds for %.2f of real time (%.2f percent of rt)' % (sim_time, simulated_time, realtime,))
 
         return full_state
 
@@ -514,22 +525,17 @@ class BaselineController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 class OptimizingController(object):
-    def __init__(self, control_rate, stiffness, **kwargs):
+    def __init__(self, control_rate, time_horizon, stiffness,
+        optimization_steps=10, iteration_steps=10, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
         self.sim = Simulator()
-        ## "Static" Stiffness ##
-        # Increasing the stiffness increases the range around 0 where the complete
-        #   desired torque works. On the other hand, decreasing the stiffness increases
-        #   the range of total torques that are output before the desired torque
-        #   saturates.
+
         self.antagonistic_stiffness = stiffness
 
-        ## "Dynamic" Stiffness ##
-        # Together K_p, K_v constitute "Dynamic" Stiffness
-        # Not quite sure how to align static holding mode with dyanmic mode right now.
-        self.K_p = 9
-        self.K_v = 1
+        self.time_horizon = time_horizon
+        self.iterations = iteration_steps
+        self.optimization_steps = optimization_steps
 
         for arg, val in kwargs.items():
             if hasattr(self, arg):
@@ -541,7 +547,7 @@ class OptimizingController(object):
     def __str__(self):
         return 'OptimizingController()'
 
-    def internal_model(self, state, desired_torque, times):
+    def internal_model(self, state, desired_torque, end_time):
         '''
         Implement something like motion_evolution for short forward time periods
         based on an internal model. The output from this will be used to pick a
@@ -555,6 +561,7 @@ class OptimizingController(object):
             - [ ] Call the motion evolution repeatedly and build up the states here
             - [ ] Return the states array
         '''
+        times = np.linspace(0, end_time, self.iterations)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(desired_torque, state)
         # print('des_ext_pres', des_ext_pres, 'des_flx_pres', des_flx_pres)
         full_state = np.zeros((times.shape[0], state.shape[0],))
@@ -582,14 +589,12 @@ class OptimizingController(object):
         mid_torque = 0.0
         min_torque = -2.25
         
-        iterations = 11
-
         desired_end_pos = desired_states[-1,0]
 
-        for i in range(iterations):
-            max_traj = self.internal_model(state, max_torque, times)
-            mid_traj = self.internal_model(state, mid_torque, times)
-            min_traj = self.internal_model(state, min_torque, times)
+        for i in range(self.optimization_steps):
+            max_traj = self.internal_model(state, max_torque, self.time_horizon)
+            mid_traj = self.internal_model(state, mid_torque, self.time_horizon)
+            min_traj = self.internal_model(state, min_torque, self.time_horizon)
             max_pos = max_traj[-1,0]
             mid_pos = mid_traj[-1,0]
             min_pos = min_traj[-1,0]
@@ -684,15 +689,20 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Position')
+        ax_pos.set_title('Position For Various Est Mass')
         ax_pos.set_ylabel('Position (% of circle)')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,0])
-
+        ax_pos.plot(time,  desired_state[:,0], label='Desired')
+        
     print('calculating...')
-    for stiffness in [1.0,]:
-        print('stiffness: %.2f' % (stiffness,))
-        C = OptimizingController(control_rate=S.CONTROL_RATE, stiffness=stiffness)
+    stiffness = 1.0
+    for index, EST_LINK_MASS in enumerate([0.25]): #, 0.22, 0.28,]):
+        print('Sim Round %d: LINK_MASS: %.2f' % (index+1, EST_LINK_MASS,))
+        estimated_S = Simulator(LINK_MASS=EST_LINK_MASS)
+    
+        C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
+            time_horizon=1.5/30, stiffness=stiffness,
+            optimization_steps=15, iteration_steps=60)
         
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
@@ -703,9 +713,10 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0])
+            ax_pos.plot(time, full_state[:,0], label='EST_LINK_MASS %.2f' % (EST_LINK_MASS,))
     if plot_position:
+        ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Tracking_optimizing.png')
+        plt.savefig('Tracking_Optimizing_LINK_MASS.png')
         plt.show()
         print('all done')
