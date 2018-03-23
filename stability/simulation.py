@@ -43,7 +43,7 @@ class Simulator(object):
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.6 # kg
+        self.ROBOT_MASS = 0.1 # kg
 
         self.INTERNAL_DAMPING = 0.1
 
@@ -56,7 +56,7 @@ class Simulator(object):
         self.PRESSURE_MAX = 620
         self.PRESSURE_MIN = 0
 
-        self.PRESSURE_RATE_MAX = 500 # 200 kPa per sec works
+        self.PRESSURE_RATE_MAX = 1000 # 200 kPa per sec works
 
         self.PRESSURE_RESOLUTION = 17.0 # hysterisis gap, # 17 works
 
@@ -64,7 +64,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 10.0
 
-        self.CONTROL_RATE = 30
+        self.CONTROL_RATE = 50
 
         ## Actuator Model Parameters ##
 
@@ -275,8 +275,6 @@ class Simulator(object):
             print(theta)
             raise
         normal_force = - F_r * R_n * math.sin(theta)
-        # TODO(buckbaskin): remove this
-        normal_force = 0
 
         return link_gravity + normal_force
 
@@ -701,9 +699,9 @@ if __name__ == '__main__':
         
     print('calculating...')
     stiffness = 1.0
-    for index, EST_INTERNAL_DAMPING in enumerate([0.00005, 0.00001, 0.0]):
-        print('Sim Round %d: EST_INTERNAL_DAMPING: %.5f' % (index+1, EST_INTERNAL_DAMPING,))
-        estimated_S = Simulator(INTERNAL_DAMPING=EST_INTERNAL_DAMPING)
+    for index, EST_ROBOT_MASS in enumerate([0.2, 0.3, 0.4]):
+        print('Sim Round %d: EST_ROBOT_MASS: %.3f' % (index+1, EST_ROBOT_MASS,))
+        estimated_S = Simulator(ROBOT_MASS=EST_ROBOT_MASS)
     
         C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/30, stiffness=stiffness,
@@ -718,10 +716,10 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0], label='EST_INTERNAL_DAMPING %.5f' % (EST_INTERNAL_DAMPING,))
+            ax_pos.plot(time, full_state[:,0], label='EST_ROBOT_MASS %.3f' % (EST_ROBOT_MASS,))
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Tracking_Optimizing_Damping5.png')
+        plt.savefig('Tracking_Optimizing_Load4.png')
         plt.show()
         print('all done')
