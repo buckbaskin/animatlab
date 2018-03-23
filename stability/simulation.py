@@ -45,6 +45,8 @@ class Simulator(object):
         self.LINK_MASS = 0.25 # kg
         self.ROBOT_MASS = 0.6 # kg
 
+        self.INTERNAL_DAMPING = 0.1
+
         self.JOINT_LIMIT_MAX = pi / 4
         self.JOINT_LIMIT_MIN = -pi / 4
 
@@ -231,7 +233,7 @@ class Simulator(object):
             - [ ] Estimated Hysterisis effect of filling or empty actuators applying
                     a torque opposite the motion
         '''
-        return 0.1 * theta_dot
+        return self.INTERNAL_DAMPING * theta_dot
 
     def conservative_effects(self, theta):
         '''
@@ -590,11 +592,12 @@ class OptimizingController(object):
         min_torque = -2.25
         
         desired_end_pos = desired_states[-1,0]
+        max_traj = self.internal_model(state, max_torque, self.time_horizon)
+        min_traj = self.internal_model(state, min_torque, self.time_horizon)
+
 
         for i in range(self.optimization_steps):
-            max_traj = self.internal_model(state, max_torque, self.time_horizon)
             mid_traj = self.internal_model(state, mid_torque, self.time_horizon)
-            min_traj = self.internal_model(state, min_torque, self.time_horizon)
             max_pos = max_traj[-1,0]
             mid_pos = mid_traj[-1,0]
             min_pos = min_traj[-1,0]
@@ -609,10 +612,12 @@ class OptimizingController(object):
             if desired_end_pos > mid_traj[-1,0]:
                 max_torque = max_torque
                 min_torque = mid_torque
+                min_traj = mid_traj.copy()
                 mid_torque = (max_torque + min_torque) / 2.0
 
             else: # desired_end_pos < mid_traj[-1,0]:
                 max_torque = mid_torque
+                max_traj = mid_traj.copy()
                 min_torque = min_torque
                 mid_torque = (max_torque + min_torque) / 2.0
 
@@ -689,20 +694,20 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Position For Various Est Mass')
+        ax_pos.set_title('Position For Various Est Damping')
         ax_pos.set_ylabel('Position (% of circle)')
         ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,0], label='Desired')
         
     print('calculating...')
     stiffness = 1.0
-    for index, EST_LINK_MASS in enumerate([0.25]): #, 0.22, 0.28,]):
-        print('Sim Round %d: LINK_MASS: %.2f' % (index+1, EST_LINK_MASS,))
-        estimated_S = Simulator(LINK_MASS=EST_LINK_MASS)
+    for index, EST_INTERNAL_DAMPING in enumerate([0.00005, 0.00001, 0.0]):
+        print('Sim Round %d: EST_INTERNAL_DAMPING: %.5f' % (index+1, EST_INTERNAL_DAMPING,))
+        estimated_S = Simulator(INTERNAL_DAMPING=EST_INTERNAL_DAMPING)
     
         C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/30, stiffness=stiffness,
-            optimization_steps=15, iteration_steps=60)
+            optimization_steps=15, iteration_steps=45)
         
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
@@ -713,10 +718,10 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0], label='EST_LINK_MASS %.2f' % (EST_LINK_MASS,))
+            ax_pos.plot(time, full_state[:,0], label='EST_INTERNAL_DAMPING %.5f' % (EST_INTERNAL_DAMPING,))
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Tracking_Optimizing_LINK_MASS.png')
+        plt.savefig('Tracking_Optimizing_Damping5.png')
         plt.show()
         print('all done')
