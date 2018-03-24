@@ -21,13 +21,14 @@ Notes:
 import sys
 print('--- %s ---' % (sys.argv[0],))
 
+import datetime
 import math
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
+from functools import partial
 from math import pi
 from numpy import arctan, sqrt, floor, ceil
-from functools import partial
 
 
 class Simulator(object):
@@ -42,7 +43,9 @@ class Simulator(object):
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.2 # kg
+        self.ROBOT_MASS = 0.4 # kg
+
+        self.INTERNAL_DAMPING = 0.1
 
         self.JOINT_LIMIT_MAX = pi / 4
         self.JOINT_LIMIT_MIN = -pi / 4
@@ -53,7 +56,7 @@ class Simulator(object):
         self.PRESSURE_MAX = 620
         self.PRESSURE_MIN = 0
 
-        self.PRESSURE_RATE_MAX = 500 # 200 kPa per sec works
+        self.PRESSURE_RATE_MAX = 1000 # 200 kPa per sec works
 
         self.PRESSURE_RESOLUTION = 17.0 # hysterisis gap, # 17 works
 
@@ -61,7 +64,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 10.0
 
-        self.CONTROL_RATE = 30
+        self.CONTROL_RATE = 50
 
         ## Actuator Model Parameters ##
 
@@ -230,7 +233,7 @@ class Simulator(object):
             - [ ] Estimated Hysterisis effect of filling or empty actuators applying
                     a torque opposite the motion
         '''
-        return 0.1 * theta_dot
+        return self.INTERNAL_DAMPING * theta_dot
 
     def conservative_effects(self, theta):
         '''
@@ -272,8 +275,6 @@ class Simulator(object):
             print(theta)
             raise
         normal_force = - F_r * R_n * math.sin(theta)
-        # TODO(buckbaskin): remove this
-        # normal_force = 0
 
         return link_gravity + normal_force
 
@@ -368,6 +369,9 @@ class Simulator(object):
 
         full_state = np.ones((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
+
+        start_time = datetime.datetime.now()
+
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 0 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
@@ -385,6 +389,13 @@ class Simulator(object):
                 control=self.last_control,
                 control_stiffness=controller.antagonistic_stiffness)
             full_state[i+1,:] = new_state
+
+        end_time = datetime.datetime.now()
+        sim_time = (end_time - start_time).total_seconds()
+        simulated_time = time[-1] - time[0]
+
+        realtime = min(1.0, simulated_time / sim_time)
+        print('runtime is: %.2f seconds for %.2f of real time (%.2f percent of rt)' % (sim_time, simulated_time, realtime,))
 
         return full_state
 
@@ -514,22 +525,16 @@ class BaselineController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 class OptimizingController(object):
-    def __init__(self, control_rate, stiffness, **kwargs):
+    def __init__(self, control_rate, time_horizon, stiffness,
+        optimization_steps=10, iteration_steps=10, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
-        self.sim = Simulator(ROBOT_MASS = 0.19)
-        ## "Static" Stiffness ##
-        # Increasing the stiffness increases the range around 0 where the complete
-        #   desired torque works. On the other hand, decreasing the stiffness increases
-        #   the range of total torques that are output before the desired torque
-        #   saturates.
+        self.sim = Simulator()
         self.antagonistic_stiffness = stiffness
 
-        ## "Dynamic" Stiffness ##
-        # Together K_p, K_v constitute "Dynamic" Stiffness
-        # Not quite sure how to align static holding mode with dyanmic mode right now.
-        self.K_p = 9
-        self.K_v = 1
+        self.time_horizon = time_horizon
+        self.iterations = iteration_steps
+        self.optimization_steps = optimization_steps
 
         for arg, val in kwargs.items():
             if hasattr(self, arg):
@@ -541,7 +546,7 @@ class OptimizingController(object):
     def __str__(self):
         return 'OptimizingController()'
 
-    def internal_model(self, state, desired_torque, times):
+    def internal_model(self, state, desired_torque, end_time):
         '''
         Implement something like motion_evolution for short forward time periods
         based on an internal model. The output from this will be used to pick a
@@ -555,6 +560,7 @@ class OptimizingController(object):
             - [ ] Call the motion evolution repeatedly and build up the states here
             - [ ] Return the states array
         '''
+        times = np.linspace(0, end_time, self.iterations)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(desired_torque, state)
         # print('des_ext_pres', des_ext_pres, 'des_flx_pres', des_flx_pres)
         full_state = np.zeros((times.shape[0], state.shape[0],))
@@ -582,14 +588,13 @@ class OptimizingController(object):
         mid_torque = 0.0
         min_torque = -2.25
         
-        iterations = 11
-
         desired_end_pos = desired_states[-1,0]
+        max_traj = self.internal_model(state, max_torque, self.time_horizon)
+        min_traj = self.internal_model(state, min_torque, self.time_horizon)
 
-        for i in range(iterations):
-            max_traj = self.internal_model(state, max_torque, times)
-            mid_traj = self.internal_model(state, mid_torque, times)
-            min_traj = self.internal_model(state, min_torque, times)
+
+        for i in range(self.optimization_steps):
+            mid_traj = self.internal_model(state, mid_torque, self.time_horizon)
             max_pos = max_traj[-1,0]
             mid_pos = mid_traj[-1,0]
             min_pos = min_traj[-1,0]
@@ -604,10 +609,12 @@ class OptimizingController(object):
             if desired_end_pos > mid_traj[-1,0]:
                 max_torque = max_torque
                 min_torque = mid_torque
+                min_traj = mid_traj.copy()
                 mid_torque = (max_torque + min_torque) / 2.0
 
             else: # desired_end_pos < mid_traj[-1,0]:
                 max_torque = mid_torque
+                max_traj = mid_traj.copy()
                 min_torque = min_torque
                 mid_torque = (max_torque + min_torque) / 2.0
 
@@ -696,16 +703,21 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Position')
+        ax_pos.set_title('Position For Various Est Supported Mass')
         ax_pos.set_ylabel('Position (% of circle)')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,0])
-
-    print('calculating...')
-    for stiffness in [1.0,]:
-        print('stiffness: %.2f' % (stiffness,))
-        C = OptimizingController(control_rate=S.CONTROL_RATE, stiffness=stiffness)
+        ax_pos.plot(time,  desired_state[:,0], label='Desired')
         
+    print('calculating...')
+    stiffness = 1.0
+    for index, EST_ROBOT_MASS in enumerate([0.4, 1.0, 0.0]):
+        print('Sim Round %d: EST_ROBOT_MASS: %.3f' % (index+1, EST_ROBOT_MASS,))
+        estimated_S = Simulator(ROBOT_MASS=EST_ROBOT_MASS)
+    
+        C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
+            time_horizon=1.5/30, stiffness=stiffness,
+            optimization_steps=15, iteration_steps=45)
+
         full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
         result = S.evaluation(full_state, desired_state, S.timeline())
@@ -715,9 +727,10 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0])
+            ax_pos.plot(time, full_state[:,0], label='EST_ROBOT_MASS %.3f' % (EST_ROBOT_MASS,))
     if plot_position:
+        ax_pos.legend()
         print('show for the dough')
-        # plt.savefig('Tracking_optimizing_sensor.png')
+        plt.savefig('Tracking_Optimizing_Load8.png')
         plt.show()
         print('all done')

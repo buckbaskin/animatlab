@@ -13,6 +13,7 @@
 - [ ] Investigate how changing estimated parameters affects stability
 - [ ] Investigate a simpler mass model if the parameters aren't that sensitive (reduce parameters to estimate)
 - [ ] Get a static single joint that works for multiple changing weights, other parameters
+- [ ] Understand how long controller takes vs Simulation time. Make it run a little faster
 
 ## Potential Analysis
 
