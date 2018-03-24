@@ -9,8 +9,10 @@
 - [x] Refactoring...
 - [x] Quantify. Tracking accuracy and internal potential energy
 - [x] Build a better controller for the slower update with fixed values
-- [ ] Explicitly model sensor input as a function of state
-- [ ] Get a static single joint that works for multiple changing weights
+- [x] Explicitly model sensor input as a function of state
+- [ ] Investigate how changing estimated parameters affects stability
+- [ ] Investigate a simpler mass model if the parameters aren't that sensitive (reduce parameters to estimate)
+- [ ] Get a static single joint that works for multiple changing weights, other parameters
 
 ## Potential Analysis
 
@@ -19,9 +21,10 @@
 - [ ] Numerically analyze nonlinear system, doing the same stuff as for a linear system
 
 ## Building a Better Controller
-- [.] Does it look close to linear for constant pressures?
-- [ ] How does this change with stiffness?
-- [ ] Also, related: what does the motion update do for constant control pressure?
+- [x] Does it look close to linear for constant pressures?
+- [x] How does this change with stiffness?
+- [x] Also, related: what does the motion update do for constant control pressure?
+- [ ] Set the controller to a fixed time to reach the correct state
 
 ## Future Thoughts
 - [ ] Update stiffness in a 3 joint model in simulation adding or removing weights

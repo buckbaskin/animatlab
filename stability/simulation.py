@@ -42,7 +42,7 @@ class Simulator(object):
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.6 # kg
+        self.ROBOT_MASS = 0.2 # kg
 
         self.JOINT_LIMIT_MAX = pi / 4
         self.JOINT_LIMIT_MIN = -pi / 4
@@ -61,7 +61,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 10.0
 
-        self.CONTROL_RATE = 10
+        self.CONTROL_RATE = 30
 
         ## Actuator Model Parameters ##
 
@@ -273,7 +273,7 @@ class Simulator(object):
             raise
         normal_force = - F_r * R_n * math.sin(theta)
         # TODO(buckbaskin): remove this
-        normal_force = 0
+        # normal_force = 0
 
         return link_gravity + normal_force
 
@@ -517,7 +517,7 @@ class OptimizingController(object):
     def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
-        self.sim = Simulator()
+        self.sim = Simulator(ROBOT_MASS = 0.19)
         ## "Static" Stiffness ##
         # Increasing the stiffness increases the range around 0 where the complete
         #   desired torque works. On the other hand, decreasing the stiffness increases
@@ -632,6 +632,17 @@ class OptimizingController(object):
 
         return des_ext_pres, des_flx_pres
 
+    def sensor_readings(self, state):
+        '''
+        The robot has rotation sensors on the joints (position) and pressure
+        sensors for each actuator.
+        '''
+        new_state = state.copy()
+        new_state[1] = 0 # zero out velocity
+        new_state[2] = 0 # zero out acceleration
+        return new_state
+
+
     def control(self, state, desired_states, times):
         '''
         Control Model
@@ -648,8 +659,9 @@ class OptimizingController(object):
             - [x] Control uses linear time scaling of control rate
             - [ ] Control uses a model to project forward to choose accel/torque
         '''
+        sensor_state = self.sensor_readings(state)
 
-        des_torque = self._pick_torque(state, desired_states, times)
+        des_torque = self._pick_torque(sensor_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         return des_ext_pres, des_flx_pres, des_torque
@@ -706,6 +718,6 @@ if __name__ == '__main__':
             ax_pos.plot(time, full_state[:,0])
     if plot_position:
         print('show for the dough')
-        plt.savefig('Tracking_optimizing.png')
+        # plt.savefig('Tracking_optimizing_sensor.png')
         plt.show()
         print('all done')
