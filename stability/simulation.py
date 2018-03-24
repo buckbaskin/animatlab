@@ -43,7 +43,7 @@ class Simulator(object):
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.1 # kg
+        self.ROBOT_MASS = 0.4 # kg
 
         self.INTERNAL_DAMPING = 0.1
 
@@ -692,14 +692,14 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Position For Various Est Damping')
+        ax_pos.set_title('Position For Various Est Supported Mass')
         ax_pos.set_ylabel('Position (% of circle)')
         ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,0], label='Desired')
         
     print('calculating...')
     stiffness = 1.0
-    for index, EST_ROBOT_MASS in enumerate([2.0, 0.001]):
+    for index, EST_ROBOT_MASS in enumerate([0.4, 1.0, 0.0]):
         print('Sim Round %d: EST_ROBOT_MASS: %.3f' % (index+1, EST_ROBOT_MASS,))
         estimated_S = Simulator(ROBOT_MASS=EST_ROBOT_MASS)
     
@@ -720,6 +720,6 @@ if __name__ == '__main__':
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Tracking_Optimizing_Load6.png')
+        plt.savefig('Tracking_Optimizing_Load8.png')
         plt.show()
         print('all done')
