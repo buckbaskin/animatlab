@@ -62,7 +62,7 @@ class Simulator(object):
 
         self.TIME_RESOLUTION = 0.001
         self.TIME_START = 0
-        self.TIME_END = 10.0
+        self.TIME_END = 5.0
 
         self.CONTROL_RATE = 50
 
@@ -539,7 +539,8 @@ class BaselineController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 class OptimizingController(object):
-    def __init__(self, control_rate, time_horizon, stiffness,
+    def __init__(self, init_state, init_time,
+        control_rate, time_horizon, stiffness,
         optimization_steps=10, iteration_steps=10, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
@@ -550,6 +551,8 @@ class OptimizingController(object):
         self.iterations = iteration_steps
         self.optimization_steps = optimization_steps
         self.last_control = 0.0
+        self.est_state = init_state.copy()
+        self.last_est_time = init_time
 
         for arg, val in kwargs.items():
             if hasattr(self, arg):
@@ -660,8 +663,8 @@ class OptimizingController(object):
         sensors for each actuator.
         '''
         new_state = state.copy()
-        new_state[1] = 0 # zero out velocity
-        new_state[2] = 0 # zero out acceleration
+        # new_state[1] = 0 # zero out velocity
+        # new_state[2] = 0 # zero out acceleration
         return new_state
 
     def sensor_fusion(self, est_state, last_est_time, current_state, current_time):
@@ -694,7 +697,10 @@ class OptimizingController(object):
         # theta_err = v_est_err * (t/2) # vel error accumulates position error
 
         theta_err = theta - est_state[0]
-        v_est_err = theta_err / (delta_t)
+        if delta_t > 0:
+            v_est_err = theta_err / (delta_t / 2.0)
+        else:
+            v_est_err = 0
 
         est_state[0] = theta
         est_state[1] += v_est_err
@@ -720,9 +726,10 @@ class OptimizingController(object):
             - [x] Control uses a model to project forward to choose accel/torque
             - [.] Estimate state because sensors only read pressure, position
         '''
-        sensor_state = self.sensor_readings(state)
+        self.est_state = self.sensor_fusion(self.est_state, self.last_est_time, state, times[0])
+        self.last_est_time = times[0]
 
-        des_torque = self._pick_torque(sensor_state, desired_states, times)
+        des_torque = self._pick_torque(self.est_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         self.last_control = des_torque
@@ -759,17 +766,18 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Position For Various Est Supported Mass')
-        ax_pos.set_ylabel('Position (% of circle)')
+        ax_pos.set_title('Estimated vs Actual Velocity')
+        ax_pos.set_ylabel('Velocity')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,0], label='Desired')
+        ax_pos.plot(time,  desired_state[:,1], label='Desired')
         
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
         estimated_S = Simulator()
     
-        C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
+        C = OptimizingController(state_start, time[0], 
+            sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/30, stiffness=stiffness,
             optimization_steps=15, iteration_steps=45)
 
@@ -782,8 +790,8 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0], label='Actual State')
-            ax_pos.plot(time, est_state[:,0], label='Internal Est. State')
+            ax_pos.plot(time, full_state[:,1], label='Actual State')
+            ax_pos.plot(time, est_state[:,1], label='Internal Est. State')
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
