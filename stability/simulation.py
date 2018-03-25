@@ -703,7 +703,7 @@ class OptimizingController(object):
             v_est_err = 0
 
         est_state[0] = theta
-        est_state[1] += v_est_err
+        est_state[1] += v_est_err * 0.5
         est_state[2] += 0
         est_state[3] = ext_p
         est_state[4] = flx_p
@@ -729,7 +729,7 @@ class OptimizingController(object):
         self.est_state = self.sensor_fusion(self.est_state, self.last_est_time, state, times[0])
         self.last_est_time = times[0]
 
-        des_torque = self._pick_torque(self.est_state, desired_states, times)
+        des_torque = self._pick_torque(state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         self.last_control = des_torque
