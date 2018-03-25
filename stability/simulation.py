@@ -722,7 +722,10 @@ class OptimizingController(object):
         self.est_state = self.sensor_fusion(self.est_state, self.last_est_time, state, times[0])
         self.last_est_time = times[0]
 
-        des_torque = self._pick_torque(self.est_state, desired_states, times)
+        mod_state = state.copy()
+        # mod_state[1] = 0
+        mod_state[2] = 0
+        des_torque = self._pick_torque(mod_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         self.last_control = des_torque
@@ -753,16 +756,18 @@ if __name__ == '__main__':
     adjust = (pi * 2) / period 
     desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
     desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
+    desired_state[:, 2] = -(MAX_AMPLITUDE * adjust * adjust) * np.sin(time * adjust)
 
     plot_position = True
+    plt_index = 0
 
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Estimated vs Actual Velocity')
-        ax_pos.set_ylabel('Velocity')
+        ax_pos.set_title('Estimated vs Actual Accel')
+        ax_pos.set_ylabel('Accel')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,1], label='Desired')
+        ax_pos.plot(time,  desired_state[:,plt_index], label='Desired')
         
     print('calculating...')
     stiffness = 1.0
@@ -783,8 +788,8 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,1], label='Actual State')
-            ax_pos.plot(time, est_state[:,1], label='Internal Est. State')
+            ax_pos.plot(time, full_state[:,plt_index], label='Actual State')
+            # ax_pos.plot(time, est_state[:,plt_index], label='Internal Est. State')
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
