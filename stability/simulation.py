@@ -663,8 +663,8 @@ class OptimizingController(object):
         sensors for each actuator.
         '''
         new_state = state.copy()
-        # new_state[1] = 0 # zero out velocity
-        # new_state[2] = 0 # zero out acceleration
+        new_state[1] = 0 # zero out velocity
+        new_state[2] = 0 # zero out acceleration
         return new_state
 
     def sensor_fusion(self, est_state, last_est_time, current_state, current_time):
@@ -672,41 +672,34 @@ class OptimizingController(object):
         Based on the last estimated state and sensor readings of the current
         state, estimate the current state before picking torques
         '''
-
-        # Use a motion model to evolve the state forward
         delta_t = current_time - last_est_time
-        est_state = self.internal_model(
-            est_state,
-            self.last_control,
-            delta_t)[-1,:]
+        start_pos = est_state[0]
+        start_vel = est_state[1]
+        start_acc = est_state[2]
+        start_extp = est_state[3]
+        start_flxp = est_state[4]
 
-        # These readings are accurate at the current_time
-        sensor_readings = self.sensor_readings(current_state)
-        theta = sensor_readings[0]
-        ext_p = sensor_readings[3]
-        flx_p = sensor_readings[4]
+        sensed = self.sensor_readings(current_state)
 
-        # accel = last_control
-        # avg_v = (old_v + new_v) / 2
-        # new_theta = old_theta + avg_v * t
-        # new_theta = old_theta + old_v * t/2 + new_v * t / 2
-        # d err_theta / d old_theta = 1, but old_theta is a direct sensor 
-        #   reading, so assume error comes from estimated values
-        # d err_theta / d new_v = t/2
-        # For now, assume that new_v is the source of error
-        # theta_err = v_est_err * (t/2) # vel error accumulates position error
+        mes_pos = sensed[0]
+        mes_extp = sensed[3]
+        mes_flxp = sensed[4]
 
-        theta_err = theta - est_state[0]
-        if delta_t > 0:
-            v_est_err = theta_err / (delta_t / 2.0)
+        if delta_t < 0.00001:
+            avg_vel = start_vel
+            end_vel = start_vel
+            avg_acc = start_acc
         else:
-            v_est_err = 0
+            avg_vel = (mes_pos - start_pos) / delta_t
+            # avg_vel = (start_vel + end_vel) / 2
+            end_vel = 2 * avg_vel - start_vel
+            avg_acc = (end_vel - start_vel) / delta_t
 
-        est_state[0] = theta
-        est_state[1] += v_est_err * 0.5
-        est_state[2] += 0
-        est_state[3] = ext_p
-        est_state[4] = flx_p
+        est_state[0] = mes_pos
+        est_state[1] = avg_vel
+        est_state[2] = avg_acc
+        est_state[3] = mes_extp
+        est_state[4] = mes_flxp
 
         return est_state
 
@@ -729,7 +722,7 @@ class OptimizingController(object):
         self.est_state = self.sensor_fusion(self.est_state, self.last_est_time, state, times[0])
         self.last_est_time = times[0]
 
-        des_torque = self._pick_torque(state, desired_states, times)
+        des_torque = self._pick_torque(self.est_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         self.last_control = des_torque
