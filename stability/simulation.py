@@ -535,6 +535,7 @@ class OptimizingController(object):
         self.time_horizon = time_horizon
         self.iterations = iteration_steps
         self.optimization_steps = optimization_steps
+        self.last_control = 0.0
 
         for arg, val in kwargs.items():
             if hasattr(self, arg):
@@ -649,13 +650,50 @@ class OptimizingController(object):
         new_state[2] = 0 # zero out acceleration
         return new_state
 
+    def sensor_fusion(self, est_state, last_est_time, current_state, current_time):
+        '''
+        Based on the last estimated state and sensor readings of the current
+        state, estimate the current state before picking torques
+        '''
+        # Use a motion model to evolve the state forward
+        delta_t = current_time - last_est_time
+        est_state = self.internal_model(
+            est_state,
+            self.last_control,
+            delta_t)
+
+        # These readings are accurate at the current_time
+        sensor_readings = self.sensor_readings(current_state)
+        theta = sensor_readings[0]
+        ext_p = sensor_readings[3]
+        flx_p = sensor_readings[4]
+
+        # accel = last_control
+        # avg_v = (old_v + new_v) / 2
+        # new_theta = old_theta + avg_v * t
+        # new_theta = old_theta + old_v * t/2 + new_v * t / 2
+        # d err_theta / d old_theta = 1, but old_theta is a direct sensor 
+        #   reading, so assume error comes from estimated values
+        # d err_theta / d new_v = t/2
+        # For now, assume that new_v is the source of error
+        # theta_err = v_est_err * (t/2) # vel error accumulates position error
+
+        theta_err = theta - est_state[0]
+        v_est_err = theta_err / (delta_t)
+
+        est_state[0] = theta
+        est_state[1] += v_est_err
+        est_state[2] += 0
+        est_state[3] = ext_p
+        est_state[4] = flx_p
+
+        return est_state
 
     def control(self, state, desired_states, times):
         '''
         Control Model
         Implements: (see _pick_torque)
-            Formerly: PD Control
-            WIP: Chooses a torque/acceleration that best matches desired states at 
+            Chooses a torque/acceleration that best matches desired states at 
                 the given times
         Complications:
             - [x] Torque Limits
@@ -664,12 +702,15 @@ class OptimizingController(object):
             - [x] Control does bang-bang pressure control
             - [x] Control only updates at X Hz
             - [x] Control uses linear time scaling of control rate
-            - [ ] Control uses a model to project forward to choose accel/torque
+            - [x] Control uses a model to project forward to choose accel/torque
+            - [.] Estimate state because sensors only read pressure, position
         '''
         sensor_state = self.sensor_readings(state)
 
         des_torque = self._pick_torque(sensor_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
+
+        self.last_control = des_torque
 
         return des_ext_pres, des_flx_pres, des_torque
 

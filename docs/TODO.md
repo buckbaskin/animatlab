@@ -11,7 +11,7 @@
 - [x] Build a better controller for the slower update with fixed values
 - [x] Explicitly model sensor input as a function of state
 - [x] Investigate how changing estimated parameters affects stability
-- [.] Not estimating velocity within the sensor model breaks stability near the edge
+- [.] Not estimating velocity within the sensor model breaks stability
 - [ ] Investigate a simpler mass model if the parameters aren't that sensitive (reduce parameters to estimate)
 - [ ] Get a static single joint that works for multiple changing weights, other parameters
 - [ ] Understand how long controller takes vs Simulation time. Make it run a little faster
