@@ -368,7 +368,13 @@ class Simulator(object):
         last_control_time = -9001
 
         full_state = np.ones((time.shape[0], state_start.shape[0]))
+        c_est_state = np.zeros((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
+        c_est_state[0,:] = state_start
+        # runs every control
+        # sensor_fusion(est_state, last_est_time, current_state, current_time)
+        # can run every time step
+        # internal_model(state, desired_torque, run_time)
 
         start_time = datetime.datetime.now()
 
@@ -378,7 +384,6 @@ class Simulator(object):
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
             if control_should_update:
-                last_control_time = this_time
                 self.last_control = controller.control(
                     state=full_state[i,:],
                     desired_states=desired_state[i:i+2*steps_to_next_ctrl,:],
@@ -389,6 +394,15 @@ class Simulator(object):
                 control=self.last_control,
                 control_stiffness=controller.antagonistic_stiffness)
             full_state[i+1,:] = new_state
+            c_est_state[i+1,:] = c_est_state[i,:]
+            if control_should_update:
+                new_est_state = controller.sensor_fusion(
+                    c_est_state[i,:],
+                    last_control_time,
+                    full_state[i,:],
+                    this_time)
+                c_est_state[i+1,:] = new_est_state
+                last_control_time = this_time
 
         end_time = datetime.datetime.now()
         sim_time = (end_time - start_time).total_seconds()
@@ -397,7 +411,7 @@ class Simulator(object):
         realtime = min(1.0, simulated_time / sim_time)
         print('runtime is: %.2f seconds for %.2f of real time (%.2f percent of rt)' % (sim_time, simulated_time, realtime,))
 
-        return full_state
+        return full_state, c_est_state
 
     def evaluation(self, states, desired_states, times):
         '''
@@ -655,12 +669,13 @@ class OptimizingController(object):
         Based on the last estimated state and sensor readings of the current
         state, estimate the current state before picking torques
         '''
+
         # Use a motion model to evolve the state forward
         delta_t = current_time - last_est_time
         est_state = self.internal_model(
             est_state,
             self.last_control,
-            delta_t)
+            delta_t)[-1,:]
 
         # These readings are accurate at the current_time
         sensor_readings = self.sensor_readings(current_state)
@@ -751,15 +766,14 @@ if __name__ == '__main__':
         
     print('calculating...')
     stiffness = 1.0
-    for index, EST_ROBOT_MASS in enumerate([0.4, 1.0, 0.0]):
-        print('Sim Round %d: EST_ROBOT_MASS: %.3f' % (index+1, EST_ROBOT_MASS,))
-        estimated_S = Simulator(ROBOT_MASS=EST_ROBOT_MASS)
+    for index, _ in enumerate([0.0]):
+        estimated_S = Simulator()
     
         C = OptimizingController(sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/30, stiffness=stiffness,
             optimization_steps=15, iteration_steps=45)
 
-        full_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
+        full_state, est_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
         result = S.evaluation(full_state, desired_state, S.timeline())
         print('Simulation Evaluation:')
@@ -768,10 +782,11 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,0], label='EST_ROBOT_MASS %.3f' % (EST_ROBOT_MASS,))
+            ax_pos.plot(time, full_state[:,0], label='Actual State')
+            ax_pos.plot(time, est_state[:,0], label='Internal Est. State')
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Tracking_Optimizing_Load8.png')
+        plt.savefig('State_Estimation.png')
         plt.show()
         print('all done')
