@@ -30,6 +30,8 @@ from functools import partial
 from math import pi
 from numpy import arctan, sqrt, floor, ceil
 
+ERROR_STANDARD = 1 # degree
+ERROR_STANDARD = ERROR_STANDARD / 180 * pi # radians
 
 class Simulator(object):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
@@ -43,7 +45,7 @@ class Simulator(object):
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.1 # kg
+        self.ROBOT_MASS = 0.3 # kg
 
         self.INTERNAL_DAMPING = 0.1
 
@@ -769,7 +771,13 @@ if __name__ == '__main__':
         ax_pos.set_title('Estimated vs Actual Accel')
         ax_pos.set_ylabel('Accel')
         ax_pos.set_xlabel('Time (sec)')
-        ax_pos.plot(time,  desired_state[:,plt_index], label='Desired')
+        ax_pos.plot(time,  desired_state[:,plt_index], 
+            color='tab:blue', label='Desired')
+        if plt_index == 0:
+            ax_pos.plot(time[1000:], desired_state[1000:,plt_index] + ERROR_STANDARD,
+                color='tab:purple', label='MAXIMUM')
+            ax_pos.plot(time[1000:], desired_state[1000:,plt_index] - ERROR_STANDARD,
+                color='tab:purple', label='MINIMUM')
         
     print('calculating...')
     stiffness = 1.0
@@ -790,8 +798,10 @@ if __name__ == '__main__':
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
-            ax_pos.plot(time, full_state[:,plt_index], label='Actual State')
-            ax_pos.plot(time, est_state[:,plt_index], label='Internal Est. State')
+            ax_pos.plot(time, full_state[:,plt_index],
+                color='tab:orange', label='Actual State')
+            ax_pos.plot(time, est_state[:,plt_index],
+                color='tab:green', label='Internal Est. State')
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
