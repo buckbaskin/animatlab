@@ -43,7 +43,7 @@ class Simulator(object):
 
         self.LINK_LENGTH = 0.25 # meters
         self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.4 # kg
+        self.ROBOT_MASS = 0.1 # kg
 
         self.INTERNAL_DAMPING = 0.1
 
@@ -64,7 +64,7 @@ class Simulator(object):
         self.TIME_START = 0
         self.TIME_END = 5.0
 
-        self.CONTROL_RATE = 50
+        self.CONTROL_RATE = 30
 
         ## Actuator Model Parameters ##
 
@@ -367,7 +367,7 @@ class Simulator(object):
         steps_to_next_ctrl = int(np.ceil(control_resolution / self.TIME_RESOLUTION))
         last_control_time = -9001
 
-        full_state = np.ones((time.shape[0], state_start.shape[0]))
+        full_state = np.zeros((time.shape[0], state_start.shape[0]))
         c_est_state = np.zeros((time.shape[0], state_start.shape[0]))
         full_state[0,:] = state_start
         c_est_state[0,:] = state_start
@@ -399,6 +399,7 @@ class Simulator(object):
                 new_est_state = controller.sensor_fusion(
                     c_est_state[i,:],
                     last_control_time,
+                    c_est_state[i-1,0],
                     full_state[i,:],
                     this_time)
                 c_est_state[i+1,:] = new_est_state
@@ -553,7 +554,7 @@ class OptimizingController(object):
         self.last_control = 0.0
         self.est_state = init_state.copy()
         self.last_est_time = init_time
-
+        self.lag_pos = 0
         for arg, val in kwargs.items():
             if hasattr(self, arg):
                 setattr(self, arg, val)
@@ -667,7 +668,7 @@ class OptimizingController(object):
         new_state[2] = 0 # zero out acceleration
         return new_state
 
-    def sensor_fusion(self, est_state, last_est_time, current_state, current_time):
+    def sensor_fusion(self, est_state, last_est_time, lag_pos, current_state, current_time):
         '''
         Based on the last estimated state and sensor readings of the current
         state, estimate the current state before picking torques
@@ -690,13 +691,12 @@ class OptimizingController(object):
             end_vel = start_vel
             avg_acc = start_acc
         else:
-            avg_vel = (mes_pos - start_pos) / delta_t
-            # avg_vel = (start_vel + end_vel) / 2
-            end_vel = 2 * avg_vel - start_vel
-            avg_acc = (end_vel - start_vel) / delta_t
+            avg_vel = (mes_pos - lag_pos) / (2 * delta_t)
+            avg_acc = (mes_pos - 2 * start_pos + lag_pos) / (delta_t * delta_t)
+            end_vel = avg_vel + (avg_acc * delta_t / 2)
 
         est_state[0] = mes_pos
-        est_state[1] = avg_vel
+        est_state[1] = end_vel
         est_state[2] = avg_acc
         est_state[3] = mes_extp
         est_state[4] = mes_flxp
@@ -719,13 +719,15 @@ class OptimizingController(object):
             - [x] Control uses a model to project forward to choose accel/torque
             - [.] Estimate state because sensors only read pressure, position
         '''
-        self.est_state = self.sensor_fusion(self.est_state, self.last_est_time, state, times[0])
+        self.est_state = self.sensor_fusion(self.est_state, self.last_est_time,
+            self.lag_pos, state, times[0])
         self.last_est_time = times[0]
+        self.lag_pos = self.est_state[0]
 
         mod_state = state.copy()
         # mod_state[1] = 0
         mod_state[2] = 0
-        des_torque = self._pick_torque(mod_state, desired_states, times)
+        des_torque = self._pick_torque(self.est_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         self.last_control = des_torque
@@ -772,7 +774,7 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = Simulator()
+        estimated_S = Simulator(LINK_MASS=0.1)
     
         C = OptimizingController(state_start, time[0],
             sim = estimated_S, control_rate=S.CONTROL_RATE,
@@ -789,7 +791,7 @@ if __name__ == '__main__':
 
         if plot_position:
             ax_pos.plot(time, full_state[:,plt_index], label='Actual State')
-            # ax_pos.plot(time, est_state[:,plt_index], label='Internal Est. State')
+            ax_pos.plot(time, est_state[:,plt_index], label='Internal Est. State')
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
