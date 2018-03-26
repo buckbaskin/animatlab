@@ -356,7 +356,7 @@ class BaseSimulator(object):
         }
 
 
-class Simulator(BaseSimulator):
+class ActualSimulator(BaseSimulator):
     def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
         '''
         Set defaults, and override extras with kwargs
@@ -508,7 +508,7 @@ class BaselineController(object):
     def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
-        self.sim = Simulator()
+        self.sim = ActualSimulator()
         ## "Static" Stiffness ##
         # Increasing the stiffness increases the range around 0 where the complete
         #   desired torque works. On the other hand, decreasing the stiffness increases
@@ -792,7 +792,7 @@ class OptimizingController(object):
 
 if __name__ == '__main__':
     ### Set up time ###
-    S = Simulator(bang_bang=True, limit_pressure=True)
+    S = ActualSimulator(bang_bang=True, limit_pressure=True)
     time = S.timeline()
 
     MAX_AMPLITUDE = S.MAX_AMPLITUDE
@@ -822,8 +822,15 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Estimated vs Actual Accel')
-        ax_pos.set_ylabel('Accel')
+        titlte = 'Estimated vs Actual %s'
+        if plt_index == 0:
+            titlte = titlte % 'Position'
+        if plt_index == 1:
+            titlte = titlte % 'Velocity'
+        if plt_index == 2:
+            titlte = titlte % 'Acceleration'
+        ax_pos.set_title(titlte)
+        ax_pos.set_ylabel('PVA')
         ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,plt_index], 
             color='tab:blue', label='Desired')
@@ -836,7 +843,7 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = SimpleSimulator(M=1, C=0.1, N=0.1)
+        estimated_S = SimpleSimulator(M=0.50, C=0.100, N=0.1)
     
         C = OptimizingController(state_start, time[0],
             sim = estimated_S, control_rate=S.CONTROL_RATE,
