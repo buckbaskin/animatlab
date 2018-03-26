@@ -659,12 +659,12 @@ class BaselineController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 class OptimizingController(object):
-    def __init__(self, init_state, init_time,
+    def __init__(self, init_state, init_time, sim,
         control_rate, time_horizon, stiffness,
         optimization_steps=10, iteration_steps=10, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
-        self.sim = SimpleSimulator(M=1, C=0.1, N=0.1)
+        self.sim = sim
         self.antagonistic_stiffness = stiffness
 
         self.time_horizon = time_horizon
