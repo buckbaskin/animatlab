@@ -33,92 +33,75 @@ from numpy import arctan, sqrt, floor, ceil
 ERROR_STANDARD = 1 # degree
 ERROR_STANDARD = ERROR_STANDARD / 180 * pi # radians
 
-class Simulator(object):
-    def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
-        '''
-        Set defaults, and override extras with kwargs
-        '''
-        self.bang_bang = bang_bang
-        self.limit_pressure = limit_pressure
-        ### Simulation Parameters and Constants ###
-        self.MAX_AMPLITUDE = math.pi / 16
+class BaseSimulator(object):
+    MAX_AMPLITUDE = math.pi / 16
+    ### Simulation Parameters and Constants ###
+    LINK_LENGTH = 0.25 # meters
+    LINK_MASS = 0.25 # kg
+    ROBOT_MASS = 0.3 # kg
 
-        self.LINK_LENGTH = 0.25 # meters
-        self.LINK_MASS = 0.25 # kg
-        self.ROBOT_MASS = 0.3 # kg
+    INTERNAL_DAMPING = 0.1
 
-        self.INTERNAL_DAMPING = 0.1
+    JOINT_LIMIT_MAX = pi / 4
+    JOINT_LIMIT_MIN = -pi / 4
 
-        self.JOINT_LIMIT_MAX = pi / 4
-        self.JOINT_LIMIT_MIN = -pi / 4
+    TORQUE_MAX = 2.5
+    TORQUE_MIN = 0.25
 
-        self.TORQUE_MAX = 2.5
-        self.TORQUE_MIN = 0.25
+    PRESSURE_MAX = 620
+    PRESSURE_MIN = 0
 
-        self.PRESSURE_MAX = 620
-        self.PRESSURE_MIN = 0
+    PRESSURE_RATE_MAX = 1000 # 200 kPa per sec works
 
-        self.PRESSURE_RATE_MAX = 1000 # 200 kPa per sec works
+    TIME_RESOLUTION = 0.001
+    TIME_START = 0
+    TIME_END = 5.0
 
-        self.PRESSURE_RESOLUTION = 17.0 # hysterisis gap, # 17 works
+    CONTROL_RATE = 30
 
-        self.TIME_RESOLUTION = 0.001
-        self.TIME_START = 0
-        self.TIME_END = 5.0
+    ## Actuator Model Parameters ##
 
-        self.CONTROL_RATE = 30
+    a0 = 254.3 # kpa
+    a1 = 192.0 # kpa
+    a2 = 2.0625
+    a3 = -0.461
+    a4 = -0.331 # 1 / Nm
+    a5 = 1.230
+    a6 = 15.6 # kpa
 
-        ## Actuator Model Parameters ##
+    ## Mutual Actuator Parameters ##
 
-        self.a0 = 254.3 # kpa
-        self.a1 = 192.0 # kpa
-        self.a2 = 2.0625
-        self.a3 = -0.461
-        self.a4 = -0.331 # 1 / Nm
-        self.a5 = 1.230
-        self.a6 = 15.6 # kpa
+    l_rest = .189 # m
+    l_620 = round(-((.17 * l_rest) - l_rest), 3)
+    k_max = 0.17
+    l_max = l_rest
+    l_min = l_620
 
-        ## Mutual Actuator Parameters ##
+    d = 0.005 # m
+    offset = 0.015 # m
+    l1 = round(sqrt(d**2 + offset**2), 3)
+    l0 = floor((l_max - l1) * 1000.0) / 1000.0
 
-        self.l_rest = .189 # m
-        self.l_620 = round(-((.17 * self.l_rest) - self.l_rest), 3)
-        self.k_max = 0.17
-        self.l_max = self.l_rest
-        self.l_min = self.l_620
+    ## Specific Actuator Parameters ##
+    # Actuator L is the negative (flexion) actuator
+    # Actuator R is the positive (extension) actuator
+    # /////////////
+    #    l  |   r
+    #    l  |   r
+    #     l |  r
+    #     l(o) r
+    #      x>\<x
+    #       . \
+    #       .  \
+    #       .   \
 
-        self.d = 0.005 # m
-        self.offset = 0.015 # m
-        self.l1 = round(sqrt(self.d**2 + self.offset**2), 3)
-        self.l0 = floor((self.l_max - self.l1) * 1000.0) / 1000.0
+    alpha_l = arctan(offset / d) # radians
+    beta_l = -pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+    beta_l = 0 # for now
 
-        ## Specific Actuator Parameters ##
-        # Actuator L is the negative (flexion) actuator
-        # Actuator R is the positive (extension) actuator
-        # /////////////
-        #    l  |   r
-        #    l  |   r
-        #     l |  r
-        #     l(o) r
-        #      x>\<x
-        #       . \
-        #       .  \
-        #       .   \
-
-        self.alpha_l = arctan(self.offset / self.d) # radians
-        self.beta_l = -pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
-        self.beta_l = 0 # for now
-
-        self.alpha_r = -arctan(self.offset / self.d) # radians
-        self.beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
-        self.beta_r = 0 # for now
-
-        self.last_control = (0.0, 0.0, 0.0,)
-
-        for arg, val in kwargs.items():
-            if hasattr(self, arg):
-                setattr(self, arg, val)
-            else:
-                raise ValueError('%s does not have attribute %s' % (self, arg,))
+    alpha_r = -arctan(offset / d) # radians
+    beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+    beta_r = 0 # for now
 
     def flx_torque_to_pressure(self, torque, state):
         T = torque
@@ -216,104 +199,27 @@ class Simulator(object):
 
     def mass_model(self, theta):
         '''
-        Mass Model
-        ma -> I theta_ddot
-
-        Implements: mass at a rigid point half of link length
-        Complications:
-            - [ ] Uniform mass distribution on the link
+        Mass
         '''
-        M = self.LINK_MASS
-        R = self.LINK_LENGTH / 2
-        return M * (R**2)
+        raise NotImplementedError()
 
     def vel_effects(self, theta, theta_dot):
         '''
-        Damping/Velocity based effects on the system
-        Complications:
-            - [ ] Small damping from flexing of actuators based on change in length
-            - [ ] Estimated Hysterisis effect of filling or empty actuators applying
-                    a torque opposite the motion
+        Damping
         '''
-        return self.INTERNAL_DAMPING * theta_dot
+        raise NotImplementedError()
 
     def conservative_effects(self, theta):
         '''
-        Conservative Forces on the system, converted to torques (for now)
-        Complications:
-            - [x] Gravity from link mass
-                    /////////////
-                        (o)
-                         .\
-                         . \
-                         .  m
-                         .  :\
-                         .  : \
-                         .  v
-            - [x] Gravity from robot/Suppoting Normal force from ground at end
-                    /////////////
-                        (o)
-                         .\
-                         . \  ^
-                         .  \ :
-                         .   \:
-                         .    0
-                         .   
+        Gravity
         '''
-        g = 9.81
-        M_l = self.LINK_MASS
-        F_g = M_l * g
-        R_g = self.LINK_LENGTH / 2
-
-        # this assumes that the robot mass is solely balanced on top of the joint
-        M_r = self.ROBOT_MASS
-        F_r = M_r * g
-        R_n = self.LINK_LENGTH
-
-        try:
-            link_gravity = F_g * R_g * math.sin(theta)
-        except ValueError:
-            print(type(theta))
-            print(theta)
-            raise
-        normal_force = - F_r * R_n * math.sin(theta)
-
-        return link_gravity + normal_force
+        raise NotImplementedError()
 
     def pressure_model(self, des_pressure, current_pressure, time_step):
         '''
-        For now, set the pressure to the desired pressure
-        In the future, use airflow model to restrict maximum pressure change
-        Complications:
-        - [x] Set pressure to desired pressure
-        - [x] Bang-bang control
-        - [x] Set maximum pressure change per time step
-        - [ ] Develop airflow model to more accurately limit pressure changes 
-              (pressure differential, airflow limits)
+        Time Dependent Pressure updates
         '''
-        # As implemented, controller either doesn't change if close or moves to the
-        #   near side of the bang-bang window (close enough). This ignores details 
-        #   of filling rate and pressure differential from the air supply to the
-        #   actuator.
-        if not self.bang_bang and not self.limit_pressure:
-            return des_pressure
-        if not self.bang_bang:
-            return np.clip(des_pressure,
-                current_pressure - self.PRESSURE_RATE_MAX,
-                current_pressure + self.PRESSURE_RATE_MAX)
-        if (float(abs(des_pressure - current_pressure)) < 
-            float(self.PRESSURE_RESOLUTION)):
-            return current_pressure
-        elif des_pressure > current_pressure:
-            if not self.limit_pressure:
-                return des_pressure - self.PRESSURE_RESOLUTION
-            return np.min([des_pressure - self.PRESSURE_RESOLUTION,
-                current_pressure + self.PRESSURE_RATE_MAX * time_step])
-        else: # des_pressure < current_pressure
-            if not self.limit_pressure:
-                return des_pressure + self.PRESSURE_RESOLUTION
-            return np.max([des_pressure + self.PRESSURE_RESOLUTION,
-                current_pressure - self.PRESSURE_RATE_MAX * time_step])
+        raise NotImplementedError()
 
     def motion_evolution(self, state, time_step, control, control_stiffness):
         '''
@@ -449,22 +355,160 @@ class Simulator(object):
             'antag_torque_rate': antag_torque_rate,
         }
 
-class SimpleSimulator(object):
-    def __init__(self):
-        self.PRESSURE_MIN = 0
-        self.PRESSURE_MAX = 620
 
-    def ext_torque_to_pressure(ext_torque, state):
-        pass
+class Simulator(BaseSimulator):
+    def __init__(self, bang_bang=True, limit_pressure=True, **kwargs):
+        '''
+        Set defaults, and override extras with kwargs
+        '''
+        self.bang_bang = bang_bang
+        self.limit_pressure = limit_pressure
+        self.last_control = (0.0, 0.0, 0.0,)
+        self.PRESSURE_RESOLUTION = 17.0 # hysterisis gap, # 17 works
 
-    def flx_torque_to_pressure(flx_torque, state):
-        pass
+        for arg, val in kwargs.items():
+            if hasattr(self, arg):
+                setattr(self, arg, val)
+            else:
+                raise ValueError('%s does not have attribute %s' % (self, arg,))
+
+    def mass_model(self, theta):
+        '''
+        Mass Model
+        ma -> I theta_ddot
+
+        Implements: mass at a rigid point half of link length
+        Complications:
+            - [ ] Uniform mass distribution on the link
+        '''
+        M = self.LINK_MASS
+        R = self.LINK_LENGTH / 2
+        return M * (R**2)
+
+    def vel_effects(self, theta, theta_dot):
+        '''
+        Damping/Velocity based effects on the system
+        Complications:
+            - [ ] Small damping from flexing of actuators based on change in length
+            - [ ] Estimated Hysterisis effect of filling or empty actuators applying
+                    a torque opposite the motion
+        '''
+        return self.INTERNAL_DAMPING * theta_dot
+
+    def conservative_effects(self, theta):
+        '''
+        Conservative Forces on the system, converted to torques (for now)
+        Complications:
+            - [x] Gravity from link mass
+                    /////////////
+                        (o)
+                         .\
+                         . \
+                         .  m
+                         .  :\
+                         .  : \
+                         .  v
+            - [x] Gravity from robot/Suppoting Normal force from ground at end
+                    /////////////
+                        (o)
+                         .\
+                         . \  ^
+                         .  \ :
+                         .   \:
+                         .    0
+                         .   
+        '''
+        g = 9.81
+        M_l = self.LINK_MASS
+        F_g = M_l * g
+        R_g = self.LINK_LENGTH / 2
+
+        # this assumes that the robot mass is solely balanced on top of the joint
+        M_r = self.ROBOT_MASS
+        F_r = M_r * g
+        R_n = self.LINK_LENGTH
+
+        try:
+            link_gravity = F_g * R_g * math.sin(theta)
+        except ValueError:
+            print(type(theta))
+            print(theta)
+            raise
+        normal_force = - F_r * R_n * math.sin(theta)
+
+        return link_gravity + normal_force
+
+    def pressure_model(self, des_pressure, current_pressure, time_step):
+        '''
+        For now, set the pressure to the desired pressure
+        In the future, use airflow model to restrict maximum pressure change
+        Complications:
+        - [x] Set pressure to desired pressure
+        - [x] Bang-bang control
+        - [x] Set maximum pressure change per time step
+        - [ ] Develop airflow model to more accurately limit pressure changes 
+              (pressure differential, airflow limits)
+        '''
+        # As implemented, controller either doesn't change if close or moves to the
+        #   near side of the bang-bang window (close enough). This ignores details 
+        #   of filling rate and pressure differential from the air supply to the
+        #   actuator.
+        if not self.bang_bang and not self.limit_pressure:
+            return des_pressure
+        if not self.bang_bang:
+            return np.clip(des_pressure,
+                current_pressure - self.PRESSURE_RATE_MAX,
+                current_pressure + self.PRESSURE_RATE_MAX)
+        if (float(abs(des_pressure - current_pressure)) < 
+            float(self.PRESSURE_RESOLUTION)):
+            return current_pressure
+        elif des_pressure > current_pressure:
+            if not self.limit_pressure:
+                return des_pressure - self.PRESSURE_RESOLUTION
+            return np.min([des_pressure - self.PRESSURE_RESOLUTION,
+                current_pressure + self.PRESSURE_RATE_MAX * time_step])
+        else: # des_pressure < current_pressure
+            if not self.limit_pressure:
+                return des_pressure + self.PRESSURE_RESOLUTION
+            return np.max([des_pressure + self.PRESSURE_RESOLUTION,
+                current_pressure - self.PRESSURE_RATE_MAX * time_step])
+
+    
+class SimpleSimulator(BaseSimulator):
+    def __init__(self, M, C, N):
+        self.mass = M
+        self.damping = C
+        self.conservative = N
+
+    def mass_model(self, theta):
+        '''
+        Returns the rotational inertia of the link being controlled
+        '''
+        return self.mass
+
+    def vel_effects(self, theta, theta_dot):
+        '''
+        Damping/Velocity based effects on the system
+        '''
+        return self.damping * theta_dot
+
+    def conservative_effects(self, theta):
+        '''
+        Simplified conservative force model. One net positive or negative force
+        acting at the end of the link vertically
+        '''
+        R_g = self.LINK_LENGTH
+        link_gravity = self.conservative * R_g * math.sin(theta)
+        return link_gravity
+
+    def pressure_model(self, des_pressure, current_pressure, time_step):
+        return des_pressure
 
 class BaselineController(object):
     def __init__(self, control_rate, stiffness, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
-        self.sim = SimpleSimulator()
+        self.sim = Simulator()
         ## "Static" Stiffness ##
         # Increasing the stiffness increases the range around 0 where the complete
         #   desired torque works. On the other hand, decreasing the stiffness increases
@@ -557,7 +601,7 @@ class OptimizingController(object):
         optimization_steps=10, iteration_steps=10, **kwargs):
         # TODO(buckbaskin): this assumes perfect matching parameters for motion model
         self.control_rate = control_rate
-        self.sim = Simulator()
+        self.sim = SimpleSimulator(M=1, C=0.1, N=0.1)
         self.antagonistic_stiffness = stiffness
 
         self.time_horizon = time_horizon
@@ -792,7 +836,7 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = Simulator(LINK_MASS=0.1)
+        estimated_S = SimpleSimulator(M=1, C=0.1, N=0.1)
     
         C = OptimizingController(state_start, time[0],
             sim = estimated_S, control_rate=S.CONTROL_RATE,
