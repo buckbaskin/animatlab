@@ -229,10 +229,13 @@ class BaseSimulator(object):
         ext_pres = state[3]
         flx_pres = state[4]
 
+
         des_ext_pres, des_flx_pres, intended_torque = control
 
         ext_pres = self.pressure_model(des_ext_pres, ext_pres, time_step)
         flx_pres = self.pressure_model(des_flx_pres, flx_pres, time_step)
+
+        print('post pressures', ext_pres, flx_pres)
 
         ext_torque, flx_torque = self.pressures_to_torque(extp=ext_pres, flxp=flx_pres,
             state=state, actual_torque=None) # intended_torque)
@@ -372,6 +375,24 @@ class ActualSimulator(BaseSimulator):
             else:
                 raise ValueError('%s does not have attribute %s' % (self, arg,))
 
+    def __str__(self):
+        R = self.LINK_LENGTH / 2
+        M = self.LINK_MASS * (R**2)
+
+        C = self.INTERNAL_DAMPING
+
+        g = 9.81
+        M_l = self.LINK_MASS
+        F_g = M_l * g
+        R_g = self.LINK_LENGTH / 2
+
+        M_r = self.ROBOT_MASS
+        F_r = M_r * g
+        R_n = self.LINK_LENGTH
+        N = (F_g * R_g - F_r * R_n) / (self.LINK_LENGTH)
+
+        return 'ActualSimulator(M=%.4f, C=%.4f, N=%.4f)' % (M, C, N,)
+
     def mass_model(self, theta):
         '''
         Mass Model
@@ -475,10 +496,22 @@ class ActualSimulator(BaseSimulator):
 
     
 class SimpleSimulator(BaseSimulator):
-    def __init__(self, M, C, N):
+    def __init__(self, M, C, N, **kwargs):
         self.mass = M
         self.damping = C
         self.conservative = N
+
+        self.bang_bang = True
+        self.limit_pressure = True
+        self.PRESSURE_RESOLUTION = 17.0
+
+        for arg, val in kwargs.items():
+            if hasattr(self, arg):
+                setattr(self, arg, val)
+
+    def __str__(self):
+        return 'SimpleSimulator(M=%.4f, C=%.4f, N=%.4f)' % (self.mass,
+            self.damping, self.conservative,)
 
     def mass_model(self, theta):
         '''
@@ -502,7 +535,39 @@ class SimpleSimulator(BaseSimulator):
         return link_gravity
 
     def pressure_model(self, des_pressure, current_pressure, time_step):
-        return des_pressure
+        '''
+        For now, set the pressure to the desired pressure
+        In the future, use airflow model to restrict maximum pressure change
+        Complications:
+        - [x] Set pressure to desired pressure
+        - [x] Bang-bang control
+        - [x] Set maximum pressure change per time step
+        - [ ] Develop airflow model to more accurately limit pressure changes 
+              (pressure differential, airflow limits)
+        '''
+        # As implemented, controller either doesn't change if close or moves to the
+        #   near side of the bang-bang window (close enough). This ignores details 
+        #   of filling rate and pressure differential from the air supply to the
+        #   actuator.
+        if not self.bang_bang and not self.limit_pressure:
+            return des_pressure
+        if not self.bang_bang:
+            return np.clip(des_pressure,
+                current_pressure - self.PRESSURE_RATE_MAX,
+                current_pressure + self.PRESSURE_RATE_MAX)
+        if (float(abs(des_pressure - current_pressure)) < 
+            float(self.PRESSURE_RESOLUTION)):
+            return current_pressure
+        elif des_pressure > current_pressure:
+            if not self.limit_pressure:
+                return des_pressure - self.PRESSURE_RESOLUTION
+            return np.min([des_pressure - self.PRESSURE_RESOLUTION,
+                current_pressure + self.PRESSURE_RATE_MAX * time_step])
+        else: # des_pressure < current_pressure
+            if not self.limit_pressure:
+                return des_pressure + self.PRESSURE_RESOLUTION
+            return np.max([des_pressure + self.PRESSURE_RESOLUTION,
+                current_pressure - self.PRESSURE_RATE_MAX * time_step])
 
 class BaselineController(object):
     def __init__(self, control_rate, stiffness, **kwargs):
@@ -791,6 +856,38 @@ class OptimizingController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
+    AS = ActualSimulator(bang_bang=True, limit_pressure=True)
+    print(AS)
+    SS = SimpleSimulator(M=0.0039, C=0.1000, N=-1.7167)
+    print(SS)
+
+    state_start = np.array([0.1, 0, 0, 100, 100])
+    time_step = 0.01
+    des_torque = -0.10
+    ext_torque = 0.5
+    flx_torque = ext_torque - des_torque
+    control = (
+        AS.ext_torque_to_pressure(ext_torque, state_start),
+        AS.flx_torque_to_pressure(flx_torque, state_start),
+        des_torque)
+    print('control', control)
+    control_stiffness = None
+
+    time = np.arange(0, 0.5, time_step)
+    act_state = np.zeros((time.shape[0], state_start.shape[0]))
+    act_state[0, :] = state_start
+    sim_state = np.zeros((time.shape[0], state_start.shape[0]))
+    sim_state[0, :] = state_start
+
+    for i in range(0, len(time) - 1):
+        act_state[i+1, :] = AS.motion_evolution(act_state[i, :], time_step, control, control_stiffness)
+        sim_state[i+1, :] = SS.motion_evolution(sim_state[i, :], time_step, control, control_stiffness)
+
+    plt.plot(time, act_state[:,0])
+    plt.plot(time, sim_state[:,0])
+    plt.show()
+
+    1/0
     ### Set up time ###
     S = ActualSimulator(bang_bang=True, limit_pressure=True)
     time = S.timeline()
