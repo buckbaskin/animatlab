@@ -856,6 +856,8 @@ if __name__ == '__main__':
         print('Simulation Evaluation:')
         print('Controller: %s' % (str(C),))
         print('Maximum Positional Error: %.3f (rad)' % (result['max_pos_error']))
+        if abs(result['max_pos_error']) > ERROR_STANDARD:
+            print('Maximum Positional Error: Failed Standard')
         print('Torque Score: %.3f (total Nm/sec)' % (result['antag_torque_rate']))
 
         if plot_position:
@@ -866,6 +868,6 @@ if __name__ == '__main__':
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('State_Estimation.png')
+        plt.savefig('Simple_State_Model.png')
         plt.show()
         print('all done')
