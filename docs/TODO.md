@@ -13,7 +13,7 @@
 - [x] Investigate how changing estimated parameters affects stability
 - [x] Not estimating velocity within the sensor model breaks stability
 - [x] Implement a simpler mass model
-- [.] Evaluate how the simple mass model estimate compares to the complex mass model estimate (graphically)
+- [x] Evaluate how the simple mass model estimate compares to the complex mass model estimate (graphically)
 - [ ] Get a static single joint that works for multiple changing weights, other parameters
 - [ ] Understand how long controller takes vs Simulation time. Make it run a little faster
 

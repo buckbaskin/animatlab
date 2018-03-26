@@ -55,7 +55,7 @@ class BaseSimulator(object):
 
     TIME_RESOLUTION = 0.001
     TIME_START = 0
-    TIME_END = 5.0
+    TIME_END = 10.0
 
     CONTROL_RATE = 30
 
@@ -495,7 +495,7 @@ class ActualSimulator(BaseSimulator):
     
 class SimpleSimulator(BaseSimulator):
     def __init__(self, M, C, N, **kwargs):
-        self.mass = M
+        self.inertia = M
         self.damping = C
         self.conservative = N
 
@@ -508,14 +508,23 @@ class SimpleSimulator(BaseSimulator):
                 setattr(self, arg, val)
 
     def __str__(self):
-        return 'SimpleSimulator(M=%.4f, C=%.4f, N=%.4f)' % (self.mass,
+        return 'SimpleSimulator(M=%.4f, C=%.4f, N=%.4f)' % (self.inertia,
             self.damping, self.conservative,)
+
+    def set(self, **kwargs):
+        for arg, val in kwargs.itemS():
+            if arg == 'M':
+                self.inertia = M
+            if arg == 'C':
+                self.inertia = C
+            if arg == 'N':
+                self.conservative = N
 
     def mass_model(self, theta):
         '''
         Returns the rotational inertia of the link being controlled
         '''
-        return self.mass
+        return self.inertia
 
     def vel_effects(self, theta, theta_dot):
         '''
@@ -822,6 +831,30 @@ class OptimizingController(object):
 
         return est_state
 
+    def update_parameters(self, last_state, last_time, current_state,
+        current_time, inertia, damping, conservative):
+        '''
+        TODO(buckbaskin):
+            - [x] Damping Estimation
+            - [.] Load Estimation
+            - [ ] Mass estimation
+        '''
+
+        delta_t = current_time - last_time
+        acc_actual = (current_state[1] - last_state[1]) / delta_t
+
+        acc_est = last_state[2]
+        acc_err = acc_actual - acc_est
+
+        vel_avg = (current_state[1] + last_state[1]) / 2
+
+        if vel_avg != 0:
+            C_err = -acc_err * (inertia / vel_avg)
+        else:
+            C_err = 0 # can't update if there wasn't a velocity
+
+        return inertia, damping + C_err, conservative
+
     def control(self, state, desired_states, times):
         '''
         Control Model
@@ -838,10 +871,19 @@ class OptimizingController(object):
             - [x] Control uses a model to project forward to choose accel/torque
             - [.] Estimate state because sensors only read pressure, position
         '''
+        old_state = self.est_state.copy()
         self.est_state = self.sensor_fusion(self.est_state, self.last_est_time,
             self.lag_pos, state, times[0])
+        new_state = self.est_state.copy()
         self.last_est_time = times[0]
         self.lag_pos = self.est_state[0]
+
+        print('guess model parameters')
+        _M, _C, _N = self.update_parameters(
+            old_state, self.last_est_time, 
+            new_state, current_time,
+            self.inertia, self.damping, self.conservative)
+        print('M', _M, 'C', _C, 'N', _N)
 
         mod_state = state.copy()
         # mod_state[1] = 0
