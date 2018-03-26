@@ -838,6 +838,9 @@ class OptimizingController(object):
             - [x] Damping Estimation
             - [.] Load Estimation
             - [ ] Mass estimation
+            - [ ] Non-dimensionalize it to stay within the stable range. Estimate
+                all values to fall in a 0-1 range, where 0 is the minimum stable
+                value and 1 is the maximum stable value.
         '''
 
         delta_t = current_time - last_time
