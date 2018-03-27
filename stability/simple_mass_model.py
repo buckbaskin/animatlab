@@ -286,6 +286,9 @@ class BaseSimulator(object):
         # internal_model(state, desired_torque, run_time)
 
         start_time = datetime.datetime.now()
+        controller.inertias.append(controller.sim.inertia)
+        controller.dampings.append(controller.sim.damping)
+        controller.cons.append(controller.sim.conservative)
 
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 1 or i == (full_state.shape[0] - 2):
@@ -307,6 +310,11 @@ class BaseSimulator(object):
                     state=full_state[i,:],
                     desired_states=desired_state[i:i+2*steps_to_next_ctrl,:],
                     times=time[i:i+2*steps_to_next_ctrl])
+
+            controller.inertias.append(controller.sim.inertia)
+            controller.dampings.append(controller.sim.damping)
+            controller.cons.append(controller.sim.conservative)
+
             new_state = self.motion_evolution(
                 state=full_state[i,:],
                 time_step=self.TIME_RESOLUTION,
@@ -513,6 +521,15 @@ class SimpleSimulator(BaseSimulator):
         self.limit_pressure = True
         self.PRESSURE_RESOLUTION = 17.0
 
+        self.DAMPING_MIN = 0.0001
+        self.DAMPING_MAX = 0.3
+
+        self.CONSERVATIVE_MIN = -5
+        self.CONSERVATIVE_MAX = 5
+
+        self.INERTIA_MIN = 0.0001
+        self.INERTIA_MAX = 0.0050
+
         for arg, val in kwargs.items():
             if hasattr(self, arg):
                 setattr(self, arg, val)
@@ -527,12 +544,12 @@ class SimpleSimulator(BaseSimulator):
         N = None
         for arg, val in kwargs.items():
             if arg == 'M':
-                self.inertia = val
+                self.inertia = np.clip(val, self.INERTIA_MIN, self.INERTIA_MAX)
             if arg == 'C':
-                self.damping = val
-                print('set damping to: %s' % (self.damping,))
+                # pass
+                self.damping = np.clip(val, self.DAMPING_MIN, self.DAMPING_MAX)
             if arg == 'N':
-                self.conservative = val
+                self.conservative = np.clip(val, self.CONSERVATIVE_MIN, self.CONSERVATIVE_MAX)
 
     def mass_model(self, theta):
         '''
@@ -697,6 +714,10 @@ class OptimizingController(object):
         self.est_state = init_state.copy()
         self.last_est_time = init_time
         self.lag_pos = 0
+
+        self.inertias = []
+        self.dampings = []
+        self.cons = []
         for arg, val in kwargs.items():
             if hasattr(self, arg):
                 setattr(self, arg, val)
@@ -852,12 +873,15 @@ class OptimizingController(object):
             - [x] Damping Estimation
             - [x] Load Estimation
             - [ ] Mass estimation
+            - [ ] Update all values as a combined gradient
             - [ ] Non-dimensionalize it to stay within the stable range. Estimate
                 all values to fall in a 0-1 range, where 0 is the minimum stable
                 value and 1 is the maximum stable value.
         '''
 
         delta_t = current_time - last_time
+        if delta_t <= 0.0:
+            return inertia, damping, conservative
         acc_actual = (current_state[1] - last_state[1]) / delta_t
 
         acc_est = last_state[2]
@@ -870,19 +894,36 @@ class OptimizingController(object):
         else:
             C_err = 0 # can't update if there wasn't a velocity
 
-        base = self.sim.LINK_LENGTH * math.sin((current_state[0] + current_state[1])/2.0)
+        theta_avg = (current_state[0] + current_state[1])/2.0
+        base = self.sim.LINK_LENGTH * math.sin(theta_avg)
         if base != 0:
             N_err = -acc_err * (inertia / base)
         else:
             N_err = 0
 
-        # prefer underestimation
-        if C_err > 0:
-            C_err *= 0.5
-        if N_err > 0:
-            N_err *= 0.5
+        ext_t, flx_t = self.sim.pressures_to_torque(last_state[3], last_state[4], last_state)
+        torque = ext_t - flx_t
+        M_err = acc_err * (torque
+            - damping * vel_avg
+            - conservative * (
+                (self.sim.LINK_LENGTH * math.sin(theta_avg))) *
+                (inertia**-2))
 
-        return inertia, damping + C_err, conservative
+        # prefer underestimation
+        if M_err > 0:
+            M_err *= 0.25
+        else:
+            M_err *= 0.33
+        if C_err > 0:
+            C_err *= 0.25
+        else:
+            C_err *= 0.33
+        if N_err > 0:
+            N_err *= 0.25
+        else:
+            N_err *= 0.33
+
+        return inertia + M_err, damping + C_err, conservative + N_err
 
     def control(self, state, desired_states, times):
         '''
@@ -905,12 +946,12 @@ class OptimizingController(object):
             self.lag_pos, state, times[0])
         new_state = self.est_state.copy()
 
-        # print('guess model parameters')
-        # _M, _C, _N = self.update_parameters(
-        #     old_state, self.last_est_time, 
-        #     new_state, times[0],
-        #     self.sim.inertia, self.sim.damping, self.sim.conservative)
-        # print('M', _M, 'C', _C, 'N', _N)
+        _M, _C, _N = self.update_parameters(
+            old_state, self.last_est_time, 
+            new_state, times[0],
+            self.sim.inertia, self.sim.damping, self.sim.conservative)
+
+        self.sim.set(M=_M, C=_C, N=_N)
 
         self.last_est_time = times[0]
         self.lag_pos = self.est_state[0]
@@ -986,7 +1027,7 @@ if __name__ == '__main__':
 
     if plot_position:
         fig = plt.figure()
-        ax_pos = fig.add_subplot(1, 1, 1)
+        ax_pos = fig.add_subplot(4, 1, 1)
         titlte = 'Estimated vs Actual %s'
         if plt_index == 0:
             titlte = titlte % 'Position'
@@ -1008,7 +1049,7 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = SimpleSimulator(M=0.0004, C=0.0050, N=-1.7000)
+        estimated_S = SimpleSimulator(M=0.0004, C=0.010, N=-1.7000)
         print('internal', estimated_S)
     
         C = OptimizingController(state_start, time[0],
@@ -1032,8 +1073,20 @@ if __name__ == '__main__':
             ax_pos.plot(time, est_state[:,plt_index],
                 color='tab:green', label='Internal Est. State')
     if plot_position:
+        ax_inertia = fig.add_subplot(4, 1, 2)
+        ax_inertia.plot(time, np.array(C.inertias))
+        ax_inertia.set_ylabel('Inertia')
+        ax_inertia.set_xlabel('Time (sec)')
+        ax_damping = fig.add_subplot(4, 1, 3)
+        ax_damping.plot(time, np.array(C.dampings))
+        ax_damping.set_ylabel('Damping Factor')
+        ax_damping.set_xlabel('Time (sec)')
+        ax_cons = fig.add_subplot(4, 1, 4)
+        ax_cons.plot(time, np.array(C.cons))
+        ax_cons.set_ylabel('Load Factor')
+        ax_cons.set_xlabel('Time (sec)')
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Simple_State_Model.png')
+        plt.savefig('Simple_State_Model_Updating.png')
         plt.show()
         print('all done')
