@@ -510,7 +510,6 @@ class ActualSimulator(BaseSimulator):
             return np.max([des_pressure + self.PRESSURE_RESOLUTION,
                 current_pressure - self.PRESSURE_RATE_MAX * time_step])
 
-    
 class SimpleSimulator(BaseSimulator):
     def __init__(self, M, C, N, **kwargs):
         self.inertia = M
@@ -965,38 +964,6 @@ class OptimizingController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
-    # AS = ActualSimulator(bang_bang=True, limit_pressure=True)
-    # print(AS)
-    # SS = SimpleSimulator(M=0.0039, C=0.1000, N=-1.7167)
-    # print(SS)
-
-    # state_start = np.array([0.1, 0, 0, 100, 100])
-    # time_step = 0.01
-    # des_torque = -0.10
-    # ext_torque = 0.5
-    # flx_torque = ext_torque - des_torque
-    # control = (
-    #     AS.ext_torque_to_pressure(ext_torque, state_start),
-    #     AS.flx_torque_to_pressure(flx_torque, state_start),
-    #     des_torque)
-    # print('control', control)
-    # control_stiffness = None
-
-    # time = np.arange(0, 0.5, time_step)
-    # act_state = np.zeros((time.shape[0], state_start.shape[0]))
-    # act_state[0, :] = state_start
-    # sim_state = np.zeros((time.shape[0], state_start.shape[0]))
-    # sim_state[0, :] = state_start
-
-    # for i in range(0, len(time) - 1):
-    #     act_state[i+1, :] = AS.motion_evolution(act_state[i, :], time_step, control, control_stiffness)
-    #     sim_state[i+1, :] = SS.motion_evolution(sim_state[i, :], time_step, control, control_stiffness)
-
-    # plt.plot(time, act_state[:,0])
-    # plt.plot(time, sim_state[:,0])
-    # plt.show()
-
-    # 1/0
     ### Set up time ###
     S = ActualSimulator(bang_bang=True, limit_pressure=True)
     print('actual', S)
