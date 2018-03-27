@@ -290,6 +290,7 @@ class BaseSimulator(object):
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 0 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
+                print(controller.sim)
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
             if control_should_update:
@@ -836,7 +837,7 @@ class OptimizingController(object):
         '''
         TODO(buckbaskin):
             - [x] Damping Estimation
-            - [.] Load Estimation
+            - [x] Load Estimation
             - [ ] Mass estimation
             - [ ] Non-dimensionalize it to stay within the stable range. Estimate
                 all values to fall in a 0-1 range, where 0 is the minimum stable
@@ -855,6 +856,18 @@ class OptimizingController(object):
             C_err = -acc_err * (inertia / vel_avg)
         else:
             C_err = 0 # can't update if there wasn't a velocity
+
+        base = self.sim.LINK_LENGTH * math.sin((current_state[0] + current_state[1])/2.0)
+        if base != 0:
+            N_err = -acc_err * (inertia / base)
+        else:
+            N_err = 0
+
+        # prefer underestimation
+        if C_err > 0:
+            C_err *= 0.5
+        if N_err > 0:
+            N_err *= 0.5
 
         return inertia, damping + C_err, conservative
 
@@ -878,20 +891,18 @@ class OptimizingController(object):
         self.est_state = self.sensor_fusion(self.est_state, self.last_est_time,
             self.lag_pos, state, times[0])
         new_state = self.est_state.copy()
+
+        # print('guess model parameters')
+        # _M, _C, _N = self.update_parameters(
+        #     old_state, self.last_est_time, 
+        #     new_state, times[0],
+        #     self.sim.inertia, self.sim.damping, self.sim.conservative)
+        # print('M', _M, 'C', _C, 'N', _N)
+
         self.last_est_time = times[0]
         self.lag_pos = self.est_state[0]
 
-        print('guess model parameters')
-        _M, _C, _N = self.update_parameters(
-            old_state, self.last_est_time, 
-            new_state, current_time,
-            self.inertia, self.damping, self.conservative)
-        print('M', _M, 'C', _C, 'N', _N)
-
-        mod_state = state.copy()
-        # mod_state[1] = 0
-        mod_state[2] = 0
-        des_torque = self._pick_torque(mod_state, desired_states, times)
+        des_torque = self._pick_torque(self.est_state, desired_states, times)
         des_ext_pres, des_flx_pres = self._convert_to_pressure(des_torque, state)
 
         self.last_control = des_torque
@@ -984,7 +995,7 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = SimpleSimulator(M=0.00039, C=0.100, N=-1.7167)
+        estimated_S = SimpleSimulator(M=0.0004, C=0.0050, N=-1.7000)
         print('internal', estimated_S)
     
         C = OptimizingController(state_start, time[0],
