@@ -288,9 +288,18 @@ class BaseSimulator(object):
         start_time = datetime.datetime.now()
 
         for i in range(full_state.shape[0] - 1):
-            if i % 1000 == 0 or i == (full_state.shape[0] - 2):
+            if i % 1000 == 1 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
                 print(controller.sim)
+                print('guess model parameters')
+                _M, _C, _N = controller.update_parameters(
+                    full_state[i-1,:], controller.last_est_time, 
+                    full_state[i,:], time[i],
+                    controller.sim.inertia,
+                    controller.sim.damping,
+                    controller.sim.conservative)
+                print('M', _M, 'C', _C, 'N', _N)
+                controller.sim.set(C=_C)
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
             if control_should_update:
@@ -513,13 +522,17 @@ class SimpleSimulator(BaseSimulator):
             self.damping, self.conservative,)
 
     def set(self, **kwargs):
-        for arg, val in kwargs.itemS():
+        M = None
+        C = None
+        N = None
+        for arg, val in kwargs.items():
             if arg == 'M':
-                self.inertia = M
+                self.inertia = val
             if arg == 'C':
-                self.inertia = C
+                self.damping = val
+                print('set damping to: %s' % (self.damping,))
             if arg == 'N':
-                self.conservative = N
+                self.conservative = val
 
     def mass_model(self, theta):
         '''
