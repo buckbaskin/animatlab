@@ -521,11 +521,11 @@ class SimpleSimulator(BaseSimulator):
         self.limit_pressure = True
         self.PRESSURE_RESOLUTION = 17.0
 
-        self.DAMPING_MIN = 0.0001
-        self.DAMPING_MAX = 0.3
+        self.DAMPING_MIN = 0.001
+        self.DAMPING_MAX = 0.25
 
-        self.CONSERVATIVE_MIN = -5
-        self.CONSERVATIVE_MAX = 5
+        self.CONSERVATIVE_MIN = -3
+        self.CONSERVATIVE_MAX = 3
 
         self.INERTIA_MIN = 0.0001
         self.INERTIA_MAX = 0.0050
@@ -544,7 +544,8 @@ class SimpleSimulator(BaseSimulator):
         N = None
         for arg, val in kwargs.items():
             if arg == 'M':
-                self.inertia = np.clip(val, self.INERTIA_MIN, self.INERTIA_MAX)
+                pass
+                # self.inertia = np.clip(val, self.INERTIA_MIN, self.INERTIA_MAX)
             if arg == 'C':
                 # pass
                 self.damping = np.clip(val, self.DAMPING_MIN, self.DAMPING_MAX)
