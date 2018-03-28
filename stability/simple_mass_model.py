@@ -26,6 +26,8 @@ import numpy as np
 from functools import partial
 from math import pi
 from numpy import arctan, sqrt, floor, ceil
+from scipy.signal import argrelmax
+from scipy.optimize import curve_fit
 
 ERROR_STANDARD = 1 # degree
 ERROR_STANDARD = ERROR_STANDARD / 180 * pi # radians
@@ -329,7 +331,8 @@ class BaseSimulator(object):
 
         return full_state, c_est_state
 
-    def evaluation(self, states, desired_states, times):
+    def evaluation(self, states, desired_states, times,
+        amplitude=None, frequency=None, phase=None, delay=None):
         '''
         Evaluate position error and antagonistic torque (wasted effort)
 
@@ -355,11 +358,38 @@ class BaseSimulator(object):
         antag_torque_rate = np.sum(antag_torque) / (times[-1] - times[0])
         max_antag_torque = np.max(antag_torque)
 
+        delts = []
+        # estimate difference in phase
+        for i in range(delay, len(times)-1):
+            if (desired_states[i-1,0] <= desired_states[i,0] and
+                desired_states[i+1,0] <= desired_states[i,0]):
+                print('found des local max %d' % (i,))
+                for j in range(i, len(times)-1):
+                    if (desired_states[j-1,0] <= desired_states[j,0] and
+                        desired_states[j+1,0] <= desired_states[j,0]):
+                        if j > i:
+                            print('found a new des max first %d' % (j,))
+                            break
+                    if ((states[j-1,0] <= states[j,0] and states[j+1,0] < states[j,0]) or 
+                        (states[j-1,0] < states[j,0] and states[j+1,0] <= states[j,0])):
+                        print('found est max %d' % (j,))
+                        # difference in time between two maximums
+                        delta_t = times[j] - times[i]
+                        delts.append(delta_t)
+                        break
+
+        # assuming a similar frequency, avg time delta is an ok estimate of phase
+        if len(delts) > 0:
+            phase_est = np.mean(delts)
+        else:
+            phase_est = 0.0
+
         return {
             'max_pos_error': max_pos_error,
             'pos_error_rate': pos_error_rate,
             'max_antag_torque': max_antag_torque,
             'antag_torque_rate': antag_torque_rate,
+            'phase_offset': phase_est,
         }
 
 
