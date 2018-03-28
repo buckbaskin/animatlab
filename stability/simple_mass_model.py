@@ -18,9 +18,6 @@ Notes:
 - Dynamic gains that are too high cause sawtooth oscillation and instability
 - Dynamic gains that are too low cause lagging trajectory execution
 '''
-import sys
-print('--- %s ---' % (sys.argv[0],))
-
 import datetime
 import math
 import matplotlib.pyplot as plt
@@ -32,6 +29,7 @@ from numpy import arctan, sqrt, floor, ceil
 
 ERROR_STANDARD = 1 # degree
 ERROR_STANDARD = ERROR_STANDARD / 180 * pi # radians
+SCORING_DELAY = 750
 
 class BaseSimulator(object):
     MAX_AMPLITUDE = math.pi / 16
@@ -292,17 +290,7 @@ class BaseSimulator(object):
 
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 1 or i == (full_state.shape[0] - 2):
-                print('...calculating step % 6d / %d' % (i, full_state.shape[0] - 1,))
-                print(controller.sim)
-                print('guess model parameters')
-                _M, _C, _N = controller.update_parameters(
-                    full_state[i-1,:], controller.last_est_time, 
-                    full_state[i,:], time[i],
-                    controller.sim.inertia,
-                    controller.sim.damping,
-                    controller.sim.conservative)
-                print('M', _M, 'C', _C, 'N', _N)
-                controller.sim.set(C=_C)
+                print('...calculating step % 6d / %d' % (i, full_state.shape[0],))
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
             if control_should_update:
@@ -353,7 +341,7 @@ class BaseSimulator(object):
         '''
         pos_error = np.abs(desired_states[:,0] - states[:,0])
         pos_error_rate = np.sum(pos_error) / (times[-1] - times[0])
-        max_pos_error = np.max(pos_error[1000:]) # ignore the first bit of time
+        max_pos_error = np.max(pos_error[SCORING_DELAY:]) # ignore the first bit of time
 
         extp = states[:,3]
         flxp = states[:,4]
@@ -964,6 +952,9 @@ class OptimizingController(object):
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
+    import sys
+    print('--- %s ---' % (sys.argv[0],))
+
     ### Set up time ###
     S = ActualSimulator(bang_bang=True, limit_pressure=True)
     print('actual', S)
@@ -1009,9 +1000,9 @@ if __name__ == '__main__':
         ax_pos.plot(time,  desired_state[:,plt_index], 
             color='tab:blue', label='Desired')
         if plt_index == 0:
-            ax_pos.plot(time[1000:], desired_state[1000:,plt_index] + ERROR_STANDARD,
+            ax_pos.plot(time[SCORING_DELAY:], desired_state[SCORING_DELAY:,plt_index] + ERROR_STANDARD,
                 color='tab:purple', label='MAXIMUM')
-            ax_pos.plot(time[1000:], desired_state[1000:,plt_index] - ERROR_STANDARD,
+            ax_pos.plot(time[SCORING_DELAY:], desired_state[SCORING_DELAY:,plt_index] - ERROR_STANDARD,
                 color='tab:purple', label='MINIMUM')
         
     print('calculating...')

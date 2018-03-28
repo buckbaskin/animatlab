@@ -2,6 +2,7 @@
 *.log
 *.aux
 *.out
-
+*.png
 _*scratch.py
 v/
+__pycache__/
