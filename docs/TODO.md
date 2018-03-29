@@ -14,20 +14,20 @@
 - [x] Not estimating velocity within the sensor model breaks stability
 - [x] Implement a simpler mass model
 - [x] Evaluate how the simple mass model estimate compares to the complex mass model estimate (graphically)
-- [ ] Get a static single joint that works for multiple changing weights, other parameters
+- [.] Get a static single joint that works for multiple changing weights, other parameters. Do a better job stably/smoothly updating control parameters
 - [ ] Understand how long controller takes vs Simulation time. Make it run a little faster
 
 ## Potential Analysis
 
-- [ ] Do a model of how fast it can track
-- [ ] Control input, desired position, sin wave of frequency, Bode plot, analyze
-- [ ] Numerically analyze nonlinear system, doing the same stuff as for a linear system
+- [x] Do a model of how fast it can track
+- [x] Control input, desired position, sin wave of frequency, Bode plot, analyze
+- [x] Numerically analyze nonlinear system, doing the same stuff as for a linear system
 
 ## Building a Better Controller
 - [x] Does it look close to linear for constant pressures?
 - [x] How does this change with stiffness?
 - [x] Also, related: what does the motion update do for constant control pressure?
-- [ ] Set the controller to a fixed time to reach the correct state
+- [x] Set the controller to a fixed time to reach the correct state
 
 ## Future Thoughts
 - [ ] Update stiffness in a 3 joint model in simulation adding or removing weights
