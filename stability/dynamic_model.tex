@@ -1,6 +1,6 @@
 \documentclass[12pt, letterpaper, oneside, notitlepage, onecolumn]{article}
 \author{William Baskin}
-\title{Festo Model}
+\title{Dynamic Festo Model}
 \pagestyle{plain}
 
 \usepackage{parskip}
@@ -55,28 +55,32 @@
 
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
-\usepackage{hyperref}
+\usepackage[pdftex,
+    pdfusetitle
+    ]{hyperref}
 
 \begin{document}
 \maketitle
 
-\section{$L_{angle}$}
+\section{General Model}
+
+\subsection{$L_{angle}$}
 \begin{equation}
 l_{0} + l_{1} \cos{\left (\alpha + \theta_{des} \right )}
 \end{equation}
 
-\section{$k$}
+\subsection{$k$}
 \begin{equation}
 \frac{1}{l_{rest}} \left(- l_{0} - l_{1} \cos{\left (\alpha + \theta_{des}
 \right )} + l_{rest}\right)
 \end{equation}
 
-\section{$F$}
+\subsection{$F$}
 \begin{equation}
 \frac{Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}}
 \end{equation}
 
-\section{Pressure Model}
+\subsection{Pressure Model}
 \begin{equation}
 S a_{6} + \frac{Torque_{des} a_{5}}{d \cos{\left (\beta + \theta_{des} \right
 )}} + a_{0} + a_{1} \tan{\left (a_{2} \left(a_{3} + \frac{- l_{0} - l_{1}
@@ -85,7 +89,7 @@ S a_{6} + \frac{Torque_{des} a_{5}}{d \cos{\left (\beta + \theta_{des} \right
 k_{max}\right)}\right) \right )}
 \end{equation}
 
-\section{Empirical Pressure Model (subs a*)}
+\subsection{Empirical Pressure Model (subs a*)}
 \begin{equation}
 15.6 S + \frac{1.23 Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}}
 - 192.0 \tan{\left (0.9342165 - \frac{2.0265 \left(- l_{0} - l_{1} \cos{\left
@@ -94,67 +98,14 @@ k_{max}\right)}\right) \right )}
   k_{max}\right)} \right )} + 254.3
   \end{equation}
 
-\section{$\dfrac{\partial P}{\partial \theta}$}
-\begin{equation}
-\frac{1.23 Torque_{des} \sin{\left (\beta + \theta_{des} \right )}}{d
-\cos^{2}{\left (\beta + \theta_{des} \right )}} - 192.0 \left(-
-\frac{0.6707715 Torque_{des} \left(- l_{0} - l_{1} \cos{\left (\alpha +
-\theta_{des} \right )} + l_{rest}\right) \sin{\left (\beta + \theta_{des}
-\right )}}{d l_{rest} \left(- \frac{0.331 Torque_{des}}{d \cos{\left (\beta +
-\theta_{des} \right )}} + k_{max}\right)^{2} \cos^{2}{\left (\beta +
-\theta_{des} \right )}} - \frac{2.0265 l_{1} \sin{\left (\alpha + \theta_{des}
-\right )}}{l_{rest} \left(- \frac{0.331 Torque_{des}}{d \cos{\left (\beta +
-\theta_{des} \right )}} + k_{max}\right)}\right) \left(\tan^{2}{\left
-(0.9342165 - \frac{2.0265 \left(- l_{0} - l_{1} \cos{\left (\alpha +
-\theta_{des} \right )} + l_{rest}\right)}{l_{rest} \left(- \frac{0.331
-Torque_{des}}{d \cos{\left (\beta + \theta_{des} \right )}} + k_{max}\right)}
-\right )} + 1\right)
-\end{equation}
 
-\section{Linearization}
-
-For a desired position of $\theta_{des}$ at 0 velocity, the linearization of the system is:
-
-$f(x, y) = f(\theta_{des}, 0) + \dfrac{\partial f}{\partial
-\theta}(\theta_{des}, 0) * (\theta - \theta_{des}) + \dfrac{\partial f}{\partial
-\dot{\theta}}(\theta_{des}, 0) * (\dot{\theta} - 0)$
-
-The partial fractions should get simpler if a particular joint geometry is used.
-Right now they feel like a bit of a mess. Of note for the current system, there
-is a different linearlization for expansion or contraction.
-
-Rewriting the terms to highlight $\theta$ and $\dot{\theta}$:
-
-$f(x, y) = f(\theta_{des}, 0) + \dfrac{\partial f}{\partial
-\theta}(\theta_{des}, 0) * (\theta - \theta_{des}) + \dfrac{\partial f}{\partial
-\dot{\theta}}(\theta_{des}, 0) * (\dot{\theta} - 0)$
-
-$f(x, y) = \dfrac{\partial f}{\partial \theta}(\theta_{des}, 0) * \theta +
-\dfrac{\partial f}{\partial \dot{\theta}}(\theta_{des}, 0) * \dot{\theta} + ()$
-
-\section{But What do I linearlize}
-
-\begin{equation}
-Torque = \tau(\theta_{des}, \tau_{des}, \theta) = \tau(P(\theta_{des},
-\tau_{des}), \theta)
-\end{equation}
-
-Where $\tau$ is the actual torque, $\theta_{des}$ is the desired static angle, 
-$\tau_{des}$ is the desired holding torque, $\theta$ is the current angle and
-$P$ is the calculated pressure for the joint based on the desired angle and
-torque.
-
-\begin{equation}
-\tau = F * d cos(\beta + \theta)
-\end{equation}
-
-This is based on the geometry. $\theta$ here is the current angle. $d, \beta$
-are constants that describe the geometry. So, what is F?
+\section{But What do I Linearlize?}
 
 \subsection{Simplified Pressure Model}
 
-In the static case, there should be minimal hysteresis, so the S term from the
-previous model will be disregarded for the moment.
+In the static case, there should be minimal hysteresis or friction effects from
+air filling, so the S term from the previous model will be disregarded for the
+moment.
 
 \begin{equation}
 P = a_{0} + a_{1} * tan(a_{2} * (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F
@@ -176,7 +127,7 @@ where the only two changing variables are assumed to be the joint angle and
 torque.
 
 \begin{equation}
-P(\theta, \tau) \approx P(\theta^{*}, \tau^{*}) + '
+P(\theta, \tau) \approx P(\theta^{*}, \tau^{*}) +
 \dfrac{\partial P}{\partial \theta}(\theta^{*}, \tau^{*}) * (\theta -\theta^{*}) +
 \dfrac{\partial P}{\partial \tau}(\theta^{*}, \tau^{*}) * (\tau - \tau^{*})
 \end{equation}
@@ -240,26 +191,113 @@ This would indicate that the actuators behave like a torsion spring ($\Delta \ta
 This means that the stability of the joint, for small angles near the desired
 angle, approximates proportional control if constant pressure is maintained.
 
-\section{Conclusion and Future Work}
+\section{Dual Actuator Model}
 
-This analysis avoids two key elements of the joints. First, there are two
-antagonistic actuators acting on the joint. This doesn't necessarily void the
-analysis because the two actuators would both behave as springs with aligned
-proportional restoring torques, so the effect would approximate two parallel
-springs acting on the joint.
+% TODO(buckbaskin): come back when I have a labeled model of how this fits
+% together
 
-Second, the actuators are controlled so there is some constant torque acting on
-the joint from opposing actuators. If it is assumed that the torques exactly
-offset, as they are expected to do in the static stable case, then this analysis
-is not invalidated; however, the derivatives w.r.t. pressure are on two
-nonlinear functions that may not have the same behavior, especially because the
-change in joint geometry is mirrored for two opposing actuators (ex. the change
-in length of one for a given joint rotation is not necessarily the same and the
-ability for the actuator to provide force/torque is dependent on its length).
+\section{Dynamic Model}
 
-Therefore, a more careful analysis of two antagonistic actuators acting on a
-single joint will be performed in another document.
+From the paper "Modeling the Dynamic Characteristics of Pneumatic Muscle" by
+Reynolds et. al. 2003, the pneumatic muscle can be modeled as the actuator, a
+spring and a damper/dashpot. The above linearlized analysis is acceptable,
+except that the linear system approximation there doesn't show any damping
+effects, so the system's eigenvalues in linear analysis doesn't demonstrate the
+expected stability.
 
-\qed
+\subsection{Proportional (In)Stability}
+
+\begin{equation}
+\begin{bmatrix}
+\dot{x} \\
+\ddot{x}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 1 \\
+-K_{p} & 0
+\end{bmatrix}
+%
+\begin{bmatrix}
+x \\
+\dot{x}
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Eigenvalues}
+
+The eigenvalues of the system as defined have a real component of 0 and
+imaginary components. Therefore the system is unstable and oscillating with the
+proportional linearized analysis.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_unstable}
+\end{center}
+
+\subsection{PD Stability}
+
+\begin{equation}
+\begin{bmatrix}
+\dot{x} \\
+\ddot{x}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 1 \\
+-K_{p} & -K_{v}
+\end{bmatrix}
+%
+\begin{bmatrix}
+x \\
+\dot{x}
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Eigenvalues}
+
+The eigenvalues of the system as defined have a real component of 0 and
+imaginary components. Therefore the system is unstable and oscillating with the
+proportional linearized analysis.
+
+For large $K_{v}$, the system is damped enough to be stable and converge.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_bigV}
+\end{center}
+
+For small $K_{v}$, the system is not damped enough to be stable and converge.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_smallV}
+\end{center}
+
+For medium $K_{v}$, the system is damped just enough to be stable and
+converge. For the example system, $K_{v} = 0.2$ the system oscillates back
+through its starting point.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_circleV}
+\end{center}
+
+For slightly larger $K_{v}$, the system is just damped enough to converge.
+
+\begin{center}
+\includegraphics[width=3in,angle=0]{linear_pd_mediumV}
+\end{center}
+
+\subsubsection{Estimating $K_{v}$}
+
+So, how does the $K_{v}$ for a pneumatic muscle compare? Based on the intuition
+above, it can fit in one of many cases (stable/unstable, oscillating/not).
+
+From Reynolds et. al. 2003, the damping increases with pressure on contraction
+and decreases with pressure on relaxation. 
+
+For a given pressure, one can linearize the change in $\dfrac{\partial
+P}{\partial t}$ w.r.t. $\theta$ and $\tau$. The pressure is assumed to remain
+constant, so the left side of the equation is assumed to be 0.
+
+% TODO(buckbaskin): insert the equation
+This can/will be done based on time series data.
 
 \end{document}

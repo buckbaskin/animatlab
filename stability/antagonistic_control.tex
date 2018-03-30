@@ -1,0 +1,473 @@
+\documentclass[12pt, letterpaper, oneside, notitlepage, onecolumn]{article}
+\author{William Baskin}
+\title{Controller for Large Angle Change with Antagonistic Muscle-Like Actuators}
+\pagestyle{plain}
+
+\usepackage{parskip}
+
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+% \usepackage{soul}
+\usepackage[margin=0.69in]{geometry}
+
+% math
+\usepackage{amsmath, amssymb, amsthm}
+% \usepackage{amsmath, amssymb, amsthm, gensymb}
+
+\usepackage{graphicx}
+\graphicspath{ {graphics/} }
+% \includegraphics[height=6.75in,angle=270]{HW25}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\subsubsubsection}{\paragraph}
+\newcommand{\bbs}[1]{\section{#1}}
+\newcommand{\bbss}[1]{\subsection{#1}}
+\newcommand{\bbsss}[1]{\subsubsection{#1}}
+\newcommand{\bbssss}[1]{\subsubsubsection{#1}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\usepackage[pdftex,
+    pdfusetitle
+    ]{hyperref}
+
+\begin{document}
+\maketitle
+
+\bbs{Controller Model}
+
+\bbss{Control Problem}
+
+Trajectory tracking posed as a time series of desired positions.
+
+\bbsss{Inputs}
+
+A stream of desired positions. Ex. a sin wave, a step function, CPG oscillating
+pattern
+
+Input effects to consider: Rate of change, systematic error in tracking for a
+certain desired velocity relative to the stiffness of the controller. Also, the
+similarity of the test inputs to actual desired motion of the joint.
+
+\bbsss{Sensors}
+
+Each joint has a position sensor and pressure sensors for each actuator. The
+robot feet also have pressure/contact sensors. 
+
+Sensor effects to consider: The pressure sensors are
+physically filtered to provide a less erratic but slightly delayed.
+
+\bbsss{Output}
+
+The controller takes in the desired position and sensor data and outputs desired
+pressures for two actuators. This comes from taking the desired position and 
+sensor data, calculating a desired acceleration for the joint 
+$\ddot{\theta}(\theta_{err}, \dot{\theta}_{err})$. This is a function of 
+controller meta-parameters (ex. stiffness) and the derived gains for 
+positional error and velocity error.
+
+The controller outputs desired pressures. This is one step different from the
+controller as implemented now that takes in desired position and holding torque
+and sets the actuators to hold equal and opposite torques of the same (given)
+value.
+
+\bbsss{Controller Meta-Parameters}
+
+\begin{itemize}
+\item Stiffness
+\item Proportional Gain for Desired Torque
+\item Derivative Gain for Desired Torque
+\item Torque limits
+\end{itemize}
+
+These parameters are "pre-"determined by the controller and determine the
+specifics of how the controller tracks the input desired positions. Due to the
+actuation schema of the robot (two antagonistic pneumatic muscles), the joint
+position, torque and stiffness can be controlled some combination of
+independently. This means that the controller gains for position/velocity/other
+potential terms can be updated over time.
+
+Small changes in joint position are controlled by changing the desired pressure
+to the calculate pressure for the point and equal and opposite actuator torques.
+This results in the actuators behaving like a proportional spring around the
+desired joint angle. The actuators are also assumed to have some inherent
+damping properties (hysteresis? (s.p.)) that makes an otherwise linear spring
+stable in small changes. This damping may or may not have significant effects
+for large motions that are at this time not yet analyzed.
+
+Large changes are calculated for combinations of error in joint position and
+joint velocity where the desired pressure change is large (larger than the
+tolerance for the bang-bang pressure controller). The desired torque is
+calculated from the determined PD control gains. Then the pressures for each
+actuator are determined from the desired stiffness and desired torque at the
+current joint position.
+
+Controller effects to consider: bang-bang pressure updates, low hz update for
+the controller causing instability at high gains, minimum gains deteremined by
+tracking performance definitions, maximum gains determined by controller rate or
+other effects.
+
+Further considerations: Can an outside observer detect these "failure modes"?
+And if so, are they recoverable by changes in controller parameters. The
+controller could also be given the desired velocity of the trajectory to help
+with tracking. The current assumption is desired 0 velocity at the given point.
+
+\bbss{Mass/Dynamics Model}
+
+Each joint of the robot is doing control of a limb that will be (for now)
+treated as a pendulum with a mass at the center of the limb. This provides
+approximations for rotational inertia around the joint and systematic forces,
+ex. gravity. 
+
+Each actuator also has damping properties. For small joint angle changes where
+the change in volume of the actuator is small, the muscles experience some
+internal friction or other effects that scrub energy from the system. For large
+changes in volume, the friction effects of pushing the air volumes through small
+feeder tubes will be modeled to estimate the damping from non-zero fill time and
+energy loss.
+
+\bbss{Pressure Model}
+
+The pressure model is based on work done by Alex Hunt that models the pressure
+as a function of strain and desired force.
+
+\bbss{Forward Pressure Model}
+
+Based on desired controller parameters, how is pressure calculated?
+
+\begin{equation}
+P_{actuator} = P(\theta_{des}, \tau_{des}) = P(\kappa_{des}, F_{des})
+\end{equation}
+
+The desired position and torque are converted into a desired strain and force.
+The position determines the normalized length of the actuator relative to the 
+relaxed length and the angle at which the actuator applies a torque. This
+determines the required force to exert the torque.
+
+\bbss{Inverse Pressure Model}
+
+Based on linearized pressure model for two antagonistic actuators, desired 
+change in pressure, what is the torque on the joint?
+
+\bbs{Linear Stability for Small Joint Angles}
+
+This work was previously done, and shows that the joint behaves as a
+proportional torsion spring when the correct pressures are set for the desired
+joint angle and holding torque. The damping effects of the actuators themselves
+are currently assumed to lead to joint stability in this case.
+
+\bbs{Linear Stability for Large Joint Angles}
+
+For large joint angles, a proportional-derivative control layer is added on top
+of the pressure calculations for a given joint torque to control the joint to a
+desired angle.
+
+\bbss{Model Parameters and Terms}
+
+\begin{itemize}
+\item $\theta_{des}$ Desired Joint Position
+\item $\theta$ Current Joint Position
+\item $\dot{\theta}$ Current Joint Velocity
+\item $\tau$ Current Joint Torque
+\item $\tau_{des}$ Desired Joint Torque
+\item $\tau_{max}$ Maximum Joint Torque Limit
+\item $\tau_{min}$ Minimum Joint Torque Limit
+\item $P_{+}$ Pressure of the defined-positive direction actuator (contract
+increases joint angle)
+\item $P_{-}$ Pressure of the negative actuator
+
+\item $\mathcal{S}_{des}$ Desired Stiffness of the joint
+\item $\mathcal{K}_{p}$ Proportional Gain
+\item $\mathcal{K}_{v}$ Velocity Gain
+
+\item $\mathcal{I}$ Moment of Inertia
+\item $\mathcal{M}$ Mass of Joint
+\item $C_{I}$ Internal Damping of Actuator (based on position change)
+\item $C_{G}$ Gaseous Damping of Actuator in motion (based on volume change)
+\end{itemize}
+
+\bbss{High Level Model}
+
+\begin{equation}
+\theta_{err} = \theta - \theta_{des},
+\dot{\theta}_{err} = \dot{\theta} - \dot{\theta}_{des}
+\end{equation}
+
+\begin{equation}
+\tau_{des} = -\mathcal{K}_{p} \theta_{err} + -\mathcal{K}_{v} \dot{\theta}_{err}
+\end{equation}
+
+% TODO(buckbaskin): Can I write this in a more elegant way?
+\begin{equation}
+\tau_{des, +} = max(\tau_{des}, 0) + \mathcal{S}_{des}
+\end{equation}
+
+\begin{equation}
+\tau_{des, -} = min(\tau_{des}, 0) + \mathcal{S}_{des}
+\end{equation}
+
+\begin{equation}
+P_{+} = P_{+}(\theta, \tau_{des, +})
+\end{equation}
+
+\begin{equation}
+P_{-} = P_{-}(\theta, \tau_{des, -})
+\end{equation}
+
+The pressures are calculated from the current position ($\theta$) and the
+desired torque at this point. The pressure calculations are equivalent but with
+different constants representing the mirrored geometry.
+
+\bbss{Dynamic Stability}
+
+Assuming the pressure update and sensor measurement are continuous and the joint
+exactly fits the model, the controller can be thought of as directly controlling
+the torque on the joint. 
+
+For some joint, the above assumptions and the mass model, the behavior of the
+joint can be described as follows:
+
+\begin{equation}
+M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta) \theta = 
+\tau_{controller}
+\end{equation}
+
+$\mathcal{M}$ is the moment of inertia term. $\mathcal{C}$ is the combined term
+of $\mathcal{C}_{I}$ and $\mathcal{C}_{G}$ based on the current position and
+velocity (which determines $\frac{\partial V}{\partial t}$ for each actuator's
+$\mathcal{C}_{G}$ term). $N$ is the conservative forces (ex. gravity) acting on
+the limb. The $\tau$ in this case is exactly the desired torque for the current
+state as calculated as $\tau_{des}$ in the controller. Substituting for the
+desired torque:
+
+\begin{equation}
+M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta) \theta = 
+\tau_{des} = -\mathcal{K}_{p} \theta_{err} + -\mathcal{K}_{v} \dot{\theta}_{err}
+\end{equation}
+
+Assuming the joint is moving relative to a reference at $\theta_{des}$ and a
+velocity of $\dot{\theta}_{des}$ at that point ($\dot{\theta}_{des}$):
+
+\begin{equation}
+M(\theta) \ddot{\theta}
++ C(\theta, \dot{\theta}) (\dot{\theta} - \dot{\theta}_{des}) 
++ N(\theta)(\theta - \theta_{des}) = 
+-\mathcal{K}_{p} (\theta - \theta_{des})
++ -\mathcal{K}_{v} (\dot{\theta} - \dot{\theta}_{des})
+\end{equation}
+
+Collecting terms
+
+\begin{equation}
+M(\theta) \ddot{\theta}
+= 
+-(C(\theta, \dot{\theta})
++ \mathcal{K}_{v}) (\dot{\theta} - \dot{\theta}_{des})
+- (N(\theta)
++ \mathcal{K}_{p}) (\theta - \theta_{des})
+\end{equation}
+
+\begin{equation}
+\ddot{\theta}
+= 
+-\dfrac{(C(\theta, \dot{\theta})
++ \mathcal{K}_{v})}{M(\theta)}
+(\dot{\theta} - \dot{\theta}_{des})
+-\dfrac{(N(\theta)
++ \mathcal{K}_{p})}{M(\theta)} (\theta - \theta_{des})
+\end{equation}
+
+\begin{equation}
+\ddot{\theta}
+= 
+-\mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\dot{\theta}_{err}
+-\mathcal{K}_{p}^{*}(\theta)
+\theta_{err}
+\end{equation}
+
+The acceleration is generally negative in sign compared with errors. When there
+is 0 positional error, there is acceleration to decrease the velocity error.
+When there is 0 velocity error, there is acceleration in the direction to
+correct the positional error.
+
+The acceleration is 0 when the two proportional terms cancel each other out:
+
+\begin{equation}
+0
+= 
+-\mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\dot{\theta}_{err}
+-\mathcal{K}_{p}^{*}(\theta)
+\theta_{err}
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{err}
+= 
+-\dfrac{\mathcal{K}_{p}^{*}(\theta)}{\mathcal{K}_{v}^{*}(\theta, \dot{\theta})}
+\theta_{err}
+\end{equation}
+
+This indicates that, in this situation, if there is a positive velocity error, 
+it occurs when there is a negative position error or vice versa. This means that
+the control scheme will, as a result at a future time step, have a less negative
+position error and the same velocity error. Then the acceleration will be
+negative because the proportional term will have decreased leaving a larger
+negative velocity correction term.
+
+
+\bbss{Linear Stability}
+
+\begin{equation}
+\dot{x} = Ax
+\end{equation}
+
+Where $x$ is the state and A is the characteristic matrix. In this case, the
+state is a simple vector:
+\begin{equation}
+x =
+\begin{bmatrix}
+\theta \\
+\dot{\theta}
+\end{bmatrix}
+\end{equation}
+
+The characteristic is easy enough to find for this system, assuming no issues
+with the controller.
+
+\begin{equation}
+\dot{x[0]} = \dot{\theta}
+\end{equation}
+
+\begin{equation}
+\dot{x[1]}
+=
+\ddot{\theta}
+=
+-\mathcal{K}_{p}^{*}(\theta) \theta 
+- \mathcal{K}_{v}^{*}(\theta, \dot{\theta}) \dot{\theta}
+\end{equation}
+
+\begin{equation}
+A =
+\begin{bmatrix}
+0 & 1 \\
+-\mathcal{K}_{p}^{*}(\theta) & - \mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\end{bmatrix}
+\end{equation}
+
+This assumes a linearization of the control behavior around the current state
+$\theta, \dot{\theta}$ that accounts for the control parameters, mass
+properties, damping and conservative forces in the system.
+
+\begin{equation}
+\mathcal{K}_{v}^{*}
+= 
+\dfrac{C(\theta, \dot{\theta})
++ \mathcal{K}_{v}}{M(\theta)}
+\end{equation}
+\begin{equation}
+\mathcal{K}_{p}^{*}
+=
+\dfrac{N(\theta) + \mathcal{K}_{p}}{M(\theta)}
+\end{equation}
+
+Based on previous analysis, this system will converge with oscillation beyond a
+certain $\mathcal{K}_{v}^{*}$ threshold and a non-zero $\mathcal{K}_{p}^{*}$. The
+oscillation disappears with a sufficiently large $\mathcal{K}_{v}^{*}$. The
+magnitude of the two values can be adjusted with the internal gains.
+
+Of interesting note, the "stiffness" value used earlier doesn't affect the
+dynamic performance in this formulation (it is expected to in later modeling).
+This means that the trajectory tracking for large angles is independent of the
+maintenance of angle at small constant angles. This suggests the controller can
+be tuned by setting a stiffness that maintains static posture and,
+independenly, gains for the controller that maintain sufficiently stable
+trajectory tracking. The stiffness would play a part if external forces attempt
+to perturb the limb motion during a swing. A higher stiffness will resist the
+change with more force and, generally, maintain posture during the stance phase.
+
+\bbs{Nonlinear Stability}
+
+\bbss{Energy}
+
+This control also decreases the energy with respect to the reference state
+(desired position and velocity). Assuming the mass is at the center of mass and
+the joint is similar to a pendulum:
+
+\begin{equation}
+E(\theta, \dot{\theta})
+= 
+\dfrac{1}{2}\mathcal{I}(\dot{\theta}^{2} - \dot{\theta}_{des}^{2})
++ ( -Mglcos(\theta) + Mglcos(\theta_{des}))
+\end{equation}
+
+\begin{equation}
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial t} = 
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial \dot{\theta}} \ddot{\theta}
++ \dfrac{\partial E(\theta, \dot{\theta})}{\partial \theta} \dot{\theta}
+=
+(\mathcal{I}\dot{\theta}) \ddot{\theta}
++ Mglsin(\theta) \dot{\theta}
+\end{equation}
+
+Substituting the equation for $\ddot{\theta}$
+
+\begin{equation}
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial t} = 
+(\mathcal{I}\dot{\theta}) 
+(-\mathcal{K}_{v}^{*}(\theta, \dot{\theta})
+\dot{\theta}_{err}
+-\mathcal{K}_{p}^{*}(\theta)
+\theta_{err})
++ Mglsin(\theta) \dot{\theta}
+\end{equation}
+
+\begin{equation}
+\dfrac{\partial E(\theta, \dot{\theta})}{\partial t} = 
+-\mathcal{I} \mathcal{K}_{v}^{*} \dot{\theta} 
+\dot{\theta}_{err}
+-\mathcal{I}
+\mathcal{K}_{p}^{*}
+\dot{\theta}_{err}
+\theta_{err}
++ Mglsin(\theta) \dot{\theta}
+\end{equation}
+
+% TODO(buckbaskin): This got a little messy becuase the pendulum isn't
+% necessarily at minimum energy at the reference desired position
+
+\bbs{Sensitivity to Parameters}
+
+Bang-bang, controller hz, mass estimate, damping estimate, as a function of gain
+
+\end{document}
