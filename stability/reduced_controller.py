@@ -103,10 +103,10 @@ if __name__ == '__main__':
     for index, _ in enumerate([0.0]):
         estimated_S = SimpleSimulator(M=0.0004, C=0.10, N=-1.7000)
     
-        C = NeuronLikeController(state_start, time[0],
+        C = FrozenOptimizingController(state_start, time[0],
             sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/S.CONTROL_RATE, stiffness=stiffness,
-            optimization_steps=15, iteration_steps=45)
+            optimization_steps=8, iteration_steps=35)
 
         full_state, est_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 

@@ -740,6 +740,10 @@ class OptimizingController(object):
             if hasattr(self, arg):
                 setattr(self, arg, val)
 
+        self.counter = 0
+        self.accel_gains = []
+        self.vel_gains = []
+
     def __repr__(self):
         return self.__str__()
 
@@ -772,6 +776,20 @@ class OptimizingController(object):
                 control=(des_ext_pres, des_flx_pres, desired_torque,),
                 control_stiffness=self.antagonistic_stiffness)
             full_state[i+1,:] = new_state
+
+        if False and (desired_torque > 0.1 or desired_torque < -0.1):
+            delta_vel = full_state[-1, 1] - state[1]
+            accel_gain = delta_vel / desired_torque
+            self.accel_gains.append(accel_gain)
+            delta_pos = full_state[-1, 0] - state[0]
+            vel_mod = state[0] + desired_torque * accel_gain
+            vel_gain = delta_pos / vel_mod
+            self.vel_gains.append(vel_gain)
+            self.counter += 1
+            if self.counter > 3000:
+                print('ag', np.mean(self.accel_gains))
+                print('vg', np.mean(self.vel_gains))
+                1/0
 
         return full_state
 
