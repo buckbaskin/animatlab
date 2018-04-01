@@ -1,0 +1,85 @@
+<Form>
+<Form>
+<ID>6f2520f3-39ec-47ef-a898-7ebbc07aef3e</ID>
+<Title>DataTool_3</Title>
+<TabPageName>DataTool_3</TabPageName>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
+<AutoCollectInterval>True</AutoCollectInterval>
+<CollectDataInterval Value="0.2" Scale="milli" Actual="0.0002"/>
+<CollectTimeWindow Value="11" Scale="None" Actual="11"/>
+<UpdateDataInterval Value="200" Scale="milli" Actual="0.2"/>
+<SetStartEndTime>True</SetStartEndTime>
+<CollectStartTime Value="0" Scale="None" Actual="0"/>
+<CollectEndTime Value="10" Scale="None" Actual="10"/>
+<AxisList>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Y Axis 1</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Dec</Name>
+<ID>a8893f84-da14-4d93-8099-736a45d93af6</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>561e80b0-9888-4eee-b7ef-5af9ba16a51e</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>0</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-5192482</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Inc</Name>
+<ID>bdc6d604-5fef-487f-8bf7-38b416c2baea</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>e7f4157d-d5f1-407e-b3de-6446723de274</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Sum</Name>
+<ID>e814e00c-b3e1-4d1b-940b-e2804bf99524</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>59519a54-ff8f-4a16-a1e2-5f8a81410ba5</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-4419697</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+</AxisList>
+<SaveDataWhenClosed>False</SaveDataWhenClosed>
+<UpdateChartAtEnd>True</UpdateChartAtEnd>
+<PointsToKeep>55000</PointsToKeep>
+<YAxisOffset>0</YAxisOffset>
+<GraphConfig ByteCount="8938"/>
+</Form>
+</Form>
