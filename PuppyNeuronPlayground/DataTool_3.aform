@@ -55,6 +55,24 @@
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-65536</LineColor>
 </DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Sum</Name>
+<ID>e814e00c-b3e1-4d1b-940b-e2804bf99524</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>59519a54-ff8f-4a16-a1e2-5f8a81410ba5</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-4419697</LineColor>
+</DataColumn>
 </DataColumns>
 </Axis>
 </AxisList>
@@ -62,6 +80,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8934"/>
+<GraphConfig ByteCount="8938"/>
 </Form>
 </Form>
