@@ -31,6 +31,30 @@ class FrozenOptimizingController(OptimizingController):
 
         return des_ext_pres, des_flx_pres, des_torque
 
+class NeuronLikeController(FrozenOptimizingController):
+    accel_gain = 1.5899
+    vel_gain = 0.0477
+    def __str__(self):
+        return 'NeuronLikeController()'
+
+    def internal_model(self, state, desired_torque, end_time):
+        '''
+        Velocity Gain:
+        Gain of velocity's effect on position. 
+
+        Acceleration Gain:
+        Gain of accel effect on position. Incorporates mass and time step into a
+        single number, corresponding to the gain of the edge in the neuron 
+        network
+        '''
+        times = np.linspace(0, end_time, 2)
+        full_state = np.zeros((times.shape[0], state.shape[0],))
+        full_state[0,:] = state
+
+        vel_mod = state[1] + desired_torque * self.accel_gain
+        full_state[1,0] = state[0] + vel_mod * self.vel_gain
+        return full_state
+
 if __name__ == '__main__':
     ### Set up time ###
     S = ActualSimulator(bang_bang=True, limit_pressure=True)
@@ -79,7 +103,7 @@ if __name__ == '__main__':
     for index, _ in enumerate([0.0]):
         estimated_S = SimpleSimulator(M=0.0004, C=0.10, N=-1.7000)
     
-        C = FrozenOptimizingController(state_start, time[0],
+        C = NeuronLikeController(state_start, time[0],
             sim = estimated_S, control_rate=S.CONTROL_RATE,
             time_horizon=1.5/S.CONTROL_RATE, stiffness=stiffness,
             optimization_steps=15, iteration_steps=45)
