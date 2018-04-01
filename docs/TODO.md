@@ -15,7 +15,7 @@
 - [x] Implement a simpler mass model
 - [x] Evaluate how the simple mass model estimate compares to the complex mass model estimate (graphically)
 - [.] Get a static single joint that works for multiple changing weights, other parameters. Do a better job stably/smoothly updating control parameters
-- [ ] Understand how long controller takes vs Simulation time. Make it run a little faster
+- [ ] Understand how long controller t\akes vs Simulation time. Make it run a little faster
 
 ## Potential Analysis
 
