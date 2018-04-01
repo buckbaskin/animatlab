@@ -37,7 +37,7 @@ class NeuronLikeController(FrozenOptimizingController):
     def __str__(self):
         return 'NeuronLikeController()'
 
-    def internal_model(self, state, desired_torque, end_time):
+    def __internal_model(self, state, desired_torque, end_time):
         '''
         Velocity Gain:
         Gain of velocity's effect on position. 
@@ -46,6 +46,8 @@ class NeuronLikeController(FrozenOptimizingController):
         Gain of accel effect on position. Incorporates mass and time step into a
         single number, corresponding to the gain of the edge in the neuron 
         network
+
+        This needs to be more complicated with gains or more iterations to work 
         '''
         times = np.linspace(0, end_time, 2)
         full_state = np.zeros((times.shape[0], state.shape[0],))
