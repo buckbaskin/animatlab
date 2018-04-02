@@ -29,13 +29,31 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>52e27196-7112-49c5-b00f-31489eba7b50</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>7</DataSubSet>
-<PrevDataSubset>7</PrevDataSubset>
+<DataSubSet>8</DataSubSet>
+<PrevDataSubset>8</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-65536</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>High Inc Amp Diff</Name>
+<ID>4f8b37d2-8e06-4e3b-aaf3-e1899ad6cdbb</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
+<DataItemID>7fbca531-4156-4ecd-a8f4-438a8c521dc9</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>9</DataSubSet>
+<PrevDataSubset>9</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16711936</LineColor>
 </DataColumn>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
@@ -47,8 +65,8 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>c77f890f-18f7-4fe7-b703-e5c97814c78e</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>8</DataSubSet>
-<PrevDataSubset>8</PrevDataSubset>
+<DataSubSet>10</DataSubSet>
+<PrevDataSubset>10</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -65,8 +83,8 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>144941ff-0521-4546-8d3a-59724df83ae7</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>9</DataSubSet>
-<PrevDataSubset>9</PrevDataSubset>
+<DataSubSet>11</DataSubSet>
+<PrevDataSubset>11</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -83,8 +101,8 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>3a4fbd9b-e992-497e-8619-86f224c27a1a</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>10</DataSubSet>
-<PrevDataSubset>10</PrevDataSubset>
+<DataSubSet>12</DataSubSet>
+<PrevDataSubset>12</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -182,6 +200,24 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Low Inc Amp</Name>
+<ID>08ef6974-00bf-4475-8fb5-fcdf83b6b1de</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
+<DataItemID>f92479f2-d0ab-40ad-beec-67a1229646a2</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>4</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>Low Dec Sum</Name>
 <ID>32c9974a-e663-4d73-a96f-acf98f13f621</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
@@ -189,8 +225,8 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>95285795-b748-46a0-867a-e91df4331b88</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>4</DataSubSet>
-<PrevDataSubset>4</PrevDataSubset>
+<DataSubSet>5</DataSubSet>
+<PrevDataSubset>5</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -207,8 +243,8 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>6a61400f-d9c6-497f-8975-b18c60b3dd2f</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>5</DataSubSet>
-<PrevDataSubset>5</PrevDataSubset>
+<DataSubSet>6</DataSubSet>
+<PrevDataSubset>6</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -225,8 +261,8 @@
 <StructureID>3f53769e-43af-4e64-90e8-750661ff5554</StructureID>
 <DataItemID>af354acb-9f30-42ea-9a7e-b85b605640d7</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>6</DataSubSet>
-<PrevDataSubset>6</PrevDataSubset>
+<DataSubSet>7</DataSubSet>
+<PrevDataSubset>7</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -240,6 +276,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9039"/>
+<GraphConfig ByteCount="9069"/>
 </Form>
 </Form>
