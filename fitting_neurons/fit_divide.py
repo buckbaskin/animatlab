@@ -1,12 +1,12 @@
 import numpy as np
 
 def actual(X):
-    return 1 - X
+    return np.clip((1.0 / X) / 100.0, 0, 1)
 
-X = np.linspace(0, 0.5, 100)
+X = np.linspace(0.01, 1.0, 100)
 Y1 = actual(X)
 
-def neuron(X, g=0.216, E=-100):
+def neuron(X, g=0.859, E=-40):
     '''
     All around good fit:
     g=0.216, E=-100
@@ -15,7 +15,7 @@ def neuron(X, g=0.216, E=-100):
     R = 20
     top = (g / R) * X * E
     bottom = 1 + (g / R) * X
-    return 1 + np.divide(top, bottom) / 20
+    return 1 + np.divide(top, bottom) / 40
 
 def error(X, g, E):
     return neuron(X, g, E) - actual(X)
