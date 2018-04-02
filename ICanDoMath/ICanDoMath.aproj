@@ -1394,7 +1394,7 @@
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
-<TimeConstant Value="205" Scale="milli" Actual="0.205"/>
+<TimeConstant Value="1005" Scale="milli" Actual="1.005"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
 <RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
@@ -1626,7 +1626,7 @@
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
-<TimeConstant Value="205" Scale="milli" Actual="0.205"/>
+<TimeConstant Value="1005" Scale="milli" Actual="1.005"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
 <RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
@@ -2255,7 +2255,7 @@
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
-<TimeConstant Value="205" Scale="milli" Actual="0.205"/>
+<TimeConstant Value="1005" Scale="milli" Actual="1.005"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
 <RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
@@ -3581,7 +3581,7 @@
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
-<TimeConstant Value="205" Scale="milli" Actual="0.205"/>
+<TimeConstant Value="1005" Scale="milli" Actual="1.005"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
 <RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
@@ -7892,7 +7892,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/02/2018 15:35:33"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/02/2018 15:43:04"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 125" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -8354,7 +8354,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_2" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_2" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;abe591e7-b26b-4c28-8cc6-f7c9a30c4030&lt;/ID&gt;
@@ -8367,7 +8367,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_3" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_3" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;c6b4959f-60c2-4f1b-aba3-8ed2d2e8ff15&lt;/ID&gt;
