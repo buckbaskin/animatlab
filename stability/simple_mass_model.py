@@ -293,6 +293,7 @@ class BaseSimulator(object):
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 1 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0],))
+                print('estimated', self)
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
             if control_should_update:
@@ -342,6 +343,9 @@ class BaseSimulator(object):
         maybe useful and allowed, but continued unnecessarily high antagonism is
         wasteful.
         '''
+        if delay is None:
+            delay = SCORING_DELAY
+
         pos_error = np.abs(desired_states[:,0] - states[:,0])
         pos_error_rate = np.sum(pos_error) / (times[-1] - times[0])
         max_pos_error = np.max(pos_error[SCORING_DELAY:]) # ignore the first bit of time
@@ -552,7 +556,7 @@ class SimpleSimulator(BaseSimulator):
                 setattr(self, arg, val)
 
     def __str__(self):
-        return 'SimpleSimulator(M=%.4f, C=%.4f, N=%.4f)' % (self.inertia,
+        return 'SimpleSimulator(M=%.5f, C=%.5f, N=%.5f)' % (self.inertia,
             self.damping, self.conservative,)
 
     def set(self, **kwargs):
@@ -908,8 +912,8 @@ class OptimizingController(object):
         TODO(buckbaskin):
             - [x] Damping Estimation
             - [x] Load Estimation
-            - [ ] Mass estimation
-            - [ ] Update all values as a combined gradient
+            - [ ] ~~Mass estimation~~
+            - [.] Update all values as a combined gradient
             - [ ] Non-dimensionalize it to stay within the stable range. Estimate
                 all values to fall in a 0-1 range, where 0 is the minimum stable
                 value and 1 is the maximum stable value.
@@ -920,20 +924,23 @@ class OptimizingController(object):
             return inertia, damping, conservative
         acc_actual = (current_state[1] - last_state[1]) / delta_t
 
-        acc_est = last_state[2]
+        acc_est = self.internal_model(
+            last_state,
+            self.last_control,
+            current_time - last_time)[-1, 2]
         acc_err = acc_actual - acc_est
 
         vel_avg = (current_state[1] + last_state[1]) / 2
 
         if vel_avg != 0:
-            C_err = -acc_err * (inertia / vel_avg)
+            C_err = acc_err * (inertia / vel_avg)
         else:
             C_err = 0 # can't update if there wasn't a velocity
 
         theta_avg = (current_state[0] + current_state[1])/2.0
         base = self.sim.LINK_LENGTH * math.sin(theta_avg)
         if base != 0:
-            N_err = -acc_err * (inertia / base)
+            N_err = acc_err * (inertia / base)
         else:
             N_err = 0
 
@@ -946,20 +953,17 @@ class OptimizingController(object):
                 (inertia**-2))
 
         # prefer underestimation
-        if M_err > 0:
-            M_err *= 0.25
-        else:
-            M_err *= 0.33
+        update_rate = 1.004
         if C_err > 0:
-            C_err *= 0.25
+            damping *= update_rate
         else:
-            C_err *= 0.33
+            damping /= update_rate
         if N_err > 0:
-            N_err *= 0.25
+            conservative *= update_rate
         else:
-            N_err *= 0.33
+            conservative /= update_rate
 
-        return inertia + M_err, damping + C_err, conservative + N_err
+        return inertia, damping, conservative
 
     def control(self, state, desired_states, times):
         '''
@@ -1056,7 +1060,8 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = SimpleSimulator(M=0.0004, C=0.010, N=-1.7000)
+        # Actual is M=0.25, C=0.1, N=-1.7
+        estimated_S = SimpleSimulator(M=0.0004, C=0.11, N=-1.8000)
         print('internal', estimated_S)
     
         C = OptimizingController(state_start, time[0],
@@ -1094,6 +1099,6 @@ if __name__ == '__main__':
         ax_cons.set_xlabel('Time (sec)')
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('Simple_State_Model_Updating.png')
+        # plt.savefig('Simple_State_Model_Updating.png')
         plt.show()
         print('all done')
