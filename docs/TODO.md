@@ -15,7 +15,7 @@
 - [x] Implement a simpler mass model
 - [x] Evaluate how the simple mass model estimate compares to the complex mass model estimate (graphically)
 - [x] Understand how long controller takes vs Simulation time. Make it run a little faster
-- [ ] Implement gradient parameter updates for damping and load
+- [x] ~~Implement gradient parameter updates for damping and load~~ slow updating seems to work now. Getting the sign right helps.
 - [ ] Get a static single joint that works for multiple changing weights, other parameters. Do a better job stably/smoothly updating control parameters
 
 ## Potential Analysis
