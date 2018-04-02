@@ -293,7 +293,7 @@ class BaseSimulator(object):
         for i in range(full_state.shape[0] - 1):
             if i % 1000 == 1 or i == (full_state.shape[0] - 2):
                 print('...calculating step % 6d / %d' % (i, full_state.shape[0],))
-                print('estimated', self)
+                print('estimated', controller.sim)
             this_time = time[i]
             control_should_update = (this_time - last_control_time) > control_resolution
             if control_should_update:
@@ -556,7 +556,7 @@ class SimpleSimulator(BaseSimulator):
                 setattr(self, arg, val)
 
     def __str__(self):
-        return 'SimpleSimulator(M=%.5f, C=%.5f, N=%.5f)' % (self.inertia,
+        return 'SimpleSimulator(M=%.4f, C=%.4f, N=%.4f)' % (self.inertia,
             self.damping, self.conservative,)
 
     def set(self, **kwargs):
@@ -1061,7 +1061,7 @@ if __name__ == '__main__':
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
         # Actual is M=0.25, C=0.1, N=-1.7
-        estimated_S = SimpleSimulator(M=0.0004, C=0.11, N=-1.8000)
+        estimated_S = SimpleSimulator(M=0.0010, C=0.11, N=-1.8000)
         print('internal', estimated_S)
     
         C = OptimizingController(state_start, time[0],
