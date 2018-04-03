@@ -10,7 +10,7 @@
 <CollectTimeWindow Value="10" Scale="None" Actual="10"/>
 <UpdateDataInterval Value="200" Scale="milli" Actual="0.2"/>
 <SetStartEndTime>True</SetStartEndTime>
-<CollectStartTime Value="1" Scale="None" Actual="1"/>
+<CollectStartTime Value="3" Scale="None" Actual="3"/>
 <CollectEndTime Value="10" Scale="None" Actual="10"/>
 <AxisList>
 <Axis>

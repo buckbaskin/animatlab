@@ -150,6 +150,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8971"/>
+<GraphConfig ByteCount="9043"/>
 </Form>
 </Form>
