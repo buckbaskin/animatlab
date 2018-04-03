@@ -343,7 +343,7 @@
 <Name>Torque To Accel Pos</Name>
 <EquilibriumPotential Value="134" Scale="milli" Actual="0.134"/>
 <MaxSynapticConductance Value="0.115" Scale="micro" Actual="1.15e-007"/>
-<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
+<PreSynapticThreshold Value="-50" Scale="milli" Actual="-0.05"/>
 <PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
 <Link>
@@ -1002,8 +1002,8 @@
 <ZOrder>0</ZOrder>
 <Name>Torque To Accel Neg</Name>
 <EquilibriumPotential Value="-100" Scale="milli" Actual="-0.1"/>
-<MaxSynapticConductance Value="0.56" Scale="micro" Actual="5.6e-007"/>
-<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
+<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<PreSynapticThreshold Value="-50" Scale="milli" Actual="-0.05"/>
 <PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
 <Link>
@@ -15706,7 +15706,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/03/2018 12:52:06"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/03/2018 13:01:24"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 131" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
