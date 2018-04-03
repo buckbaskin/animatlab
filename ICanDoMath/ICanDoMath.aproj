@@ -494,7 +494,7 @@
 <ZOrder>0</ZOrder>
 <Name>Signal Inverter</Name>
 <EquilibriumPotential Value="-100" Scale="milli" Actual="-0.1"/>
-<MaxSynapticConductance Value="0.56" Scale="micro" Actual="5.6e-007"/>
+<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
 <PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
@@ -2491,6 +2491,82 @@
 <Node>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
 <ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>37d7b462-abd4-4918-807d-6f7842802de4</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="826" y="36"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="71.75" Height="40"/>
+<Text>Recon 1</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks>
+<ID>1cdcc817-2ce4-4ede-86e6-21691aac6e46</ID>
+</InLinks>
+<OutLinks/>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>62419bff-5434-4e18-8aa6-964fb7526867</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>1a8b840b-6699-45fd-a8a9-514a349ba58f</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
 <ID>3a4fbd9b-e992-497e-8619-86f224c27a1a</ID>
 <Alignment>CenterMiddle</Alignment>
 <AutoSize>None</AutoSize>
@@ -2690,6 +2766,7 @@
 <OutLinks>
 <ID>e8f4ea71-aac2-46bd-9b8f-54335ae1a787</ID>
 <ID>69337078-f484-4535-955a-379d7adb8d8f</ID>
+<ID>4e776f1f-b7ac-4ae7-ad23-6b46f9e6525d</ID>
 <ID>571f741d-892d-4e7e-8a11-33154eafc136</ID>
 <ID>b080278e-993e-4dad-8d3a-db92578a0b0e</ID>
 <ID>75204fee-4309-461a-be4a-161c1a568776</ID>
@@ -2698,6 +2775,7 @@
 <ID>d30186aa-add1-4f26-9620-e2f043ba4142</ID>
 <ID>0b782669-8ca5-4eae-870d-7bd0af760b94</ID>
 <ID>6a47fd49-82bf-48a5-9fb8-7c6d708535bf</ID>
+<ID>2a3b9d54-4a5e-4cd9-bcf2-6607075cef2d</ID>
 <ID>175b4dac-62c1-4f60-b617-26b65f17df22</ID>
 <ID>ee8e2915-a8b1-4a05-a878-c2ed4b37792e</ID>
 <ID>e1515e43-dc70-42a1-aa3f-31095524fda2</ID>
@@ -2805,6 +2883,84 @@
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
 <TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>46c101f6-9422-44ab-8fa1-4882a3c55764</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="762" y="145.75"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="71.75" Height="40"/>
+<Text>Inv</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks>
+<ID>2a3b9d54-4a5e-4cd9-bcf2-6607075cef2d</ID>
+</InLinks>
+<OutLinks>
+<ID>7eae5bb3-f949-4f9d-8da5-e4433d94aec6</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>269a33c1-6a30-4b60-96d6-697c2cc2edfc</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>230a2eb2-62fd-44b7-aba3-1615a3e57ccf</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="20" Scale="nano" Actual="2e-008"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -3035,7 +3191,7 @@
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
-<TonicStimulus Value="14" Scale="nano" Actual="1.4e-008"/>
+<TonicStimulus Value="6" Scale="nano" Actual="6e-009"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -4911,6 +5067,82 @@
 <Node>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
 <ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>bb946fd3-fde6-4742-80e6-00533d2a44bc</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="822.25" y="83.5"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="71.75" Height="40"/>
+<Text>Recon 2</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks>
+<ID>7eae5bb3-f949-4f9d-8da5-e4433d94aec6</ID>
+</InLinks>
+<OutLinks/>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>b16903fb-8138-46de-84cc-bf3308848763</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>e0b1237a-98ae-49ee-90f9-8b98d12d70ee</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="20" Scale="nano" Actual="2e-008"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
 <ID>be43f629-a166-4d3a-9dfc-12ee44267595</ID>
 <Alignment>CenterMiddle</Alignment>
 <AutoSize>None</AutoSize>
@@ -5364,6 +5596,84 @@
 </CaActivation>
 <CaDeactivation>
 <ID>32e522b5-860c-4f20-863b-2ff725126964</ID>
+<MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
+<Slope Value="-0.1" Scale="None" Actual="-0.1"/>
+<TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
+<ActivationType>False</ActivationType>
+</CaDeactivation>
+<InitAtBottom>True</InitAtBottom>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicNoise Value="0" Scale="milli" Actual="0"/>
+</Node>
+<Node>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</ClassName>
+<ID>d545273e-c2b8-45dc-a912-a8c68829228a</ID>
+<Alignment>CenterMiddle</Alignment>
+<AutoSize>None</AutoSize>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<FillColor>-7876870</FillColor>
+<Font Family="Arial" Size="14" Bold="True" Underline="False" Strikeout="False" Italic="False"/>
+<Gradient>False</Gradient>
+<GradientColor>0</GradientColor>
+<GradientMode>BackwardDiagonal</GradientMode>
+<DiagramImageName/>
+<ImageName/>
+<ImageLocation x="0" y="0"/>
+<ImagePosition>RelativeToText</ImagePosition>
+<InLinkable>True</InLinkable>
+<LabelEdit>True</LabelEdit>
+<Location x="750" y="37"/>
+<OutLinkable>True</OutLinkable>
+<ShadowStyle>None</ShadowStyle>
+<ShadowColor>-16777216</ShadowColor>
+<ShadowSize Width="0" Height="0"/>
+<Shape>Termination</Shape>
+<ShapeOrientation>Angle0</ShapeOrientation>
+<Size Width="71.75" Height="40"/>
+<Text>Trans</Text>
+<TextColor>-16777216</TextColor>
+<TextMargin Width="0" Height="0"/>
+<ToolTip/>
+<Transparent>False</Transparent>
+<Url/>
+<XMoveable>True</XMoveable>
+<XSizeable>True</XSizeable>
+<YMoveable>True</YMoveable>
+<YSizeable>True</YSizeable>
+<ZOrder>0</ZOrder>
+<ZOrder>0</ZOrder>
+<TemplateNode>False</TemplateNode>
+<TemplateNodeCount>1</TemplateNodeCount>
+<TemplateChangeScript/>
+<InLinks>
+<ID>4e776f1f-b7ac-4ae7-ad23-6b46f9e6525d</ID>
+</InLinks>
+<OutLinks>
+<ID>1cdcc817-2ce4-4ede-86e6-21691aac6e46</ID>
+</OutLinks>
+<Enabled>True</Enabled>
+<RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
+<RelativeSize Value="1" Scale="None" Actual="1"/>
+<TimeConstant Value="5" Scale="milli" Actual="0.005"/>
+<InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
+<RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
+<AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
+<AHP_Conductance Value="1" Scale="micro" Actual="1e-006"/>
+<AHP_TimeConstant Value="3" Scale="milli" Actual="0.003"/>
+<MaxCaConductance Value="0" Scale="micro" Actual="0"/>
+<CaActivation>
+<ID>9164b418-9a9c-4777-81f8-4a2c5789dd50</ID>
+<MidPoint Value="-30" Scale="milli" Actual="-0.03"/>
+<Slope Value="0.1" Scale="None" Actual="0.1"/>
+<TimeConstant Value="20" Scale="milli" Actual="0.02"/>
+<ActivationType>True</ActivationType>
+</CaActivation>
+<CaDeactivation>
+<ID>cf4a664d-8159-4546-85be-b1b176d08548</ID>
 <MidPoint Value="-90" Scale="milli" Actual="-0.09"/>
 <Slope Value="-0.1" Scale="None" Actual="-0.1"/>
 <TimeConstant Value="7500" Scale="milli" Actual="7.5"/>
@@ -6362,6 +6672,53 @@
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
 <ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>1cdcc817-2ce4-4ede-86e6-21691aac6e46</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>37d7b462-abd4-4918-807d-6f7842802de4</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>d545273e-c2b8-45dc-a912-a8c68829228a</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>37ad732d-1bf1-4790-8c0e-d2df031bb7cd</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
 <ID>1eaeef75-4154-44b0-947d-12330edc67b6</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -6590,6 +6947,53 @@
 <Url/>
 <ZOrder>0</ZOrder>
 <SynapticTypeID>fe470029-65b7-4a4c-a19e-93c01e07e846</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>2a3b9d54-4a5e-4cd9-bcf2-6607075cef2d</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>46c101f6-9422-44ab-8fa1-4882a3c55764</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>3fbaa7fd-44b6-4122-8909-40386c0ce3ac</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>240df0d9-214c-425c-8fb0-1b5137cd5c1f</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -6911,6 +7315,53 @@
 <LineStyle>Polyline</LineStyle>
 <OrthogonalDynamic>True</OrthogonalDynamic>
 <OriginID>b15b44c3-4476-4402-87ea-003ea6ffcd1d</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>37ad732d-1bf1-4790-8c0e-d2df031bb7cd</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>4e776f1f-b7ac-4ae7-ad23-6b46f9e6525d</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>d545273e-c2b8-45dc-a912-a8c68829228a</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>3fbaa7fd-44b6-4122-8909-40386c0ce3ac</OriginID>
 <OrientedText>True</OrientedText>
 <Selectable>True</Selectable>
 <Stretchable>True</Stretchable>
@@ -7530,6 +7981,53 @@
 <Url/>
 <ZOrder>0</ZOrder>
 <SynapticTypeID>0b7fd003-774e-4c35-8ef1-94d18566a44e</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>7eae5bb3-f949-4f9d-8da5-e4433d94aec6</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>bb946fd3-fde6-4742-80e6-00533d2a44bc</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>46c101f6-9422-44ab-8fa1-4882a3c55764</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>240df0d9-214c-425c-8fb0-1b5137cd5c1f</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -9101,8 +9599,52 @@
 <GridStyle>DottedLines</GridStyle>
 <JumpSize>Medium</JumpSize>
 <SnapToGrid>False</SnapToGrid>
-<AddFlow Nodes="55" Links="69">
+<AddFlow Nodes="59" Links="73">
   <Version>1.5.0.1</Version>
+  <Node Left="845.5" Top="87.25" Width="71.75" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Recon 2</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>bb946fd3-fde6-4742-80e6-00533d2a44bc</Tag>
+  </Node>
+  <Node Left="762" Top="145.75" Width="71.75" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Inv</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>46c101f6-9422-44ab-8fa1-4882a3c55764</Tag>
+  </Node>
+  <Node Left="842.5" Top="37.5" Width="71.75" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Recon 1</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>37d7b462-abd4-4918-807d-6f7842802de4</Tag>
+  </Node>
+  <Node Left="750" Top="37" Width="71.75" Height="40">
+    <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
+    <Shape Style="Termination" Orientation="so_0" />
+    <FillColor>-7876870</FillColor>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <GradientColor>0</GradientColor>
+    <Text>Trans</Text>
+    <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>d545273e-c2b8-45dc-a912-a8c68829228a</Tag>
+  </Node>
   <Node Left="688.5" Top="603.75" Width="86.5" Height="40">
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
@@ -9323,7 +9865,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>be43f629-a166-4d3a-9dfc-12ee44267595</Tag>
   </Node>
-  <Link Org="19" Dst="18">
+  <Link Org="23" Dst="22">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9401,7 +9943,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>9924c749-0b4a-475b-8c2a-147f98784aad</Tag>
   </Node>
-  <Link Org="26" Dst="24">
+  <Link Org="30" Dst="28">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9413,7 +9955,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6400f14a-969f-46cb-8c7b-fa0838d1e5c4</Tag>
   </Link>
-  <Link Org="25" Dst="24">
+  <Link Org="29" Dst="28">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9503,7 +10045,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>d12f28ea-beed-4bb4-b25e-f03c76585861</Tag>
   </Node>
-  <Link Org="35" Dst="33">
+  <Link Org="39" Dst="37">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9515,7 +10057,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>e18143ae-421b-4727-852e-f1c90eb4568c</Tag>
   </Link>
-  <Link Org="34" Dst="33">
+  <Link Org="38" Dst="37">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9560,7 +10102,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>62b630a0-baee-4e44-bfa8-68fa5f6ae6b0</Tag>
   </Node>
-  <Link Org="40" Dst="38">
+  <Link Org="44" Dst="42">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9572,7 +10114,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>d9828166-f619-4db2-8c3c-2bbb2e318e64</Tag>
   </Link>
-  <Link Org="39" Dst="38">
+  <Link Org="43" Dst="42">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9796,7 +10338,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>0479ee76-0d6b-4cc4-afd3-95f0347d636a</Tag>
   </Node>
-  <Link Org="59" Dst="57">
+  <Link Org="63" Dst="61">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9808,7 +10350,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>0b782669-8ca5-4eae-870d-7bd0af760b94</Tag>
   </Link>
-  <Link Org="60" Dst="57">
+  <Link Org="64" Dst="61">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9820,7 +10362,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>382ccc6f-b6c0-4223-be6b-9d013146f4d2</Tag>
   </Link>
-  <Link Org="60" Dst="56">
+  <Link Org="64" Dst="60">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9832,7 +10374,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>4e0bba1e-9f0f-4bfd-9611-ffad28cbf2e9</Tag>
   </Link>
-  <Link Org="58" Dst="56">
+  <Link Org="62" Dst="60">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9844,7 +10386,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>3b1ca93d-2b55-4927-af30-2220a19e2f1f</Tag>
   </Link>
-  <Link Org="58" Dst="55">
+  <Link Org="62" Dst="59">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9856,7 +10398,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b7c0ce46-beac-4d1b-bf6f-82804dc86c5f</Tag>
   </Link>
-  <Link Org="59" Dst="55">
+  <Link Org="63" Dst="59">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9868,7 +10410,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>69337078-f484-4535-955a-379d7adb8d8f</Tag>
   </Link>
-  <Link Org="59" Dst="54">
+  <Link Org="63" Dst="58">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9880,7 +10422,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>19cfa121-5ed6-4264-8c06-0143915edc6f</Tag>
   </Link>
-  <Link Org="60" Dst="54">
+  <Link Org="64" Dst="58">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9892,7 +10434,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>9f0a1c3e-8940-4a30-b361-b588edbf395f</Tag>
   </Link>
-  <Link Org="61" Dst="53">
+  <Link Org="65" Dst="57">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9904,7 +10446,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>1a62917a-f494-4509-9a3f-5e9721bcddad</Tag>
   </Link>
-  <Link Org="59" Dst="53">
+  <Link Org="63" Dst="57">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9916,7 +10458,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>e1515e43-dc70-42a1-aa3f-31095524fda2</Tag>
   </Link>
-  <Link Org="61" Dst="52">
+  <Link Org="65" Dst="56">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9928,7 +10470,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ad6d236a-7a0e-460e-9762-36d1721fd26d</Tag>
   </Link>
-  <Link Org="60" Dst="52">
+  <Link Org="64" Dst="56">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9940,7 +10482,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b4d3b72f-2048-4830-9814-2bf4c0d8c2e4</Tag>
   </Link>
-  <Link Org="60" Dst="51">
+  <Link Org="64" Dst="55">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9952,7 +10494,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>a9eb0760-858b-4ebf-ad7b-9ff927587a11</Tag>
   </Link>
-  <Link Org="61" Dst="51">
+  <Link Org="65" Dst="55">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9964,7 +10506,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6f606563-72f3-4481-aa5a-c1bbf9ffb55d</Tag>
   </Link>
-  <Link Org="61" Dst="50">
+  <Link Org="65" Dst="54">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -9976,7 +10518,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>d57ecbef-9891-4c17-b516-6534846abd04</Tag>
   </Link>
-  <Link Org="59" Dst="50">
+  <Link Org="63" Dst="54">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -9988,7 +10530,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>e8f4ea71-aac2-46bd-9b8f-54335ae1a787</Tag>
   </Link>
-  <Link Org="49" Dst="48">
+  <Link Org="53" Dst="52">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10000,7 +10542,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>9b98f7d9-c020-4ec8-b6ea-6be0fd50cbc5</Tag>
   </Link>
-  <Link Org="59" Dst="48">
+  <Link Org="63" Dst="52">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10012,7 +10554,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b080278e-993e-4dad-8d3a-db92578a0b0e</Tag>
   </Link>
-  <Link Org="59" Dst="47">
+  <Link Org="63" Dst="51">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10024,7 +10566,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>175b4dac-62c1-4f60-b617-26b65f17df22</Tag>
   </Link>
-  <Link Org="47" Dst="46">
+  <Link Org="51" Dst="50">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10036,7 +10578,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>c4f79a35-9ab4-4cf6-af44-7845fec84d29</Tag>
   </Link>
-  <Link Org="59" Dst="45">
+  <Link Org="63" Dst="49">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10048,7 +10590,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6a47fd49-82bf-48a5-9fb8-7c6d708535bf</Tag>
   </Link>
-  <Link Org="59" Dst="44">
+  <Link Org="63" Dst="48">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10060,7 +10602,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>d30186aa-add1-4f26-9620-e2f043ba4142</Tag>
   </Link>
-  <Link Org="45" Dst="43">
+  <Link Org="49" Dst="47">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10072,7 +10614,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>0705d0cd-6f73-4200-b105-ece4ed069969</Tag>
   </Link>
-  <Link Org="44" Dst="43">
+  <Link Org="48" Dst="47">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10084,7 +10626,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>fb840f85-a840-4d01-91ca-c2c08bfaf05f</Tag>
   </Link>
-  <Link Org="58" Dst="40">
+  <Link Org="62" Dst="44">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10096,7 +10638,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>01102720-69f2-4a94-b2ac-a5e66c079973</Tag>
   </Link>
-  <Link Org="58" Dst="39">
+  <Link Org="62" Dst="43">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10108,7 +10650,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>1fa81357-35a1-4679-82fb-cd906125c0d9</Tag>
   </Link>
-  <Link Org="49" Dst="35">
+  <Link Org="53" Dst="39">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10120,7 +10662,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>e912fd28-afc5-4a85-a1bc-86661d0ce9c8</Tag>
   </Link>
-  <Link Org="49" Dst="34">
+  <Link Org="53" Dst="38">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10132,7 +10674,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>afb18792-8f04-479b-abd5-cd95e0306d3f</Tag>
   </Link>
-  <Link Org="32" Dst="31">
+  <Link Org="36" Dst="35">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10144,7 +10686,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>1eaeef75-4154-44b0-947d-12330edc67b6</Tag>
   </Link>
-  <Link Org="31" Dst="30">
+  <Link Org="35" Dst="34">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10157,7 +10699,7 @@
     <Point X="227.25" Y="500.25" />
     <Tag>a11f7423-7435-4ba5-80f6-101a0a08660f</Tag>
   </Link>
-  <Link Org="30" Dst="31">
+  <Link Org="34" Dst="35">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10170,7 +10712,7 @@
     <Point X="291.75" Y="445.5" />
     <Tag>f9d46f97-2274-4505-bb10-5f61d21b69be</Tag>
   </Link>
-  <Link Org="29" Dst="26">
+  <Link Org="33" Dst="30">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10182,7 +10724,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>392efbf1-edc1-4a30-bd17-f0acdea1bc3f</Tag>
   </Link>
-  <Link Org="29" Dst="25">
+  <Link Org="33" Dst="29">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10194,7 +10736,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ad2027b7-2a59-42dc-a888-e9b24f736b96</Tag>
   </Link>
-  <Link Org="59" Dst="23">
+  <Link Org="63" Dst="27">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10206,7 +10748,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>75204fee-4309-461a-be4a-161c1a568776</Tag>
   </Link>
-  <Link Org="60" Dst="23">
+  <Link Org="64" Dst="27">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10218,7 +10760,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>e2999341-3dbb-4db0-993c-6e5be519ab48</Tag>
   </Link>
-  <Link Org="59" Dst="22">
+  <Link Org="63" Dst="26">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10230,7 +10772,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ee8e2915-a8b1-4a05-a878-c2ed4b37792e</Tag>
   </Link>
-  <Link Org="61" Dst="22">
+  <Link Org="65" Dst="26">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10242,7 +10784,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>06d78e46-6c04-47e5-85e7-b57d3457a7ac</Tag>
   </Link>
-  <Link Org="26" Dst="21">
+  <Link Org="30" Dst="25">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10254,7 +10796,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>54c224f0-4e08-4dbb-a7ef-727675e6dc85</Tag>
   </Link>
-  <Link Org="25" Dst="21">
+  <Link Org="29" Dst="25">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10266,7 +10808,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>22c7fbd2-fb11-495f-831b-4dac728aa907</Tag>
   </Link>
-  <Link Org="60" Dst="46">
+  <Link Org="64" Dst="50">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10278,7 +10820,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>f7f6ec4b-1b4f-45fe-8479-9e4bcc578458</Tag>
   </Link>
-  <Link Org="59" Dst="19">
+  <Link Org="63" Dst="23">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10290,7 +10832,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>571f741d-892d-4e7e-8a11-33154eafc136</Tag>
   </Link>
-  <Link Org="49" Dst="18">
+  <Link Org="53" Dst="22">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10302,7 +10844,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b2a059e5-4cb8-4924-aadf-424d876194dc</Tag>
   </Link>
-  <Link Org="61" Dst="16">
+  <Link Org="65" Dst="20">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10314,7 +10856,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>04ee4ac4-c2ed-46ba-9872-1650b556f240</Tag>
   </Link>
-  <Link Org="59" Dst="17">
+  <Link Org="63" Dst="21">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10326,7 +10868,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>2ca838cd-99f4-48e5-a9b8-4525470a0bea</Tag>
   </Link>
-  <Link Org="17" Dst="16">
+  <Link Org="21" Dst="20">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10338,7 +10880,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6456636c-4c9f-42a7-a736-aac92e5ebbd2</Tag>
   </Link>
-  <Link Org="15" Dst="13">
+  <Link Org="19" Dst="17">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10350,7 +10892,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>d2c5f159-e758-4cd1-99bb-3a1853f8fdd2</Tag>
   </Link>
-  <Link Org="15" Dst="14">
+  <Link Org="19" Dst="18">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10362,7 +10904,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>a79ea7f3-d825-4092-9d34-9bd646e5d25e</Tag>
   </Link>
-  <Link Org="15" Dst="12">
+  <Link Org="19" Dst="16">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10374,7 +10916,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>f8be7c32-6d02-4670-a62d-b6d1b8c69e0d</Tag>
   </Link>
-  <Link Org="15" Dst="11">
+  <Link Org="19" Dst="15">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10387,7 +10929,7 @@
     <Point X="147" Y="636.75" />
     <Tag>128a763c-47cc-4a1e-9a6b-3ada18a02f26</Tag>
   </Link>
-  <Link Org="11" Dst="10">
+  <Link Org="15" Dst="14">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10399,7 +10941,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>22c2dc00-6cd0-4280-83f7-b30940c5dae5</Tag>
   </Link>
-  <Link Org="10" Dst="9">
+  <Link Org="14" Dst="13">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10411,7 +10953,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b4da8f4f-9a61-4b09-acd7-f95c3cecf576</Tag>
   </Link>
-  <Link Org="15" Dst="8">
+  <Link Org="19" Dst="12">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10423,7 +10965,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>c5db83f8-b66f-48be-8a48-9ab5a50e3675</Tag>
   </Link>
-  <Link Org="8" Dst="11">
+  <Link Org="12" Dst="15">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10435,7 +10977,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>2ac975ac-9f57-42c8-8951-10ef21b4cd11</Tag>
   </Link>
-  <Link Org="6" Dst="5">
+  <Link Org="10" Dst="9">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10447,7 +10989,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>a8552ced-4897-4f85-b5d5-2a3b08f83f93</Tag>
   </Link>
-  <Link Org="7" Dst="4">
+  <Link Org="11" Dst="8">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10459,7 +11001,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>57da6992-0beb-4201-970f-ca8f8cef6ce7</Tag>
   </Link>
-  <Link Org="7" Dst="3">
+  <Link Org="11" Dst="7">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10471,7 +11013,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>50102c88-2bc5-4c5c-a37d-4702366435d3</Tag>
   </Link>
-  <Link Org="4" Dst="2">
+  <Link Org="8" Dst="6">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10483,7 +11025,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>34a21945-0169-45ef-815f-3bfa6f0b9156</Tag>
   </Link>
-  <Link Org="3" Dst="2">
+  <Link Org="7" Dst="6">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10495,7 +11037,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>0d57ffe5-61d1-488f-8738-65609b62d2b8</Tag>
   </Link>
-  <Link Org="2" Dst="1">
+  <Link Org="6" Dst="5">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10507,7 +11049,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>034f611e-b312-4911-932b-39f834c499f4</Tag>
   </Link>
-  <Link Org="0" Dst="5">
+  <Link Org="4" Dst="9">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10519,7 +11061,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b3e24ce1-ab36-4716-bb21-6d87ff8a641a</Tag>
   </Link>
-  <Link Org="6" Dst="0">
+  <Link Org="10" Dst="4">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -10531,7 +11073,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>b8f007d9-4b1f-4e22-bfdf-c2df9dad53fb</Tag>
   </Link>
-  <Link Org="1" Dst="0">
+  <Link Org="5" Dst="4">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -10542,6 +11084,54 @@
     <TextColor>-16777216</TextColor>
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>7bd7c487-738d-4428-a093-38828e7c037a</Tag>
+  </Link>
+  <Link Org="63" Dst="3">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>4e776f1f-b7ac-4ae7-ad23-6b46f9e6525d</Tag>
+  </Link>
+  <Link Org="3" Dst="2">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>1cdcc817-2ce4-4ede-86e6-21691aac6e46</Tag>
+  </Link>
+  <Link Org="63" Dst="1">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>2a3b9d54-4a5e-4cd9-bcf2-6607075cef2d</Tag>
+  </Link>
+  <Link Org="1" Dst="0">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>7eae5bb3-f949-4f9d-8da5-e4433d94aec6</Tag>
   </Link>
 </AddFlow>
 </Diagram>
@@ -10664,6 +11254,13 @@
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
 <ToolFormID>c6b4959f-60c2-4f1b-aba3-8ed2d2e8ff15</ToolFormID>
+</ToolHolder>
+<ToolHolder>
+<ID>e476d385-55a4-45db-832d-c683c23e9f84</ID>
+<Name>DataTool_8</Name>
+<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+<ToolFormID>de13a7a9-69d5-40ab-9c1c-d5d42d637e22</ToolFormID>
 </ToolHolder>
 <ToolHolder>
 <ID>fa3c2353-ff12-49ad-a91e-626225190c56</ID>
@@ -10933,7 +11530,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/03/2018 17:17:06"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/03/2018 17:35:38"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 134" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -11381,7 +11978,7 @@
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
     &lt;/Leaf&gt;
-    &lt;Leaf Count="7" Unique="4" Space="49.183417085427135678391959800"&gt;
+    &lt;Leaf Count="8" Unique="4" Space="49.183417085427135678391959800"&gt;
       &lt;Page Title="DataTool_1" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
@@ -11460,7 +12057,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_7" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_7" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;4ff229aa-904f-4151-a11b-4e1aa9f923b9&lt;/ID&gt;
@@ -11469,6 +12066,19 @@
 &lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
 &lt;ExternalFile&gt;DataTool_7.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="DataTool_8" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;de13a7a9-69d5-40ab-9c1c-d5d42d637e22&lt;/ID&gt;
+&lt;Title&gt;DataTool_8&lt;/Title&gt;
+&lt;TabPageName&gt;DataTool_8&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
+&lt;ExternalFile&gt;DataTool_8.aform&lt;/ExternalFile&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
