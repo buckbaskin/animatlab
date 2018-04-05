@@ -62,26 +62,7 @@
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
 <Name>Theta</Name>
 <WorkingAxis>0</WorkingAxis>
-<DataColumns>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Test Theta</Name>
-<ID>c5fe7dd9-4711-4111-8d39-f9c8e3c42883</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
-<DataItemID>bf310135-3bf9-4984-87d6-0069be5ea9b2</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>0</DataSubSet>
-<PrevDataSubset>0</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-65536</LineColor>
-</DataColumn>
-</DataColumns>
+<DataColumns/>
 </Axis>
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>

@@ -100,24 +100,6 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Neg Vel</Name>
-<ID>19186adb-dce2-42a0-a0a6-f8cfd29a5be2</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
-<DataItemID>f0af299d-1aa1-4b55-849d-240d295f8f6d</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>1</DataSubSet>
-<PrevDataSubset>1</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-23296</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>Neg Vel Mod</Name>
 <ID>29db8f52-6aa0-4760-aee1-ff625ffd7295</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
@@ -150,24 +132,6 @@
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-65536</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Pos Vel</Name>
-<ID>ff1bc2b9-d09a-4daf-a41d-2dde28059131</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
-<DataItemID>783a7980-30be-45df-8666-c88ff707c99c</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>4</DataSubSet>
-<PrevDataSubset>4</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-16776961</LineColor>
 </DataColumn>
 </DataColumns>
 </Axis>
