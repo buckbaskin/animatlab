@@ -210,6 +210,12 @@ When $\dot{\theta}_{0}$ is 0, then $N_{err}$ explains the total error in acceler
 C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
 \end{equation}
 
-By following these steps, the updates for the Damping Factor and Load Factor can be updated ``easily".
+By following these steps, the updates for the Damping Factor and Load Factor can be updated ``easily". In neurons, $\dfrac{2}{\delta t^{2}}$ ammount to a scaling effect (the update rate is assumed constant) because the update will be modulated by a gain/moving average calculation so that single spurious measurements don't adversely impact stability. This leaves (with an arbitrary gain term $G$):
+
+\begin{equation}
+\lambda = G * (M * \theta_{err}) * \dfrac{1}{1 + \dot{\theta}^{2}}
+\end{equation}
+
+That last term looks like it will fit closely to a Signal Inverse Reduction (0.5x) synapse.
 
 \end{document}
