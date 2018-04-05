@@ -5,3 +5,6 @@
 *.pdf
 *.asv
 *.swp
+*.aux
+*.log
+*.out
