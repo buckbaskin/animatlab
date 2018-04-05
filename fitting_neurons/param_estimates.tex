@@ -19,7 +19,7 @@
 % \usepackage{amsmath, amssymb, amsthm, gensymb}
 
 \usepackage{graphicx}
-\graphicspath{ {graphics/} }
+% \graphicspath{ {graphics/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -64,8 +64,16 @@
 
 \section{General Model}
 
+The key components of the acceleration calculation are highlighted in green.
+
 \begin{equation}
 M \ddot{\theta} + C \dot{\theta} + N = \tau
 \end{equation}
+
+\begin{center}
+\includegraphics[height=5in, angle=0]{NetworkLayout}
+\end{center}
+
+The Inertia Factor (M) is connected via a division synapse. The Load Factor (N) is a signal transfer network. The Damping Factor (C) is connected via a multiplication synapse to modulate damping effects based on the sign of the velocity.
 
 \end{document}
