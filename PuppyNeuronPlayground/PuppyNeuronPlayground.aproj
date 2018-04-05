@@ -2646,8 +2646,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>b7d421b5-a4ed-4ef7-ab4d-47985fcd09c5</ID>
 <ID>f2215a17-cc41-4ae2-8a79-2bb479299c94</ID>
+<ID>b7d421b5-a4ed-4ef7-ab4d-47985fcd09c5</ID>
 </InLinks>
 <OutLinks/>
 <Enabled>True</Enabled>
@@ -7853,13 +7853,13 @@
 <ID>21a22c1a-9180-4350-992d-7ce4b44cd676</ID>
 </InLinks>
 <OutLinks>
-<ID>d78ebaeb-3506-4d77-97ce-d6e4e0c737e7</ID>
 <ID>f2215a17-cc41-4ae2-8a79-2bb479299c94</ID>
+<ID>d78ebaeb-3506-4d77-97ce-d6e4e0c737e7</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
-<TimeConstant Value="1005" Scale="milli" Actual="1.005"/>
+<TimeConstant Value="505" Scale="milli" Actual="0.505"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
 <RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
@@ -11405,7 +11405,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>34ea07c1-cbbe-4250-951a-67e8d1da21a1</SynapticTypeID>
+<SynapticTypeID>3696ce27-55b2-456c-b829-0cd0fb446ee8</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -13661,7 +13661,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>3056ff98-05c0-486c-a10d-e651df31f875</SynapticTypeID>
+<SynapticTypeID>85578db7-e355-434e-9891-9b64689ed69b</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -14272,7 +14272,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>3056ff98-05c0-486c-a10d-e651df31f875</SynapticTypeID>
+<SynapticTypeID>85578db7-e355-434e-9891-9b64689ed69b</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -15071,7 +15071,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>34ea07c1-cbbe-4250-951a-67e8d1da21a1</SynapticTypeID>
+<SynapticTypeID>3696ce27-55b2-456c-b829-0cd0fb446ee8</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -18686,7 +18686,7 @@
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>2 * 10 * cos(2 * t)</Equation>
+<Equation>2 * 5 * cos(2 * t)</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
 <NodeID>53593445-362d-4866-a2e2-c276fbb41be1</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
@@ -18733,7 +18733,7 @@
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
 <NodeID>d49551ec-42be-4a79-8f46-a74ef1f8726e</NodeID>
-<CurrentOn Value="100" Scale="nano" Actual="1e-007"/>
+<CurrentOn Value="25" Scale="nano" Actual="2.5e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
 <CycleOnDuration Value="10" Scale="centi" Actual="0.1"/>
@@ -18752,7 +18752,7 @@
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>10 * sin(2 * t)</Equation>
+<Equation>5 * sin(2 * t)</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
 <NodeID>bf310135-3bf9-4984-87d6-0069be5ea9b2</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
@@ -18883,7 +18883,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/04/2018 22:52:09"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/04/2018 23:27:18"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 131" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
