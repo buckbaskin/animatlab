@@ -76,24 +76,6 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Add Low Inc 4x</Name>
-<ID>8267611d-c68f-4b64-bb67-c21619407327</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
-<DataItemID>4d46ee0c-fd60-40c9-ad66-23436203aedc</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>7</DataSubSet>
-<PrevDataSubset>7</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-12525360</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>Transfer Inc</Name>
 <ID>b254fe69-455b-4bcf-a248-40c5dd4cbffc</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
@@ -101,8 +83,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>b2b62eb7-ff6d-4a2c-8d33-5819ad28b45d</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>8</DataSubSet>
-<PrevDataSubset>8</PrevDataSubset>
+<DataSubSet>7</DataSubSet>
+<PrevDataSubset>7</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -120,24 +102,6 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>Sub High Inc 4x</Name>
-<ID>310029ab-baec-460f-8d74-53a04bcf814d</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
-<DataItemID>99882498-d715-4f82-945e-2f1410f8e150</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>9</DataSubSet>
-<PrevDataSubset>9</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-7077677</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>Double Inv Inc</Name>
 <ID>7a870e81-e644-48f6-845c-1bf8eaf13735</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
@@ -145,8 +109,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>6f290e0b-bacd-46a9-a888-7596bd1d74cb</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>10</DataSubSet>
-<PrevDataSubset>10</PrevDataSubset>
+<DataSubSet>8</DataSubSet>
+<PrevDataSubset>8</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -163,8 +127,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>9c2d00b0-9213-4c77-8d95-42311c56a489</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>11</DataSubSet>
-<PrevDataSubset>11</PrevDataSubset>
+<DataSubSet>9</DataSubSet>
+<PrevDataSubset>9</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -181,8 +145,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>b15126f2-0d5b-4948-b25f-eef657e6c039</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>12</DataSubSet>
-<PrevDataSubset>12</PrevDataSubset>
+<DataSubSet>10</DataSubSet>
+<PrevDataSubset>10</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -271,11 +235,55 @@
 </DataColumn>
 </DataColumns>
 </Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Mult</Name>
+<WorkingAxis>3</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Mult High Inc</Name>
+<ID>192d1f06-5837-40ac-8a12-d99ad3a9b455</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>8214d6a5-51f1-4fe1-bbce-b4d7002e504c</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>11</DataSubSet>
+<PrevDataSubset>11</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16181</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Mult Mid Inc</Name>
+<ID>63c4c506-ad1d-41d0-a132-9f3fb1110e7b</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>e5a4f081-60b7-4240-a36f-c712714aefbe</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>12</DataSubSet>
+<PrevDataSubset>12</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-13726889</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9075"/>
+<GraphConfig ByteCount="9074"/>
 </Form>
 </Form>
