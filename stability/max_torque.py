@@ -27,6 +27,10 @@ def N(P):
 
 T = M(pos) * accel + C(pos, vel) * vel + N(pos)
 
+print('Maximum and Minimum Torques Required for Trajectory:')
+print('%.2f Nm' % np.max(T))
+print('%.2f Nm' % np.min(T))
+
 plt.plot(time, pos, label='Position (rad)')
 plt.plot(time, vel, label='Velocity (rad/sec)')
 plt.plot(time, accel,  label='Accleration (rad/sec^2)')
