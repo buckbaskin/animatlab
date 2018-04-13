@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+plt.rc('font', **{'size': 28})
 
 data = np.genfromtxt('MathOperationsTable.csv', delimiter=',', skip_header=1)
 index = data[:, 0]
