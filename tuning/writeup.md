@@ -17,4 +17,33 @@ Most joints in a dog at a walking range don't exceed an oscillation of 1 Hz.
 By a continuation of the same logic, the acceleration term should maximize at about 30 rad/(sec^2).
 This analysis also suggests that the calculations for `max_torque.py` is off.
 
+## Expectations
+
+The expected controller rate is about 30 hz. This corresponds to a time step of about 33 milliseconds. 
+Assuming the maximum acceleration occurs for that entire time step, the maximum change in velocity is just under 1 m/s.
+Over the velocity mapping range, this means that a fully positive or negative acceleration neuron, transfered through a synapse, should shift the neuron by 4 mV (0.2x/reduction).
+
+For a maximum velocity of 5 rad/sec, the expectation is that the position will change at most 0.165 rad in one time step. This corresponds to 4.2 mV in the split estimators of position/theta. As a current approximation, both can use the same reduction edge that takes full activation and shifts by 4 mV.
+
+## Pressures
+
+For now: 0 -> 20 mV corresponds to 0 -> 620 kPa.
+
+## Notes
+
+In thinking about this, the mutual activations of neurons representing the same value where both are near zero may lead to bad values? Unless they remain generally mirrored around -60 mV for small variations, at which point it should be ok.
+
+## Things to Visualize/Tune
+
+1. Velocity estimation network. Max velocity show on a 1 Hz sin wave input of the correct sin, or approximately that. Phase should be consistent with approximately 1 Hz.
+2. Accel fusion network is harder. Pick 10 combos of ext, flx pressures and joint angles. 3 joint angles, +/-/0. Then two pressure pairs each? Goal is to show "symmetric" effects from joint angle and pressure differential, with highest torque at the 0 angle.
+3. Parameter network behaviors (especially in the compressed single step version)
+4. Torque Guessing Network. Based on known correspondences, can do the maths out.
+5. Torque -> Pressures network. This needs pressure correspondences.
+
+### Parameter Networks
+
+1. Write out correspondences.
+2. Verify behaviors with correspondences (inertia, etc.) for assumed known values.
+3. Update networks. Sign needs to be correct for 5-10 test cases.
 
