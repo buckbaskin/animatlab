@@ -45,7 +45,7 @@ if __name__ == '__main__':
     ax.set_xlim(0, 3)
     ax.set_ylim(0, 620)
     ax.set_xticks([])
-    ax.set_yticks([])
+    ax.set_yticks([0, 620])
     ax.spines['right'].set_color('none')
     ax.spines['left'].set_linewidth(linewidth)
     ax.spines['top'].set_color('none')
