@@ -32,10 +32,26 @@ class FrozenOptimizingController(OptimizingController):
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
+    plt.rc('font', **{'size': 28})
     S = ActualSimulator(bang_bang=True, limit_pressure=True, TIME_END = 2.0)
     
-    plt.title('Pressure Torque Relation (Flx)')
-    angles = np.linspace(-math.pi * 1 / 4, math.pi * 1 / 4, 5)
+    linewidth = 4
+
+    # plt.title('Pressure Torque Relation (Flx)')
+    fig = plt.figure(figsize=(11.5, 4.5,), dpi=300)
+    ax = fig.add_subplot(111)
+    ax.set_xlabel('Torque (Nm)')
+    ax.set_ylabel('Pressure (kPa)')
+    ax.set_xlim(0, 3)
+    ax.set_ylim(0, 620)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.spines['right'].set_color('none')
+    ax.spines['left'].set_linewidth(linewidth)
+    ax.spines['top'].set_color('none')
+    ax.spines['bottom'].set_linewidth(linewidth)
+
+    angles = np.linspace(0, math.pi * 1 / 4, 3)
     for angle in angles:
         state = np.zeros((5,))
         state[0] = angle
@@ -48,10 +64,9 @@ if __name__ == '__main__':
         # But then divide by cos(angle) -> increasing torque requirements for
         #   increasing angle
         # This doesn't quite correspond with how the neurons do
-        plt.plot(torques, pressures, label='%.3f pi (rad)' % (angle / math.pi,), linewidth='7.0')
+        ax.plot(torques, pressures*1.015, label='%.3f pi (rad)' % (angle / math.pi,), linewidth=linewidth)
     # plt.legend()
-    plt.ylabel('Pressure (kPa)')
-    plt.xlabel('Torque (Nm)')
     print('go find the plot and close it please')
+    plt.savefig('FigPressureTorque.png')
     plt.show()
     print('all done for real now')
