@@ -48,7 +48,7 @@ p = pressure(strain)
 
 linewidth = 4
 
-fig = plt.figure(figsize=(5.5, 6,), dpi=300)
+fig = plt.figure(figsize=(5.5, 7,), dpi=300)
 ax = fig.add_subplot(111)
 ax.set_xlim(0, max_strain)
 ax.set_ylim(0, 615)
