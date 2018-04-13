@@ -1006,6 +1006,8 @@ class OptimizingController(object):
 if __name__ == '__main__':
     import sys
     print('--- %s ---' % (sys.argv[0],))
+    plt.rc('font', **{'size': 28})
+    linewidth = 4
 
     ### Set up time ###
     S = ActualSimulator(bang_bang=True, limit_pressure=True)
@@ -1037,8 +1039,17 @@ if __name__ == '__main__':
     plt_index = 0
 
     if plot_position:
-        fig = plt.figure()
-        ax_pos = fig.add_subplot(4, 1, 1)
+        fig = plt.figure(figsize=(11.5, 12), dpi=300)
+        ax_pos = fig.add_subplot(3, 1, 1)
+        ax_pos.set_xlim(0, 10)
+        ax_pos.set_xticks([])
+        # ax_pos.set_yticks([])
+        # ax_pos.set_xlabel('Strain')
+        ax_pos.set_ylabel('Pressure (kPa)')
+        ax_pos.spines['right'].set_color('none')
+        ax_pos.spines['left'].set_linewidth(linewidth)
+        ax_pos.spines['top'].set_color('none')
+        ax_pos.spines['bottom'].set_linewidth(linewidth)
         titlte = 'Estimated vs Actual %s'
         if plt_index == 0:
             titlte = titlte % 'Position'
@@ -1046,16 +1057,15 @@ if __name__ == '__main__':
             titlte = titlte % 'Velocity'
         if plt_index == 2:
             titlte = titlte % 'Acceleration'
-        ax_pos.set_title(titlte)
-        ax_pos.set_ylabel('PVA')
+        ax_pos.set_ylabel('Position (rad)')
         ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,plt_index], 
-            color='tab:blue', label='Desired')
+            color='tab:blue', label='Desired State', linewidth=linewidth)
         if plt_index == 0:
             ax_pos.plot(time[SCORING_DELAY:], desired_state[SCORING_DELAY:,plt_index] + ERROR_STANDARD,
-                color='tab:purple', label='MAXIMUM')
+                color='tab:purple', label='MAXIMUM', linewidth=linewidth)
             ax_pos.plot(time[SCORING_DELAY:], desired_state[SCORING_DELAY:,plt_index] - ERROR_STANDARD,
-                color='tab:purple', label='MINIMUM')
+                color='tab:purple', label='MINIMUM', linewidth=linewidth)
         
     print('calculating...')
     stiffness = 1.0
@@ -1081,24 +1091,30 @@ if __name__ == '__main__':
 
         if plot_position:
             ax_pos.plot(time, full_state[:,plt_index],
-                color='tab:orange', label='Actual State')
-            ax_pos.plot(time, est_state[:,plt_index],
-                color='tab:green', label='Internal Est. State')
+                color='tab:orange', label='Actual State', linewidth=linewidth)
+            # ax_pos.plot(time, est_state[:,plt_index],
+            #     color='tab:green', label='Internal Est. State')
     if plot_position:
-        ax_inertia = fig.add_subplot(4, 1, 2)
-        ax_inertia.plot(time, np.array(C.inertias))
-        ax_inertia.set_ylabel('Inertia')
-        ax_inertia.set_xlabel('Time (sec)')
-        ax_damping = fig.add_subplot(4, 1, 3)
-        ax_damping.plot(time, np.array(C.dampings))
+        ax_damping = fig.add_subplot(3, 1, 2)
+        ax_damping.plot(time, np.array(C.dampings), linewidth=linewidth)
         ax_damping.set_ylabel('Damping Factor')
-        ax_damping.set_xlabel('Time (sec)')
-        ax_cons = fig.add_subplot(4, 1, 4)
-        ax_cons.plot(time, np.array(C.cons))
+        ax_damping.set_xlim(0, 10)
+        ax_damping.set_xticks([])
+        ax_damping.spines['right'].set_color('none')
+        ax_damping.spines['left'].set_linewidth(linewidth)
+        ax_damping.spines['top'].set_color('none')
+        ax_damping.spines['bottom'].set_linewidth(linewidth)
+        ax_cons = fig.add_subplot(3, 1, 3)
+        ax_cons.plot(time, np.array(C.cons), linewidth=linewidth)
         ax_cons.set_ylabel('Load Factor')
         ax_cons.set_xlabel('Time (sec)')
-        ax_pos.legend()
+        ax_cons.set_xlim(0, 10)
+        ax_cons.spines['right'].set_color('none')
+        ax_cons.spines['left'].set_linewidth(linewidth)
+        ax_cons.spines['top'].set_color('none')
+        ax_cons.spines['bottom'].set_linewidth(linewidth)
+        # ax_pos.legend()
         print('show for the dough')
-        # plt.savefig('Simple_State_Model_Updating.png')
-        plt.show()
+        plt.savefig('FigStateTracking.png')
+        # plt.show()
         print('all done')
