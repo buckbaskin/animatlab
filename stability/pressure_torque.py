@@ -64,8 +64,8 @@ if __name__ == '__main__':
         # But then divide by cos(angle) -> increasing torque requirements for
         #   increasing angle
         # This doesn't quite correspond with how the neurons do
-        ax.plot(torques, pressures*1.015, label='%.3f pi (rad)' % (angle / math.pi,), linewidth=linewidth)
-    # plt.legend()
+        ax.plot(torques, pressures*1.015, label='%.2f (rad)' % (angle), linewidth=linewidth)
+    plt.legend()
     print('go find the plot and close it please')
     plt.savefig('FigPressureTorque.png')
     plt.show()
