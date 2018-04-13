@@ -1880,7 +1880,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1027.57" y="437.929"/>
+<Location x="1220.43" y="421.857"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2189,7 +2189,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1118.57" y="490.429"/>
+<Location x="1311.43" y="474.357"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2747,7 +2747,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="748.571" y="457.929"/>
+<Location x="750.714" y="482.571"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -2985,7 +2985,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="634.571" y="583.429"/>
+<Location x="636.714" y="595.214"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -3302,7 +3302,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="903.643" y="242.893"/>
+<Location x="956.143" y="253.607"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4171,7 +4171,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1120.57" y="549.179"/>
+<Location x="1313.43" y="533.107"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4326,7 +4326,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1030.82" y="706.929"/>
+<Location x="1223.68" y="690.857"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -4432,8 +4432,8 @@
 <ID>f8a1be38-e423-4267-b529-e1ca409b1cbe</ID>
 </InLinks>
 <OutLinks>
-<ID>9a6b46d3-5233-461f-91ca-5bf344981779</ID>
 <ID>7dd4d9b7-263a-4383-83fb-e13383a45336</ID>
+<ID>9a6b46d3-5233-461f-91ca-5bf344981779</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
@@ -4953,7 +4953,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1123.07" y="606.679"/>
+<Location x="1315.93" y="590.607"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -5056,8 +5056,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>9dd99c90-ffe1-4575-9a3d-0071cd0efa39</ID>
 <ID>1c768145-e0df-4aed-8b82-9bd09e1ac79c</ID>
+<ID>9dd99c90-ffe1-4575-9a3d-0071cd0efa39</ID>
 </InLinks>
 <OutLinks>
 <ID>6d217da0-74c3-4a3e-820e-f5fb90076e6e</ID>
@@ -5662,7 +5662,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="899.143" y="316.643"/>
+<Location x="951.643" y="327.357"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -5741,7 +5741,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="83.5714" y="247.643"/>
+<Location x="64.2857" y="165.143"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -6371,7 +6371,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1032.32" y="761.929"/>
+<Location x="1225.18" y="745.857"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -7077,7 +7077,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1051.64" y="377.393"/>
+<Location x="955.214" y="392.393"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -7311,7 +7311,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="842.143" y="383.143"/>
+<Location x="844.286" y="324.214"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -7413,8 +7413,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>516bdc62-7591-4f71-8391-f27e08d882b8</ID>
 <ID>c51bdb63-cf9b-498e-a8cc-01a20125e6d1</ID>
+<ID>516bdc62-7591-4f71-8391-f27e08d882b8</ID>
 </InLinks>
 <OutLinks>
 <ID>35e87eb0-4562-4da8-8b66-894e50387af5</ID>
@@ -7729,11 +7729,11 @@
 <OutLinks>
 <ID>1caaa5ed-37a3-4a1c-90fe-23b2f755ce05</ID>
 <ID>5e230415-149c-4af8-b9d7-b89b886e8558</ID>
-<ID>4adfeb07-fb06-4431-924b-35846c160407</ID>
 <ID>0d2f6c3c-d966-47bd-ac69-9e24ae21ec11</ID>
 <ID>de6e7413-fa20-4183-8919-cf2aa4f79b1e</ID>
 <ID>fd23e1c6-f194-441e-ac94-e211c8a28578</ID>
 <ID>1a848d97-8517-45d4-9e63-9416686834b4</ID>
+<ID>4adfeb07-fb06-4431-924b-35846c160407</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
@@ -8576,7 +8576,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="203.214" y="593.284"/>
+<Location x="177.5" y="591.141"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -8655,7 +8655,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="205.929" y="495.143"/>
+<Location x="180.214" y="493"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -8892,7 +8892,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="997.643" y="319.143"/>
+<Location x="1050.14" y="329.857"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -9444,7 +9444,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1030.82" y="550.679"/>
+<Location x="1223.68" y="534.607"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -9522,7 +9522,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1122.07" y="810.429"/>
+<Location x="1314.93" y="794.357"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -9760,7 +9760,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1002.14" y="245.393"/>
+<Location x="1054.64" y="256.107"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -9838,7 +9838,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="1126.07" y="667.179"/>
+<Location x="1318.93" y="651.107"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -21682,8 +21682,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>6fa0f68b-b485-46d7-ad07-9c719eadd787</Name>
-<ID>6fa0f68b-b485-46d7-ad07-9c719eadd787</ID>
+<Name>41005f3b-d7d6-426a-addd-f613f9e1e324</Name>
+<ID>41005f3b-d7d6-426a-addd-f613f9e1e324</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -21777,7 +21777,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/12/2018 18:46:17"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/12/2018 22:09:03"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 131" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
