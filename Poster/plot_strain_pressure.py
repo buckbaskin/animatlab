@@ -35,23 +35,23 @@ beta_r = 0 # for now
 PRESSURE_MAX = 620
 PRESSURE_MIN = 0
 
-def pressure(strain):
-    F = 0.0533
+def pressure(strain, F=0.0533):
     K = strain
     P = (a0 + a1 *
         np.tan(a2 * (K / (a4 * F + k_max)+ a3))
         + a5 * F) # kpa
     return np.clip(P, PRESSURE_MIN, PRESSURE_MAX)
 
-strain = np.linspace(0, 0.15, 100)
+max_strain = 0.16
+strain = np.linspace(0, max_strain, 100)
 p = pressure(strain)
 
 linewidth = 4
 
 fig = plt.figure(figsize=(5.5, 6,), dpi=300)
 ax = fig.add_subplot(111)
-ax.set_xlim(0, 0.15)
-ax.set_ylim(0, 620)
+ax.set_xlim(0, max_strain)
+ax.set_ylim(0, 615)
 ax.set_xticks([])
 ax.set_yticks([])
 ax.set_xlabel('Strain')
@@ -61,6 +61,9 @@ ax.spines['left'].set_linewidth(linewidth)
 ax.spines['top'].set_color('none')
 ax.spines['bottom'].set_linewidth(linewidth)
 
-ax.plot(strain, p, linewidth=linewidth)
+ax.plot(strain, pressure(strain, F=0.0), linewidth=linewidth, label='0 lb')
+ax.plot(strain, pressure(strain, F=0.05), linewidth=linewidth, label='12 lb')
+ax.plot(strain, pressure(strain, F=0.10), linewidth=linewidth, label='24 lb')
+ax.legend()
 plt.savefig('FigStrainPressure.png')
 plt.show()
