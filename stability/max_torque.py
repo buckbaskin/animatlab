@@ -3,14 +3,15 @@ import numpy as np
 from math import pi
 from matplotlib import pyplot as plt
 
-time = np.arange(0, 10, 0.01)
+time_res = 0.01
+time = np.arange(0, 10, time_res)
 
 period = 1
 adjust = (2*pi) / period
 
 pos = (pi/4) * np.sin(time * adjust)
-vel = np.gradient(pos)
-accel = np.gradient(vel)
+vel = np.gradient(pos) / time_res
+accel = np.gradient(vel) / time_res
 
 M = 1
 C = 0.1
