@@ -35,7 +35,7 @@ if __name__ == '__main__':
     S = ActualSimulator(bang_bang=True, limit_pressure=True, TIME_END = 2.0)
     
     plt.title('Pressure Torque Relation (Flx)')
-    angles = np.linspace(-math.pi * 1 / 4, math.pi * 1 / 4 - 0.001, 5)
+    angles = np.linspace(-math.pi * 1 / 4, math.pi * 1 / 4, 5)
     for angle in angles:
         state = np.zeros((5,))
         state[0] = angle
@@ -48,8 +48,8 @@ if __name__ == '__main__':
         # But then divide by cos(angle) -> increasing torque requirements for
         #   increasing angle
         # This doesn't quite correspond with how the neurons do
-        plt.plot(torques, pressures, label='%.3f pi (rad)' % (angle / math.pi,))
-    plt.legend()
+        plt.plot(torques, pressures, label='%.3f pi (rad)' % (angle / math.pi,), linewidth='7.0')
+    # plt.legend()
     plt.ylabel('Pressure (kPa)')
     plt.xlabel('Torque (Nm)')
     print('go find the plot and close it please')

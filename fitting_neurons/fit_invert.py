@@ -3,10 +3,10 @@ import numpy as np
 def actual(X):
     return 1 - X
 
-X = np.linspace(0, 0.5, 100)
+X = np.linspace(0, 1.0, 100)
 Y1 = actual(X)
 
-def neuron(X, g=0.216, E=-100):
+def neuron(X, g=0.234, E=-100):
     '''
     All around good fit:
     g=0.216, E=-100

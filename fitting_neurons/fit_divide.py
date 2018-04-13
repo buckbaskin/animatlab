@@ -1,12 +1,12 @@
 import numpy as np
 
 def actual(X):
-    return np.clip((1.0 / X) / 100.0, 0, 1)
+    return np.clip((1.0 / X) / 40, 0, 1)
 
 X = np.linspace(0.01, 1.0, 100)
 Y1 = actual(X)
 
-def neuron(X, g=0.859, E=-40):
+def neuron(X, g=3.014, E=-50):
     '''
     All around good fit:
     g=0.216, E=-100
