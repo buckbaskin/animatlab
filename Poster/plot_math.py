@@ -28,7 +28,7 @@ for name, datasets in setup:
     fig = plt.figure()
     ax = fig.add_subplot('111')
     for datas in datasets:
-        ax.plot(mvIn[200:], datas[200:])
+        ax.plot(mvIn[200:], np.clip(datas[200:], -60, -40))
     ax.set_xlim(-60, -40)
     ax.set_ylim(-60, -40)
     ax.set_xticks([-60, -50, -40])
