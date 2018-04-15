@@ -1029,7 +1029,8 @@ if __name__ == '__main__':
     desired_state = np.zeros((time.shape[0], state_start.shape[0],))
 
     # Try following a sin curve
-    period = 2
+    period = 10
+    print('Running with a desired period of %.1f' % (period,))
     adjust = (pi * 2) / period 
     desired_state[:, 0] = MAX_AMPLITUDE * np.sin(time * adjust)
     desired_state[:, 1] = (MAX_AMPLITUDE * adjust) * np.cos(time * adjust)
@@ -1039,12 +1040,10 @@ if __name__ == '__main__':
     plt_index = 0
 
     if plot_position:
-        fig = plt.figure(figsize=(11.5, 12), dpi=300)
+        fig = plt.figure(figsize=(11.25, 12), dpi=300)
         ax_pos = fig.add_subplot(3, 1, 1)
         ax_pos.set_xlim(0, 10)
         ax_pos.set_xticks([])
-        # ax_pos.set_yticks([])
-        # ax_pos.set_xlabel('Strain')
         ax_pos.set_ylabel('Pressure (kPa)')
         ax_pos.spines['right'].set_color('none')
         ax_pos.spines['left'].set_linewidth(linewidth)
@@ -1058,7 +1057,6 @@ if __name__ == '__main__':
         if plt_index == 2:
             titlte = titlte % 'Acceleration'
         ax_pos.set_ylabel('Position (rad)')
-        ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,plt_index], 
             color='tab:blue', label='Desired State', linewidth=linewidth)
         if plt_index == 0:
@@ -1100,7 +1098,7 @@ if __name__ == '__main__':
         ax_damping.set_ylabel('Damping Factor')
         ax_damping.set_xlim(0, 10)
         ax_damping.set_xticks([])
-        ax_damping.set_yticks([0.05, 0.1])
+        # ax_damping.set_yticks([0.05, 0.1])
         ax_damping.spines['right'].set_color('none')
         ax_damping.spines['left'].set_linewidth(linewidth)
         ax_damping.spines['top'].set_color('none')
@@ -1116,6 +1114,7 @@ if __name__ == '__main__':
         ax_cons.spines['bottom'].set_linewidth(linewidth)
         # ax_pos.legend()
         print('show for the dough')
+        plt.tight_layout()
         plt.savefig('FigStateTracking%02d.png' % (period,))
         # plt.show()
         print('all done')
