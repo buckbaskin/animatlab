@@ -35,15 +35,161 @@ In thinking about this, the mutual activations of neurons representing the same 
 
 ## Things to Visualize/Tune
 
-1. Velocity estimation network. Max velocity show on a 1 Hz sin wave input of the correct sin, or approximately that. Phase should be consistent with approximately 1 Hz.
-2. Accel fusion network is harder. Pick 10 combos of ext, flx pressures and joint angles. 3 joint angles, +/-/0. Then two pressure pairs each? Goal is to show "symmetric" effects from joint angle and pressure differential, with highest torque at the 0 angle.
-3. Parameter network behaviors (especially in the compressed single step version)
-4. Torque Guessing Network. Based on known correspondences, can do the maths out.
-5. Torque -> Pressures network. This needs pressure correspondences.
+1. [x] Velocity estimation network. Max velocity show on a 1 Hz sin wave input of the correct sin, or approximately that. Phase should be consistent with approximately 1 Hz.
+2. [x] Accel fusion network is harder. Pick 10 combos of ext, flx pressures and joint angles. 3 joint angles, +/-/0. Then two pressure pairs each? Goal is to show "symmetric" effects from joint angle and pressure differential, with highest torque at the 0 angle.
+3. [x] Parameter network behaviors (especially in the compressed single step version)
+4. [x] Torque Guessing Network. Based on known correspondences, can do the maths out.
+5. [x] Torque -> Pressures network. This needs pressure correspondences.
 
-### Parameter Networks
+### Parameter Networks/Torque -> Acceleration
 
-1. Write out correspondences.
-2. Verify behaviors with correspondences (inertia, etc.) for assumed known values.
-3. Update networks. Sign needs to be correct for 5-10 test cases.
+1. [v] Write out correspondences
+2. [x] Verify behaviors with correspondences (inertia, etc.) for assumed known values.
+3. [x] Update networks. Sign needs to be correct for 5-10 test cases.
 
+### Things left to do
+
+1. [ ] Write out correspondences for Torque -> Acceleration Factors and Parameter
+update networks (maybe?)
+1. [ ] Do the math for all the question marks to convert mV or real inputs to real
+outputs. Then convert again to mV outputs.
+2. [ ] Set up test stimuli to make all these combinations happen. For visual effect
+when testing, sort all the outputs by expected increasing output level.
+
+## Working Notes
+
+### Acceleration Fusion Network
+
+#### Values
+
+Choose 10-12 sets of values for Ext Pressure (kPa), Flx Pressure (kPa), Theta
+(~~rad~~, -20 <= mV <= 20)
+
+1. 620, 0, 0 -> ?
+2. 0, 620, 0 -> ?
+3. 310, 0, 0 -> ?
+4. 0, 310, 0 -> ?
+
+5. 620, 0, 10 -> ?
+6. 0, 620, 10 -> ?
+7. 310, 0, 10 -> ?
+8. 0, 310, 10 -> ?
+
+9. 620, 0, -10 -> ?
+10. 0, 620, -10 -> ?
+11. 310, 0, -10 -> ?
+12. 0, 310, -10 -> ?
+
+### Parameter Adjustment/Parameter Estimation/System Model Network
+
+Choose values for prediction error, velocity. Position ranges from pi/4 ->
+-pi/4 (+- 20 mV). I'm going to assume position error will also fall in that
+range. It will saturate if it's more than that, but I expect only a possible
+error of +- 4 for the given time step (max 8 mV if min predicted and max
+realized). Velocity ranges +- 5 rad/sec (+- 20 mV). This suggests interesting
+ranges. The lambda gain can be set to allow full pass through for now.
+
+Test max and min error, 0 error and small positive error to check values with
+different velocities.
+
+The lag from the theta should be tuned independently.
+
+1. 0, 0 -> 0
+2. 0, 20 -> 0
+3. 0, -20 -> 0
+
+4. 8, 0, -> ?
+5. 8, 20, -> ?
+6. 8, -20, -> ?
+
+7. -8, 0, -> ?
+8. -8, 20, -> ?
+9. -8, -20, -> ?
+
+10. 4, 0, -> ?
+11. 4, 20, -> ?
+12. 4, -20, -> ?
+
+### Parameter Adjustment Timing
+
+Need to tune the lagging theta prediction. It should just be 33 ms, but the
+network might perform better with a less precise value. This will likely combine
+with the gain term.
+
+### Acceration from Torque
+
+Need to check inertia, damping and load factors. Correspondences? Inertia 0.001 -> 2
+kg... for 0 -> 20 mV. Damping factor: Nm / (m/s), 0 -> 1 seems reasonable (0 -> 5 
+Nm with velocity range), likely on the lower side though for 0 -> 20 mV. 
+Load shoud maybe be recalculated to take angle into account, so it'll get a 
+little more complicated.
+
+Measure these in mV, but consider their expected effect in kg, etc.
+
+1. 0, 0, 0 -> ?
+2. 10, 0, 0 -> ?
+3. 20, 0, 0 -> ?
+
+4. 0, 10, 0 -> ?
+5. 0, 20, 0 -> ?
+
+6. 0, 0, 10 -> ?
+7. 0, 0, 20 -> ?
+
+8. 10, 10, 0 -> ?
+9. 10, 20, 0 -> ?
+10. 20, 10, 0 -> ?
+11. 20, 20, 0 -> ?
+
+### Torque Guessing Network
+
+Inputs: Current Position, Desired Position and Velocity. Guesses torque
+modifcation to velocity.
+to position to match a desired position, with "constant" effects from damping,
+inertia, etc. Input quantities are current position, desired position, current velocity.
+
+Position can change at most 4 mV in one direction per step, so a position error
+of 5 or more should elicit maximum torque. To maintain the same position, a
+maximum velocity should elicit maximum opposite torque.
+
+1. 0, 0, 0 -> 0
+2. 0, 5, 0 -> ++?
+3. 0, -5, 0 -> --?
+
+4. 5, 0, 0 -> --?
+5. -5, 0, 0 -> ++?
+
+6. 0, 2, 0 -> ?
+7. 0, -2, 0 -> ?
+
+8. 0, 0, 20 -> --?
+9. 0, 0, -20 -> ++?
+10. 0, 1, 10 -> -?
+11. 1, 0, -10 -> +?
+12. 2, -2, 0 -> ? crossing 0 just check, just in case
+
+### Desired Torque -> Pressures
+
+Inputs: Theta, Torque. Outputs -> Ext Pressure, Flx Pressure
+The Theta, Torque range to +- 20 mV, joint limits, Not sure on max torque
+applied (+- 3 Nm). Values in mV (rad) and Nm
+
+1. 0, 0 -> ?
+2. 0, 3 -> ?
+3. 0, -3 -> ?
+
+4. 20, 0 -> ?
+5. 20, 3 -> ?
+6. 20, -3 -> ?
+
+7. -20, 0 -> ?
+8. -20, 3 -> ?
+9. -20, -3 -> ?
+
+10. 10, 0 -> ?
+11. 10, 3 -> ?
+12. 10, -3 -> ?
+
+
+In general I think this covers a lot of different sub networks, or at least as
+thoroughly as I can get without a consistent Wifi connection.
