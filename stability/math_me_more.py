@@ -1,4 +1,5 @@
 from simple_mass_model import BaseSimulator
+from bode import ActualSimulator, SimpleSimulator, FrozenOptimizingController
 
 import numpy as np
 from math import pi
@@ -141,3 +142,60 @@ for torque_mV, velocity_mV, inertia_mV, damping_mV, load_mV in ja3:
         accel,
         accel_mV,
         ))
+
+print('\n### Torque Guessing/Forward Projection')
+
+# inputs: Position, Vel, Acceleration
+# output: Torque
+
+ja4 = [
+(0, 0, 0),
+(0, 5, 0),
+(0, -5, 0),
+
+(5, 0, 0),
+(-5, 0, 0),
+
+(0, 2, 0),
+(0, -2, 0),
+
+(0, 0, 20),
+(0, 0, -20),
+(0, 1, 10),
+(1, 0, -10),
+(2, -2, 0), 
+]
+
+state_start = np.array([
+    -0.01, # position
+    # 0,
+    0, # vel
+    0, # accel
+    0, # ext pressure
+    0,]) # flx pressure
+
+S = ActualSimulator(bang_bang=True, limit_pressure=True, TIME_END = 2.0)
+estimated_S = SimpleSimulator(M=0.0004, C=0.10, N=-1.7000)
+
+controller = FrozenOptimizingController(state_start, 0.0,
+            sim = estimated_S, control_rate=S.CONTROL_RATE,
+            time_horizon=1.5/S.CONTROL_RATE, stiffness=1.0,
+            optimization_steps=15, iteration_steps=45)
+
+for theta_mV, desired_theta_mV, velocity_mV in ja4:
+    theta = theta_mV * (pi / 4) / 20
+    desired_theta = desired_theta_mV * (pi / 4) / 20
+    velocity = velocity_mV * 5 / 20
+
+    state = np.array([theta, velocity, 0, 0, 0])
+    desired_states = np.array([[desired_theta, 0, 0, 0, 0]])
+    times = np.array([1.5/hi.CONTROL_RATE])
+    _, _, des_torque = controller.control(state, desired_states, times)
+
+    torque_mV = des_torque / 2.5 * 20
+
+    print('(% 2d mV, % 2d mV, % 3d mV) -> (% .2f, % 5.2f, % 5.2f) --> (% 5.2f) -> (% 5.1f mV)' % (
+        theta_mV, desired_theta_mV, velocity_mV,
+        theta, desired_theta, velocity,
+        des_torque,
+        torque_mV,))

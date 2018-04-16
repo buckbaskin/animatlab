@@ -201,21 +201,20 @@ Position can change at most 4 mV in one direction per step, so a position error
 of 5 or more should elicit maximum torque. To maintain the same position, a
 maximum velocity should elicit maximum opposite torque.
 
-1. 0, 0, 0 -> 0
-2. 0, 5, 0 -> ++?
-3. 0, -5, 0 -> --?
+#### Values/Calculated
 
-4. 5, 0, 0 -> --?
-5. -5, 0, 0 -> ++?
-
-6. 0, 2, 0 -> ?
-7. 0, -2, 0 -> ?
-
-8. 0, 0, 20 -> --?
-9. 0, 0, -20 -> ++?
-10. 0, 1, 10 -> -?
-11. 1, 0, -10 -> +?
-12. 2, -2, 0 -> ? crossing 0 just check, just in case
+( 0 mV,  0 mV,   0 mV) -> ( 0.00,  0.00,  0.00) --> (-1.42) -> (-11.4 mV)
+( 0 mV,  5 mV,   0 mV) -> ( 0.00,  0.20,  0.00) --> ( 2.25) -> ( 18.0 mV)
+( 0 mV, -5 mV,   0 mV) -> ( 0.00, -0.20,  0.00) --> (-2.25) -> (-18.0 mV)
+( 5 mV,  0 mV,   0 mV) -> ( 0.20,  0.00,  0.00) --> (-2.25) -> (-18.0 mV)
+(-5 mV,  0 mV,   0 mV) -> (-0.20,  0.00,  0.00) --> ( 2.25) -> ( 18.0 mV)
+( 0 mV,  2 mV,   0 mV) -> ( 0.00,  0.08,  0.00) --> ( 2.25) -> ( 18.0 mV)
+( 0 mV, -2 mV,   0 mV) -> ( 0.00, -0.08,  0.00) --> (-2.25) -> (-18.0 mV)
+( 0 mV,  0 mV,  20 mV) -> ( 0.00,  0.00,  5.00) --> (-1.42) -> (-11.4 mV)
+( 0 mV,  0 mV, -20 mV) -> ( 0.00,  0.00, -5.00) --> (-1.42) -> (-11.4 mV)
+( 0 mV,  1 mV,  10 mV) -> ( 0.00,  0.04,  2.50) --> ( 2.25) -> ( 18.0 mV)
+( 1 mV,  0 mV, -10 mV) -> ( 0.04,  0.00, -2.50) --> (-2.25) -> (-18.0 mV)
+( 2 mV, -2 mV,   0 mV) -> ( 0.08, -0.08,  0.00) --> (-2.25) -> (-18.0 mV)
 
 ### Desired Torque -> Pressures
 
