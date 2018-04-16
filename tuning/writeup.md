@@ -43,17 +43,17 @@ In thinking about this, the mutual activations of neurons representing the same 
 
 ### Parameter Networks/Torque -> Acceleration
 
-1. [v] Write out correspondences
+1. [x] Write out correspondences
 2. [x] Verify behaviors with correspondences (inertia, etc.) for assumed known values.
 3. [x] Update networks. Sign needs to be correct for 5-10 test cases.
 
 ### Things left to do
 
-1. [ ] Write out correspondences for Torque -> Acceleration Factors and Parameter
+1. [x] Write out correspondences for Torque -> Acceleration Factors and Parameter
 update networks (maybe?)
-1. [ ] Do the math for all the question marks to convert mV or real inputs to real
+1. [x] Do the math for all the question marks to convert mV or real inputs to real
 outputs. Then convert again to mV outputs.
-2. [ ] Set up test stimuli to make all these combinations happen. For visual effect
+2. [.] Set up test stimuli to make all these combinations happen. For visual effect
 when testing, sort all the outputs by expected increasing output level.
 
 ## Working Notes
@@ -81,6 +81,7 @@ Choose 10-12 sets of values for Ext Pressure (kPa), Flx Pressure (kPa), Theta
 12. 0, 310, -10 -> ?
 
 #### Calculated
+
 ```
 ( 20 mV,   0 mV,   0 mV) -> ( 620,   0,  0.00) -->  2 Nm ->  19.7 mV
 (  0 mV,  20 mV,   0 mV) -> (  0,  620,  0.00) --> -2 Nm -> -19.7 mV
@@ -139,6 +140,7 @@ Set gain = 1, inertia = 1 (not being tested here)
 
 lambda = theta_err / (1 + vel^2)
 
+```
 (  0 mV,   0 mV) -> ( 0.00,  0.0) --> ( 0.0,  0.0) -> ( 0.0 mV,   0.0 mV)
 (  0 mV,  20 mV) -> ( 0.00,  5.0) --> ( 0.0,  0.0) -> ( 0.0 mV,   0.0 mV)
 (  0 mV, -20 mV) -> ( 0.00, -5.0) --> (-0.0,  0.0) -> (-0.0 mV,   0.0 mV)
@@ -151,7 +153,7 @@ lambda = theta_err / (1 + vel^2)
 (  4 mV,   0 mV) -> ( 0.16,  0.0) --> ( 0.0,  0.2) -> ( 0.0 mV,   9.8 mV)
 (  4 mV,  20 mV) -> ( 0.16,  5.0) --> ( 0.0,  0.0) -> ( 1.9 mV,   0.4 mV)
 (  4 mV, -20 mV) -> ( 0.16, -5.0) --> (-0.0,  0.0) -> (-1.9 mV,   0.4 mV)
-
+```
 ### Parameter Adjustment Timing
 
 Need to tune the lagging theta prediction. It should just be 33 ms, but the
@@ -179,6 +181,7 @@ Torque, velocity, inertia, damping, load
 
 #### Values/Calculated
 
+```
 (  0 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> (  0.00) -> (  0.00 mV)
 ( 20 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> ( 25.00) -> ( 16.67 mV)
 (-10 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> (-12.50) -> ( -8.33 mV)
@@ -189,6 +192,7 @@ Torque, velocity, inertia, damping, load
 (-10 mV,   0 mV,  10 mV,   0 mV,   0 mV) -> (...) --> ( -2.08) -> ( -1.39 mV)
 ( 10 mV,   0 mV,   0 mV,   0 mV,  20 mV) -> (...) --> ( -7.50) -> ( -5.00 mV)
 (-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (...) --> (-22.50) -> (-15.00 mV)
+```
 
 ### Torque Guessing Network
 
@@ -203,6 +207,7 @@ maximum velocity should elicit maximum opposite torque.
 
 #### Values/Calculated
 
+```
 ( 0 mV,  0 mV,   0 mV) -> ( 0.00,  0.00,  0.00) --> (-1.42) -> (-11.4 mV)
 ( 0 mV,  5 mV,   0 mV) -> ( 0.00,  0.20,  0.00) --> ( 2.25) -> ( 18.0 mV)
 ( 0 mV, -5 mV,   0 mV) -> ( 0.00, -0.20,  0.00) --> (-2.25) -> (-18.0 mV)
@@ -215,6 +220,7 @@ maximum velocity should elicit maximum opposite torque.
 ( 0 mV,  1 mV,  10 mV) -> ( 0.00,  0.04,  2.50) --> ( 2.25) -> ( 18.0 mV)
 ( 1 mV,  0 mV, -10 mV) -> ( 0.04,  0.00, -2.50) --> (-2.25) -> (-18.0 mV)
 ( 2 mV, -2 mV,   0 mV) -> ( 0.08, -0.08,  0.00) --> (-2.25) -> (-18.0 mV)
+```
 
 ### Desired Torque -> Pressures
 
@@ -224,6 +230,7 @@ applied (+- 2.5 Nm). Values in mV (rad) and Nm
 
 #### Values/Calculated
 
+```
 (  0 mV,   0 mV) -> ( 0.00,  0.00) --> (231, 230) -> (7.5 mV,  7.5 mV)
 (  0 mV,  20 mV) -> ( 0.00,  2.50) --> (540,   0) -> (17.4 mV, 0.0 mV)
 (  0 mV, -20 mV) -> ( 0.00, -2.50) --> (  0, 540) -> (0.0 mV, 17.4 mV)
@@ -236,6 +243,7 @@ applied (+- 2.5 Nm). Values in mV (rad) and Nm
 ( 10 mV,   0 mV) -> ( 0.39,  0.00) --> (231, 230) -> (7.5 mV,  7.5 mV)
 ( 10 mV,  20 mV) -> ( 0.39,  2.50) --> (540,   0) -> (17.4 mV, 0.0 mV)
 ( 10 mV, -20 mV) -> ( 0.39, -2.50) --> (  0, 540) -> (0.0 mV, 17.4 mV)
+```
 
 In general I think this covers a lot of different sub networks, or at least as
 thoroughly as I can get without a consistent Wifi connection.
