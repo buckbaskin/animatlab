@@ -60,10 +60,10 @@ when testing, sort all the outputs by expected increasing output level.
 
 ### Acceleration Fusion Network
 
-#### Values
-
 Choose 10-12 sets of values for Ext Pressure (kPa), Flx Pressure (kPa), Theta
 (~~rad~~, -20 <= mV <= 20)
+
+#### Values
 
 1. 620, 0, 0 -> ?
 2. 0, 620, 0 -> ?
@@ -80,6 +80,21 @@ Choose 10-12 sets of values for Ext Pressure (kPa), Flx Pressure (kPa), Theta
 11. 310, 0, -10 -> ?
 12. 0, 310, -10 -> ?
 
+#### Calculated
+
+(620.000000, 0.000000, 0.000000) -> 2.467679 rad/sec**2
+(0.000000, 620.000000, 0.000000) -> -2.467679
+(310.000000, 0.000000, 0.000000) -> 1.233840
+(0.000000, 310.000000, 0.000000) -> -1.233840
+(620.000000, 0.000000, 0.392699) -> 2.307437
+(0.000000, 620.000000, 0.392699) -> -2.307437
+(310.000000, 0.000000, 0.392699) -> 1.153719
+(0.000000, 310.000000, 0.392699) -> -1.153719
+(620.000000, 0.000000, -0.392699) -> 2.263642
+(0.000000, 620.000000, -0.392699) -> -2.263642
+(310.000000, 0.000000, -0.392699) -> 1.131821
+(0.000000, 310.000000, -0.392699) -> -1.131821
+
 ### Parameter Adjustment/Parameter Estimation/System Model Network
 
 Choose values for prediction error, velocity. Position ranges from pi/4 ->
@@ -93,6 +108,8 @@ Test max and min error, 0 error and small positive error to check values with
 different velocities.
 
 The lag from the theta should be tuned independently.
+
+#### Values
 
 1. 0, 0 -> 0
 2. 0, 20 -> 0
@@ -109,6 +126,17 @@ The lag from the theta should be tuned independently.
 10. 4, 0, -> ?
 11. 4, 20, -> ?
 12. 4, -20, -> ?
+
+#### Calculated
+
+lambda = gain * inertia * theta_err * (1 / (1+vel^2))
+
+C_err = lambda * vel
+N_err = lambda
+
+Set gain = 1, inertia = 1 (not being tested here)
+
+lambda = theta_err / (1 + vel^2)
 
 ### Parameter Adjustment Timing
 
@@ -193,3 +221,7 @@ applied (+- 3 Nm). Values in mV (rad) and Nm
 
 In general I think this covers a lot of different sub networks, or at least as
 thoroughly as I can get without a consistent Wifi connection.
+
+## CPG
+
+Do this. This is a thing. I need to do.
