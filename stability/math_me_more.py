@@ -199,3 +199,37 @@ for theta_mV, desired_theta_mV, velocity_mV in ja4:
         theta, desired_theta, velocity,
         des_torque,
         torque_mV,))
+
+print('\n### Desired Torque -> Pressures')
+
+# Inputs: Theta, Torque. Outputs -> Ext Pressure, Flx Pressure
+
+ja5 = [
+(0, 0),
+(0, 2.5),
+(0, -2.5),
+(20, 0),
+(20, 2.5),
+(20, -2.5),
+(-20, 0),
+(-20, 2.5),
+(-20, -2.5),
+(10, 0),
+(10, 2.5),
+(10, -2.5),
+]
+
+for theta_mV, torque in ja5:
+    theta = theta_mV / 20 * (pi / 4)
+    torque_mV = torque / 2.5 * 20
+
+    ext_pres, flx_pres = controller._convert_to_pressure(torque, state)
+
+    extp_mV = ext_pres / 620 * 20
+    flxp_mV = flx_pres / 620 * 20
+
+    print('(% 3d mV, % 3d mV) -> (% 5.2f, % 5.2f) --> (% 3d, % 3d) -> (% .1f mV, % .1f mV)' % (
+        theta_mV, torque_mV,
+        theta, torque,
+        ext_pres, flx_pres,
+        extp_mV, flxp_mV,))

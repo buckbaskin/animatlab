@@ -220,28 +220,26 @@ maximum velocity should elicit maximum opposite torque.
 
 Inputs: Theta, Torque. Outputs -> Ext Pressure, Flx Pressure
 The Theta, Torque range to +- 20 mV, joint limits, Not sure on max torque
-applied (+- 3 Nm). Values in mV (rad) and Nm
+applied (+- 2.5 Nm). Values in mV (rad) and Nm
 
-1. 0, 0 -> ?
-2. 0, 3 -> ?
-3. 0, -3 -> ?
+#### Values/Calculated
 
-4. 20, 0 -> ?
-5. 20, 3 -> ?
-6. 20, -3 -> ?
-
-7. -20, 0 -> ?
-8. -20, 3 -> ?
-9. -20, -3 -> ?
-
-10. 10, 0 -> ?
-11. 10, 3 -> ?
-12. 10, -3 -> ?
-
+(  0 mV,   0 mV) -> ( 0.00,  0.00) --> ( 231,  230) -> ( 7.5 mV,  7.5 mV)
+(  0 mV,  20 mV) -> ( 0.00,  2.50) --> ( 540,   0) -> ( 17.4 mV,  0.0 mV)
+(  0 mV, -20 mV) -> ( 0.00, -2.50) --> (  0,  540) -> ( 0.0 mV,  17.4 mV)
+( 20 mV,   0 mV) -> ( 0.79,  0.00) --> ( 231,  230) -> ( 7.5 mV,  7.5 mV)
+( 20 mV,  20 mV) -> ( 0.79,  2.50) --> ( 540,   0) -> ( 17.4 mV,  0.0 mV)
+( 20 mV, -20 mV) -> ( 0.79, -2.50) --> (  0,  540) -> ( 0.0 mV,  17.4 mV)
+(-20 mV,   0 mV) -> (-0.79,  0.00) --> ( 231,  230) -> ( 7.5 mV,  7.5 mV)
+(-20 mV,  20 mV) -> (-0.79,  2.50) --> ( 540,   0) -> ( 17.4 mV,  0.0 mV)
+(-20 mV, -20 mV) -> (-0.79, -2.50) --> (  0,  540) -> ( 0.0 mV,  17.4 mV)
+( 10 mV,   0 mV) -> ( 0.39,  0.00) --> ( 231,  230) -> ( 7.5 mV,  7.5 mV)
+( 10 mV,  20 mV) -> ( 0.39,  2.50) --> ( 540,   0) -> ( 17.4 mV,  0.0 mV)
+( 10 mV, -20 mV) -> ( 0.39, -2.50) --> (  0,  540) -> ( 0.0 mV,  17.4 mV)
 
 In general I think this covers a lot of different sub networks, or at least as
 thoroughly as I can get without a consistent Wifi connection.
 
 ## CPG
 
-Do this. This is a thing. I need to do.
+Do this. This is a thing. I need to do. Later.
