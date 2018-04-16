@@ -54,12 +54,22 @@ ja = [
 (0, 310, -10),
 ]
 
+print('### Acceleration Fusion Network')
+
 for extp, flxp, theta_mV in ja:
+    extp_mV = extp / 620 * 20
+    flxp_mV = flxp / 620 * 20
     theta = theta_mV / 20 * (pi / 4)
     state = np.array([theta, 0, 0, extp, flxp,])
     eT1, fT1 = hi.pressures_to_torque(extp, flxp, state)
     torque = eT1 - fT1
-    print('(%f, %f, %f) -> %f' % (extp, flxp, theta, torque,))
+    torque_mV = torque / 2.5 * 20
+    # TODO(buckbaskin): split out net torque to positive/negative guess
+    print('(%d mV, %d mV, %d mV) -> (%d, %d, %.2f) -> %f Nm -> %.1f mV' % (
+        extp_mV, flxp_mV, theta_mV,
+        extp, flxp, theta,
+        torque,
+        torque_mV,))
 
 ja2 = [
 (0, 0),
