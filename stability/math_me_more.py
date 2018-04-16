@@ -65,7 +65,7 @@ for extp, flxp, theta_mV in ja:
     torque = eT1 - fT1
     torque_mV = torque / 2.5 * 20
     # TODO(buckbaskin): split out net torque to positive/negative guess
-    print('(%d mV, %d mV, %d mV) -> (%d, %d, %.2f) -> %f Nm -> %.1f mV' % (
+    print('(% 3d mV, % 3d mV, % 3d mV) -> (% 3d, % 3d, % 4.2f) --> % 2d Nm -> % 5.1f mV' % (
         extp_mV, flxp_mV, theta_mV,
         extp, flxp, theta,
         torque,
@@ -86,12 +86,58 @@ ja2 = [
 (4, -20),
 ]
 
+print('\n### Parameter Adjustment/System Model')
+
 for index, values in enumerate(ja2):
     pos_err_mV, velocity_mV = values
     pos_err = pos_err_mV / 20 * pi/4 # radians
     velocity = velocity_mV / 20 * 5 # rad/sec
     lambda_ = pos_err / (1 + velocity**2)
+    C_err = lambda_ * velocity
+    N_err = lambda_
     lambda_mV = lambda_ / 0.32 * 20
-    C_err = lambda_mV * velocity
-    N_err = lambda_mV
-    print('%s -> (%.2f, %.2f)' % (values, C_err, N_err,))
+    C_err_mV = lambda_mV * velocity
+    N_err_mV = lambda_mV
+    print('(% 3d mV, % 3d mV) -> (% 4.2f, % 3.1f) --> (% 3.1f, % 3.1f) -> (% .1f mV, %5.1f mV)' % (
+        pos_err_mV, velocity_mV,
+        pos_err, velocity,
+        C_err, N_err,
+        C_err_mV, N_err_mV,))
+
+print('\n### Accleration From Torque')
+
+# inertia, damping and load in mV
+ja3 = [
+(  0,   0,   0,   0,   0),
+( 20,   0,   0,   0,   0),
+(-10,   0,   0,   0,   0),
+( 10,  20,   0,  10,   0),
+( 10, -10,   0,  10,   0),
+(-10,  10,   0,  10,   0),
+( 10,   0,  20,   0,   0),
+(-10,   0,  10,   0,   0),
+( 10,   0,   0,   0,  20),
+(-10,   0,   0,   0,  10),
+]
+
+# inertia correspondence 20 mV -> 1
+
+for torque_mV, velocity_mV, inertia_mV, damping_mV, load_mV in ja3:
+    torque = torque_mV / 20 * 2.5
+    velocity = velocity_mV / 20 * 5
+    inertia = inertia_mV / 20 * 1
+    damping = damping_mV / 20 * 1
+    load = load_mV / 20 * 2
+
+    M = inertia + 0.1
+    C = velocity * damping
+    N = load
+    accel = (torque - C - N) / M
+
+    accel_mV = accel / 30 * 20
+
+    print('(% 3d mV, % 3d mV, % 3d mV, % 3d mV, % 3d mV) -> (...) --> (% 6.2f) -> (% 6.2f mV)' % (
+        torque_mV, velocity_mV, inertia_mV, damping_mV, load_mV,
+        accel,
+        accel_mV,
+        ))
