@@ -232,17 +232,34 @@ Torque, velocity, inertia, damping, load
 #### Values/Calculated
 
 ```
-(  0 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> (  0.00) -> (  0.00 mV)
-( 20 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> ( 25.00) -> ( 16.67 mV)
-(-10 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> (-12.50) -> ( -8.33 mV)
-( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> (...) --> (-12.50) -> ( -8.33 mV)
-( 10 mV, -10 mV,   0 mV,  10 mV,   0 mV) -> (...) --> ( 25.00) -> ( 16.67 mV)
-(-10 mV,  10 mV,   0 mV,  10 mV,   0 mV) -> (...) --> (-25.00) -> (-16.67 mV)
-( 10 mV,   0 mV,  20 mV,   0 mV,   0 mV) -> (...) --> (  1.14) -> (  0.76 mV)
-(-10 mV,   0 mV,  10 mV,   0 mV,   0 mV) -> (...) --> ( -2.08) -> ( -1.39 mV)
-( 10 mV,   0 mV,   0 mV,   0 mV,  20 mV) -> (...) --> ( -7.50) -> ( -5.00 mV)
-(-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (...) --> (-22.50) -> (-15.00 mV)
+1. (  0 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> (  0.00) -> (  0.00 mV)
+2. ( 20 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> ( 25.00) -> ( 16.67 mV)
+3. (-10 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (...) --> (-12.50) -> ( -8.33 mV)
+4. ( 10 mV, -10 mV,   0 mV,  10 mV,   0 mV) -> (...) --> ( 25.00) -> ( 16.67 mV)
+5. (-10 mV,  10 mV,   0 mV,  10 mV,   0 mV) -> (...) --> (-25.00) -> (-16.67 mV)
+6. ( 10 mV,   0 mV,  20 mV,   0 mV,   0 mV) -> (...) --> (  1.14) -> (  0.76 mV)
+7. (-10 mV,   0 mV,  10 mV,   0 mV,   0 mV) -> (...) --> ( -2.08) -> ( -1.39 mV)
+8. ( 10 mV,   0 mV,   0 mV,   0 mV,  20 mV) -> (...) --> ( -7.50) -> ( -5.00 mV)
+9. (-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (...) --> (-22.50) -> (-15.00 mV)
+10. ( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> (...) --> (-12.50) -> ( -8.33 mV)
 ```
+
+#### Test Iteration 1
+
+```
+1. (  0 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (  0.00 mV) actually 0
+2. ( 20 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> ( 16.67 mV) actually 10 mV
+3. (-10 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> ( -8.33 mV) actually -4.2 mV
+4. ( 10 mV, -10 mV,   0 mV,  10 mV,   0 mV) -> ( 16.67 mV) actually 6.2 mV
+5. (-10 mV,  10 mV,   0 mV,  10 mV,   0 mV) -> (-16.67 mV) actually -6.2 mV
+6. ( 10 mV,   0 mV,  20 mV,   0 mV,   0 mV) -> (  0.76 mV) actually 0.5 mV
+7. (-10 mV,   0 mV,  10 mV,   0 mV,   0 mV) -> ( -1.39 mV) actually -1.0 mV
+8. ( 10 mV,   0 mV,   0 mV,   0 mV,  20 mV) -> ( -5.00 mV) actually 14 mV <-- sign, magnitude error
+9. (-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (-15.00 mV) actually 4 mV <-- sign, magnitude error
+10. ( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> ( -8.33 mV) actually -4 mV
+
+TODO(buckbaskin): The network in its current state exhibits a number of magnitude errors and 2 sign errors (tests 8 and 9).
+Proposed Solution: Split the computation into multiple steps. The combined option isn't working.
 
 ### Torque Guessing Network
 
