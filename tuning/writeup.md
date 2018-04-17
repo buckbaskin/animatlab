@@ -276,6 +276,9 @@ Proposed Solution: Split the computation into multiple steps. The combined optio
 9. (-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (-15.00 mV) actually -9 mV <-- magnitude err (should be close to 2)
 10. ( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> ( -8.33 mV) actually -8 mV
 ```
+I'm not too too worried about the magnitude errors in 4 and 5. They're close ish.
+
+TODO(buckbaskin): The errors in 8 and 9 come from incorrect (not implemented) load calculations.
 
 ### Torque Guessing Network
 

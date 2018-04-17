@@ -163,8 +163,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>41781265-cf93-4bf9-bae2-931b2380e2fd</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>11</DataSubSet>
-<PrevDataSubset>11</PrevDataSubset>
+<DataSubSet>13</DataSubSet>
+<PrevDataSubset>13</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -181,8 +181,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>8f7e4627-60ae-4ab2-b383-d9963558d503</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>12</DataSubSet>
-<PrevDataSubset>12</PrevDataSubset>
+<DataSubSet>14</DataSubSet>
+<PrevDataSubset>14</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -244,6 +244,24 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Neg Load</Name>
+<ID>17faef4b-60b4-4c6c-b51e-29794dc43177</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>991eaf22-ff9f-46bc-9829-ebc2f8cd851d</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>9</DataSubSet>
+<PrevDataSubset>9</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-2354116</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>(T - C - N)-</Name>
 <ID>b07870f6-94ba-438f-99a5-64eb9368d2b1</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
@@ -251,8 +269,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>925d4f62-ecd6-4931-a57d-34ba03fa5565</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>9</DataSubSet>
-<PrevDataSubset>9</PrevDataSubset>
+<DataSubSet>10</DataSubSet>
+<PrevDataSubset>10</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -269,13 +287,31 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>e303313f-3c54-4c53-893e-910de68819b1</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>10</DataSubSet>
-<PrevDataSubset>10</PrevDataSubset>
+<DataSubSet>11</DataSubSet>
+<PrevDataSubset>11</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-40121</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Pos Load</Name>
+<ID>f6b2064f-2e62-49df-a624-8ae3fad49fa1</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>b6cf088e-7511-4f93-9156-242d31ffe101</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>12</DataSubSet>
+<PrevDataSubset>12</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-60269</LineColor>
 </DataColumn>
 </DataColumns>
 </Axis>
@@ -284,6 +320,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>55000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9201"/>
+<GraphConfig ByteCount="9227"/>
 </Form>
 </Form>
