@@ -141,19 +141,54 @@ Set gain = 1, inertia = 1 (not being tested here)
 lambda = theta_err / (1 + vel^2)
 
 ```
-(  0 mV,   0 mV) -> ( 0.00,  0.0) --> ( 0.0,  0.0) -> ( 0.0 mV,   0.0 mV)
-(  0 mV,  20 mV) -> ( 0.00,  5.0) --> ( 0.0,  0.0) -> ( 0.0 mV,   0.0 mV)
-(  0 mV, -20 mV) -> ( 0.00, -5.0) --> (-0.0,  0.0) -> (-0.0 mV,   0.0 mV)
-(  8 mV,   0 mV) -> ( 0.31,  0.0) --> ( 0.0,  0.3) -> ( 0.0 mV,  19.6 mV)
-(  8 mV,  20 mV) -> ( 0.31,  5.0) --> ( 0.1,  0.0) -> ( 3.8 mV,   0.8 mV)
-(  8 mV, -20 mV) -> ( 0.31, -5.0) --> (-0.1,  0.0) -> (-3.8 mV,   0.8 mV)
-( -8 mV,   0 mV) -> (-0.31,  0.0) --> (-0.0, -0.3) -> (-0.0 mV, -19.6 mV)
-( -8 mV,  20 mV) -> (-0.31,  5.0) --> (-0.1, -0.0) -> (-3.8 mV,  -0.8 mV)
-( -8 mV, -20 mV) -> (-0.31, -5.0) --> ( 0.1, -0.0) -> ( 3.8 mV,  -0.8 mV)
-(  4 mV,   0 mV) -> ( 0.16,  0.0) --> ( 0.0,  0.2) -> ( 0.0 mV,   9.8 mV)
-(  4 mV,  20 mV) -> ( 0.16,  5.0) --> ( 0.0,  0.0) -> ( 1.9 mV,   0.4 mV)
-(  4 mV, -20 mV) -> ( 0.16, -5.0) --> (-0.0,  0.0) -> (-1.9 mV,   0.4 mV)
+1. (  0 mV,   0 mV) -> ( 0.00,  0.0) --> ( 0.0,  0.0) -> ( 0.0 mV,   0.0 mV)
+2. (  0 mV,  20 mV) -> ( 0.00,  5.0) --> ( 0.0,  0.0) -> ( 0.0 mV,   0.0 mV)
+3. (  0 mV, -20 mV) -> ( 0.00, -5.0) --> (-0.0,  0.0) -> (-0.0 mV,   0.0 mV)
+4. (  8 mV,   0 mV) -> ( 0.31,  0.0) --> ( 0.0,  0.3) -> ( 0.0 mV,  19.6 mV)
+5. (  8 mV,  20 mV) -> ( 0.31,  5.0) --> ( 0.1,  0.0) -> ( 3.8 mV,   0.8 mV)
+6. (  8 mV, -20 mV) -> ( 0.31, -5.0) --> (-0.1,  0.0) -> (-3.8 mV,   0.8 mV)
+7. ( -8 mV,   0 mV) -> (-0.31,  0.0) --> (-0.0, -0.3) -> (-0.0 mV, -19.6 mV)
+8. ( -8 mV,  20 mV) -> (-0.31,  5.0) --> (-0.1, -0.0) -> (-3.8 mV,  -0.8 mV)
+9. ( -8 mV, -20 mV) -> (-0.31, -5.0) --> ( 0.1, -0.0) -> ( 3.8 mV,  -0.8 mV)
+10. (  4 mV,   0 mV) -> ( 0.16,  0.0) --> ( 0.0,  0.2) -> ( 0.0 mV,   9.8 mV)
+11. (  4 mV,  20 mV) -> ( 0.16,  5.0) --> ( 0.0,  0.0) -> ( 1.9 mV,   0.4 mV)
+12. (  4 mV, -20 mV) -> ( 0.16, -5.0) --> (-0.0,  0.0) -> (-1.9 mV,   0.4 mV)
 ```
+
+#### Testing Notes (Iteration 1)
+
+Even with two 4x gains in the system, the actual range of the system appears
+to be +- 15 mV. This should scale the rest of the values down by about 25%.
+There is also a lack of sensitivity near 0 (less than 2 mV rated above) that
+I'm ok with for now because I think that small adjustments shouldn't cause
+major problems. In practice, the gain in the above math is 0.75.
+
+lambda = 0.75 * theta_err / (1 + vel^2)
+
+TODO(buckbaskin): In test cases 6 and 8, the current implementation doesn't 
+flip the sign of the C_err. Is the sign flip the correct behavior? The 
+magnitude of 3.8 mV -> 2 mV is adequately explained by a smaller gain (see below)
+Proposed Solution: ???
+
+6. (  8 mV, -20 mV) -> -3.8 mV actually 2 mV
+8. ( -8 mV,  20 mV) -> -3.8 mV actually 2 mV
+
+TODO(buckbaskin): In test cases 5, 6, 8, 9, the magnitude of N_err should be
+much smaller.
+Proposed solution: add a divider to N_err.
+
+5. (  8 mV,  20 mV) ->  0.8 mV actually 2 mV
+6. (  8 mV, -20 mV) ->  0.8 mV actually 2 mV
+8. ( -8 mV,  20 mV) -> -0.8 mV actually -2 mV
+9. ( -8 mV, -20 mV) -> -0.8 mV actually -2 mV
+
+TODO(buckbaskin): In test case 10, the magnitude of N_err should be larger.
+Proposed Action: Investigate the value of Lambda. Lambda should be large here.
+Even with adjustment, expect a value in the 7-8 mV range. After checking, the
+lambda calculation is way off.
+
+10. (  4 mV,   0 mV) -> 9.8 mV actually < 1 mV.
+
 ### Parameter Adjustment Timing
 
 Need to tune the lagging theta prediction. It should just be 33 ms, but the
