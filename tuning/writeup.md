@@ -165,7 +165,7 @@ major problems. In practice, the gain in the above math is 0.75.
 
 lambda = 0.75 * theta_err / (1 + vel^2)
 
-TODO(buckbaskin): In test cases 6 and 8, the current implementation doesn't 
+In test cases 6 and 8, the current implementation doesn't 
 flip the sign of the C_err. Is the sign flip the correct behavior? The 
 magnitude of 3.8 mV -> 2 mV is adequately explained by a smaller gain (see below)
 Proposed Solution: ???
@@ -173,21 +173,32 @@ Proposed Solution: ???
 6. (  8 mV, -20 mV) -> -3.8 mV actually 2 mV
 8. ( -8 mV,  20 mV) -> -3.8 mV actually 2 mV
 
-TODO(buckbaskin): In test cases 5, 6, 8, 9, the magnitude of N_err should be
-much smaller.
+In test cases 5, 6, 8, 9, the magnitude of N_err should be much smaller.
 Proposed solution: add a divider to N_err.
+In practice, fixing the multiplication-division overrun fixed this
+as well without other changes.
 
 5. (  8 mV,  20 mV) ->  0.8 mV actually 2 mV
 6. (  8 mV, -20 mV) ->  0.8 mV actually 2 mV
 8. ( -8 mV,  20 mV) -> -0.8 mV actually -2 mV
 9. ( -8 mV, -20 mV) -> -0.8 mV actually -2 mV
 
-TODO(buckbaskin): In test case 10, the magnitude of N_err should be larger.
+In test case 10, the magnitude of N_err should be larger.
 Proposed Action: Investigate the value of Lambda. Lambda should be large here.
 Even with adjustment, expect a value in the 7-8 mV range. After checking, the
-lambda calculation is way off.
+lambda calculation is off because of the combined multiply and divide operation.
+Split and fixed.
 
-10. (  4 mV,   0 mV) -> 9.8 mV actually < 1 mV.
+#### Testing Notes (Iteration 2)
+
+TODO(buckbaskin): In test cases 6, 8, and 12, the current implementation doesn't 
+flip the sign of the C_err. Is the sign flip the correct behavior?
+Proposed Solution: Make a more complex logic to alternately pass through to 
+positive or negative depending on the sign of the velocity.
+
+6. (  8 mV, -20 mV) -> -3.8 mV actually 1 mV
+8. ( -8 mV,  20 mV) -> -3.8 mV actually 1 mV
+12. (  4 mV, -20 mV) -> -1.9 mV actually 0.5 mV
 
 ### Parameter Adjustment Timing
 

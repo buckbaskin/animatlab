@@ -91,8 +91,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>1291a806-f4f8-42c6-b61f-a7f898e41cf6</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>-1</DataSubSet>
-<PrevDataSubset>-1</PrevDataSubset>
+<DataSubSet>7</DataSubSet>
+<PrevDataSubset>7</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -109,8 +109,8 @@
 <StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
 <DataItemID>9d9d943f-8726-4199-8cd1-cdbf45028714</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>-1</DataSubSet>
-<PrevDataSubset>-1</PrevDataSubset>
+<DataSubSet>8</DataSubSet>
+<PrevDataSubset>8</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -204,6 +204,6 @@
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>65000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9086"/>
+<GraphConfig ByteCount="9117"/>
 </Form>
 </Form>

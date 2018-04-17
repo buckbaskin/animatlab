@@ -192,7 +192,7 @@ N_{err} =
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
 
-When $\dot{\theta}_{0}$ is 0, then $N_{err}$ explains the total error in acceleration. When $\dot{\theta}_{0}$ is large, $N_{err}$ should explain a diminishing ammount of the error. This can be thought of as finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$.
+When $\dot{\theta}_{0}$ is 0, then $N_{err}$ explains the total error in acceleration. When $\dot{\theta}_{0}$ is large, $N_{err}$ should explain a diminishing amount of the error. This can be thought of as finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$.
 
 \begin{equation}
 \lambda = 
@@ -217,5 +217,56 @@ By following these steps, the updates for the Damping Factor and Load Factor can
 \end{equation}
 
 That last term looks like it will fit closely to a Signal Inverse Reduction (0.5x) synapse.
+
+\bbssss{Some extra hopefully helpful math}
+
+Assume G term isn't significant here to this math because it's non-zero and arbitrary and here, it can encapsulate the inertia representation M as well.
+
+\begin{equation}
+\lambda = (M * \theta_{err}) * \dfrac{1}{1 + \dot{\theta}^{2}}
+\end{equation}
+
+Chosing a $\theta_{err} = \pi / 10$ in radians and the velocity is one of: 0 rad/sec, 2.5 rad/sec and 5 rad/sec, the math works as follows: 
+
+\begin{equation}
+\lambda = (0.314) * \dfrac{1}{1 + 0} = 0.314, C_err = 0.0, N_err = 0.314
+\end{equation}
+
+\begin{equation}
+\lambda = (0.314) * \dfrac{1}{1 + 6.25} = 0.0433, C_err = 0.108, N_err = 0.0433
+\end{equation}
+
+\begin{equation}
+\lambda = (0.314) * \dfrac{1}{1 + 25} = 0.012, C_err = 0.060, N_err = 0.012
+\end{equation}
+
+\includegraphics[height=5in, angle=0]{UnderstandingErrorCorrection}
+
+Treat the x axis as if it ranged from 0 to 20 mV (working conversion factor for velocity to mV). This is the $... * \dfrac{1}{1 + \dot{\theta}^{2}}$ version. The blue line is $C_{err}$ as a function of velocity. The purple line (larger value at $x=0$) is $N_{err}$.
+
+The next version for $... * \dfrac{1}{1 + \dot{\theta}}$ is obviously a little broken, so my simplifying assumption is really bad here. The blue line is $C_{err}$ as a function of velocity. The purple line (larger value at $x=0$) is $N_{err}$. In particular, the value for $C_{err}$ is far more broken.
+
+\includegraphics[height=5in, angle=0]{WowThisIsWrong}
+
+\bbssss{Back to the correct version}
+
+So, what neurons actually encode this math? This whole thing ends up getting scaled by inertia and $\theta_{err}$, but those are reasonably well understood ``multiplication'' operations in neurons.
+
+\includegraphics[height=5in, angle=0]{UnderstandingErrorCorrection}
+
+For now, I'd be happy with defining $N_{err}$ as a division operation approximation operation in neurons because it maintains the correct sign and most of the correct magnitude. What to do with $C_{err}$?
+
+\includegraphics[width=4in, angle=0]{CErr_Guess2}
+
+The purple (top) line is promising. The goal is to match the green (second from top) line. If this line gets scaled with the neuron multiplication operation, it could be pretty close to correct, especially if the multiplication operation saturates in the first quarter of the range.
+
+\begin{equation}
+N_{err} = \dfrac{20}{1 + x}
+\end{equation}
+
+\begin{equation}
+C_{err} = \dfrac{20}{1 + x} \times (4 x)
+\end{equation}
+
 
 \end{document}
