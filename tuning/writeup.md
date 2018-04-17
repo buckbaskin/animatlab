@@ -191,7 +191,7 @@ Split and fixed.
 
 #### Testing Notes (Iteration 2)
 
-TODO(buckbaskin): In test cases 6, 8, and 12, the current implementation doesn't 
+In test cases 6, 8, and 12, the current implementation doesn't 
 flip the sign of the C_err. Is the sign flip the correct behavior?
 Proposed Solution: Make a more complex logic to alternately pass through to 
 positive or negative depending on the sign of the velocity.
@@ -199,6 +199,10 @@ positive or negative depending on the sign of the velocity.
 6. (  8 mV, -20 mV) -> -3.8 mV actually 1 mV
 8. ( -8 mV,  20 mV) -> -3.8 mV actually 1 mV
 12. (  4 mV, -20 mV) -> -1.9 mV actually 0.5 mV
+
+#### Testing Notes (Iteration 3)
+
+As of this commit, the network works pretty well. There are some small overshoots in some cases, but in general I like how this network matches up.
 
 ### Parameter Adjustment Timing
 
