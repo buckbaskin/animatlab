@@ -257,9 +257,25 @@ Torque, velocity, inertia, damping, load
 8. ( 10 mV,   0 mV,   0 mV,   0 mV,  20 mV) -> ( -5.00 mV) actually 14 mV <-- sign, magnitude error
 9. (-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (-15.00 mV) actually 4 mV <-- sign, magnitude error
 10. ( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> ( -8.33 mV) actually -4 mV
+```
 
-TODO(buckbaskin): The network in its current state exhibits a number of magnitude errors and 2 sign errors (tests 8 and 9).
+The network in its current state exhibits a number of magnitude errors and 2 sign errors (tests 8 and 9).
 Proposed Solution: Split the computation into multiple steps. The combined option isn't working.
+
+#### Test Iteration 2
+
+```
+1. (  0 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (  0.00 mV) actually 0
+2. ( 20 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> ( 16.67 mV) actually 20 mV
+3. (-10 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> ( -8.33 mV) actually -9 mV
+4. ( 10 mV, -10 mV,   0 mV,  10 mV,   0 mV) -> ( 16.67 mV) actually 12.5 mV <-- magnitude err (should be same as 2)
+5. (-10 mV,  10 mV,   0 mV,  10 mV,   0 mV) -> (-16.67 mV) actually -12.5 mV <-- magnitude err (should be same as 2)
+6. ( 10 mV,   0 mV,  20 mV,   0 mV,   0 mV) -> (  0.76 mV) actually 0.5 mV
+7. (-10 mV,   0 mV,  10 mV,   0 mV,   0 mV) -> ( -1.39 mV) actually -1.0 mV
+8. ( 10 mV,   0 mV,   0 mV,   0 mV,  20 mV) -> ( -5.00 mV) actually 9 mV <-- sign and magnitude err
+9. (-10 mV,   0 mV,   0 mV,   0 mV,  10 mV) -> (-15.00 mV) actually -9 mV <-- magnitude err (should be close to 2)
+10. ( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> ( -8.33 mV) actually -8 mV
+```
 
 ### Torque Guessing Network
 
