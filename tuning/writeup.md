@@ -367,6 +367,14 @@ Actual vel wave:
 
 2 * pi/4 * cos(2 * t) -> (pi/4) / 5 * 20 * 2 mV cos(2 * t) -> +- 8 mV cos(2 * t)
 
+Actual sin wave:
+
+pi/4 * sin(6 * t) -> +- max mV sin(6 * t) theta
+
+Actual vel wave:
+
+6 * pi/4 * cos(6 * t) -> (pi/4) / 5 * 20 * 6 mV cos(5 * t) -> +- 19 mV cos(5 * t)
+
 ## CPG
 
 Do this. This is a thing. I need to do. Later.

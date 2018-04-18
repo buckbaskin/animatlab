@@ -11187,7 +11187,7 @@
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
-<TimeConstant Value="205" Scale="milli" Actual="0.205"/>
+<TimeConstant Value="185" Scale="milli" Actual="0.185"/>
 <InitialThreshold Value="50" Scale="milli" Actual="0.05"/>
 <RelativeAccomodation Value="0.3" Scale="None" Actual="0.3"/>
 <AccomodationTimeConstant Value="10" Scale="milli" Actual="0.01"/>
@@ -28370,7 +28370,7 @@
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>10 * sin(2 * t)</Equation>
+<Equation>10 * sin(6 * t)</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
 <NodeID>c4b22ab1-3f08-47a7-b883-853a0924e141</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
@@ -28458,7 +28458,7 @@
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>8 * cos(2 * t)</Equation>
+<Equation>19 * cos(6 * t)</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
 <NodeID>dc5e9840-d276-40c0-9869-cb695643f9b1</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
@@ -28788,7 +28788,7 @@
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Equation</ValueType>
-<Equation>-8 * cos(2 * t)</Equation>
+<Equation>-19 * cos(6 * t)</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
 <NodeID>2d6dd677-62c1-4cb9-a4e4-82fce7d0abc8</NodeID>
 <CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
@@ -28963,7 +28963,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/17/2018 20:55:48"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/17/2018 21:07:59"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 128" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
