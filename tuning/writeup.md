@@ -278,7 +278,22 @@ Proposed Solution: Split the computation into multiple steps. The combined optio
 ```
 I'm not too too worried about the magnitude errors in 4 and 5. They're close ish.
 
-TODO(buckbaskin): The errors in 8 and 9 come from incorrect (not implemented) load calculations.
+The errors in 8 and 9 come from incorrect (not implemented) load calculations.
+
+#### Test Iteration 3
+
+```
+1. (  0 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> (  0.00 mV) actually 0
+2. ( 20 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> ( 16.67 mV) actually 20 mV
+3. (-10 mV,   0 mV,   0 mV,   0 mV,   0 mV) -> ( -8.33 mV) actually -9 mV
+4. ( 10 mV, -10 mV,   0 mV,  10 mV,   0 mV) -> ( 16.67 mV) actually 12.5 mV
+5. (-10 mV,  10 mV,   0 mV,  10 mV,   0 mV) -> (-16.67 mV) actually -12.5 mV
+6. ( 10 mV,   0 mV,  20 mV,   0 mV,   0 mV) -> (  0.76 mV) actually 0.5 mV
+7. (-10 mV,   0 mV,  10 mV,   0 mV,   0 mV) -> ( -1.39 mV) actually -1.0 mV
+10. ( 10 mV,  20 mV,   0 mV,  10 mV,   0 mV) -> ( -8.33 mV) actually -8 mV
+```
+
+This seems good. The other two test cases (8, 9) were poorly implemented anyway.
 
 ### Torque Guessing Network
 
