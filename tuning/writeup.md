@@ -349,6 +349,24 @@ applied (+- 2.5 Nm). Values in mV (rad) and Nm
 In general I think this covers a lot of different sub networks, or at least as
 thoroughly as I can get without a consistent Wifi connection.
 
+### Velocity Derivation
+
+Actual sin wave:
+
+pi/4 * sin(t) -> +- max mV sin(t) theta
+
+Actual vel wave:
+
+pi/4 * cos(t) -> (pi/4) / 5 * 20 mV cos(t) -> +- 4 mV cos(t)
+
+Actual sin wave:
+
+pi/4 * sin(2 * t) -> +- max mV sin(2 * t) theta
+
+Actual vel wave:
+
+2 * pi/4 * cos(2 * t) -> (pi/4) / 5 * 20 * 2 mV cos(2 * t) -> +- 8 mV cos(2 * t)
+
 ## CPG
 
 Do this. This is a thing. I need to do. Later.
