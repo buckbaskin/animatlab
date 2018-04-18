@@ -1,0 +1,129 @@
+<Form>
+<Form>
+<ID>b250c552-854d-47a7-8151-43edef70da60</ID>
+<Title>DataTool_11</Title>
+<TabPageName>DataTool_11</TabPageName>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
+<AutoCollectInterval>True</AutoCollectInterval>
+<CollectDataInterval Value="0.2" Scale="milli" Actual="0.0002"/>
+<CollectTimeWindow Value="13" Scale="None" Actual="13"/>
+<UpdateDataInterval Value="200" Scale="milli" Actual="0.2"/>
+<SetStartEndTime>True</SetStartEndTime>
+<CollectStartTime Value="0" Scale="None" Actual="0"/>
+<CollectEndTime Value="12" Scale="None" Actual="12"/>
+<AxisList>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Inputs (Test T2P)</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Neg Torque (Test T2P)</Name>
+<ID>a07a532a-3959-4f05-9ce5-65302189ee6a</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>5fa935a5-f687-4250-89f5-61797061a219</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>0</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Pos Torque (Test T2P)</Name>
+<ID>ab961d6f-2298-404a-9691-40a0e68e3545</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>44e3b9b9-4814-4783-9658-8d4c821eaaf1</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16711936</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Theta (Test T2P)</Name>
+<ID>e15e2acc-d42c-441c-8e69-15cae6ff94f3</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>76cfcf7b-1cb2-42f6-80f1-a3bf3fa24f9d</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Outputs (Test T2P)</Name>
+<WorkingAxis>1</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Ext Pressure</Name>
+<ID>889a3dff-d41c-4dfe-b117-a8838bd49058</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>7c4449ec-6628-454c-8947-6faace1b087a</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>3</DataSubSet>
+<PrevDataSubset>3</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-256</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>Flx Pressure</Name>
+<ID>d14d8fd4-e096-4da8-860a-695f7a81d0aa</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</StructureID>
+<DataItemID>ac986d5c-3dce-4734-a431-3e28acf6c2f0</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>4</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-23296</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+</AxisList>
+<SaveDataWhenClosed>False</SaveDataWhenClosed>
+<UpdateChartAtEnd>True</UpdateChartAtEnd>
+<PointsToKeep>65000</PointsToKeep>
+<YAxisOffset>0</YAxisOffset>
+<GraphConfig ByteCount="9039"/>
+</Form>
+</Form>
