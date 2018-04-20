@@ -3006,7 +3006,6 @@
 <InLinks>
 <ID>31ce653e-3c52-40e8-b9f2-631e84f28cf1</ID>
 <ID>67eb58ef-9d53-417c-8f57-e5ca9cd208a3</ID>
-<ID>337f40ca-9755-4440-b898-3c1e56f31cc8</ID>
 <ID>bd09248e-6e72-4f6f-8105-786b903983d1</ID>
 </InLinks>
 <OutLinks>
@@ -3547,7 +3546,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -3564,7 +3563,7 @@
 <OutLinks>
 <ID>7b703811-4d07-41e8-b04d-85ccd78a38e6</ID>
 </OutLinks>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
@@ -3638,7 +3637,6 @@
 <TemplateChangeScript/>
 <InLinks>
 <ID>69c44f45-21d2-434c-8129-aaf2a67aff8f</ID>
-<ID>b79aee00-cba3-4c99-a4ae-952dca94c7ac</ID>
 <ID>f3653904-2eb2-49f4-a931-ef05de2b3644</ID>
 <ID>9e29796b-0b98-4f89-956c-07d39b1778b0</ID>
 </InLinks>
@@ -3670,7 +3668,7 @@
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
-<TonicStimulus Value="20" Scale="nano" Actual="2e-008"/>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -5213,8 +5211,8 @@
 </InLinks>
 <OutLinks>
 <ID>b10afd2b-72c7-47aa-840d-9d4c355ef743</ID>
-<ID>d17123fe-df6d-4d53-b755-0f73d9d9f282</ID>
 <ID>df9c7a76-0709-4bba-9c40-ecb4e6febe9d</ID>
+<ID>d17123fe-df6d-4d53-b755-0f73d9d9f282</ID>
 <ID>9c5acfa4-03c7-46ed-ad4b-55891888b055</ID>
 </OutLinks>
 <Enabled>True</Enabled>
@@ -6290,7 +6288,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>False</Transparent>
+<Transparent>True</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -6307,7 +6305,7 @@
 <OutLinks>
 <ID>2279d5ff-7348-46b3-85df-4c1d15dd20c0</ID>
 </OutLinks>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
@@ -6933,10 +6931,10 @@
 <ID>3634483e-cfe6-4b23-af35-0f39108d6fde</ID>
 </InLinks>
 <OutLinks>
+<ID>a8e99770-437a-4181-8cf5-89e6487e9ffb</ID>
 <ID>47e80fb8-a661-457f-b68b-e979c1af34ed</ID>
 <ID>5570ddb1-42b1-426e-a2a0-1780e7c699e3</ID>
 <ID>07ec6bab-2ba4-4504-ab67-d69af3d87864</ID>
-<ID>a8e99770-437a-4181-8cf5-89e6487e9ffb</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
@@ -8451,7 +8449,7 @@
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
-<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicStimulus Value="20" Scale="nano" Actual="2e-008"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -8959,7 +8957,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>True</Transparent>
+<Transparent>False</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -8972,11 +8970,12 @@
 <TemplateChangeScript/>
 <InLinks>
 <ID>2279d5ff-7348-46b3-85df-4c1d15dd20c0</ID>
+<ID>319c7c16-a2bf-44ff-9f20-029deb2796a0</ID>
 </InLinks>
 <OutLinks>
 <ID>bd09248e-6e72-4f6f-8105-786b903983d1</ID>
 </OutLinks>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
@@ -9001,7 +9000,7 @@
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
-<TonicStimulus Value="20" Scale="nano" Actual="2e-008"/>
+<TonicStimulus Value="0" Scale="nano" Actual="0"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -11500,7 +11499,7 @@
 <TextColor>-16777216</TextColor>
 <TextMargin Width="0" Height="0"/>
 <ToolTip/>
-<Transparent>True</Transparent>
+<Transparent>False</Transparent>
 <Url/>
 <XMoveable>True</XMoveable>
 <XSizeable>True</XSizeable>
@@ -11512,12 +11511,13 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
+<ID>0ef39164-b667-4b54-8dba-b61516cb2514</ID>
 <ID>7b703811-4d07-41e8-b04d-85ccd78a38e6</ID>
 </InLinks>
 <OutLinks>
 <ID>9e29796b-0b98-4f89-956c-07d39b1778b0</ID>
 </OutLinks>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <RestingPotential Value="-60" Scale="milli" Actual="-0.06"/>
 <RelativeSize Value="1" Scale="None" Actual="1"/>
 <TimeConstant Value="5" Scale="milli" Actual="0.005"/>
@@ -14333,8 +14333,8 @@
 <TemplateChangeScript/>
 <InLinks/>
 <OutLinks>
-<ID>337f40ca-9755-4440-b898-3c1e56f31cc8</ID>
-<ID>b79aee00-cba3-4c99-a4ae-952dca94c7ac</ID>
+<ID>0ef39164-b667-4b54-8dba-b61516cb2514</ID>
+<ID>319c7c16-a2bf-44ff-9f20-029deb2796a0</ID>
 </OutLinks>
 <Enabled>True</Enabled>
 <RestingPotential Value="-50" Scale="milli" Actual="-0.05"/>
@@ -16349,6 +16349,53 @@
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
 <ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>0ef39164-b667-4b54-8dba-b61516cb2514</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>ba08b2d7-ff03-4cb1-8942-07fc5c9e9106</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>f10e49f0-a1a2-464b-adf5-533d9e2d18c9</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>788aa18b-93f5-4fba-bda7-82152b501a1f</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
 <ID>0ffb6fa3-eddb-41ca-b620-c91c1aa7dccc</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -17994,6 +18041,53 @@
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
 <ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>319c7c16-a2bf-44ff-9f20-029deb2796a0</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>9179a520-f976-4d9d-a5f7-e9392cdbb7e0</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>f10e49f0-a1a2-464b-adf5-533d9e2d18c9</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>11b3d9fa-3a52-4643-bbd2-a40eb07eb1be</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
 <ID>31ce653e-3c52-40e8-b9f2-631e84f28cf1</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -18033,7 +18127,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>e3f40f4e-72fc-42e4-89e8-86210bbe817e</SynapticTypeID>
+<SynapticTypeID>d43aabad-74c5-479e-a5b7-d837f7b17ea3</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -18081,53 +18175,6 @@
 <Url/>
 <ZOrder>0</ZOrder>
 <SynapticTypeID>e3f40f4e-72fc-42e4-89e8-86210bbe817e</SynapticTypeID>
-<UserText/>
-<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
-<ConductionDelay Value="0" Scale="milli" Actual="0"/>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
-<ID>337f40ca-9755-4440-b898-3c1e56f31cc8</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Arrow</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID>184f8f4c-2f34-4cda-98d6-2b0b12c3ae53</DestinationID>
-<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID>f10e49f0-a1a2-464b-adf5-533d9e2d18c9</OriginID>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<SynapticTypeID>11b3d9fa-3a52-4643-bbd2-a40eb07eb1be</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -20665,7 +20712,7 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
-<SynapticTypeID>a0a658aa-f090-4014-9a73-30c46c1fb55c</SynapticTypeID>
+<SynapticTypeID>8664f6ec-686a-4aa8-96d1-8b1ca8114ec7</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -24191,53 +24238,6 @@
 <Url/>
 <ZOrder>0</ZOrder>
 <SynapticTypeID>a1a55801-a811-41f2-8700-1ed269834c93</SynapticTypeID>
-<UserText/>
-<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
-<ConductionDelay Value="0" Scale="milli" Actual="0"/>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
-<ID>b79aee00-cba3-4c99-a4ae-952dca94c7ac</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Arrow</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID>225059f8-9e0c-4900-995c-95ad33a8f6af</DestinationID>
-<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID>f10e49f0-a1a2-464b-adf5-533d9e2d18c9</OriginID>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<SynapticTypeID>788aa18b-93f5-4fba-bda7-82152b501a1f</SynapticTypeID>
 <UserText/>
 <SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <ConductionDelay Value="0" Scale="milli" Actual="0"/>
@@ -28465,48 +28465,48 @@
     <Tag>6f144b1c-4303-443f-b7a3-0cd3c504f964</Tag>
   </Node>
   <Node Left="476.25" Top="652.5357" Width="63.75" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
     <FillColor>-7876870</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Inv Neg Vel</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>222952a1-0b30-4163-b340-0a37e1c2517a</Tag>
   </Node>
   <Node Left="661.0006" Top="649.6071" Width="63.75" Height="40">
-    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
     <FillColor>-8388480</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Disabled</Text>
+    <Text>Neg Vel</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ba08b2d7-ff03-4cb1-8942-07fc5c9e9106</Tag>
   </Node>
   <Node Left="475.1073" Top="556.9643" Width="63.75" Height="40">
+    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
     <FillColor>-7876870</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Inv Pos Vel</Text>
+    <Text>Disabled</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>632a0f6b-5a07-4199-b48e-5494cbd322ee</Tag>
   </Node>
   <Node Left="664.142944" Top="558.3214" Width="63.75" Height="40">
-    <Transparent>True</Transparent>
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
     <FillColor>-8388480</FillColor>
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <GradientColor>0</GradientColor>
-    <Text>Disabled</Text>
+    <Text>Pos Vel</Text>
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>9179a520-f976-4d9d-a5f7-e9392cdbb7e0</Tag>
   </Node>
@@ -32728,30 +32728,6 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>6bf23af8-6aad-4bfa-831c-3523d43cbd84</Tag>
   </Link>
-  <Link Org="2" Dst="168">
-    <OrientedText>True</OrientedText>
-    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
-    <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
-    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
-    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
-    <Jump>Arc</Jump>
-    <DrawColor>-16777216</DrawColor>
-    <TextColor>-16777216</TextColor>
-    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <Tag>337f40ca-9755-4440-b898-3c1e56f31cc8</Tag>
-  </Link>
-  <Link Org="2" Dst="167">
-    <OrientedText>True</OrientedText>
-    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
-    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
-    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
-    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
-    <Jump>Arc</Jump>
-    <DrawColor>-16777216</DrawColor>
-    <TextColor>-16777216</TextColor>
-    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <Tag>b79aee00-cba3-4c99-a4ae-952dca94c7ac</Tag>
-  </Link>
   <Node Left="715" Top="2021" Width="40" Height="40">
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
     <Shape Style="Termination" Orientation="so_0" />
@@ -32763,7 +32739,7 @@
     <Font Name="Arial" Size="14" Bold="True" Italic="False" Strikeout="False" Underline="False" />
     <Tag>f31e1f66-a7a4-4b95-ac12-8413ae8d1470</Tag>
   </Node>
-  <Link Org="433" Dst="1">
+  <Link Org="431" Dst="1">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
@@ -32775,7 +32751,7 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>48d4230a-2d48-4028-a167-28acdaac2edf</Tag>
   </Link>
-  <Link Org="433" Dst="0">
+  <Link Org="431" Dst="0">
     <OrientedText>True</OrientedText>
     <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
     <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
@@ -32786,6 +32762,30 @@
     <TextColor>-16777216</TextColor>
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Tag>ce2f9d3e-3f14-4dae-977e-0c3433fc9880</Tag>
+  </Link>
+  <Link Org="2" Dst="72">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>319c7c16-a2bf-44ff-9f20-029deb2796a0</Tag>
+  </Link>
+  <Link Org="2" Dst="70">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Circle" Size="Medium" Angle="deg30" Filled="True" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="One" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Tag>0ef39164-b667-4b54-8dba-b61516cb2514</Tag>
   </Link>
 </AddFlow>
 </Diagram>
@@ -33088,6 +33088,28 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Test Vel Theta</Name>
+<ID>d55c1660-2b97-49f5-97d4-ed40732b1d8c</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="12" Scale="None" Actual="12"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Equation</ValueType>
+<Equation>10 * sin(6 * t)</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>c4b22ab1-3f08-47a7-b883-853a0924e141</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="12" Scale="None" Actual="12"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="12" Scale="None" Actual="12"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
 <Name>Test Adapter Neg Vel 1</Name>
 <ID>c509c155-527f-4b24-9c43-cd980dac093b</ID>
@@ -33106,28 +33128,6 @@
 <CycleOnDuration Value="1" Scale="None" Actual="1"/>
 <CycleOffDuration Value="2" Scale="None" Actual="2"/>
 <BurstOnDuration Value="10" Scale="None" Actual="10"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Test Adapter PPE 1</Name>
-<ID>5677b8eb-c8e8-4ddc-82ac-ee06e99d93b7</ID>
-<StartTime Value="3" Scale="None" Actual="3"/>
-<EndTime Value="6" Scale="None" Actual="6"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>e8f2e941-f22f-484e-8738-1bdc4d1ace9d</NodeID>
-<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="3" Scale="None" Actual="3"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="3" Scale="None" Actual="3"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33397,6 +33397,28 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Throwaway 2</Name>
+<ID>cfdc0ca6-c146-4bbb-9925-185f2b0f6610</ID>
+<StartTime Value="8" Scale="None" Actual="8"/>
+<EndTime Value="24" Scale="None" Actual="24"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>e05dea81-2207-46b6-b367-841c45214f52</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-009"/>
+<CurrentOff Value="-5" Scale="nano" Actual="-5e-009"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="8" Scale="None" Actual="8"/>
+<CycleOffDuration Value="8" Scale="None" Actual="8"/>
+<BurstOnDuration Value="16" Scale="None" Actual="16"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
 <Name>Test T2A Neg Torque</Name>
 <ID>dacab86b-42c2-4409-aca9-d7b357d7c733</ID>
 <StartTime Value="2" Scale="None" Actual="2"/>
@@ -33441,13 +33463,35 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Stimulus_1</Name>
+<ID>bd911249-bebb-4599-8b4d-052bd9e93514</ID>
+<StartTime Value="3" Scale="None" Actual="3"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>False</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>b613582e-8537-47f7-918a-5705d547bc1d</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Throwaway</Name>
 <ID>ca5d5083-c12b-41d6-871e-c27e834c4a90</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
 <EndTime Value="24" Scale="None" Actual="24"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Equation</ValueType>
 <Equation>(10 / 24) * t - 5</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33480,28 +33524,6 @@
 <CycleOnDuration Value="3" Scale="None" Actual="3"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
 <BurstOnDuration Value="3" Scale="None" Actual="3"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
-<Name>Test TorG Theta Des 1</Name>
-<ID>92b54110-98c6-4583-879d-59035e7198ca</ID>
-<StartTime Value="13" Scale="None" Actual="13"/>
-<EndTime Value="15" Scale="None" Actual="15"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>e05dea81-2207-46b6-b367-841c45214f52</NodeID>
-<CurrentOn Value="2.5" Scale="nano" Actual="2.5e-009"/>
-<CurrentOff Value="-2.5" Scale="nano" Actual="-2.5e-009"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1" Scale="None" Actual="1"/>
-<CycleOffDuration Value="1" Scale="None" Actual="1"/>
-<BurstOnDuration Value="2" Scale="None" Actual="2"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33573,23 +33595,23 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_1</Name>
-<ID>bd911249-bebb-4599-8b4d-052bd9e93514</ID>
+<Name>Test Adapter PPE 1</Name>
+<ID>5677b8eb-c8e8-4ddc-82ac-ee06e99d93b7</ID>
 <StartTime Value="3" Scale="None" Actual="3"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
+<EndTime Value="6" Scale="None" Actual="6"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>b613582e-8537-47f7-918a-5705d547bc1d</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<NodeID>e8f2e941-f22f-484e-8738-1bdc4d1ace9d</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="2" Scale="None" Actual="2"/>
+<CycleOnDuration Value="3" Scale="None" Actual="3"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOnDuration Value="3" Scale="None" Actual="3"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33704,24 +33726,24 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Integrator Start</Name>
-<ID>f145df60-b32e-4f79-99ad-47645864a4da</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="0.5" Scale="None" Actual="0.5"/>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Test TorG Theta Des 1</Name>
+<ID>92b54110-98c6-4583-879d-59035e7198ca</ID>
+<StartTime Value="13" Scale="None" Actual="13"/>
+<EndTime Value="15" Scale="None" Actual="15"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>4c10c356-a275-43c1-b968-f7631b650b59</NodeID>
-<CurrentOn Value="1" Scale="nano" Actual="1e-009"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<NodeID>e05dea81-2207-46b6-b367-841c45214f52</NodeID>
+<CurrentOn Value="2.5" Scale="nano" Actual="2.5e-009"/>
+<CurrentOff Value="-2.5" Scale="nano" Actual="-2.5e-009"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="50" Scale="centi" Actual="0.5"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="50" Scale="centi" Actual="0.5"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="1" Scale="None" Actual="1"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33815,30 +33837,30 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Test Vel Theta</Name>
-<ID>d55c1660-2b97-49f5-97d4-ed40732b1d8c</ID>
+<Name>Integrator Start</Name>
+<ID>f145df60-b32e-4f79-99ad-47645864a4da</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="12" Scale="None" Actual="12"/>
+<EndTime Value="0.5" Scale="None" Actual="0.5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
-<ValueType>Equation</ValueType>
-<Equation>10 * sin(6 * t)</Equation>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>c4b22ab1-3f08-47a7-b883-853a0924e141</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<NodeID>4c10c356-a275-43c1-b968-f7631b650b59</NodeID>
+<CurrentOn Value="1" Scale="nano" Actual="1e-009"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="12" Scale="None" Actual="12"/>
+<CycleOnDuration Value="50" Scale="centi" Actual="0.5"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="12" Scale="None" Actual="12"/>
+<BurstOnDuration Value="50" Scale="centi" Actual="0.5"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>12c5490e-60cd-4142-ad1a-6c8e096785e1</Name>
-<ID>12c5490e-60cd-4142-ad1a-6c8e096785e1</ID>
+<Name>fe8ef4d2-eb66-4b9f-b1d4-0468506729d1</Name>
+<ID>fe8ef4d2-eb66-4b9f-b1d4-0468506729d1</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -33932,7 +33954,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/19/2018 17:41:13"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/19/2018 23:04:01"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 128" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -34306,7 +34328,7 @@
       &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
         &lt;Content Name="Workspace" UniqueName="" /&gt;
-        &lt;Space Value="50" /&gt;
+        &lt;Space Value="63.422459893048128342245989300" /&gt;
         &lt;Best Count="1"&gt;
           &lt;Item Name="Workspace" /&gt;
         &lt;/Best&gt;
@@ -34362,7 +34384,7 @@
       &lt;PreviousAll Count="0" /&gt;
       &lt;Child Type="Crownwood.DotNetMagic.Docking.RestoreZoneAffinity"&gt;
         &lt;Content Name="Properties" UniqueName="" /&gt;
-        &lt;Space Value="100" /&gt;
+        &lt;Space Value="100.000" /&gt;
         &lt;Best Count="1"&gt;
           &lt;Item Name="Properties" /&gt;
         &lt;/Best&gt;
@@ -34405,7 +34427,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Test Bed" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Test Bed" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;bf5aa681-eaf6-43d3-b18e-d08a36f39690&lt;/ID&gt;
@@ -34420,7 +34442,7 @@
       &lt;/Page&gt;
     &lt;/Leaf&gt;
     &lt;Leaf Count="8" Unique="8" Space="56.099110546378653113087674710"&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;e9df6c45-c1dd-4a57-a141-727776c53358&lt;/ID&gt;
@@ -34433,7 +34455,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_6" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_6" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;a869baef-1cff-4183-847d-15b4a2eb309b&lt;/ID&gt;
@@ -34446,7 +34468,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Test Accel Fusion" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Test Accel Fusion" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;95059046-588d-40cf-8079-b1d5266033d8&lt;/ID&gt;
@@ -34459,7 +34481,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_8" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_8" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;e2d20152-9343-4284-a7bb-169f59485c9b&lt;/ID&gt;
@@ -34472,7 +34494,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_9" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_9" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;b1c4b848-b000-450c-af0c-4246381be2f4&lt;/ID&gt;
@@ -34485,7 +34507,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_10" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_10" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9211219f-d372-4291-ad98-29445f0ad6a1&lt;/ID&gt;
@@ -34498,7 +34520,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_11" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_11" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;b250c552-854d-47a7-8151-43edef70da60&lt;/ID&gt;
@@ -34511,7 +34533,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="DataTool_12" ImageList="True" ImageIndex="2" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="DataTool_12" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;c86fbd7a-185b-410c-83a9-2c5f05131fdf&lt;/ID&gt;
