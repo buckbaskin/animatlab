@@ -67,10 +67,10 @@
 
 \listoffigures
 
-\chapter{Acknowledgments}
+\chapter*{Acknowledgments}
 Acknowledged!
 
-\chapter{Abstract}
+\chapter*{Abstract}
 This research develops a new synthetic nervous system for control of joints using pneumatic actuators in order to create a more efficient and adaptable walking robot system. This design implements new features not previously seen in a control oriented nervous system. It develops 3 major design components not previously used for control of antagonistic pneumatic actuators. It uses an internal model of the actuators to esimate the state of the joint. It uses internal estimates of the dynamics of the joint to continually optimize the control output. Additionally, it updates its own internal system model with a memory-like loop to allow the controller to adapt to any joint and trajectory. The controller allows for the replacement of proportional or other control designs with a learning system that decreases wasted antagonistic muscle activation and wasted energy, decreases phase lag and increases trajectory tracking accuracy.
 
 \chapter{Introduction}
@@ -90,27 +90,22 @@ This research develops a new synthetic nervous system for control of joints usin
 \end{itemize}
 \input{chapters/lit_review}
 
-\chapter{Design}
+\chapter{Controller Design}
 \begin{itemize}
   \item Simulation
   \item Design of each component x 5
 \end{itemize}
 % \chapter{Simulation Environments and Models}
-\input{chapters/simulation}
+\input{chapters/controller_design}
 
-% TODO change. Based on Nick's MS thesis
-\chapter{Robust Robotic Stepping}
-\input{chapters/robot_stepping}
+\chapter{Neuron Design}
+\begin{itemize}
+  \item Design of each component x 5
+\end{itemize}
+% \chapter{Simulation Environments and Models}
+\input{chapters/neuron_design}
 
-% TODO change. Based on Nick's MS thesis
-\chapter{Low Level Transitions}
-\input{chapters/low_level}
-
-% TODO change. Based on Nick's MS thesis
-\chapter{Behavioral Transitions}
-\input{chapters/behavior}
-
-\chapter{Testing}
+\chapter{Testing/Methods}
 
 \chapter{Results}
 
