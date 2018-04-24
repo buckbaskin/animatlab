@@ -1,9 +1,10 @@
-\documentclass[12pt, letterpaper, oneside, onecolumn]{report}
+\documentclass[12pt, letterpaper, oneside, onecolumn]{report} % 
 \author{William Baskin}
 \title{Thesis}
 \title{
-	{Thesis Title}\\
-	{\large Institution Name}%\\
+  {A Biologically Inspired Controller for Efficient Trajectory Execution with Pneumatic Actuated Joints}\\
+  {\large Case Western Reserve University \\
+  Department of Mechanical and Aerospace Engineering}%\\
 %	{\includegraphics{university.jpg}}
 }
 % \date{Day Month Year}
@@ -15,38 +16,41 @@
 \graphicspath{ {images/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
 
-\usepackage[style=ieee, backend=biber]]{biblatex}
-\addbibresource{references.bib}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\doublespacing
+\usepackage[style=ieee, backend=biber]{biblatex}
+% \addbibresource{references.bib}
 
-%%% math %%%
-\usepackage{amsmath, amssymb, amsthm}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
+% %%% math %%%
+% \usepackage{amsmath, amssymb, amsthm}
+% \DeclareMathOperator*{\argmax}{arg\,max}
+% \DeclareMathOperator*{\argmin}{arg\,min}
 
-%%% Code %%%
-\usepackage{color}
-\usepackage{verbatim}
-\usepackage{listings}
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+% %%% Code %%%
+% \usepackage{color}
+% \usepackage{verbatim}
+% \usepackage{listings}
+% \definecolor{dkgreen}{rgb}{0,0.6,0}
+% \definecolor{gray}{rgb}{0.5,0.5,0.5}
+% \definecolor{mauve}{rgb}{0.58,0,0.82}
 
-\lstset{frame=tb,
-  language=Matlab,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
-}
+% \lstset{frame=tb,
+%   language=Matlab,
+%   aboveskip=3mm,
+%   belowskip=3mm,
+%   showstringspaces=false,
+%   columns=flexible,
+%   basicstyle={\small\ttfamily},
+%   numbers=none,
+%   numberstyle=\tiny\color{gray},
+%   keywordstyle=\color{blue},
+%   commentstyle=\color{dkgreen},
+%   stringstyle=\color{mauve},
+%   breaklines=true,
+%   breakatwhitespace=true,
+%   tabsize=3
+% }
 
 
 %%% Packages for the future %%%
@@ -63,32 +67,41 @@
 
 \listoffigures
 
-\chapter*{Abstract}
-Synthetic nervous system control for the Puppy robot. Leverages work done for the previous leg system and new work done exploring distributed optimization models.
-
 \chapter*{Acknowledgments}
 Acknowledged!
+
+\chapter*{Abstract}
+This research develops a new synthetic nervous system for control of joints using pneumatic actuators in order to create a more efficient and adaptable walking robot system. This design implements new features not previously seen in a control oriented nervous system. It develops 3 major design components not previously used for control of antagonistic pneumatic actuators. It uses an internal model of the actuators to esimate the state of the joint. It uses internal estimates of the dynamics of the joint to continually optimize the control output. Additionally, it updates its own internal system model with a memory-like loop to allow the controller to adapt to any joint and trajectory. The controller allows for the replacement of proportional or other control designs with a learning system that decreases wasted antagonistic muscle activation and wasted energy, decreases phase lag and increases trajectory tracking accuracy.
 
 \chapter{Introduction}
 \input{chapters/introduction}
 
-\chapter{Literature Review}
+\chapter{Literature Review/Background}
+\begin{itemize}
+\item General Robot Class
+\item Robots for a more particular task
+\item Heritage of a robot feature
+\end{itemize}
 \input{chapters/lit_review}
 
-\chapter{Simulation Environments and Models}
-\input{chapters/simulation}
+\chapter{Controller Design}
+\begin{itemize}
+  \item Simulation
+  \item Design of each component x 5
+\end{itemize}
+% \chapter{Simulation Environments and Models}
+\input{chapters/controller_design}
 
-% TODO change. Based on Nick's MS thesis
-\chapter{Robust Robotic Stepping}
-\input{chapters/robot_stepping}
+\chapter{Neuron Design}
+\begin{itemize}
+  \item Design of each component x 5
+\end{itemize}
+% \chapter{Simulation Environments and Models}
+\input{chapters/neuron_design}
 
-% TODO change. Based on Nick's MS thesis
-\chapter{Low Level Transitions}
-\input{chapters/low_level}
+\chapter{Testing/Methods}
 
-% TODO change. Based on Nick's MS thesis
-\chapter{Behavioral Transitions}
-\input{chapters/behavior}
+\chapter{Results}
 
 \chapter{Conclusions and Future Work}
 \input{chapters/conclusion}
