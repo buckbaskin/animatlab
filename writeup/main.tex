@@ -26,6 +26,9 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
 
+% https://tex.stackexchange.com/questions/119513/cleveref-and-appendix-packages-appendix-referenced-as-section
+\crefname{appsec}{Appendix}{Appendices}
+
 \newcommand{\myref}[1]{\hyperref[#1]{\Cref{#1}}}
 
 %%% math %%%
@@ -135,11 +138,19 @@ This research develops a new synthetic nervous system for control of joints usin
 \label{chap:conclusion}
 \input{chapters/conclusion}
 
+\newpage
+\label{chap:references}
+\printbibliography[heading=bibintoc, title={Bibliography}]
+
+\newpage
 \appendix
+\crefalias{section}{appsec}
 \chapter{Network Topologies}
+\label{app:network_topologies}
 \input{chapters/appendix}
 
-\nocite{*}
-\printbibliography
+\chapter{Neuron Tests}
+\label{app:neuron_tests}
+\input{chapters/app_neuron_tests}
 
 \end{document}
