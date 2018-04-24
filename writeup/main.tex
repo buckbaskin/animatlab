@@ -26,10 +26,12 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
 
-% %%% math %%%
-% \usepackage{amsmath, amssymb, amsthm}
-% \DeclareMathOperator*{\argmax}{arg\,max}
-% \DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\myref}[1]{\hyperref[#1]{\Cref{#1}}}
+
+%%% math %%%
+\usepackage{amsmath, amssymb, amsthm}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 % %%% Code %%%
 % \usepackage{color}
@@ -61,6 +63,14 @@
 % \usepackage{parskip}
 % \usepackage{textcomp}
 % \usepackage{soul}
+
+\newcommand{\subsubsubsection}{\paragraph}
+\newcommand{\bbs}[1]{\section{#1}}
+\newcommand{\bbss}[1]{\subsection{#1}}
+\newcommand{\bbsss}[1]{\subsubsection{#1}}
+\newcommand{\bbssss}[1]{\subsubsubsection{#1}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \begin{document}
 \maketitle
@@ -114,8 +124,12 @@ This research develops a new synthetic nervous system for control of joints usin
 \chapter{Testing/Methods}
 \label{chap:methods}
 
+\input{chapters/methods}
+
 \chapter{Results}
 \label{chap:results}
+
+\input{chapters/results}
 
 \chapter{Conclusions and Future Work}
 \label{chap:conclusion}
