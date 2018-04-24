@@ -1,3 +1,11 @@
+Walking (especially bipedal) is hard
+
+Animals achieve stability and effective walking through redundancy (ex. 4 legs,
+6 legs, etc) and multi-level neuron control via sensory feedback and descending
+commands. Studies have shown that animals can still exhibit significant portions
+of walking behavior without higher level control from the brain and, in certain
+conditions, without sensory feedback.
+
 Animals adapt to their environment through physical structure and compliance as
 well as adapting through a learning process in the nervous system. While the
 simulation or replication of both the physical and neural systems in their
@@ -6,18 +14,89 @@ muscles to better control a walking robot.
 
 \section{Task Overview}
 
-Walking a quadruped
+This thesis focuses on control of joints for the canine-inspired
+Puppy robot in a walking scenario. The two distinguishing physical features of 
+the robot are its pneumatic muscle actuators and a design that leans heavily
+on the mechanics and skeleton of canines.
+
+% TODO(buckbaskin): insert figure
+Figure of Puppy
+
+% TODO(buckbaskin): finish this thought
+Pneumatic actuators are used because...
+
+% TODO(buckbaskin): finish this thought
+Canine design is used because...
 
 \section{Why Walking?}
 
-This particular thesis focuses on control of joints for the canine-inspired
-Puppy robot. The two distinguishing physical features of the robot are its
-pneumatic muscle actuators and a design that leans heavily on the mechanics and
-skeleton of canines.
+Walking robots, and more specifically quadruped walking robots, offer a number 
+of advantages over wheeled robots. First, walking robots can cover much more 
+varied terrain compared with wheeled vehicles. Second, quadruped and walking
+robots with more than 4 legs offer inherent stability compared with biped robots
+on the same terrain via redundancy and the ability to move one limb at a time
+while keeping the center of mass over a supported area.
 
-Figure of Puppy
+
+On the other hand, walking robots have disadvantages that mean they are not
+necessarily the right option for every situation.
+
+Increased energy usage (energy per meter metric?). This comes from the
+requirement that the active control in the robot is required to support the
+weight of the robot with motors or muscles instead of having weight statically
+supported by the structure in the case of wheels.
+
+% TODO(buckbaskin): write about this more
+Lower maximum speed
+
+
+One option that has been explored as an intermediate step are Whegs. These
+designs allow for increased climbing ability on uneven terrain while retaining
+many of the advantages of wheels including ease of control (although additional
+% TODO(buckbaskin): 1-2 citations for Whegs
+work must be done to synchronize a tripod gate) and increased speed.
+
+
+However, canines and other legged animals have adapted to efficient and fast 
+methods for walking using muscles that suggest robotic design inspired by 
+biomechanics of a dog can offer insights into making a more efficient and 
+faster robot that retains the advantages of legged robots for walking on uneven
+% TODO(buckbaskin): incorporate a second reason for walking robots
+terrain and remaining stable in varied environments.
 
 \section{Specifications and Important Challenges}
 
 For control of a walking robot, based on previous challenges
+
+Challenges:
+\begin{itemize}
+\item Peak position during hip actuation isn't accurate (5-15 deg) 
+\item Delays between sensor data off the robot -> lab view -> animatlab -> lab
+view -> robot cause tracking problems
+\item Scapula drives forward motion for front legs in the reverse Z orientation
+\item Improve torque profiles to eliminate external support, even close to
+maximum activation
+\item Better internals and internal understanding of dynamics to match desired
+and intended activations
+\end{itemize}
+
+Requirements:
+\begin{itemize}
+\item Increase position accuracy to less than 5 degrees from maximum desired position
+\item Minimize phase shift between desired and achieved trajectory
+\item Decrease torque errors between neuron desired model and executed torques
+\end{itemize}
+
+Internal Design Goals:
+\begin{itemize}
+\item Incorporate and ``understanding" of dynamics
+\item Optimize current control for future position or, stated another way,
+control for the current time/state with delayed sensory information
+\end{itemize}
+
+\section{This Work}
+
+Chapter X discusses ...
+
+Chapter Y discusses ...
 
