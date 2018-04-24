@@ -12,6 +12,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{csquotes}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
@@ -20,7 +21,9 @@
 \usepackage{setspace}
 \doublespacing
 \usepackage[style=ieee, backend=biber]{biblatex}
-% \addbibresource{references.bib}
+\addbibresource{references.bib}
+
+\usepackage[hidelinks]{hyperref}
 
 % %%% math %%%
 % \usepackage{amsmath, amssymb, amsthm}
@@ -110,6 +113,7 @@ This research develops a new synthetic nervous system for control of joints usin
 \chapter{Network Topologies}
 \input{chapters/appendix}
 
+\nocite{*}
 \printbibliography
 
 \end{document}
