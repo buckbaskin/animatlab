@@ -24,6 +24,7 @@
 \addbibresource{references.bib}
 
 \usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
 
 % %%% math %%%
 % \usepackage{amsmath, amssymb, amsthm}
@@ -71,15 +72,21 @@
 \listoffigures
 
 \chapter*{Acknowledgments}
+\label{chap:acknowledgements}
 Acknowledged!
 
 \chapter*{Abstract}
+\label{chap:abstract}
+
 This research develops a new synthetic nervous system for control of joints using pneumatic actuators in order to create a more efficient and adaptable walking robot system. This design implements new features not previously seen in a control oriented nervous system. It develops 3 major design components not previously used for control of antagonistic pneumatic actuators. It uses an internal model of the actuators to esimate the state of the joint. It uses internal estimates of the dynamics of the joint to continually optimize the control output. Additionally, it updates its own internal system model with a memory-like loop to allow the controller to adapt to any joint and trajectory. The controller allows for the replacement of proportional or other control designs with a learning system that decreases wasted antagonistic muscle activation and wasted energy, decreases phase lag and increases trajectory tracking accuracy.
 
 \chapter{Introduction}
+\label{chap:introduction}
+
 \input{chapters/introduction}
 
 \chapter{Literature Review/Background}
+\label{chap:lit_review}
 \begin{itemize}
 \item General Robot Class
 \item Robots for a more particular task
@@ -88,6 +95,7 @@ This research develops a new synthetic nervous system for control of joints usin
 \input{chapters/lit_review}
 
 \chapter{Controller Design}
+\label{chap:controller_design}
 \begin{itemize}
   \item Simulation
   \item Design of each component x 5
@@ -96,6 +104,7 @@ This research develops a new synthetic nervous system for control of joints usin
 \input{chapters/controller_design}
 
 \chapter{Neuron Design}
+\label{chap:neuron_design}
 \begin{itemize}
   \item Design of each component x 5
 \end{itemize}
@@ -103,10 +112,13 @@ This research develops a new synthetic nervous system for control of joints usin
 \input{chapters/neuron_design}
 
 \chapter{Testing/Methods}
+\label{chap:methods}
 
 \chapter{Results}
+\label{chap:results}
 
 \chapter{Conclusions and Future Work}
+\label{chap:conclusion}
 \input{chapters/conclusion}
 
 \appendix

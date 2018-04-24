@@ -68,6 +68,8 @@ terrain and remaining stable in varied environments.
 
 For control of a walking robot, based on previous challenges
 
+% TODO(buckbaskin): break this into subsections and a paragraph for each
+% challenge
 Challenges:
 \begin{itemize}
 \item Peak position during hip actuation isn't accurate (5-15 deg) 
@@ -80,6 +82,8 @@ maximum activation
 and intended activations
 \end{itemize}
 
+% TODO(buckbaskin): break this into subsections and a paragraph for each
+% requirement
 Requirements:
 \begin{itemize}
 \item Increase position accuracy to less than 5 degrees from maximum desired position
@@ -87,6 +91,8 @@ Requirements:
 \item Decrease torque errors between neuron desired model and executed torques
 \end{itemize}
 
+% TODO(buckbaskin): break this into subsections and a paragraph for each
+% design goal
 Internal Design Goals:
 \begin{itemize}
 \item Incorporate and ``understanding" of dynamics
@@ -96,7 +102,14 @@ control for the current time/state with delayed sensory information
 
 \section{This Work}
 
-Chapter X discusses ...
+\Cref{chap:controller_design} discusses the design of a new type 
+of controller that incorporates the
+design goals of understanding the dynamics, projecting forward in time and
+optimizing the controlled output based on the understanding of dynamics.
 
-Chapter Y discusses ...
+\Cref{chap:neuron_design} discusses the implementation of the controller within 
+a neuron
+simulation. This discussion talks about some simplifications and approximations
+that were made in the process, as well as areas of the network that are more
+complex improvements over the controller design in \Cref{chap:controller_design}.
 
