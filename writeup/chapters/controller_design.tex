@@ -1,14 +1,92 @@
+The controller design implemented in code had 3 major goals derived from
+requirements and challenges faced with a neural implementation in (cite Hunt's
+thesis). See \myref{chap:introduction} for more details.
+
+\begin{enumerate}
+\item Increase position accuracy to less than 5 degrees from maximum desired
+position
+\item Minimize phase shift between desired and achieved trajectory
+\item Decrease torque errors between neuron desired model and executed torques
+\end{enumerate}
+
+Requirement 2 is fulfilled in
+the controller through sensor fusion to estimate state at the time of sensor
+readings (assumed to be ``current" time) and then using an internal model of the
+joint dynamics to predict the evolution of the joint's position and velocity
+given a particular controlling torque. From there, an internal optimization loop
+can run to identify a goal torque with sufficient resolution.
+
+An accurate internal model will help meet all 3 requirements. In particular, an
+internal model directly solves Requirement 3 by matching controlled torques to
+pressures accounting for the pneumatic muscle dynamics. The internal model
+designed into the control is designed to adapt to the actual observed
+characteristics of the joint, allowing for changing dynamics over time (for
+example, adding or removing weight from the robot, degrading pneumatic muscles
+or changing positions of other limbs),
+adapting to different joints with the same controller and increasing the
+robustness of the controller to variations from the original estimated
+properties of the robot.
+
+Requirement 1 is met by a combination of the design decisions above and
+consistitutes a metric by which to measure the effectiveness of the new design
+relative to old designs, regardless of implementation.
+
 \section{Sensor Fusion}
+
+Within the controller, state estimation is done in a relatively simplified
+manner. This trades off accuracy for computation time, where the estimation was
+refined to run sufficiently accurately that the rest of the system was robust to
+small estimation errors.
 
 \subsection{Pneumatic Actuator Simulation/Simplification}
 
+The pneumatic actuators and their existing pressure controller were simulated 
+at varying degrees of fidelity ...
+
+% TODO(buckbaskin): finish this thought based on code
+
 \subsection{Centered Divided Difference}
+
+The velocity was estimated with a fixed window of the last 3 position readings.
+From there, a centered divided difference formula was used to estimate the
+slope and estimate velocity. This was found to be more accurate than a forward
+divided difference method only incorporating two points in practice when run
+against simulated data.
+
+% TODO(buckbaskin): write the two equations
+
+% TODO(buckbaskin): show a plot with the two different estimations side by side
+% to show error
 
 \section{Optimizing Torque Control}
 
+Once the current state of the robot was determined, iteratively optimizing the
+desired torque was relatively simple. First, bounds were selected from estimates
+of the maximum and minimum (maximum negative) torque that can be applied to the
+joint and a forward projection mechanism based on the internal physics model was
+used to estimate the resulting position. From there, a binary search procedure
+can be used to repeatedly shrink the bounds around the optimal torque. The final
+step was to convert the desired torque into a pressure control.
+
 \subsection{Forward Projection of State}
 
+Given the state estimation, project forward.
+
+Also, can use bounds on estimated state, say high and low velocity, to project
+forward through multiple iterations, and optimize for the torque that, given the
+bounds, is most likely to produce the best result. This work is unnecessary for
+a well implemented state estimation system, but is helpful for increasing
+robustness to potential sensor reading errors or estimation errors.
+
+% TODO(buckbaskin): complete this thought
+
 \subsection{Torque to Pressure}
+
+% TODO(buckbaskin): complete these two steps
+Show the math
+
+Also, talk about designing the desired pressure around the knowledge of a
+bang-bang controller under the hood for more accurate pressure control
 
 \section{System Modeling}
 
@@ -16,4 +94,11 @@ Parameter weight updates
 
 \subsection{Actual Error Calculation}
 
-\subsection{Evaluation of asymmetric error concerns}
+% TODO(buckbaskin): adapt existing work on how the error update should be done
+This comes from a writeup that I've already done
+
+\subsection{Evaluation of asymmetric error concerns}o
+
+% TODO(buckbaskin): use some sort of math to show that the over/underestimation
+% of damping, etc. can lead to underdamped or overdamped conditions. Prefer
+% overdamped control
