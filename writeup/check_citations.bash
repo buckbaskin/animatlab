@@ -1,1 +1,1 @@
-biber --input-directory out --output-directory out main
+biber --input-directory out --output-directory out --validate_datamodel main
