@@ -1,35 +1,132 @@
-\section{Similar Robots}
+\bbs{Puppy}
 
-\subsection{Canine Robots}
+The canine-inspired robot Puppy was designed to prove the feasibility of using
+pneumatic muscles for actuating a quadruped robot. The design focuses on 
+imitating the musculoskeletal parameters of an adult greyhound. 
+\cite{PuppyDesign}
 
-\subsection{Robots with Pneumatic Muscles}
+\bbs{Similar Robots}
+
+There have been multipled variations of walking robots in 2-legged and 4-legged
+configurations. Canines and felines are a common inspiration for these kinds of
+robots, with inspiration ranging from very low degree of freedom (single joint
+per leg) robots that mimic gait timing to robots that attempt to implement
+complete structural and muscular replications of dogs or cats.
+
+\bbss{Canine Robots}
+
+\bbsss{Example Robots}
+
+\bbsss{Dynamics}
+
+The dynamics of robots, even those that attempt to accurately mimic biolgoical
+mechanisms, can vary significantly in performance from their biological
+counterparts. For example, mirroring the standard Z configuration of a canine-
+inspired robot can actually increase its efficiency by better utilizing passive
+spring elements. This suggests that animals may have adapted gaits and
+stimulation patterns for redundant muscles that take better advantage of passive
+properties of muscles than are accomodated for in current control designs.
+\cite{HindLegMorphology}
+
+Passive elements and the particular properties of a joint play a stron role in
+the energy required to actuate the joint and the effective frequency at which it
+can operate. \cite{Na2015}
+
+\bbss{Robots with Pneumatic Muscles}
 
 % TODO(buckbaskin): find survey of other robots that use pneumatic muscles
 
-\subsubsection{Pneumatic Actuators}
+Cat with multiple redundant and antagonistic actuators
+\cite{Rosendo2013}
 
-Pneumatic Actuators are used on the Puppy robot. They are the primary form of actuation, replacing electric motors or hydraulic actuation. One of the key benefits of using pneumatic muscles in a biologically-inspired robot design is that the muscles have similar properties to the biological muscles that control canines. 
+Canine robot (cheetah-like?) with a rules based controller that switched between
+pressures tied to neuron activations
+\cite{Pneupard2013}
+
+Quadruped robot, biologically inspired but not canine biomimetic \cite{Wait2014}
+
+
+
+\bbs{Pneumatic Actuators}
+
+Compare air muscles to electric motors
+\cite{Tavakoli2008}
+
+\bbss{Characterizing Pneumatic Actuators}
+
+Characterize pneumatic actuators for use in a (linear?) controller
+\cite{Situm2008}
+
+Pneumatic Actuators are used on the Puppy robot. They are the primary form of
+actuation, replacing electric motors or hydraulic actuation. One of the key
+benefits of using pneumatic muscles in a biologically-inspired robot design is
+that the muscles have similar properties to the biological muscles that control
+canines. 
 % TODO(buckbaskin): find a biology paper that covers the strain-effort relationship for muscles
-During static analysis, the muscles demonstrated a non-linear response to changing length and the ability to apply a force. This relationship was quantified and generalized in \cite{HuntPMuscles}. This research showed that there is a relationship between the strain on the muscle and the pressure required to support a fixed load that can be approximated by a shifted tangent function. Using test and validation sets, the model was fit to data collected from existing actuators on Puppy. Further, the paper goes on to show that the model helps derive a controller for semi-static motion of joints. \cite{HuntPMuscles}
+During static analysis, the muscles demonstrated a non-linear response to
+changing length and the ability to apply a force. This relationship was
+quantified and generalized in \cite{HuntPMuscles}. This research showed that
+there is a relationship between the strain on the muscle and the pressure
+required to support a fixed load that can be approximated by a shifted tangent
+function. Using test and validation sets, the model was fit to data collected
+from existing actuators on Puppy. Further, the paper goes on to show that the
+model helps derive a controller for semi-static motion of joints. 
+\cite{HuntPMuscles}
 
-Other research with pneumatic muscles provides a model for incorporating the dynamic properties of pneumatic actuators to allow for a more fine tuned control process. In \cite{DynamicPMuscles}, the authors use dynamic application and removal of load to measure the effective spring constant of the muscles and the effective damping constant. The spring constant was shown to be correlated with pressure, with a small constant spring effect at no pressure from the muscle material itself. The damping coefficient was shown to be positively correlated with pressure during contraction and weakly negatively correlated with pressure during relaxation. The work suggests that this damping comes from intenal friction in the actuator design. Additionally, the damping due to friction effects in the input and exhaust lines is shown to be minimal compared to internal actuator effects. \cite{DynamicPMuscles}
+Other research with pneumatic muscles provides a model for incorporating the
+dynamic properties of pneumatic actuators to allow for a more fine tuned control
+process. In \cite{DynamicPMuscles}, the authors use dynamic application and
+removal of load to measure the effective spring constant of the muscles and the
+effective damping constant. The spring constant was shown to be correlated with
+pressure, with a small constant spring effect at no pressure from the muscle
+material itself. The damping coefficient was shown to be positively correlated
+with pressure during contraction and weakly negatively correlated with pressure
+during relaxation. The work suggests that this damping comes from intenal
+friction in the actuator design. Additionally, the damping due to friction
+effects in the input and exhaust lines is shown to be minimal compared to
+internal actuator effects. \cite{DynamicPMuscles}
 
 \cite{einstein}
 
-\section{Similar Neurons}
+\bbs{Controllers}
+
+\bbss{Overview from Robotics 1}
+
+\bbss{Joint Controllers}
+
+In \cite{EventBasedWalking}, a new controller paradigm is proposed where control
+is done by switching between known phases in a state machine based on sensory
+events to generate an adaptable trajectory similar to purely time-based
+trajectories where stability was achieved by a separate stability adjustment
+system. This paper focuses on control of a biped robot; however, the lessons can
+be applied to a quadruped.
+
+\bbss{Controllers for Pneumatic Muscles}
+
+This paper talks about using Active Force Control (pretty much what I'm doing)
+to control a pneumatic muscle for a linear joint.
+% TODO(buckbaskin): justify why my work is more interesting (in neurons, stable estimation of parameters)
+% TODO(buckbaskin): find a good paper to summarize active force control
+\cite{Jahanabadi2009}
+
+\bbs{Similar Neurons}
+
+\bbss{CPGs}
+
+Many neuron control systems for oscilating joints incorporate central pattern
+generators (CPGs). In their most reduced form, CPGs are a small bundle of
+neurons that oscillate continually without requiring outside stimulation. In
+practice, they are often connected to muscles through pattern formation or other
+layers to convert the CPG cycle into muscle activation.
+% TODO(buckbaskin): include more contents of CPGReview
+\cite{CPGReview}
 
 Multi-Level CPG Organization: low level PID/control loop with higher level CPG
 \cite{MultiLevelCPG}
 
+In insects, CPGs have been shown to combine with peripheral sensory feedback and
+descending signals to coordinate walking motion between multiple joints and
+limbs.
 CPGs for baseline, sensors/reflexes to reset \cite{SixLeggedWalking}
 
-\subsection{Neuron Design}
-
-\section{Controllers}
-
-\subsection{Overview from Robotics 1}
-
-\subsection{Joint Controllers}
-
-\subsection{Controllers for Pneumatic Muscle Joints?}
-
+\bbss{Neuron Design}
