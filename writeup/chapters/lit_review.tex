@@ -4,10 +4,15 @@
 
 \subsection{Robots with Pneumatic Muscles}
 
+% TODO(buckbaskin): find survey of other robots that use pneumatic muscles
+
 \subsubsection{Pneumatic Actuators}
 
-\cite{HuntPMuscles}
-\cite{DynamicPMuscles}
+Pneumatic Actuators are used on the Puppy robot. They are the primary form of actuation, replacing electric motors or hydraulic actuation. One of the key benefits of using pneumatic muscles in a biologically-inspired robot design is that the muscles have similar properties to the biological muscles that control canines. 
+% TODO(buckbaskin): find a biology paper that covers the strain-effort relationship for muscles
+During static analysis, the muscles demonstrated a non-linear response to changing length and the ability to apply a force. This relationship was quantified and generalized in \cite{HuntPMuscles}. This research showed that there is a relationship between the strain on the muscle and the pressure required to support a fixed load that can be approximated by a shifted tangent function. Using test and validation sets, the model was fit to data collected from existing actuators on Puppy. Further, the paper goes on to show that the model helps derive a controller for semi-static motion of joints. \cite{HuntPMuscles}
+
+Other research with pneumatic muscles provides a model for incorporating the dynamic properties of pneumatic actuators to allow for a more fine tuned control process. In \cite{DynamicPMuscles}, the authors use dynamic application and removal of load to measure the effective spring constant of the muscles and the effective damping constant. The spring constant was shown to be correlated with pressure, with a small constant spring effect at no pressure from the muscle material itself. The damping coefficient was shown to be positively correlated with pressure during contraction and weakly negatively correlated with pressure during relaxation. The work suggests that this damping comes from intenal friction in the actuator design. Additionally, the damping due to friction effects in the input and exhaust lines is shown to be minimal compared to internal actuator effects. \cite{DynamicPMuscles}
 
 \cite{einstein}
 
