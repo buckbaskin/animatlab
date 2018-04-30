@@ -21,9 +21,7 @@ A minimalistic robot for simulation high frequency control based on an open-loop
 CPG control design. 
 \cite{Narioka2012}
 
-\bbsss{Example Robots}
-
-\bbsss{Dynamics}
+\bbsss{Dynamics of Canine Robots}
 
 The dynamics of robots, even those that attempt to accurately mimic biolgoical
 mechanisms, can vary significantly in performance from their biological
@@ -38,7 +36,7 @@ Passive elements and the particular properties of a joint play a stron role in
 the energy required to actuate the joint and the effective frequency at which it
 can operate. \cite{Na2015}
 
-\bbss{Robots with Pneumatic Muscles}
+\bbss{Other Robots with Pneumatic Muscles}
 
 % TODO(buckbaskin): find survey of other robots that use pneumatic muscles
 
@@ -50,8 +48,6 @@ pressures tied to neuron activations
 \cite{Pneupard2013}
 
 Quadruped robot, biologically inspired but not canine biomimetic \cite{Wait2014}
-
-
 
 \bbs{Pneumatic Actuators}
 
@@ -98,6 +94,8 @@ internal actuator effects. \cite{DynamicPMuscles}
 
 \bbss{Overview from Robotics 1}
 
+% TODO(buckbaskin): add context for control, proportional, feedforward, computed torque, etc
+
 \bbss{Joint Controllers}
 
 In \cite{EventBasedWalking}, a new controller paradigm is proposed where control
@@ -121,6 +119,8 @@ doing) to control a pneumatic muscle joint based on an acceleration trajectory.
 
 \bbs{Similar Neurons}
 
+% TODO(buckbaskin): add a citation/introduction motivating the use of neurons for controllers
+
 \bbss{CPGs}
 
 Many neuron control systems for oscilating joints incorporate central pattern
@@ -140,3 +140,14 @@ limbs.
 CPGs for baseline, sensors/reflexes to reset \cite{SixLeggedWalking}
 
 \bbss{Neuron Design}
+
+Neuron-based controllers are often designed in a data-driven way, where the
+neuron system is treated as a black box. Recent work, collected in 
+\cite{NickFunctionalSubnetwork}, shows that a more detailed neuron model can be
+used to build up small subnetworks of neurons that perform a specific task.
+These subnetworks can be recursively combined to form larger and more intricate
+networks that form a controller. This approach allows for the integration of
+existing work in controller design with biological inspiration to increase the
+effectiveness of the controller when controlling a biologically inspired robot.
+This approach also allows for rapid testing and developing new hypothesis on how
+biological systems work in a way that typical controller designs do not.
