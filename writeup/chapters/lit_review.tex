@@ -3,7 +3,19 @@
 The canine-inspired robot Puppy was designed to prove the feasibility of using
 pneumatic muscles for actuating a quadruped robot. The design focuses on 
 imitating the musculoskeletal parameters of an adult greyhound. 
-\cite{PuppyDesign}
+\cite{PuppyDesign} This work is motivated by extensions and potential
+improvements to a control method developed by Alex Hunt in
+\cite{HuntPhDThesis} and \cite{HuntHindLegWalking}. Among other areas identified
+for improvement and future work, the thesis in particular cites accurate torque
+profiles as a key improvment for increasing the stability and mobility of the
+robot. Related to the accurate torque profiles, the joint peak angles are
+accurate to between 5 and 15 degrees, but improving the accuracy further offers
+an avenue for more effective walking. One potential source of error in the
+hardware system is the delay between a sensor reading, communicating the data to
+an offboard computer and then communicating a command back to the robot. The end
+result of the current system is that the hind legs can walk effectively;
+however, the front legs would trip or otherwise get stuck under the body of the
+robot.
 
 \bbs{Similar Robots}
 
@@ -58,7 +70,17 @@ Compare air muscles to electric motors
 
 \bbss{Characterizing Pneumatic Actuators}
 
-Characterize pneumatic actuators for use in a (linear?) controller
+Characterize pneumatic actuators for use in a (linear?) controller Among other
+areas identified for improvement and future work, the thesis in particular cites
+accurate torque profiles as a key improvment for increasing the stability and
+mobility of the robot. Related to the accurate torque profiles, the joint peak
+angles are accurate to between 5 and 15 degrees, but improving the accuracy
+further offers an avenue for more effective walking. One potential source of
+error in the hardware system is the delay between a sensor reading,
+communicating the data to an offboard computer and then communicating a command
+back to the robot. The end result of the current system is that the hind legs
+can walk effectively; however, the front legs would trip or otherwise get stuck
+under the body of the robot.
 \cite{Situm2008}
 
 Pneumatic Actuators are used on the Puppy robot. They are the primary form of
@@ -106,6 +128,13 @@ events to generate an adaptable trajectory similar to purely time-based
 trajectories where stability was achieved by a separate stability adjustment
 system. This paper focuses on control of a biped robot; however, the lessons can
 be applied to a quadruped.
+
+Event-based control through reflexes was also proposed as a way for additional
+improvement of the existing synthetic nervous system in \cite{HuntPhDThesis}.
+The thesis suggest that a particular a reflex known as the elevator reflex,
+where the paw strikes an
+obstacle mid-swing, could be used as the design inspiration for an internal recovery
+mechanism to prevent tripping.
 
 \bbss{Controllers for Pneumatic Muscles}
 
