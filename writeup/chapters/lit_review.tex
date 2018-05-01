@@ -251,10 +251,18 @@ muscle system with a controller that has a good system model can be effective; h
 actuator itself and tailoring the controller to a robotic application as opposed
 to a vertical trolley.
 
-This paper talks about using model based control (sounds similar to what I'm 
-doing) to control a pneumatic muscle joint based on an acceleration trajectory.
-% 4
-\cite{Wang2013}
+In \cite{Wang2013}, the authors discuss using a model based control method that
+attempts to minimize the antagonistic muscle activation during operation in
+order to better track a trajectory and imitate the muscle activations of a
+biological system. The end result was the merger of both a high stiffness 
+controller for operation near the desired trajectory and a high torque system
+for high velocity or large error corrections. This work suggests that a system 
+that smoothly combines these two behaviors will be highly effective, measured by
+joint tracking accuracy for a steady position, joint tracking at high 
+acceleration and velocity as well as joint efficiency and reduced antagonistic
+waste. On the other hand, this model based system doesn't appear to estimate
+parameters of the system that can continually change, which opens up an avenue
+for potential improvement.
 
 \bbs{Similar Neurons}
 
