@@ -8,19 +8,19 @@ imitating the musculoskeletal parameters of an adult greyhound.
 improvements to a control method developed by Alex Hunt in
 \cite{HuntPhDThesis} and \cite{HuntHindLegWalking}. Among other areas identified
 for improvement and future work, the thesis in particular cites accurate torque
-profiles as a key improvment for increasing the stability and mobility of the
+profiles as a key improvement for increasing the stability and mobility of the
 robot. Related to the accurate torque profiles, the joint peak angles are
 accurate to between 5 and 15 degrees, but improving the accuracy further offers
 an avenue for more effective walking. One potential source of error in the
 hardware system is the delay between a sensor reading, communicating the data to
-an offboard computer and then communicating a command back to the robot. The end
+an off-board computer and then communicating a command back to the robot. The end
 result of the current system is that the hind legs can walk effectively;
 however, the front legs would trip or otherwise get stuck under the body of the
 robot.
 
 \bbs{Similar Robots}
 
-There have been multipled variations of walking robots in 2-legged and 4-legged
+There have been multiple variations of walking robots in 2-legged and 4-legged
 configurations. Canines and felines are a common inspiration for these kinds of
 robots, with inspiration ranging from very low degree of freedom (single joint
 per leg) robots that mimic gait timing to robots that attempt to implement
@@ -46,13 +46,13 @@ independent of the flexion or extension of the leg.
 
 \bbsss{Dynamics of Canine Robots}
 
-The dynamics of robots, even those that attempt to accurately mimic biolgoical
+The dynamics of robots, even those that attempt to accurately mimic biological
 mechanisms, can vary significantly in performance from their biological
 counterparts. For example, mirroring the standard Z configuration of a canine-
 inspired robot can actually increase its efficiency by better utilizing passive
 spring elements. This suggests that animals may have adapted gaits and
 stimulation patterns for redundant muscles that take better advantage of passive
-properties of muscles than are accomodated for in current control designs.
+properties of muscles than are accommodated for in current control designs.
 \cite{HindLegMorphology}
 
 Passive elements and the particular properties of a joint play a strong role in
@@ -71,9 +71,9 @@ Additionally, the devices are used for medical applications where the actuators
 inherent compliance, lighter weight and higher power output are also important. 
 
 The Pneupard robot is a feline-inspired robot based on a cheetah's
-musculoskeletal design. It is actuated using pnematic muscles to control each 3
-DOF leg. To control the leg, a rules-based controller is used to switch between
-states where muscle activations in an actual cat are mapped to pressures in each
+musculoskeletal design. It is actuated using pneumatic muscles to control each 3
+degree of freedom leg. To control the leg, a rules-based controller is used to switch between
+states where muscle activation in an actual cat are mapped to pressures in each
 muscle. This was aided by taking a biomimetic approach to determining the lever
 arms by which the pneumatic muscles actuate. The results showed that the simple
 control system remained effective even in the face of obstacles in the robot
@@ -84,7 +84,7 @@ In \cite{Wait2014}, the authors show that a simpler controller design can be
 used on a quadruped robot with biologically inspired design to achieve a highly
 power dense design that walks effectively. The control approach focuses on
 a high-impedance control scheme for the stance phase and a second state
-that takes advantage of pneumatic actuators's compliance during the swing phase.
+that takes advantage of pneumatic actuator compliance during the swing phase.
 This design does not use pneumatic muscles. Instead, the authors use pneumatic
 cylinders to make the design more compact by using a device that can apply both
 pushing and pulling forces on a joint. 
@@ -105,10 +105,10 @@ advantage of the unique properties of two antagonistic nonlinear actuators.
 
 Pneumatic actuators less common in robotics compared with electric motors;
 however,
-they are often result in a lighter system for controling a joint than an
-electric motor. There are tradeoffs to each, but pneumatic actuators offer a
+they are often result in a lighter system for controlling a joint than an
+electric motor. There are trade offs to each, but pneumatic actuators offer a
 higher power to weight ratio for smaller displacement at low velocity and are
-often a significant improvment over electric motors at higher velocities.
+often a significant improvement over electric motors at higher velocities.
 \cite{Tavakoli2008} This suggests that they are well suited for applications in
 biological walking robots where an increased power to weight ratio increases
 the efficiency of the walking mechanism, especially at high joint velocities
@@ -117,7 +117,7 @@ found in a stepping motion.
 \bbss{Characterizing Pneumatic Actuators}
 
 In \cite{Situm2008}, the authors analyze gas flow properties for fluidic muscles
-and experimentally quantifying their performance in an antagonisitc coupling
+and experimentally quantifying their performance in an antagonistic coupling
 through a pulley. One of the key conclusions motivating future work is the
 demonstration for a single joint with most external factors removed, the
 proportional-integration control as implemented was unable to fully correct for
@@ -146,7 +146,7 @@ effective damping constant. The spring constant was shown to be correlated with
 pressure, with a small constant spring effect at no pressure from the muscle
 material itself. The damping coefficient was shown to be positively correlated
 with pressure during contraction and weakly negatively correlated with pressure
-during relaxation. The work suggests that this damping comes from intenal
+during relaxation. The work suggests that this damping comes from internal
 friction in the actuator design. Additionally, the damping due to friction
 effects in the input and exhaust lines is shown to be minimal compared to
 internal actuator effects. \cite{DynamicPMuscles}
@@ -155,8 +155,6 @@ internal actuator effects. \cite{DynamicPMuscles}
 
 \bbs{Controllers}
 
-% 2
-% TODO(buckbaskin): cite MLS94 Robits 1 textbook
 Joint position controllers can be treated as a function mapping the current
 state (usually position, velocity and acceleration) to a torque to match the 
 desired trajectory, expressed as position but often constrained to be a twice
@@ -169,7 +167,7 @@ M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{
 If the robot starts at its desired initial state and the model of the robot is
 perfectly known, the robot will track the exact trajectory. Feedback in the 
 form of sensory input is used to correct for starting error or error in the 
-forumulation of the exact model.
+formulation of the exact model.
 
 One common formulation for control is a proportional-derivative controller, 
 where torque is chosen as the following:
@@ -192,13 +190,13 @@ windup or other issues.
 One general method for overcoming these limitations is to use a model of the 
 system to perform what is known as computed torque control, where the actuator
 applies enough torque to account for the $C(\theta, \dot{\theta})$ and
-$N(\theta, \dot{\theta})$ terms and then applies the desired acceleration. This feedforward term is written as follows:
+$N(\theta, \dot{\theta})$ terms and then applies the desired acceleration. This feed-forward term is written as follows:
 
 \begin{equation}
 \tau = M(\theta) \ddot{\theta_{d}} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{\theta})
 \end{equation}
 
-To correct for intitial error or otherwise, additional proportional terms are
+To correct for initial error or otherwise, additional proportional terms are
 added to the acceleration term:
 
 \begin{equation}
@@ -206,7 +204,7 @@ added to the acceleration term:
 \end{equation}
 
 These additional terms are known as the feedback component. Since these 
-corrections are linear in a system that is linearized by the feedforward term,
+corrections are linear in a system that is linearized by the feed-forward term,
 values for the gains can be easily chosen to make the system stable and converge
 to exactly following the desired trajectory (exponentially stable). \cite{MLS94}
 
@@ -235,12 +233,23 @@ mechanism to prevent tripping.
 
 \bbss{Controllers for Pneumatic Muscles}
 
-This paper talks about using Active Force Control (pretty much what I'm doing)
-to control a pneumatic muscle for a linear joint.
-% 3
-% TODO(buckbaskin): justify why my work is more interesting (in neurons, stable estimation of parameters)
-% TODO(buckbaskin): find a good paper to summarize active force control
-\cite{Jahanabadi2009}
+Multiple different methods have been proposed specifically for controlling 
+pneumatic muscles.
+
+In \cite{Jahanabadi2009}, the authors use Active Force Control
+to control a pneumatic muscle for a prismatic joint. The system was designed to
+use a PID control system as an outer loop with an inner loop based around an
+artificial neural network to adapt to disturbances and other dynamic phenomena.
+In practice, the system used a neural network to learn the nonlinear parameters
+seen in the feed-forward term of the computed torque controller to provide a
+nearly linear system to the PID controller. This system used a very simple
+artificial neuron network to learn the system model, which is approximated as an
+effective mass. The results of the paper show that the PID controller alone did
+not track a square or saw-tooth wave well, and the system was improved by
+incorporating a nonlinear system model. This work suggests that a pneumatic 
+muscle system with a controller that has a good system model can be effective; however, the performance can be further improved with a better model of the
+actuator itself and tailoring the controller to a robotic application as opposed
+to a vertical trolley.
 
 This paper talks about using model based control (sounds similar to what I'm 
 doing) to control a pneumatic muscle joint based on an acceleration trajectory.
@@ -254,7 +263,7 @@ doing) to control a pneumatic muscle joint based on an acceleration trajectory.
 
 \bbss{CPGs}
 
-Many neuron control systems for oscilating joints incorporate central pattern
+Many neuron control systems for oscillating joints incorporate central pattern
 generators (CPGs).
 % TODO(buckbaskin): including (cite more papers that use CPGs)
 In their most reduced form, CPGs are a small bundle of
