@@ -1,3 +1,4 @@
+% TODO(buckbaskin): consider being consistent and using only typically instead of usually
 \bbs{Puppy}
 
 The canine-inspired robot Puppy was designed to prove the feasibility of using
@@ -154,10 +155,64 @@ internal actuator effects. \cite{DynamicPMuscles}
 
 \bbs{Controllers}
 
-\bbss{Overview from Robotics 1}
-
 % 2
-% TODO(buckbaskin): add context for control, proportional, feedforward, computed torque, etc
+% TODO(buckbaskin): cite MLS94 Robits 1 textbook
+Joint position controllers can be treated as a function mapping the current
+state (usually position, velocity and acceleration) to a torque to match the 
+desired trajectory, expressed as position but often constrained to be a twice
+differentiable function.
+
+\begin{equation}
+M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{\theta}) = \tau
+\end{equation}
+
+If the robot starts at its desired initial state and the model of the robot is
+perfectly known, the robot will track the exact trajectory. Feedback in the 
+form of sensory input is used to correct for starting error or error in the 
+forumulation of the exact model.
+
+One common formulation for control is a proportional-derivative controller, 
+where torque is chosen as the following:
+
+\begin{equation}
+\tau = -K_{v} \dot{e} - K_{p} e
+\end{equation}
+
+where
+
+\begin{equation}
+e = \theta - \theta_{d}
+\end{equation}
+
+This results in a control system that is stable, but it doesn't not converge to
+exact tracking for most real systems. A common modification for this is to add
+an integral term that accounts for steady state error; however, this can lead to
+windup or other issues.
+
+One general method for overcoming these limitations is to use a model of the 
+system to perform what is known as computed torque control, where the actuator
+applies enough torque to account for the $C(\theta, \dot{\theta})$ and
+$N(\theta, \dot{\theta})$ terms and then applies the desired acceleration. This feedforward term is written as follows:
+
+\begin{equation}
+\tau = M(\theta) \ddot{\theta_{d}} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{\theta})
+\end{equation}
+
+To correct for intitial error or otherwise, additional proportional terms are
+added to the acceleration term:
+
+\begin{equation}
+\tau = M(\theta) (\ddot{\theta_{d}} - K_{v} \dot{e} - K_{p} e) + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{\theta})
+\end{equation}
+
+These additional terms are known as the feedback component. Since these 
+corrections are linear in a system that is linearized by the feedforward term,
+values for the gains can be easily chosen to make the system stable and converge
+to exactly following the desired trajectory (exponentially stable). This system 
+of control is not always practical because it requires a good knowledge of the 
+system under control and a model that is well fit to the system. In practice, 
+there are many different ways to achieve effective control for a rotational 
+joint.
 
 \bbss{Joint Controllers}
 
