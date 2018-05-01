@@ -90,30 +90,43 @@ pushing and pulling forces on a joint.
 
 \bbs{Pneumatic Actuators}
 
-Compare air muscles to electric motors
-% 1
-\cite{Tavakoli2008}
+Pneumatic artificial muscles typically consist of a high pressure source, a
+flexible polymer section and an exhaust valve. The muscle contracts in length
+when the internal pressure is higher than the surrounding environment. During
+this contraction, the muscle applies a force. One limitation of pneumatic
+muscles is that they are typically unable to apply force during relaxation in
+the same way a rigid pneumatic cylinder can. Instead, they are typically used in
+antagonistic pairs. The nonlinear nature of the muscles combined with the
+antagonistic design means that, in practice, simple linear controllers are
+ineffective. This means that more complex controllers are required; however,
+this also means that the controller design can be more detailed and take
+advantage of the unique properties of two antagonistic nonlinear actuators.
+
+Pneumatic actuators less common in robotics compared with electric motors;
+however,
+they are often result in a lighter system for controling a joint than an
+electric motor. There are tradeoffs to each, but pneumatic actuators offer a
+higher power to weight ratio for smaller displacement at low velocity and are
+often a significant improvment over electric motors at higher velocities.
+\cite{Tavakoli2008} This suggests that they are well suited for applications in
+biological walking robots where an increased power to weight ratio increases
+the efficiency of the walking mechanism, especially at high joint velocities
+found in a stepping motion.
 
 \bbss{Characterizing Pneumatic Actuators}
 
-Characterize pneumatic actuators for use in a (linear?) controller Among other
-areas identified for improvement and future work, the thesis in particular cites
-accurate torque profiles as a key improvment for increasing the stability and
-mobility of the robot. Related to the accurate torque profiles, the joint peak
-angles are accurate to between 5 and 15 degrees, but improving the accuracy
-further offers an avenue for more effective walking. One potential source of
-error in the hardware system is the delay between a sensor reading,
-communicating the data to an offboard computer and then communicating a command
-back to the robot. The end result of the current system is that the hind legs
-can walk effectively; however, the front legs would trip or otherwise get stuck
-under the body of the robot.
-\cite{Situm2008}
+In \cite{Situm2008}, the authors analyze gas flow properties for fluidic muscles
+and experimentally quantifying their performance in an antagonisitc coupling
+through a pulley. One of the key conclusions motivating future work is the
+demonstration for a single joint with most external factors removed, the
+proportional-integration control as implemented was unable to fully correct for
+errors even in a desired trajectory composed of slow steps to a constant value
+where the control system had time to reach a set actuation pressure.
 
-Pneumatic Actuators are used on the Puppy robot. They are the primary form of
-actuation, replacing electric motors or hydraulic actuation. One of the key
+Pneumatic Actuators are used on the Puppy robot. One of the key
 benefits of using pneumatic muscles in a biologically-inspired robot design is
 that the muscles have similar properties to the biological muscles that control
-canines. 
+canines. \cite{Tavakoli2008}
 During static analysis, the muscles demonstrated a non-linear response to
 changing length and the ability to apply a force. This relationship was
 quantified and generalized in \cite{HuntPMuscles}. This research showed that
@@ -184,7 +197,9 @@ doing) to control a pneumatic muscle joint based on an acceleration trajectory.
 \bbss{CPGs}
 
 Many neuron control systems for oscilating joints incorporate central pattern
-generators (CPGs). In their most reduced form, CPGs are a small bundle of
+generators (CPGs).
+% TODO(buckbaskin): including (cite more papers that use CPGs)
+In their most reduced form, CPGs are a small bundle of
 neurons that oscillate continually without requiring outside stimulation. In
 practice, they are often connected to muscles through pattern formation or other
 layers to convert the CPG cycle into muscle activation.
