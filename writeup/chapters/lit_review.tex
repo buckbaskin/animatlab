@@ -65,8 +65,8 @@ motion during high frequency operation.
 
 % TODO(buckbaskin): insert a photo of pneumatic air muscles, one relaxed and one pressurized
 
-% TODO(buckbaskin): cite andirpikolos survey
-In this survey, many biorobotic applications for pneumatic muscles are presented.
+In \cite{PAMApplicationSurvey}, many biorobotic applications for pneumatic
+muscles are presented.
 Additionally, the devices are used for medical applications where the actuators
 inherent compliance, lighter weight and higher power output are also important. 
 
@@ -208,9 +208,12 @@ added to the acceleration term:
 These additional terms are known as the feedback component. Since these 
 corrections are linear in a system that is linearized by the feedforward term,
 values for the gains can be easily chosen to make the system stable and converge
-to exactly following the desired trajectory (exponentially stable). This system 
-of control is not always practical because it requires a good knowledge of the 
-system under control and a model that is well fit to the system. In practice, 
+to exactly following the desired trajectory (exponentially stable). \cite{MLS94}
+
+Control via computed torque 
+is not always practical because it requires the system to have a good model of 
+itself with known parameters that incorporate many potential variations of the
+system. In practice, 
 there are many different ways to achieve effective control for a rotational 
 joint.
 
