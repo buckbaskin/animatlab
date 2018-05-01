@@ -1,4 +1,3 @@
-% TODO(buckbaskin): consider being consistent and using only typically instead of usually
 \bbs{Puppy}
 
 The canine-inspired robot Puppy was designed to prove the feasibility of using
@@ -38,7 +37,7 @@ The robot ``Ken" is based on canine kinematics with a focus on designing for
 high frequency operation. The design is focused on being lightweight while also
 being biomimetic. One key design decision was the use of pneumatic muscles over
 electric motors. This facilitates high speed and high frequency operation
-without the usual heating and/or cooling issues. Another interesting design
+without the typical heating and/or cooling issues. Another interesting design
 decision for the Ken robot was the incorporation of a contractor muscle at the
 hip. Its placement and operation shorten or lengthen the leg mechanism
 independent of the flexion or extension of the leg.
@@ -156,7 +155,7 @@ internal actuator effects. \cite{DynamicPMuscles}
 \bbs{Controllers}
 
 Joint position controllers can be treated as a function mapping the current
-state (usually position, velocity and acceleration) to a torque to match the 
+state (typically position, velocity and acceleration) to a torque to match the 
 desired trajectory, expressed as position but often constrained to be a twice
 differentiable function.
 
@@ -281,24 +280,25 @@ network.
 \bbss{CPGs}
 
 Many neuron control systems for oscillating joints incorporate central pattern
-generators (CPGs), including \cite{Narioka2012, EventBasedWalking, HuntHindLegWalking, HuntPhDThesis}.
+generators (CPGs), including 
+\cite{Narioka2012, EventBasedWalking, HuntHindLegWalking, HuntPhDThesis}.
 In their most reduced form, CPGs are a small bundle of
-neurons that oscillate continually without requiring outside stimulation. In
-practice, they are often connected to muscles through pattern formation or other
-layers to convert the CPG cycle into muscle activation.
-% 6
-% TODO(buckbaskin): include more contents of CPGReview
+neurons that oscillate continually without requiring outside stimulation. They
+have been implemented in multiple ways, but the underlying principles and 
+biological motivation remain the same.
 \cite{CPGReview}
+In
+practice, CPGs are often connected to muscles through pattern formation or other
+layers to convert the CPG cycle into muscle activation instead of directly
+activating motor neurons. This can come in the form of single-level, single-plus-level or two-level CPG models. \cite{MultiLevelCPG}
 
-Multi-Level CPG Organization: low level PID/control loop with higher level CPG
-% 7
-\cite{MultiLevelCPG}
-
-In insects, CPGs have been shown to combine with peripheral sensory feedback and
+In insects and other animals, CPGs have been shown to combine with peripheral 
+sensory feedback and
 descending signals to coordinate walking motion between multiple joints and
-limbs.
-% 8
-CPGs for baseline, sensors/reflexes to reset \cite{SixLeggedWalking}
+limbs. The can come into the system as resetting or non-resetting deletions
+along with other sensory effects that synchronize the oscillation of the CPG
+with other limbs or mechanical motion, even a decerebrated animal.
+\cite{SixLeggedWalking, CPGReview}
 
 \bbss{Neuron Design}
 
