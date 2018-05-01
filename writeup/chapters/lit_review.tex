@@ -266,14 +266,22 @@ for potential improvement.
 
 \bbs{Similar Neurons}
 
-% 5
-% TODO(buckbaskin): add a introduction motivating the use of neurons for controllers
+Neuron-based controllers offer a wide range of benefits over typical controller
+designs. Neurons offer a dynamic way to represent control calculations that can
+update and adapt to edge cases and perturbations in a system in a consistent 
+way. Additionally, insights from biological nervous systems can be used to 
+direclty improve the performance of controllers, especially those controlling 
+bioinspired systems. There have been issues with understanding how
+to tune these neuron networks; however, as presented in 
+\cite{NickFunctionalSubnetworks}, the neuron models can be adapted with 
+relatively few parameters to replicate arthmetic and calculus operations, 
+opening the door for an engineering approach to constructing and optmizing the
+network.
 
 \bbss{CPGs}
 
 Many neuron control systems for oscillating joints incorporate central pattern
-generators (CPGs).
-% TODO(buckbaskin): including (cite more papers that use CPGs)
+generators (CPGs), including \cite{Narioka2012, EventBasedWalking, HuntHindLegWalking, HuntPhDThesis}.
 In their most reduced form, CPGs are a small bundle of
 neurons that oscillate continually without requiring outside stimulation. In
 practice, they are often connected to muscles through pattern formation or other
