@@ -3,13 +3,13 @@ requirements and challenges faced with a neural implementation in
 \cite{HuntPhDThesis}. See \myref{chap:introduction} for more details.
 
 \begin{enumerate}
+\item Decrease torque errors between neuron desired model and executed torques
+\item Minimize phase shift between desired and achieved trajectory
 \item Increase position accuracy to less than 5 degrees from maximum desired
 position
-\item Minimize phase shift between desired and achieved trajectory
-\item Decrease torque errors between neuron desired model and executed torques
 \end{enumerate}
 
-Requirement 2 is fulfilled in
+Requirement 1 is fulfilled in
 the controller through sensor fusion to estimate state at the time of sensor
 readings (assumed to be ``current" time) and then using an internal model of the
 joint dynamics to predict the evolution of the joint's position and velocity
@@ -17,7 +17,7 @@ given a particular controlling torque. From there, an internal optimization loop
 can run to identify a goal torque with sufficient resolution.
 
 An accurate internal model will help meet all 3 requirements. In particular, an
-internal model directly solves Requirement 3 by matching controlled torques to
+internal model directly solves Requirement 1 by matching controlled torques to
 pressures accounting for the pneumatic muscle dynamics. The internal model
 designed into the control is designed to adapt to the actual observed
 characteristics of the joint, allowing for changing dynamics over time (for
@@ -25,68 +25,147 @@ example, adding or removing weight from the robot, degrading pneumatic muscles
 or changing positions of other limbs),
 adapting to different joints with the same controller and increasing the
 robustness of the controller to variations from the original estimated
-properties of the robot.
+properties of the robot. This also avoids a phase shift for Requirement 2. 
 
-Requirement 1 is met by a combination of the design decisions above and
+Requirement 3 is met by a combination of the design decisions above and
 constitutes a metric by which to measure the effectiveness of the new design
 relative to old designs, regardless of implementation.
 
 \section{Sensor Fusion}
 
 Within the controller, state estimation is done in a relatively simplified
-manner. This trades off accuracy for computation time, where the estimation was
-refined to run sufficiently accurately that the rest of the system was robust to
-small estimation errors.
+manner. The design trades off accuracy for computation time, where the 
+estimation was designed to have sufficiently small error that it wouldn't 
+break the functionality of the rest of the system. An additional consideration
+was the ability to implement the algorithm in a neuron system.
 
-\subsection{Pneumatic Actuator Simulation/Simplification}
-
-The pneumatic actuators and their existing pressure controller were simulated 
-at varying degrees of fidelity ...
-
-% TODO(buckbaskin): finish this thought based on code
-
-\subsection{Centered Divided Difference}
+\subsection{Centeral Divided Difference}
 
 The velocity was estimated with a fixed window of the last 3 position readings.
-From there, a centered divided difference formula was used to estimate the
+From there, a centeral divided difference formula was used to estimate the
 slope and estimate velocity. This was found to be more accurate than a forward
 divided difference method only incorporating two points in practice when run
 against simulated data.
 
-% TODO(buckbaskin): write the two equations
+The equations that define the centered divided difference are as follows:
 
-% TODO(buckbaskin): show a plot with the two different estimations side by side
-% to show error
+\begin{equation}
+\dot{\theta} = \dfrac{\theta_{t} - \theta_{t - 2}}{2 \delta t}
+\end{equation}
+
+% TODO(buckbaskin): show a plot with the two different estimations side by side to show error
+
+\subsection{Pneumatic Actuator Modeling}
+
+The internal estimation of the current acceleration was primarily based on the 
+pressure sensors on the robot. These readings, combined with a position sensor, 
+allow for a direct measurements of the state of the actuator and therefore the
+applied torque. The model comes from \cite{HuntPMuscles}.
+
+To calculate a pressure from a force and position, the following model is used:
+
+\begin{equation}
+P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
+\end{equation}
+
+\begin{equation}
+k_{max} = \dfrac{L_{rest} - L_{620 kpa}}{L_{rest}}
+\end{equation}
+
+\begin{equation}
+k = \dfrac{L_{rest} - L_{angle}}{L_{rest}}
+\end{equation}
+
+\begin{equation}
+L_{angle} = L_{0} - L_{1} cos(\alpha + \theta)
+\end{equation}
+
+\begin{equation}
+F = \dfrac{T}{d cos(\beta + \theta)}
+\end{equation}
+
+$\alpha, \beta, d, L_{rest}$ and $L_{620 kpa}$ represent the parameters for a 
+particular actuator. The subscripted $a$ values represent optimized parameters
+for the generalized model that adjusts to all actuators.
+
+There are 3 key aspects to the model. First, the over model is a shifted and 
+scaled tangent curve. This represents the observed trend that increasing 
+pressure has less strain effects for short changes in length or large changes in 
+length, with an stronger effect for medium changes in length. This is similar to 
+the behavior of biological muscles.
+
+Second, The scaling effect comes from the observed
+effect that increased end effector force leads to a shrinking of the tangent 
+curve.
+
+Third, there is a hysteresis term ($a_{6} * S$) that represents the internal
+friction observed in the filling and emptying process.
+
+From there, the estimation of acceleration comes from the mass, 
+damping and conservative forces and the torque model specified in
+\myref{chap:lit_review}.
 
 \section{Optimizing Torque Control}
 
-Once the current state of the robot was determined, iteratively optimizing the
-desired torque was relatively simple. First, bounds were selected from estimates
+Once the current state of the robot was determined, the optimization process was 
+done recursively using a binary search algorithm. 
+
+This equation and model are designed to present a forward model to convert from 
+a desired torque and force to a pressure. There is not a clean and simple 
+inversion of the model; however, a binary search algorithm was used to invert 
+the process by estimating a maximum and minimum torque to apply and narrowing the
+potential window from there. This allows for a estimating a known bound on the 
+potential error and balancing the error with how quickly the algorithm iterates.
+
+% TODO(buckbaskin): include the binary search graphic
+
+Bounds were selected from estimates
 of the maximum and minimum (maximum negative) torque that can be applied to the
 joint and a forward projection mechanism based on the internal physics model was
-used to estimate the resulting position. From there, a binary search procedure
-can be used to repeatedly shrink the bounds around the optimal torque. The final
-step was to convert the desired torque into a pressure control.
+used to estimate the resulting position. From there, the binary search procedure
+repeatedly shrinks the bounds around the optimal torque. The model can be 
+applied to each actuator in the pair independently (with a fixed antagonistic 
+torque) or as a pair with a variable overlap in torque. 
+
+The final
+step is to convert the desired torque into a pressure control. This involves a 
+one final forward iteration of the model above, at the current joint angle, to 
+calculate the desired pressures for each of the actuators.
 
 \subsection{Forward Projection of State}
 
-Given the state estimation, project forward.
+Given the current state and an applied torque, the joint model in 
+\myref{chap:lit_review} can be used to predict the motion of the joint.
+This was done at multiple time resolutions, with increased time resolution 
+increasing the accuracy of the internal prediction. This is a direct tradeoff;
+however, a more accurate internal prediction directly increases the tracking
+performance of the algorithm.
 
-Also, can use bounds on estimated state, say high and low velocity, to project
-forward through multiple iterations, and optimize for the torque that, given the
-bounds, is most likely to produce the best result. This work is unnecessary for
-a well implemented state estimation system, but is helpful for increasing
-robustness to potential sensor reading errors or estimation errors.
-
-% TODO(buckbaskin): complete this thought
+One aspect of the current algorithm that allows for reduced fidelity is the 
+opportunity to make estimates for an upper and lower bound. This allows the 
+controller to bound the maximum possible positional error and iterate further
+if there is insufficient accuracy at particular steps.
 
 \subsection{Torque to Pressure}
 
-% TODO(buckbaskin): complete these two steps
-Show the math
+Converting from a desired torque to pressure for a single actuator follows
+the model expressed above:
 
-Also, talk about designing the desired pressure around the knowledge of a
-bang-bang controller under the hood for more accurate pressure control
+\begin{equation}
+P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
+\end{equation}
+
+One complicated aspect of implementing conversion from the desired torque to 
+pressures for
+the joint is incorporating the antagonistic overlap of the actuation of the two 
+muscles. It is often sufficient to pick a fixed overlap for the joints; however,
+there is room for improvement for varying the overlap and stiffness of the joint.
+
+Another complicated aspect of designing desired pressure in the system is the
+knowledge of the underlying control scheme. As mentioned in \cite{HuntPMuscles},
+the underlying controller implements a bang-bang algorithm. This means that 
+there is some uncontrolled variation; however, a more complicated algorithm
+can use the understanding that there is a fixed controlled window
 
 \section{System Modeling}
 
