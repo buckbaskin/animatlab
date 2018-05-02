@@ -39,10 +39,10 @@ estimation was designed to have sufficiently small error that it wouldn't
 break the functionality of the rest of the system. An additional consideration
 was the ability to implement the algorithm in a neuron system.
 
-\subsection{Centeral Divided Difference}
+\subsection{Central Divided Difference}
 
 The velocity was estimated with a fixed window of the last 3 position readings.
-From there, a centeral divided difference formula was used to estimate the
+From there, a Central divided difference formula was used to estimate the
 slope and estimate velocity. This was found to be more accurate than a forward
 divided difference method only incorporating two points in practice when run
 against simulated data.
@@ -69,7 +69,7 @@ P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} 
 \end{equation}
 
 \begin{equation}
-k_{max} = \dfrac{L_{rest} - L_{620 kpa}}{L_{rest}}
+k_{max} = \dfrac{L_{rest} - L_{620 kPa}}{L_{rest}}
 \end{equation}
 
 \begin{equation}
@@ -84,8 +84,8 @@ L_{angle} = L_{0} - L_{1} cos(\alpha + \theta)
 F = \dfrac{T}{d cos(\beta + \theta)}
 \end{equation}
 
-$\alpha, \beta, d, L_{rest}$ and $L_{620 kpa}$ represent the parameters for a 
-particular actuator. The subscripted $a$ values represent optimized parameters
+$\alpha, \beta, d, L_{rest}$ and $L_{620 kPa}$ represent the parameters for a 
+particular actuator. The $a$ values represent optimized parameters
 for the generalized model that adjusts to all actuators.
 
 There are 3 key aspects to the model. First, the over model is a shifted and 
@@ -137,7 +137,7 @@ calculate the desired pressures for each of the actuators.
 Given the current state and an applied torque, the joint model in 
 \myref{chap:lit_review} can be used to predict the motion of the joint.
 This was done at multiple time resolutions, with increased time resolution 
-increasing the accuracy of the internal prediction. This is a direct tradeoff;
+increasing the accuracy of the internal prediction. This is a direct trade-off;
 however, a more accurate internal prediction directly increases the tracking
 performance of the algorithm.
 
@@ -171,7 +171,7 @@ can use the understanding that there is a fixed controlled window
 
 One of the key aspects of the control design is the internal estimate of key 
 joint parameters. These have been simplified down to 3 key parameters: inertia 
-($M$), damping ($C$) and conservative load ($Ns$). The simplified internal 
+($M$), damping ($C$) and conservative load ($N$). The simplified internal 
 model uses the following equation to determine the acceleration of the joint:
 
 \begin{equation}
@@ -202,7 +202,7 @@ there is not a sensor that directly observes joint acceleration. Instead, error
 is measured in the difference in the estimated position and the measured 
 position.
 
-\bbss{Accleration Error Calculation}
+\bbss{Acceleration Error Calculation}
 
 \begin{equation}
 \ddot{\theta}_{act} = \dfrac{\tau}{M} - \dfrac{C \dot{\theta}_{0}}{M} - \dfrac{N sin(\theta)}{M}
@@ -315,14 +315,14 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
 
 \subsection{Evaluation of asymmetric error concerns}
 
-One additional consideration for the design of the controller is the asymetric
-effect that estimation error has on the over or underdamping behavior of the
+One additional consideration for the design of the controller is the asymmetric
+effect that estimation error has on the over or under-damping behavior of the
 controller. Intuitively,
 underestimating the inertia of the controlled link leads to a decreased control
 torque, which will make a smaller adjustment to velocity than required. On the
 other hand, overestimating the mass will cause an over-application of torque
 that can't be corrected until the next control iteration, potentially causing
-extreme motions that go uncorrected in an underdamped control scenario.
+extreme motions that go uncorrected in an under-damped control scenario.
 
 Going back to the calculation of the acceleration from torque:
 
