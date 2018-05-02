@@ -167,17 +167,181 @@ the underlying controller implements a bang-bang algorithm. This means that
 there is some uncontrolled variation; however, a more complicated algorithm
 can use the understanding that there is a fixed controlled window
 
-\section{System Modeling}
+\bbs{System Modeling}
 
-Parameter weight updates
+One of the key aspects of the control design is the internal estimate of key 
+joint parameters. These have been simplified down to 3 key parameters: inertia 
+($M$), damping ($C$) and conservative load ($Ns$). The simplified internal 
+model uses the following equation to determine the acceleration of the joint:
 
-\subsection{Actual Error Calculation}
+\begin{equation}
+M * \ddot{\theta} + C * \dot{\theta} + N * sin(\theta) = \tau
+\end{equation}
 
-% TODO(buckbaskin): adapt existing work on how the error update should be done
-This comes from a write up that I've already done
+\begin{equation}
+\ddot{\theta} = \dfrac{\tau - C * \dot{\theta} - N * sin(\theta)}{M}
+\end{equation}
 
-\subsection{Evaluation of asymmetric error concerns}o
+From there, the velocity and position are estimated as follows:
 
-% TODO(buckbaskin): use some sort of math to show that the over/underestimation
-% of damping, etc. can lead to underdamped or overdamped conditions. Prefer
-% overdamped control
+\begin{equation}
+\dot{\theta}_{1} = \dot{\theta}_{0} + \ddot{\theta} \delta t
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{avg} = \dfrac{\dot{\theta}_{0} + \dot{\theta}_{1}}{2}
+\end{equation}
+
+\begin{equation}
+\theta_{1} = \theta_{0} + \dot{\theta}_{avg} \delta t
+\end{equation}
+
+Using this model, the estimated acceleration between now and the next controller 
+step is predicted and compared with the observed acceleration. On the other hand,
+there is not a sensor that directly observes joint acceleration. Instead, error
+is measured in the difference in the estimated position and the measured 
+position.
+
+\bbss{Accleration Error Calculation}
+
+\begin{equation}
+\ddot{\theta}_{act} = \dfrac{\tau}{M} - \dfrac{C \dot{\theta}_{0}}{M} - \dfrac{N sin(\theta)}{M}
+\end{equation}
+
+\begin{equation}
+(\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{(\tau + \tau_{err})}{(M + M_{err})} - \dfrac{(C + C_{err}) (\dot{\theta}_{0} + \dot{\theta}_{err})}{(M + M_{err})} - \dfrac{((N + N_{err})sin(\theta + \theta_{err}))}{(M + M_{err})}
+\end{equation}
+
+This equation includes some sources of error that are assumed to be small. In 
+this analysis, the mass error $M_{err}$ is assumed to be small because it can
+be measured directly from the robot. $\tau_{err}$ is assumed to be small because
+the underlying pressure controller is assumed to correctly apply pressures to
+match the calculated desired torque. In general, the assumption is that the error
+comes primarily from errors in the damping and conservative load estimate. This 
+assumption may not be correct, but continued effort on estimation (in particular 
+velocity estimation) will hope to minimize estimation errors (potentially by 
+including concepts from Kalman filtering).
+
+The revised, simplified equation that assumes error comes from parameter estimation is as follows:
+
+\begin{equation}
+(\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{\tau}{M} - \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} - \dfrac{(N + N_{err})}{M}
+\end{equation}
+
+The error components can be identified by subtracting out the non-error 
+components:
+
+\begin{equation}
+(\ddot{\theta}_{act} + \ddot{\theta}_{err}) - \ddot{\theta}_{act} =
+\dfrac{\tau}{M} - \dfrac{\tau}{M}
+- \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} + \dfrac{C}{M}\dot{\theta}_{0}
+- \dfrac{(N + N_{err})}{M}  + \dfrac{N}{M}
+\end{equation}
+
+\begin{equation}
+\ddot{\theta}_{err} =
+- C_{err} \dfrac{\dot{\theta}_{0}}{M}
+- N_{err} \dfrac{1}{M}
+\end{equation}
+
+\begin{equation}
+\ddot{\theta}_{err} = - \dfrac{1}{M}
+(C_{err} \dot{\theta}_{0} + N_{err})
+\end{equation}
+
+\bbss{Velocity Error}
+
+\begin{equation}
+(\dot{\theta}_{1, act} + \dot{\theta}_{1, err}) = \dot{\theta}_{0} + (\ddot{\theta}_{act} + \ddot{\theta}_{err}) \delta t
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{1, err} = \ddot{\theta}_{err} \delta t
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{1, err} = - \dfrac{\delta t}{M}(C_{err} \dot{\theta}_{0} + N_{err})
+\end{equation}
+
+\begin{equation}
+(\dot{\theta}_{avg, act} + \dot{\theta}_{avg, err}) = \dfrac{\dot{\theta}_{0} + (\dot{\theta}_{1, act} + \dot{\theta}_{1, err})}{2}
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{avg, err} = \dfrac{\dot{\theta}_{1, err}}{2}
+\end{equation}
+
+\begin{equation}
+\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err}) = \dfrac{\delta t}{2} \ddot{\theta_{err}}
+\end{equation}
+
+\bbsss{Positional Error}
+
+\begin{equation}
+(\theta_{1, act} + \theta_{err}) = \theta_{0} + (\dot{\theta}_{avg} + \dot{\theta}_{avg, err}) \delta t
+\end{equation}
+
+\begin{equation}
+\theta_{err} = \dot{\theta}_{avg, err} \delta t = \dfrac{\delta t^{2}}{2} \ddot{\theta_{err}} = - \dfrac{\delta t^{2}}{2M}(C_{err} \dot{\theta}_{0} + N_{err})
+\end{equation}
+
+\begin{equation}
+- \dfrac{2M}{\delta t^{2}} \theta_{err} = C_{err} \dot{\theta}_{0} + N_{err}
+\end{equation}
+
+\begin{equation}
+N_{err} = 
+- \dot{\theta}_{0} C_{err}
+- \dfrac{2M}{\delta t^{2}} \theta_{err}
+\end{equation}
+
+When $\dot{\theta}_{0}$ is 0, then $N_{err}$ explains the total error in acceleration. When $\dot{\theta}_{0}$ is large, $N_{err}$ should explain a diminishing amount of the error. This can be thought of as finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$.
+
+\begin{equation}
+\lambda = 
+- \lambda \dot{\theta}_{0}^{2}
+- \dfrac{2M}{\delta t^{2}} \theta_{err}
+\end{equation}
+
+\begin{equation}
+\lambda 
+=
+- \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
+\end{equation}
+
+\begin{equation}
+C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
+\end{equation}
+
+\subsection{Evaluation of asymmetric error concerns}
+
+One additional consideration for the design of the controller is the asymetric
+effect that estimation error has on the over or underdamping behavior of the
+controller. Intuitively,
+underestimating the inertia of the controlled link leads to a decreased control
+torque, which will make a smaller adjustment to velocity than required. On the
+other hand, overestimating the mass will cause an over-application of torque
+that can't be corrected until the next control iteration, potentially causing
+extreme motions that go uncorrected in an underdamped control scenario.
+
+Going back to the calculation of the acceleration from torque:
+
+\begin{equation}
+M * \ddot{\theta} = \tau - C * \dot{\theta} - N * sin(\theta)
+\end{equation}
+
+Given the desire to over-damp the system instead of under-damp the system, the
+above equation informs the relative penalty of positive or negative error for
+each internal parameter (including mass).
+
+For a constant $C$ and $N$, an increased mass estimate leads to increased torque
+applied. If the actual inertia is lower, the actual required torque is lower 
+than the controlled torque so the system will make a larger change in velocity 
+than the desired trajectory requires. This behavior can lead to under-damped 
+control, therefore the preference is to underestimate the inertia of the system.
+
+For a constant $M$ and $N$, an increased estimate of the damping leads to 
+increased torque applied. If the actual damping is lower, the actual required
+torque is lower than the controlled torque, again leading to an over-correcting
+system. Varying $N$ behaves the same way, except that the effects of $N$ may be
+minimal when $sin(\theta)$ is small.
