@@ -6,6 +6,7 @@ maximum potential of -40 mV for a range of 20 mV.
 
 \bbs{Key Neurons and Synapses}
 
+% 1 (go through images first)
 % TODO(buckbaskin): Define important synapses in model
 Transfer, Inversion, Inverted Transfer, etc. 
 
@@ -22,10 +23,12 @@ position, velocity and acceleration.
 
 \bbsss{Differentiator Network}
 
+% 2
 % TODO(buckbaskin): talk about differentiator network
 The velocity network is based on the Differentiator Network presented in 
 \cite{NickFunctionalSubnetwork}.
 
+% 3
 % TODO(buckbaskin): Figure of differentiator network
 
 \bbss{Velocity Fusion Network}
@@ -35,6 +38,7 @@ The one major change from the network,
 as presented, is the inclusion of a second $U_{post}$ neuron to represent the
 negative derivative of the position (negative velocity).
 
+% 4
 % TODO(buckbaskin): Figure of my velocity network
 
 % TODO(buckbaskin): make sure my inhibitory and excitatory synapses are visualized properly
@@ -68,6 +72,7 @@ representation falling below resting potential when the other neuron is active.
 This means the signal transfer synapse from the below zero neuron will have no
 effect.
 
+% 5
 % TODO(buckbaskin): Figure of my absolute value network
 
 \bbsss{Integration Network}
@@ -83,6 +88,7 @@ current.
 
 \bbsss{Convert Torque to Pressure}
 
+% 6
 % TODO(buckbaskin): talk about how this approximation came about through simulation
 Linearized approximation to help with neurons
 
@@ -103,12 +109,14 @@ torque is converted into extension pressure. Third, the estimated extension
 pressure is compared with the sensed pressure. If there is an delta between the
 two, the extension torque guess is modified in turn and the cycle repeats.
 
+% 7
 % TODO(buckbaskin): Figure of pressure loops
 
 This architecture is mirrored for flexion torque.
 
 \bbss{Torque to Acceleration Network}
 
+% 8
 % TODO(buckbaskin): talk about T2A
 
 \bbss{Acceleration Fusion Network}
@@ -121,33 +129,54 @@ and flexion torques together to get a net torque and acceleration.
 
 \section{Optimizing Torque Control}
 
+% 9
 I/O summarizing, goals
 position, velocity, desired position -> torque
 
 \subsection{Small Networks}
 
+% 10
+
 \subsection{Mid Networks}
+
+% 11
 
 \subsection{Entire Network}
 
+% 12
+
 \section{Torque to Pressure}
 
+% 13
 I/O summarizing, goals
 convert desired torque pressure in neurons
 
 \subsection{Small Networks}
 
+% 14
+
 \subsection{Mid Networks}
+
+% 15
 
 \subsection{Entire Network}
 
+% 16
+
 \section{System Modeling}
 
+% 17
 I/O summarizing, goals
 Parameter weight updates
 
 \subsection{Small Networks}
 
+% 18
+
 \subsection{Mid Networks}
 
+% 19
+
 \subsection{Entire Network}
+
+% 20
