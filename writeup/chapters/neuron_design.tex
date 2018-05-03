@@ -8,9 +8,13 @@ maximum potential of -40 mV for a range of 20 mV.
 
 The neuron controller network is made up of a set of engineered synapses
 designed to emulate arthimetic operations. These can be grouped into two
-categories: excitatory neurons and inhibitory neurons. Most neurons were tuned
+categories: excitatory neurons and inhibitory neurons. 
+
+Most neurons were tuned
 via an optimization process to identify the best equilibrium potential and
-synaptic conductance. Some neurons were tuned by hand for specific behaviors in
+synaptic conductance based on equations defined in 
+\cite{NickFunctionalSubnetwork}. 
+Some neurons were tuned by hand for specific behaviors in
 a subsection of the overall controller.
 
 \bbss{Excitatory Synapses}
@@ -178,22 +182,23 @@ position, velocity and acceleration.
 
 \bbsss{Differentiator Network}
 
-% 2
-% TODO(buckbaskin): talk about differentiator network
 The velocity network is based on the Differentiator Network presented in 
+\cite{NickFunctionalSubnetwork}. The key insight into making a network
+of neurons that can estimate the derivative of an input signal is that
+the time constants of individual neurons can be independently tuned to 
+approximate a single step finite difference method. This itself is based
+on a Reichardt detector network as explained in
 \cite{NickFunctionalSubnetwork}.
 
-% 3
 % TODO(buckbaskin): Figure of differentiator network
 
 \bbss{Velocity Fusion Network}
 
 The velocity network is based on the Differentiator network. 
 The one major change from the network,
-as presented, is the inclusion of a second $U_{post}$ neuron to represent the
-negative derivative of the position (negative velocity).
+as presented, is the inclusion of a second $U_{post}$ neuron to 
+represent the negative derivative of the position (negative velocity).
 
-% 4
 % TODO(buckbaskin): Figure of my velocity network
 
 % TODO(buckbaskin): make sure my inhibitory and excitatory synapses are visualized properly
@@ -227,7 +232,6 @@ representation falling below resting potential when the other neuron is active.
 This means the signal transfer synapse from the below zero neuron will have no
 effect.
 
-% 5
 % TODO(buckbaskin): Figure of my absolute value network
 
 \bbsss{Integration Network}
