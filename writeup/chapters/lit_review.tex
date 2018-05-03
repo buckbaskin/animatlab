@@ -132,7 +132,17 @@ changing length and the ability to apply a force. This relationship was
 quantified and generalized in \cite{HuntPMuscles}. This research showed that
 there is a relationship between the strain on the muscle and the pressure
 required to support a fixed load that can be approximated by a shifted tangent
-function. Using test and validation sets, the model was fit to data collected
+function. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=5in]{controller_design/FigStrainPressure}
+\caption{Strain/pressure relations for different applied loads}
+\label{fig:StrainPressure}
+\end{figure}
+% TODO(buckbaskin): regenerate figure of correct size and with axis labels
+
+Using test and validation sets, the model was fit to data collected
 from existing actuators on Puppy. Further, the paper goes on to show that the
 model helps derive a controller for semi-static motion of joints. 
 \cite{HuntPMuscles}
