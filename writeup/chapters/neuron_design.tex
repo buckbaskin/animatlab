@@ -130,11 +130,10 @@ conductance of 2.3 microsiemens.
 
 \bbsss{Integral Inhibitor}
 
-% TODO(buckbaskin): start here
-
-The signal transfer synapse is designed to pass the voltage of the input neuron
-to the output neuron in the active range of the neuron. It has a synaptic 
-conductance of 0.115 microsiemens.
+The integral inhibitor synapse is designed to help both neurons maintain a 
+stable value unless an external current is applied. The values for this
+synapse are based on \cite{NickFunctionalSubnetwork}. The synapse has a  
+conductance of 0.5 microsiemens.
 
 \bbsss{Convert Forward Negative}
 
@@ -147,15 +146,24 @@ saturation is -50 mV and the synaptic conductance is 0.5 microsiemens.
 
 \bbsss{Signal Divider}
 
-The signal transfer synapse is designed to pass the voltage of the input neuron
-to the output neuron in the active range of the neuron. It has a synaptic 
-conductance of 0.115 microsiemens.
+The signal divider synapse is designed to reduce the effect of another input
+synapse, where the reduction increases with increased input voltage to the
+signal divider synapse. It is distinguished from the signal multiplier synapse
+in that the value never reaches 0. Intuitively, this is a replication of 
+division where dividing by a large number makes the quantity small but never 0.
+It has a synaptic conductance of 20 microsiemens. The equilibrium potential of
+the synapse is -60 mV (equal to the resting potential of the input and output
+neurons).
 
 \bbsss{Signal Multiplier}
 
-The signal transfer synapse is designed to pass the voltage of the input neuron
-to the output neuron in the active range of the neuron. It has a synaptic 
-conductance of 0.115 microsiemens.
+The signal divider synapse is designed to reduce the effect of another input
+synapse, where the reduction deccreases with increased input voltage to the
+signal divider synapse. It is distinguished from the signal divider synapse
+behavior in that the value reaches 0. Intuitively, this is a replication of 
+multiplication where multiplying by 0 will make any value 0.
+It has a synaptic conductance of 19.75 microsiemens. The equilibrium potential 
+of the synapse is -61 mV.
 
 \bbs{Sensor Fusion}
 
