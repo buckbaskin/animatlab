@@ -340,6 +340,14 @@ than the controlled torque so the system will make a larger change in velocity
 than the desired trajectory requires. This behavior can lead to under-damped 
 control, therefore the preference is to underestimate the inertia of the system.
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=5in]{controller_design/Tracking_Optimizing_LINK_MASS2}
+\caption{Underdamped control due to mass estimate}
+\label{fig:UnderdampedControl}
+\end{figure}
+
+
 For a constant $M$ and $N$, an increased estimate of the damping leads to 
 increased torque applied. If the actual damping is lower, the actual required
 torque is lower than the controlled torque, again leading to an over-correcting

@@ -300,7 +300,8 @@ biological motivation remain the same.
 In
 practice, CPGs are often connected to muscles through pattern formation or other
 layers to convert the CPG cycle into muscle activation instead of directly
-activating motor neurons. This can come in the form of single-level, single-plus-level or two-level CPG models. \cite{MultiLevelCPG}
+activating motor neurons. This can come in the form of single-level,
+single-plus-level or two-level CPG models. \cite{MultiLevelCPG}
 
 In insects and other animals, CPGs have been shown to combine with peripheral 
 sensory feedback and
@@ -315,7 +316,25 @@ with other limbs or mechanical motion, even a decerebrated animal.
 Neuron-based controllers are often designed in a data-driven way, where the
 neuron system is treated as a black box. Recent work, collected in 
 \cite{NickFunctionalSubnetwork}, shows that a more detailed neuron model can be
-used to build up small subnetworks of neurons that perform a specific task.
+used to build up small subnetworks of neurons that perform a specific task,
+including arithmetic operations like addition, subtraction, multiplication and
+division, as well as operations such as integration and differentiation.
+
+\begin{figure}[h!]
+\centering
+\begin{tabular}{cc}
+\includegraphics[width=3in]{lit_review/FigAdd} &
+\includegraphics[width=3in]{lit_review/FigSub} \\
+(a) Addition & (b) Subtraction \\
+\includegraphics[width=3in]{lit_review/FigMul} &
+\includegraphics[width=3in]{lit_review/FigDiv} \\
+(a) Multiplication & (b) Division \\
+\end{tabular}
+\caption{Neuron Outputs Tuned to Arithmetic Operations}
+\label{fig:MathOutputs}
+\end{figure}
+% TODO(buckbaskin): redo figures with axis labels
+
 These subnetworks can be recursively combined to form larger and more intricate
 networks that form a controller. This approach allows for the integration of
 existing work in controller design with biological inspiration to increase the
