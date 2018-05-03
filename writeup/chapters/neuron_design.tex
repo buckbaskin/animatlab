@@ -6,9 +6,156 @@ maximum potential of -40 mV for a range of 20 mV.
 
 \bbs{Key Neurons and Synapses}
 
-% 1 (go through images first)
-% TODO(buckbaskin): Define important synapses in model
-Transfer, Inversion, Inverted Transfer, etc. 
+The neuron controller network is made up of a set of engineered synapses
+designed to emulate arthimetic operations. These can be grouped into two
+categories: excitatory neurons and inhibitory neurons. Most neurons were tuned
+via an optimization process to identify the best equilibrium potential and
+synaptic conductance. Some neurons were tuned by hand for specific behaviors in
+a subsection of the overall controller.
+
+\bbss{Excitatory Synapses}
+
+Except where otherwise noted, a value of 134 mV was used for the equilibrium
+potential. The pre-synaptic threshold is -60 mV and the pre-synaptic saturation
+level is -40 mV.
+
+\bbsss{Signal Transfer}
+
+The signal transfer synapse is designed to pass the voltage of the input neuron
+to the output neuron in the active range of the neuron. It is often used to add
+the value of two or more neurons together in an output neuron.
+It has a synaptic 
+conductance of 0.115 microsiemens. 
+
+\bbsss{Inverted Signal Transfer}
+
+By combining two signal inversions, a more accurate signal transfer synapse was
+created. This involves an extra neuron; however, it leads to a more precise
+transfer of the voltage level of the input neuron to the output neuron. In
+general, the synapse was implemented with two Signal Inverter (Stimulated)
+synapses.
+
+\bbsss{Signal Amplifier 2x}
+
+The signal amplifier synapse is designed to pass the voltage of the input neuron
+to the output neuron with a 2x gain. This was tuned with input values from 0 to
+10 mV. Higher inputs saturate the output neuron. It has a synaptic conductance
+of 0.23 microsiemens.
+
+\bbsss{Signal Amplifier 4x}
+
+The signal amplifier has the same function as the 2x amplifier but with a x4 
+gain. This was tuned with input values from 0 to
+5 mV. Higher inputs saturate the output neuron. It has a synaptic conductance
+of 0.46 microsiemens.
+
+\bbsss{Signal Reduction 0.2x}
+
+The signal reduction synapse is designed to pass the voltage of the input neuron
+to the output neuron in the active range of the neuron, but with a loss of 0.2x. 
+It has a synaptic  conductance of 0.021 microsiemens. This neuron was tuned
+over the complete range of input values, 0 to 20 mV.
+
+\bbsss{Signal Reduction 0.5x}
+
+The signal reduction synapse is designed to pass the voltage of the input neuron
+to the output neuron in the active range of the neuron, but with a loss of 0.5x. 
+It has a synaptic  conductance of 0.054 microsiemens. This neuron was tuned
+over the complete range of input values, 0 to 20 mV.
+
+\bbsss{Convert Forward Positive}
+
+The convert forward positive synapse is designed to convert the representation
+of a value in a single neuron, for example the neuron that represents the 
+position of the joint, to the same value represented in two neurons. This
+synapse converts the value when the value is above -50 mV to values between 0 
+and 20 mV. The pre-synaptic
+threshold is -50 mV and the synaptic conductance is 0.115 microsiemens.
+
+\bbsss{Torque Pressure Converter}
+
+The torque pressure converter synapse is designed to perform the torque-pressure
+calculation approximation. It has a synaptic 
+conductance of 0.048 microsiemens.
+
+\bbss{Inhibitory Synapses}
+
+Except where otherwise noted, the equilibrium potential of inhibitory neurons
+is simulated as -100 mV. This is the lowest value possible in the simulation.
+The pre-synaptic threshold is -60 mV. The pre-synaptic saturation level is -40
+mV.
+
+\bbsss{Signal Inverter}
+
+The signal inverted synapse is designed to decrease the voltage of the output 
+neuron proportional to the voltage of the input neuron. It has a synaptic 
+conductance of 0.55 microsiemens.
+
+\bbsss{Signal Inverter (Stimulated)}
+
+The signal inverted synapse is designed to decrease the voltage of the output 
+neuron proportional to the voltage of the input neuron. This synapse is tuned
+slightly differently from the standard signal inverter because there was an
+observed difference in voltage when a stimulus current was applied to the output
+neuron along with other incoming synapses. It has a synaptic 
+conductance of 0.5 microsiemens.
+
+\bbsss{Signal Invert Reduction 0.2x}
+
+The signal inverted reduction synapse is designed to decrease the voltage of
+the output 
+neuron at a 0.2x loss compared to the voltage of the input neuron. It has a 
+synaptic conductance of 0.093 microsiemens.
+
+\bbsss{Signal Invert Reduction 0.5x}
+
+The signal inverted reduction synapse is designed to decrease the voltage of
+the output 
+neuron at a 0.5x loss compared to the voltage of the input neuron. It has a 
+synaptic conductance of 0.22 microsiemens.
+
+\bbsss{Signal Inverter Amplifier 2x}
+
+The signal inverted amplifier synapse is designed to decrease the voltage of
+the output 
+neuron at a 2x gain to the voltage of the input neuron. It has a synaptic 
+conductance of 1.11 microsiemens.
+
+\bbsss{Signal Inverter Amplifier 4x}
+
+The signal inverted amplifier synapse is designed to decrease the voltage of
+the output 
+neuron at a 4x gain to the voltage of the input neuron. It has a synaptic 
+conductance of 2.3 microsiemens.
+
+\bbsss{Integral Inhibitor}
+
+% TODO(buckbaskin): start here
+
+The signal transfer synapse is designed to pass the voltage of the input neuron
+to the output neuron in the active range of the neuron. It has a synaptic 
+conductance of 0.115 microsiemens.
+
+\bbsss{Convert Forward Negative}
+
+The convert forward negative synapse is designed to convert the representation
+of a value in a single neuron, for example the neuron that represents the 
+position of the joint, to the same value represented in two neurons. This
+synapse converts the value when the value is below -50 mV to a positve value 
+from 0 to 20 mV. The pre-synaptic
+saturation is -50 mV and the synaptic conductance is 0.5 microsiemens.
+
+\bbsss{Signal Divider}
+
+The signal transfer synapse is designed to pass the voltage of the input neuron
+to the output neuron in the active range of the neuron. It has a synaptic 
+conductance of 0.115 microsiemens.
+
+\bbsss{Signal Multiplier}
+
+The signal transfer synapse is designed to pass the voltage of the input neuron
+to the output neuron in the active range of the neuron. It has a synaptic 
+conductance of 0.115 microsiemens.
 
 \bbs{Sensor Fusion}
 
@@ -55,7 +202,7 @@ network (often making it more than twice as complicated) is to increase the
 effective range of values that the neuron can represent at the same fidelity and
 to increase the accuracy of zero. When a single neuron represents positive and
 negative values of equal magnitude, the value of 0 is represented at 50 mV; 
-however, after passing through a signal transfer neuron this value is often
+however, after passing through a signal transfer synapse this value is often
 slightly higher, up to 52 mV. This means that comparing the two neurons (the
 original neuron and the signal transfer) yields a slightly positive error
 instead of near zero error.
