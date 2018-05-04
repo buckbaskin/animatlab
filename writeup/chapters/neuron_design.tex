@@ -422,39 +422,75 @@ method may be required.
 
 \bbs{Torque to Pressure}
 
-% 13 TODO(buckbaskin): start here
-I/O summarizing, goals
-convert desired torque pressure in neurons
+The torque to pressure section of the network is smaller than the rest of the 
+major components. It is built in the same way as the torque to pressure inside
+the sensor fusion pressure to torque network. In the sensor fusion application,
+the network is used in a forward capacity insided of a feedback loop that ends
+up performing an inverse. This network is much more simple because the network
+is used only in a forward capacity to compute the desired pressures.
 
-\bbss{Small Networks}
-
-% 14
-
-\bbss{Mid Networks}
-
-% 15
-
-\bbss{Entire Network}
-
-% 16
+One additional modification to the network is the inclusion of a stiffness
+parameter neuron. This controls any desired overlap in the antagonistic control
+to increase or decrease joint stiffness manually.
 
 \bbs{System Modeling}
 
-% 17
-I/O summarizing, goals
-Parameter weight updates
+The system modeling network compares the predicted location of the joint from 
+the last control iteration with the current position. Using the error 
+calculations discussed in \myref{chap:controller_design}, the neuron network
+can calculate the weight updates for its internal estimate of damping and 
+conservative load. The equations are as follows:
 
-\bbss{Small Networks}
+\begin{equation}
+\lambda 
+=
+- \dfrac{2M}{\delta t^{2}} \dfrac{\theta_{err}}{1 + \dot{\theta}_{0}^{2}}
+\end{equation}
 
-% 18
+\begin{equation}
+C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
+\end{equation}
 
-\bbss{Mid Networks}
+\bbss{System Modeling Components}
 
-% 19
+\bbsss{Theta Delay}
 
-\bbss{Entire Network}
+The most unique component of the system is the delayed neuron that approximates
+the estimated position of the joint. This is done with a signal transfer
+synapse and a single neuron with a time constant that is tuned to the controller
+update rate.
 
-% 20
+\bbsss{Prediction Error}
+
+The prediction error is calculated in both a dual neuron representation. The
+error is then multiplied with the inertia, again resulting in a dual 
+representation of the positive and negative quantity. This matches the behavior
+expressed in the first term of the update equation to calculate $\lambda$.
+
+\bbsss{Velocity Correction}
+
+The absolute value of the velocity is used along with a signal divider. This
+matches the second term of the equation to calculate $\lambda$. In practice,
+the divider network is one of the networks that fits closely to a term like
+$\dfrac{1}{1 + x^{2}}$. One potential improvement to the network is to fit
+a custom synapse or subnetwork to better fit the term; however, this is not
+currently a major source of error.
+
+\bbsss{Lambda Calculation}
+
+The calculation of $\lambda$ is completed with the addition of a gain term. This
+allows for the scaling of the updates and behaves in a similar way to the 
+learning rate in a neural network. A single data point may be noisy, but if a 
+series of updates suggest the same parameter update, the network will adjust the
+parameter.
+
+\bbsss{Calculating $\Delta N$}
+
+The calculation for the conservative load is simply a signal transfer from the scaled lambda, following the given equation.
+
+\bbsss{Calculating $\Delta C$}
+
+% TODO(buckbaskin): start here
 
 \bbs{Combined Controller Network}
 
