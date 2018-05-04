@@ -7,7 +7,7 @@ maximum potential of -40 mV for a range of 20 mV.
 \bbs{Key Neurons and Synapses}
 
 The neuron controller network is made up of a set of engineered synapses
-designed to emulate arthimetic operations. These can be grouped into two
+designed to emulate arithmetic operations. These can be grouped into two
 categories: excitatory neurons and inhibitory neurons. 
 
 Most neurons were tuned
@@ -144,7 +144,7 @@ conductance of 0.5 microsiemens.
 The convert forward negative synapse is designed to convert the representation
 of a value in a single neuron, for example the neuron that represents the 
 position of the joint, to the same value represented in two neurons. This
-synapse converts the value when the value is below -50 mV to a positve value 
+synapse converts the value when the value is below -50 mV to a positive value 
 from 0 to 20 mV. The pre-synaptic
 saturation is -50 mV and the synaptic conductance is 0.5 microsiemens.
 
@@ -162,7 +162,7 @@ neurons).
 \bbsss{Signal Multiplier}
 
 The signal divider synapse is designed to reduce the effect of another input
-synapse, where the reduction deccreases with increased input voltage to the
+synapse, where the reduction decreases with increased input voltage to the
 signal divider synapse. It is distinguished from the signal divider synapse
 behavior in that the value reaches 0. Intuitively, this is a replication of 
 multiplication where multiplying by 0 will make any value 0.
@@ -309,7 +309,7 @@ synapse.
 
 The scaling of the damping factor is the most complicated component of this
 network. First, the estimated damping factor is scaled based on the velocity 
-with a multiplication synapse to ensure that it has no effect on accleration
+with a multiplication synapse to ensure that it has no effect on acceleration
 when the velocity is zero. Second, it is then applied with both positive and
 negative velocities (in a split representation) to the positive and negative
 acceleration terms. Due to the design choice of representing the velocity as two
@@ -365,7 +365,7 @@ into to the velocity voltages.
 
 \bbsss{Position Modification}
 
-The position modification netwokr takes the modified velocity in and adjusts the
+The position modification network takes the modified velocity in and adjusts the
 future position for a time step in the same method as the velocity modification
 network.
 
@@ -384,7 +384,7 @@ to be. This error is used as feedback to directly modify the torque estimate.
 This network geometry allows for easy incorporation of other metrics as well.
 For example, if the position estimation is noisy, multiple forward projections
 can be made for upper and lower bounds and the torque can be optimized to 
-minimize an error function over all projectioned locations.
+minimize an error function over all projected locations.
 
 \bbss{Torque Control Network}
 
@@ -425,7 +425,7 @@ method may be required.
 The torque to pressure section of the network is smaller than the rest of the 
 major components. It is built in the same way as the torque to pressure inside
 the sensor fusion pressure to torque network. In the sensor fusion application,
-the network is used in a forward capacity insided of a feedback loop that ends
+the network is used in a forward capacity inside of a feedback loop that ends
 up performing an inverse. This network is much more simple because the network
 is used only in a forward capacity to compute the desired pressures.
 
@@ -473,7 +473,7 @@ The absolute value of the velocity is used along with a signal divider. This
 matches the second term of the equation to calculate $\lambda$. In practice,
 the divider network is one of the networks that fits closely to a term like
 $\dfrac{1}{1 + x^{2}}$. One potential improvement to the network is to fit
-a custom synapse or subnetwork to better fit the term; however, this is not
+a custom synapse or sub-network to better fit the term; however, this is not
 currently a major source of error.
 
 \bbsss{Lambda Calculation}
@@ -495,8 +495,8 @@ the complexity comes from the fact that the sign of the update changes with the
 sign of the velocity and the positional error. Intuitively, this happens because
 damping opposes velocity, but conservative loads (as modeled) don't depend on
 velocity. For example, a positive velocity and positive $\lambda$ means that 
-less actual damping occured than was expected, but a negative velocity with a 
-positive $\lambda$ means that more damping occured than was expected.
+less actual damping occurred than was expected, but a negative velocity with a 
+positive $\lambda$ means that more damping occurred than was expected.
 
 % TODO(buckbaskin): connect up signed velocities to C calculation
 % TODO(buckbaskin): chcek the sign of the C update and make sure it matches written text
@@ -514,7 +514,7 @@ will be active meaning that only the correct sign of the output value will be
 active, maintaining the correctness of the dual neuron representation in the 
 output. This implementation replaces a series of if statements that may appear
 in a code-defined controller and shows an additional advantage of using two
-neurons to represent a value in a functional subnetwork. When connected 
+neurons to represent a value in a functional sub-network. When connected 
 correctly, it allows for easier sign flipping, easier validation of correctness
 by checking edge connectivity and easier testing.
 
