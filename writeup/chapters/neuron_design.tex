@@ -328,57 +328,123 @@ network. In total, the network uses a combination of smaller networks to
 estimate the torque applied from sensed pressure and then combine the extension
 and flexion torques together to get a net torque and acceleration.
 
-\section{Optimizing Torque Control}
+\bbs{Optimizing Torque Control}
 
-% 9
-I/O summarizing, goals
-position, velocity, desired position -> torque
+The torque control network uses a feedback loop to optimize the
+control torque. The network takes the estimated position and velocity from the 
+sensor fusion network and the desired position from a trajectory generator
+network (ex. a CPG) and outputs the torque to best follow that trajectory.
 
-\subsection{Small Networks}
+\bbss{Optimizing Torque Control Components}
 
-% 10
+\bbsss{Torque Estimation}
 
-\subsection{Mid Networks}
+The first step in the torque control network is a torque estimate. This is built
+as an integration network.
 
-% 11
+\bbsss{Torque to Acceleration}
 
-\subsection{Entire Network}
+This torque to acceleration network is calculated in the same manner as above.
+The principle difference is that the source of torque is an desired control
+torque instead of the estimated applied torque of the actuators.
 
-% 12
+\bbsss{Velocity Modification}
 
-\section{Torque to Pressure}
+The velocity modification network takes the current velocity in and adjusts for
+the acceleration. Based on the estimated update rate of the controller, the
+change in velocity is linear in acceleration.
+
+\begin{equation}
+\dot{\theta}_{future} = \dot{\theta}_{current} + \ddot{\theta} * \delta t
+\end{equation}
+
+This is encoded as a constant gain (calculated to be 0.2x) to be incorporated 
+into to the velocity voltages.
+
+\bbsss{Position Modification}
+
+The position modification netwokr takes the modified velocity in and adjusts the
+future position for a time step in the same method as the velocity modification
+network.
+
+\begin{equation}
+\theta_{future} = \theta_{current} + \dot{\theta}_{future} * \delta t
+\end{equation}
+
+
+\bbsss{Position Comparator}
+
+The position comparator estimates the error between where the joint will be at
+the future point and time and where the trajectory generator wants the joint
+to be. This error is used as feedback to directly modify the torque estimate.
+This network geometry allows for easy incorporation of other metrics as well.
+For example, if the position estimation is noisy, multiple forward projections
+can be made for upper and lower bounds and the torque can be optimized to 
+minimize an error function over all projectioned locations.
+
+\bbss{Torque Control Network}
+
+The overall feedback loop and torque control network is a combination of pieces
+that joint together to approximate
+Newton's Method for finding the root of the error function. The original 
+controller used a bounded bisection method that proved less suited for 
+implementation in neurons. The bisection method was originally chosen because
+it would always converge or have a well defined behavior when the desired
+position fell outside the bounds.
+
+\begin{equation}
+\theta_{future} = \theta_{current} + (\dot{\theta}_{current} + \ddot{\theta} * \delta t) * \delta t
+\end{equation}
+
+\begin{equation}
+\theta_{future} = \theta_{current} + \dot{\theta}_{current} * \delta t + \ddot{\theta} * \delta t^{2}
+\end{equation}
+
+\begin{equation}
+\dfrac{\partial \theta_{future}}{\partial \ddot{\theta}} = \delta t^{2}
+\end{equation}
+
+The derivative of the position is constant with respect to the controlled value
+$\ddot{\theta}$. Therefore, Newton's Method should also always converges.
+Therefore it is a suitable replacement for the bisection method in this neuron
+controller. In practice, it should work well with many error functions; however,
+a more complicated error function involving multiple independent error 
+components may exhibit local minima and a more complex root finding feedback
+method may be required.
+
+\bbs{Torque to Pressure}
 
 % 13
 I/O summarizing, goals
 convert desired torque pressure in neurons
 
-\subsection{Small Networks}
+\bbss{Small Networks}
 
 % 14
 
-\subsection{Mid Networks}
+\bbss{Mid Networks}
 
 % 15
 
-\subsection{Entire Network}
+\bbss{Entire Network}
 
 % 16
 
-\section{System Modeling}
+\bbs{System Modeling}
 
 % 17
 I/O summarizing, goals
 Parameter weight updates
 
-\subsection{Small Networks}
+\bbss{Small Networks}
 
 % 18
 
-\subsection{Mid Networks}
+\bbss{Mid Networks}
 
 % 19
 
-\subsection{Entire Network}
+\bbss{Entire Network}
 
 % 20
 
