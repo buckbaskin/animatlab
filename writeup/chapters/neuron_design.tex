@@ -350,6 +350,8 @@ torque instead of the estimated applied torque of the actuators.
 
 \bbsss{Velocity Modification}
 
+% TODO(buckbaskin): Figure - velocity modification network
+
 The velocity modification network takes the current velocity in and adjusts for
 the acceleration. Based on the estimated update rate of the controller, the
 change in velocity is linear in acceleration.
@@ -374,6 +376,8 @@ network.
 
 \bbsss{Position Comparator}
 
+% TODO(buckbaskin): Figure - position comparator network
+
 The position comparator estimates the error between where the joint will be at
 the future point and time and where the trajectory generator wants the joint
 to be. This error is used as feedback to directly modify the torque estimate.
@@ -386,7 +390,11 @@ minimize an error function over all projectioned locations.
 
 The overall feedback loop and torque control network is a combination of pieces
 that joint together to approximate
-Newton's Method for finding the root of the error function. The original 
+Newton's Method for finding the root of the error function.
+
+% TODO(buckbaskin): Figure - torque control network overall
+
+The original 
 controller used a bounded bisection method that proved less suited for 
 implementation in neurons. The bisection method was originally chosen because
 it would always converge or have a well defined behavior when the desired
@@ -414,7 +422,7 @@ method may be required.
 
 \bbs{Torque to Pressure}
 
-% 13
+% 13 TODO(buckbaskin): start here
 I/O summarizing, goals
 convert desired torque pressure in neurons
 
