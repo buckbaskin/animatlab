@@ -490,9 +490,44 @@ The calculation for the conservative load is simply a signal transfer from the s
 
 \bbsss{Calculating $\Delta C$}
 
-% TODO(buckbaskin): start here
+The calculation for the damping factor update is more involved. In particular,
+the complexity comes from the fact that the sign of the update changes with the
+sign of the velocity and the positional error. Intuitively, this happens because
+damping opposes velocity, but conservative loads (as modeled) don't depend on
+velocity. For example, a positive velocity and positive $\lambda$ means that 
+less actual damping occured than was expected, but a negative velocity with a 
+positive $\lambda$ means that more damping occured than was expected.
+
+% TODO(buckbaskin): connect up signed velocities to C calculation
+% TODO(buckbaskin): chcek the sign of the C update and make sure it matches written text
+
+To perform this calculation in neurons, the velocity and $\lambda$ are 
+calculated for all sign pairs. From there, the correct outputs are connected.
+Following the example above, a positive velocity and positive $\lambda$ transfer
+their signal to the positive C delta, which then connects to the damping factor 
+to drive it down. For a positive lambda and a negative velocity, the ``C Err -+" neuron is active and this transfers to the negative C Delta output.
+
+This implementation relies on the dual neuron representation for values to drive
+the correct output. Either the positive or negative neuron will be active in the
+velocity and $\lambda$ values, therefore only one of the 4 combination neurons
+will be active meaning that only the correct sign of the output value will be
+active, maintaining the correctness of the dual neuron representation in the 
+output. This implementation replaces a series of if statements that may appear
+in a code-defined controller and shows an additional advantage of using two
+neurons to represent a value in a functional subnetwork. When connected 
+correctly, it allows for easier sign flipping, easier validation of correctness
+by checking edge connectivity and easier testing.
 
 \bbs{Combined Controller Network}
+
+% TODO(buckbaskin): figure out how to reference a figure
+% TODO(buckbaskin): I like splitting out subnetwork into sub-network, but idk if it's consistent with Nick's/Alex's work 
+The fully combined network (see Figure how do I reference a figure?) implements
+a controller by combining the 4 large sub-networks. First, sensor data is passed
+through a sensor fusion network. The state estimation output of the sensor 
+fusion network are then passed into the torque optimization network. The 
+selected torque is then passed through one more sub-network to convert the
+desired torque into pressures for the actuators.
 
 \begin{figure}[h!]
 \centering
@@ -501,3 +536,9 @@ The calculation for the conservative load is simply a signal transfer from the s
 \label{fig:NetworkLayout}
 \end{figure}
 % TODO(buckbaskin): redo this with the complete actual network
+
+This leaves the system model sub-network. This last sub-network is connected to 
+the state estimation values and the internal projection and observes the 
+differences between the forward prediction and reality. This observer then 
+updates key model parameters to improve the controller over time while 
+maintaining a controller that avoids excessive oscillation. 
