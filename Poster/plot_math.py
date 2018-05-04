@@ -1,6 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
-plt.rc('font', **{'size': 28})
+plt.rc('font', **{'size': 12})
 
 data = np.genfromtxt('MathOperationsTable.csv', delimiter=',', skip_header=1)
 index = data[:, 0]
@@ -26,10 +26,10 @@ setup = [
 ('Div', [div_high, div_low]),
 ]
 
-linewidth = 4
+linewidth = 2
 
 for name, datasets in setup:
-    fig = plt.figure(figsize=(5,5,), dpi=300)
+    fig = plt.figure(figsize=(3,3,), dpi=300)
     ax = fig.add_subplot('111')
     for datas in datasets:
         ax.plot(mvIn[200:], datas[200:], -60, -40, linewidth=linewidth)
@@ -37,8 +37,8 @@ for name, datasets in setup:
     ax.set_ylim(-60, -40)
     # ax.set_xticks([-60, -50, -40])
     # ax.set_yticks([-60, -50, -40])
-    ax.set_xticks([])
-    ax.set_yticks([])
+    ax.set_xticks([-60, -40])
+    ax.set_yticks([-60, -40])
     ax.set_xlabel('U0 (mV)')
     ax.set_ylabel('U1 (mV)')
     ax.spines['right'].set_color('none')
@@ -50,5 +50,6 @@ for name, datasets in setup:
     y0, y1 = ax.get_xlim()
     ax.set_aspect((x1 - x0)/(y1 - y0))
 
+    plt.tight_layout()
     plt.savefig('Fig%s.png' % (name,))
     plt.show()

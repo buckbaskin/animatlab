@@ -3,7 +3,7 @@ from math import pi
 from numpy import arctan, sqrt, floor, ceil
 
 from matplotlib import pyplot as plt
-plt.rc('font', **{'size': 28})
+plt.rc('font', **{'size': 12})
 
 a0 = 254.3 # kpa
 a1 = 192.0 # kpa
@@ -46,14 +46,14 @@ max_strain = 0.16
 strain = np.linspace(0, max_strain, 100)
 p = pressure(strain)
 
-linewidth = 4
+linewidth = 2
 
-fig = plt.figure(figsize=(5.5, 7,), dpi=300)
+fig = plt.figure(figsize=(6.5, 4,), dpi=300)
 ax = fig.add_subplot(111)
 ax.set_xlim(0, max_strain)
 ax.set_ylim(0, 615)
-ax.set_xticks([])
-ax.set_yticks([])
+# ax.set_xticks([])
+# ax.set_yticks([])
 ax.set_xlabel('Strain')
 ax.set_ylabel('Pressure (kPa)')
 ax.spines['right'].set_color('none')
@@ -65,5 +65,6 @@ ax.plot(strain, pressure(strain, F=0.0), linewidth=linewidth, label='0 lb')
 ax.plot(strain, pressure(strain, F=0.05), linewidth=linewidth, label='12 lb')
 ax.plot(strain, pressure(strain, F=0.10), linewidth=linewidth, label='24 lb')
 ax.legend()
+plt.tight_layout()
 plt.savefig('FigStrainPressure.png')
 plt.show()
