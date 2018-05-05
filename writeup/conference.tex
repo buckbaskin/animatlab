@@ -156,8 +156,73 @@ discussed in \myref{chap:neuron_design}. The results are shown in \myref{chap:re
 \bbss{Controller Design}
 \label{chap:controller_design}
 
+The controller design has 3 major goals derived from
+requirements and challenges faced with a neural implementation in
+\cite{HuntPhDThesis}.
+
+\begin{enumerate}
+\item Decrease torque errors between neuron desired model and executed torques
+\item Minimize phase shift between desired and achieved trajectory
+\item Increase position accuracy to less than 5 degrees from maximum desired
+position
+\end{enumerate}
+
+In order to achieve these 3 goals, 3 areas of improvement were identified:
+sensor fusion, an optimizing internal loop and a better system model.
+
+\bbsss{Sensor Fusion}
+
+The goal of the sensor fusion system is to provide an accurate measure of the
+current state of the joint for the rest of the controller. The joint is defined
+by 5 related parameters: position, velocity, acceleration and the pressure in
+each of the antagonistic actuators.
+
+While more complex methods are possible, the first controller prototype used
+a finite divided difference to estimate the velocity of the joint from the
+measured position. The acceleration can be estimated one of two ways: a second
+numerical derivative or by using knowledge of how the pressure in the actuators
+applies force to the joint itself. The first method was easier to implement in
+code. The second method derived a better result when implemented in neurons (see
+\myref{chap:neuron_design}).
+
+The internal estimation of the acceleration based on pressure comes from \cite{HuntPMuscles}.
+
+To calculate a pressure from a force and position, the following model is used:
+
+\begin{equation}
+P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
+\end{equation}
+
+\begin{equation}
+k_{max} = \dfrac{L_{rest} - L_{620 kPa}}{L_{rest}}
+\end{equation}
+
+\begin{equation}
+k = \dfrac{L_{rest} - L_{angle}}{L_{rest}}
+\end{equation}
+
+\begin{equation}
+L_{angle} = L_{0} - L_{1} cos(\alpha + \theta)
+\end{equation}
+
+\begin{equation}
+F = \dfrac{T}{d cos(\beta + \theta)}
+\end{equation}
+
+$\alpha, \beta, d, L_{rest}$ and $L_{620 kPa}$ represent the parameters for a 
+particular actuator. The $a$ values represent optimized parameters
+for the generalized model that adjusts to all actuators. See \cite{HuntPMuscles}
+for more details. Once the torque is calculated, the 
+estimation of acceleration comes from the internal estimation of the joint's mass, damping and conservative forces.
+
+\bbsss{Optimizing Torque Control}
+
+\bbsss{System Modeling and Improvement}
+
 \bbss{Neuron Design}
 \label{chap:neuron_design}
+
+
 
 \bbs{Results}
 \label{chap:results}
