@@ -4,6 +4,7 @@ print('--- %s ---' % (sys.argv[0],))
 import datetime
 import math
 import matplotlib.pyplot as plt
+plt.rc('font', **{'size': 12})
 import numpy as np
 
 from functools import partial
@@ -32,20 +33,19 @@ class FrozenOptimizingController(OptimizingController):
         return des_ext_pres, des_flx_pres, des_torque
 
 if __name__ == '__main__':
-    plt.rc('font', **{'size': 28})
     S = ActualSimulator(bang_bang=True, limit_pressure=True, TIME_END = 2.0)
     
-    linewidth = 4
+    linewidth = 2
 
     # plt.title('Pressure Torque Relation (Flx)')
-    fig = plt.figure(figsize=(11.5, 4.5,), dpi=300)
+    fig = plt.figure(figsize=(6.5, 4.5,), dpi=300)
     ax = fig.add_subplot(111)
     ax.set_xlabel('Torque (Nm)')
     ax.set_ylabel('Pressure (kPa)')
     ax.set_xlim(0, 3)
     ax.set_ylim(0, 620)
-    ax.set_xticks([])
-    ax.set_yticks([0, 620])
+    # ax.set_xticks([])
+    # ax.set_yticks([0, 620])
     ax.spines['right'].set_color('none')
     ax.spines['left'].set_linewidth(linewidth)
     ax.spines['top'].set_color('none')
@@ -66,6 +66,7 @@ if __name__ == '__main__':
         # This doesn't quite correspond with how the neurons do
         ax.plot(torques, pressures*1.015, label='%.2f (rad)' % (angle), linewidth=linewidth)
     plt.legend()
+    plt.tight_layout()
     print('go find the plot and close it please')
     plt.savefig('FigPressureTorque.png')
     plt.show()
