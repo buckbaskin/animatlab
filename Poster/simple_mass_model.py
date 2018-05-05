@@ -910,13 +910,7 @@ class OptimizingController(object):
         current_time, inertia, damping, conservative):
         '''
         TODO(buckbaskin):
-            - [x] Damping Estimation
-            - [x] Load Estimation
-            - [ ] ~~Mass estimation~~
-            - [.] Update all values as a combined gradient
-            - [ ] Non-dimensionalize it to stay within the stable range. Estimate
-                all values to fall in a 0-1 range, where 0 is the minimum stable
-                value and 1 is the maximum stable value.
+            - [.] Update all values as a combined gradient. See writeup
         '''
 
         delta_t = current_time - last_time
@@ -1115,6 +1109,7 @@ if __name__ == '__main__':
         # ax_pos.legend()
         print('show for the dough')
         plt.tight_layout()
+        plt.show()
         plt.savefig('FigStateTracking%02d.png' % (period,))
         # plt.show()
         print('all done')
