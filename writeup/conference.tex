@@ -217,11 +217,42 @@ estimation of acceleration comes from the internal estimation of the joint's mas
 
 \bbsss{Optimizing Torque Control}
 
+Given the current state of the joint, a binary search algorithm is used to
+estimate the optimal control torque. This overcomes limitations with inverting
+a complex internal model, but allows for iterative improvement with known bounds
+based on the maximum and minimum torque output of the joint at its current 
+state.
+
+At each step in the binary search, a forward model is used to evolve the state 
+forward at a fixed interval. Originally, this was done with a complete physics
+model, but over time the model was simplified down to 3 parameters: inertia, 
+damping and conservative load. This simplified internal model was used to 
+estimate the ending position of the joint after an application of a given 
+torque. The binary search procedure repeatedly shrinks the bounds around the 
+optimal torque. Once an optimal torque range is determined, the state and torque
+can be used to select the proper pressures for each actuator, with either a 
+fixed or varying antagonistic overlap.
+
+Converting from a desired torque to pressure for a single actuator follows
+the model expressed above:
+
+\begin{equation}
+P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
+\end{equation}
+
+One complicated aspect of implementing conversion from the desired torque to 
+pressures in the system is the
+knowledge of the underlying control scheme. As described in \cite{HuntPMuscles},
+the underlying controller implements a bang-bang algorithm. This means that 
+there is some uncontrolled variation in the torque. This means that there is a
+range of desired torques that may output the same control. This is modeled as
+part of the binary search process, where a window of torques is identified, and
+the most likely control torque is selected.
+
 \bbsss{System Modeling and Improvement}
 
 \bbss{Neuron Design}
 \label{chap:neuron_design}
-
 
 
 \bbs{Results}
