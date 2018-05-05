@@ -6,7 +6,7 @@ def actual(X):
 X = np.linspace(0.01, 1.0, 100)
 Y1 = actual(X)
 
-def neuron(X, g=3.014, E=-50):
+def neuron(X, g=3.014, E=-40):
     '''
     All around good fit:
     g=0.216, E=-100
@@ -23,8 +23,6 @@ def error(X, g, E):
 from matplotlib import pyplot as plt
 
 plt.plot(X, Y1)
-Y2 = neuron(X)
-plt.plot(X, Y2)
 
 def seek_g_E(E_list=None):
     if E_list is None:
@@ -69,5 +67,7 @@ from scipy.optimize import curve_fit
 popt, _ = curve_fit(neuron, X, actual(X), p0=[0.25])
 print(popt)
 
+Y2 = neuron(X, *popt)
+plt.plot(X, Y2)
 # plt.plot(E_list, scores)
 plt.show()

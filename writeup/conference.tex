@@ -16,13 +16,13 @@
 \usepackage[style=ieee, backend=biber]{biblatex}
 \addbibresource{references.bib}
 
-% \usepackage[hidelinks]{hyperref}
-% \usepackage{cleveref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
 
 % https://tex.stackexchange.com/questions/119513/cleveref-and-appendix-packages-appendix-referenced-as-section
 % \crefname{appsec}{Appendix}{Appendices}
 
-% \newcommand{\myref}[1]{\hyperref[#1]{\Cref{#1}}}
+\newcommand{\myref}[1]{\hyperref[#1]{\Cref{#1}}}
 
 %%% math %%%
 \usepackage{amsmath, amssymb, amsthm}
@@ -76,27 +76,96 @@
 This research develops a new synthetic nervous system for control of joints using pneumatic actuators in order to create a more efficient and adaptable walking robot system. This design implements new features not previously seen in a control oriented nervous system. It develops 3 major design components not previously used for control of antagonistic pneumatic actuators. It uses an internal model of the actuators to estimate the state of the joint. It uses internal estimates of the dynamics of the joint to continually optimize the control output. Additionally, it updates its own internal system model with a memory-like loop to allow the controller to adapt to any joint and trajectory. The controller allows for the replacement of proportional or other control designs with a learning system that decreases wasted antagonistic muscle activation and wasted energy, decreases phase lag and increases trajectory tracking accuracy.
 \end{abstract}
 
-\bbs{Introduction}
+\bbs{Introduction} % and Lit Review
 \label{chap:introduction}
 
-\bbs{Literature Review}
-\label{chap:lit_review}
+Walking robots offer many advantages over wheeled robots or other types
+of locomotion. Wheeled or tracked vehicles are unable to access over half
+of the earth's landmass. \cite{BigDog} Further, many areas in which humans
+operate are designed for walking as opposed to rolling, so a successful walking 
+robot has increased mobility in environments designed for human walking. On the
+other hand, walking robots are harder to control than their wheeled 
+counterparts.
 
-\cite{einstein}
+Many robots have looked to biological inspiration to increase the mobility and
+ease of control of robots. In particular, many biological systems have increased
+redundancy to aid in balance with many animals, including dogs and cats, walking
+on 4 or more legs. The inspiration taken varies from imitating gait timing to
+help coordinate simple legs to completely mimicing musculoskeletal layout. The
+Puppy robot was designed to mimic the operation of a large canine walking in
+the sagittal plane. \cite{PuppyDesign}
 
-\bbs{Controller Design}
-\label{chap:controller_design}
+Another advantage that animals have over most robots is their actuators.
+Biological muscles are compliant and are a key part to how animals walk. Many
+robots use electric motors or hydraulic actuators to actuate joints, which can
+mean that other biologically inspired design decisions aren't necessarily 
+optimal. Puppy chose to use pneumatic artificial muscles, which have a higher
+power to weight ratio than other designs and offer similar compliance and
+behavior to biological muscles. \cite{Tavakoli2008} Typically seen as a 
+limitation, pneumatic muscles as actuators apply force during contraction, so 
+they need to be used in antagonistic pairs. While this increases the complexity
+of the robot, it also allows for further bio-inspiration in the robot design
+and control system.
 
-\bbs{Neuron Design}
-\label{chap:neuron_design}
+One of the major tradeoffs for pneumatic muscles is that they exhibit 
+non-linear behavior in both static and dynamic control situations.
+\cite{HuntPMuscles, DynamicPMuscles} This has 
+motivated the designs of new types of controllers to overcome the non-linear
+behavior through adaptation in the controller. In \cite{Jahanabadi2009}, the
+authors propose a system called ``Active Force Control" where a neural network
+is used to learn non-linear properties of the actuator and controlled mass.
+The network is run in an inner control loop and the output of the network is
+used to present the control situation in a linearized fashion to an outer PID
+control system. The results suggest that a system model of the nonlinear 
+properties of the actuators decreases positional error. The work was
+applied to controlling a vertical trolley and used a neural network as a black
+box for modelling the system, so there is an opportunity for improving the 
+system and its application to controlling Puppy's rotational joints. 
+In \cite{Wang2013}, a model-based controller was used to control the actuation
+of a revolute joint with pneumatic muscles. The author's system allowed for
+decreased antagonistic muscle overlap at high accelerations combined with a 
+high stiffness, high overlap controller for precise position tracking in near
+static situations. This adapting system was shown to be effective in their
+results; however, it doesn't account for estimating changing properties of the
+robot system that might reduce the effectiveness of the model.
+
+A combination of these two types of controllers offers insight into how to build
+an effective joint controller for Puppy. One further area of potential 
+improvment over existing designs is the incorporation of biological inspiration
+within the controller itself. In \cite{NickFunctionalSubnetwork}, the authors
+demonstrate a method for using a dynamic, biologically accurate model of neurons
+to develop models of neurons for controlling physical systems. The work in the 
+paper describes how to create building blocks such as arithmetic operations,
+differentiation or integration. These components can then be used together to 
+recursively create new controller architectures that use biological inspiration
+taken from literature for controlling legged robots and combine it with an
+efficient system for engineering the correct control responses. Together,
+existing literature suggests that a neuron-based controller that adapts to the
+properties of the muscles and the joints that it controls offers a new
+architecture for more efficient and more accurate control of pneumatic muscle-
+actuated robots.
+
+In this paper, we show the design process for a new adapting controller. The
+design of the controller itself is discussed in \myref{chap:controller_design}.
+The implementation of the controller within a synthetic nervous system is 
+discussed in \myref{chap:neuron_design}. The results are shown in \myref{chap:results} and discussed in \myref{chap:discussion}.
 
 \bbs{Methods}
 \label{chap:methods}
 
+\bbss{Controller Design}
+\label{chap:controller_design}
+
+\bbss{Neuron Design}
+\label{chap:neuron_design}
+
 \bbs{Results}
 \label{chap:results}
 
-\bbs{Conclusions and Future Work}
+\bbs{Discussion}
+\label{chap:discussion}
+
+\bbs{Conclusion}
 \label{chap:conclusion}
 
 \newpage
