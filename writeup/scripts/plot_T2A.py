@@ -28,24 +28,22 @@ neg_acc = data[:, 16]
 # TODO(buckbaskin): define reference accelerations for positive, negative
 # 5000 steps per second
 pos_ref = np.zeros(pos_acc.shape)
-pos_ref[5000:10000] = 19.7
-pos_ref[15000:20000] = 9.9
-pos_ref[25000:30000] = 18.5
-pos_ref[35000:40000] = 9.2
-pos_ref[45000:50000] = 18.1
-pos_ref[55000:60000] = 9.1
+pos_ref[ 5000:10000] = 0
+pos_ref[10000:15000] = 20
+pos_ref[15000:20000] = -9
+pos_ref[20000:25000] = 12.5
+pos_ref[25000:30000] = -12.5
+pos_ref[30000:35000] = 0.5
+pos_ref[35000:40000] = -1
+pos_ref[40000:45000] = 0
+pos_ref[45000:50000] = 0
+pos_ref[50000:55000] = -8
+neg_ref = - pos_ref.copy()
 
 pos_ref += -60
-
-neg_ref = np.zeros(neg_acc.shape)
-neg_ref[10000:15000] = 19.7
-neg_ref[20000:25000] = 9.9
-neg_ref[30000:35000] = 18.5
-neg_ref[40000:45000] = 9.2
-neg_ref[50000:55000] = 18.1
-neg_ref[60000:65000] = 9.1
-
+pos_ref = np.clip(pos_ref, -60, -40)
 neg_ref += -60
+neg_ref = np.clip(neg_ref, -60, -40)
 
 setup = [
 ('Pos', [pos_acc, pos_ref]),
@@ -70,11 +68,11 @@ for name, datasets in setup:
     ax.plot(time[5000:], ref[5000:], linewidth=linewidth, label='Reference')
     
     if count == 1:
-        ax.set_ylabel('+ Torque (mV)')
+        ax.set_ylabel('+ Accel (mV)')
         ax.set_xticks([])
     else:
         ax.set_xlabel('Time (sec)')
-        ax.set_ylabel('- Torque (mV)')
+        ax.set_ylabel('- Accel (mV)')
 
     ax.set_ylim(-60, -40)
     ax.set_yticks([-60, -40])
