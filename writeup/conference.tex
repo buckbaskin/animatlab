@@ -382,12 +382,35 @@ The additional complexity in the neuron network comes from the need to have the 
 
 \bbss{Sensor Fusion}
 
+The two key estimates made within the sensor fusion sub-network: velocity and
+acceleration. Both controllers were tested against sin waves of known
+frequencies: 1 Hz, 2 Hz and 4 Hz. This allows for the easy calculation of
+amplitude of the output.
+
+% TODO*buckbaskin): Figure of neuron controller velocity test
+
+Within the neuron network, acceleration is calculated primarily from actuator
+pressures. The output is plotted compared with expected output.
+
+% TODO*buckbaskin): Figure of neuron controller acceleration test
+
 \bbss{Torque Optimization}
+
+% TODO*buckbaskin): Figure of neuron controller torque optimization test
 
 \bbss{System Modeling}
 
+% TODO*buckbaskin): Figure of neuron controller system model test
+
+\bbss{Overall}
+
+% TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed
+% estimators)
+
 \bbs{Discussion}
 \label{chap:discussion}
+
+Discuss accuracy of each piece
 
 \bbs{Conclusion}
 \label{chap:conclusion}
