@@ -51,7 +51,7 @@ setup = [
 ]
 
 
-fig = plt.figure(figsize=(3,3,), dpi=300)
+fig = plt.figure(figsize=(3,2.25,), dpi=300)
 ax1 = fig.add_subplot('211')
 ax2 = fig.add_subplot('212')
 count = 0
