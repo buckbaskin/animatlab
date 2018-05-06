@@ -247,6 +247,7 @@ part of the binary search process, where a window of torques is identified, and
 the most likely control torque is selected.
 
 \bbss{System Modeling and Improvement}
+\label{sec:systemImprovement}
 
 The original model for updating the weights on the system was to calculate the
 intended sign of the error correction for the damping and load estimates and 
@@ -307,6 +308,74 @@ load. Therefore, there is no information to quantify their update and the intern
 \bbs{Neuron Design}
 \label{chap:neuron_design}
 
+The neuron controller network is made up of a set of engineered synapses
+designed to emulate arithmetic operations. These can be grouped into two
+categories: excitatory neurons and inhibitory neurons. Most neurons were tuned
+via an optimization process to identify the best equilibrium potential and
+synaptic conductance based on equations defined in 
+\cite{NickFunctionalSubnetwork}. Some involved some hand tuning for modeling custom behavior.
+
+One key design pattern not seen among other neuron designs is the use of two
+neurons to represent a single value centered around 0. In this case, one neuron 
+is active when the value is positive and zero otherwise. The second represents 
+negative values in the same way. This doubles the precision of the value 
+represented by the neurons. Also, it allows for a more accurate representation of a zero value, which is instrumental when comparing two values.
+
+\bbss{Sensor Fusion}
+
+The sensor fusion neuron network performs essentially the same function as the
+sensor fusion network in the prototype controller. In this case, 3 neurons
+represent the 3 sensor inputs available in a joint: position (``Theta"),
+extension muscle pressure (``Ext Pres") and flexion muscle pressure
+(``Flx Pres"). The outputs for the network are the estimates for current 
+position, velocity and acceleration.
+
+\bbsss{Velocity Estimation}
+
+The velocity network is based on the Differentiator network. 
+The one major change from the network,
+as presented, is the inclusion of a second $U_{post}$ neuron to 
+represent the negative derivative of the position (negative velocity), following the dual-neuron design pattern outlined above.
+
+\bbsss{Acceleration Estimation}
+\label{sec:accelerationEstimation}
+
+The acceleration network uses 4 functional sub-network components. The first component is the pressure estimation. This converts a torque estimate internal to the acceleration estimation network into the expected pressure for the extension actuator (with the same network applied to the flexion actuator). This is used within a feedback loop to minimize the error between the input pressures and the torque applied by the muscle. This is an approximation of Newton's method for finding a root, in this case used to match a torque estimate to a pressure input. The torque estimate itself is stored in an integrator pair for use in the rest of the network. The last component is a 3 stage process where damping, static loads and inertial effects are applied to the estimated torque to produce an acceleration estimate.
+
+\bbss{Torque Optimization}
+
+The torque optimization network performs the same function as the torque optmization step in the torque controller; however, it uses Newton's method instead of a bisecting search to estimate the optimal torque.
+
+The torque optimization loop is built around a feedback loop similar to the internal feedback loop in the acceleration estimation discussed in \myref{sec:accelerationEstimation}. In this loop, a torque estimate is passed through a velocity modifier and a position modifier to estimate the change in state for the given torque after being converted to acceleration with damping, load and inertial effects. This is compared to the desired state from a central pattern generator (CPG) and the torque is updated to minimize this error.
+
+Newton's method is not guarunteed to converge; however, in this application with this error function, it will always converge. The derivative of the predicted future position with respect to the initial acceleration estimate is a constant term, so there will only be one root where the feedback loop will terminate.
+
+\begin{equation}
+\dfrac{\partial \theta_{future}}{\partial \ddot{\theta}} = \delta t^{2}
+\end{equation}
+
+\bbss{System Modeling}
+
+The original implementation of the system update model was a relatively simple approximation of the equation given in \myref{sec:systemImprovement}.
+
+\begin{equation}
+C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
+\end{equation}
+
+\begin{equation}
+\lambda 
+=
+- \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
+\end{equation}
+
+The original assumption was that a gain term can be added that encompases both a translation from an arbitrary range of values to the fixed range available in the neuron (20 mV). This absorbs the $\frac{2}{\delta t^{2}}$ term. This leaves
+the mass term and the divison by $1 + \dot{\theta}^{2}$. The mass term is included with a multiplication synapse. 
+
+The key original simplification was that
+dividing by $1 + \dot{\theta}^{2}$ is a good approximation for the signal division synapse discussed in \cite{NickFunctionalSubnetwork}. This allowed for
+just a single step to calculate $\lambda$.
+
+The additional complexity in the neuron network comes from the need to have the $C_{err}$ term change sign with changes in sign of both the positional error term and the state velocity. This was accomplished with the help of the dual-neuron representation of these values. This design pattern allows for all pairs of edges (positive-positive, positive-negative, negative-positive, negative-negative) to be connected, and then these neurons are connected to the correct sign output neurons. This network only works because only one of each pair of inputs will be active (the other will be at or below its resting potential), so only one of the 4 intermediate neurons will be active, activating one of the two output neurons. This 4 way cross achieves the ability to flip the sign of the output based on velocity and position error sign to correctly calculate $C_{err}$.
 
 \bbs{Results}
 \label{chap:results}
