@@ -19,6 +19,8 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
 
+\usepackage{floatrow}
+
 % https://tex.stackexchange.com/questions/119513/cleveref-and-appendix-packages-appendix-referenced-as-section
 % \crefname{appsec}{Appendix}{Appendices}
 
@@ -388,34 +390,46 @@ frequencies. See \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 
 % TODO(buckbaskin): bode plot? for positive and negative? in discussion?
 
-\begin{figure}
-\centering
+\begin{figure*}
+\begin{floatrow}
+\ffigbox{%
 \includegraphics[width=3in]{results/TestVelPos}
+}{%
 \caption{Positive Velocity Testing (Reference in orange)}
 \label{fig:TestVelPos}
-\end{figure}
+}
 
-\begin{figure}
-\centering
+\ffigbox{%
 \includegraphics[width=3in]{results/TestVelNeg}
-\caption{Negative Velocity Testing (Reference in orange)}
+}{%
+\caption{Negative Velocity Testing}
 \label{fig:TestVelNeg}
-\end{figure}
+}
+\end{floatrow}
+\begin{floatrow}
+\ffigbox{%
+\includegraphics[width=3in]{results/TestAccelPos}
+}{%
+\caption{Positive Acceleration Testing}
+\label{fig:TestAccelPos}
+}
+
+\ffigbox{%
+\includegraphics[width=3in]{results/TestAccelNeg}
+}{%
+\caption{Negative Acceleration Testing}
+\label{fig:TestAccelNeg}
+}
+\end{floatrow}
+\end{figure*}
 
 Within the neuron network, acceleration is calculated primarily from actuator
-pressures. The output is plotted compared with expected output. See \myref{fig:TestAccelPos}.
-
-\begin{figure}
-\centering
-\includegraphics[width=3in]{results/TestAccelPos}
-\caption{Positive Acceleration Tests (Reference in orange)}
-\label{fig:TestAccelPos}
-\end{figure}
+pressures. The output is plotted compared with expected output. See \myref{fig:TestAccelPos} and \myref{fig:TestAccelNeg}.
 
 \bbss{Torque Optimization}
 
 The torque optimization network was tested as a complete network. See \myref{fig:TestTorqueOptimization}.
-% TODO*buckbaskin): Figure of neuron controller torque optimization test
+% TODO(buckbaskin): Figure of neuron controller torque optimization test
 \begin{figure}
 \centering
 \includegraphics[width=3in]{results/TestAccelPos}
@@ -424,39 +438,63 @@ The torque optimization network was tested as a complete network. See \myref{fig
 \end{figure}
 
 The components for converting the torque to acceleration were also tested separately. See \myref{fig:TestT2A}.
-% TODO*buckbaskin): Figure of neuron controller T2A
+% TODO(buckbaskin): Figure of neuron controller T2A
 \begin{figure}
 \centering
 \includegraphics[width=3in]{results/TestAccelPos}
-\caption{Torque Optimization (Reference in orange)}
+\caption{Converting applied torque to acceleration}
 \label{fig:TestT2A}
 \end{figure}
 
 The components for converting the torque to pressure were also tested separately. See \myref{fig:TestT2P}.
-% TODO*buckbaskin): Figure of neuron controller T2A
+% TODO(buckbaskin): Figure of neuron controller T2P
 \begin{figure}
 \centering
 \includegraphics[width=3in]{results/TestAccelPos}
-\caption{Torque Optimization (Reference in orange)}
+\caption{Converting desired torque to actuator pressure}
 \label{fig:TestT2P}
 \end{figure}
 
 \bbss{System Modeling}
 
-% TODO*buckbaskin): Figure of neuron controller system model test
-The system modeling network was tested as a complete network. See \myref{fig:SystemModel}.
-% TODO*buckbaskin): Figure of neuron controller torque optimization test
-\begin{figure}
-\centering
+The system modeling network was tested as a complete network. See \myref{fig:SystemModel1}.
+% TODO(buckbaskin): Figure of neuron controller system model tests (4x)
+\begin{figure*}
+\begin{floatrow}
+\ffigbox{%
+\includegraphics[width=3in]{results/TestVelPos}
+}{%
+\caption{System Model 1}
+\label{fig:SystemModel1}
+}
+
+\ffigbox{%
+\includegraphics[width=3in]{results/TestVelNeg}
+}{%
+\caption{System Model 2}
+\label{fig:SystemModel2}
+}
+\end{floatrow}
+\begin{floatrow}
+\ffigbox{%
 \includegraphics[width=3in]{results/TestAccelPos}
-\caption{Torque Optimization (Reference in orange)}
-\label{fig:SystemModel}
-\end{figure}
+}{%
+\caption{System Model 3}
+\label{fig:SystemModel3}
+}
+
+\ffigbox{%
+\includegraphics[width=3in]{results/TestAccelNeg}
+}{%
+\caption{System Model 4}
+\label{fig:SystemModel4}
+}
+\end{floatrow}
+\end{figure*}
 
 \bbss{Overall}
 
-% TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed
-% estimators)
+% TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed estimators)
 
 \bbs{Discussion}
 \label{chap:discussion}
