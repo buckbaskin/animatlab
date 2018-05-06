@@ -1,7 +1,7 @@
-def yield_lines():
+def yield_lines(base):
     headers = None
 
-    with open('MathOperationsTable.txt', 'r') as f_in:
+    with open('%s.tsv' % (base,), 'r') as f_in:
         for index, line in enumerate(f_in):
             if headers is None:
                 names = line.split(', ')
@@ -29,9 +29,14 @@ def yield_lines():
                     real_columns.append(left.strip())
                 real_columns.append(right.strip())
             yield ', '.join(real_columns)
-
-with open('MathOperationsTable.csv', 'w') as f_out:
-    for index, line in enumerate(yield_lines()):
-        f_out.write(line + '\n')
-        if index % 1000 == 0:
-            print('done with line %d' % (index,))
+if __name__ == '__main__':
+    base = 'TestAccel'
+    for base in ['TestAccel', 'TestSystemModel', 'TestT2A', 'TestT2P',
+            'TestTorqueOptimization', 'TestVel']:
+        with open('%s.csv' % (base,), 'w') as f_out:
+            for index, line in enumerate(yield_lines(base)):
+                if index < 10 and False:
+                    print(line)
+                f_out.write(line + '\n')
+                if index % 1000 == 0:
+                    print('%s done with line %d' % (base, index,))
