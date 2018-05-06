@@ -283,14 +283,14 @@ This error in acceleration can be directly measured by comparing the estimated
 position and the sensed position at the next control step. After propagating error from acceleration to position, the equation is as follows:
 
 \begin{equation}
-\theta_{err} = - \dfrac{\delta t^{2}}{2M}(C_{err} \dot{\theta}_{0} + N_{err})
+\theta_{err} = - \dfrac{\delta t^{2}}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
 \end{equation}
 
 To convert the equation into a form that can be used to update the damping and
 load internal estimates:
 
 \begin{equation}
-C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
+C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 \end{equation}
 
 where
@@ -301,12 +301,21 @@ where
 - \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
 \end{equation}
 
+This analysis has a singular point when both $\theta = 0$ and $\dot{\theta} = 0$. In this case, there is no damping effect and no torque applied from a static
+load. Therefore, there is no information to quantify their update and the internal update is paused.
+
 \bbs{Neuron Design}
 \label{chap:neuron_design}
 
 
 \bbs{Results}
 \label{chap:results}
+
+\bbss{Sensor Fusion}
+
+\bbss{Torque Optimization}
+
+\bbss{System Modeling}
 
 \bbs{Discussion}
 \label{chap:discussion}

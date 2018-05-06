@@ -225,7 +225,7 @@ including concepts from Kalman filtering).
 The revised, simplified equation that assumes error comes from parameter estimation is as follows:
 
 \begin{equation}
-(\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{\tau}{M} - \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} - \dfrac{(N + N_{err})}{M}
+(\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{\tau}{M} - \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} - \dfrac{(N + N_{err})sin(\theta)}{M}
 \end{equation}
 
 The error components can be identified by subtracting out the non-error 
@@ -235,18 +235,18 @@ components:
 (\ddot{\theta}_{act} + \ddot{\theta}_{err}) - \ddot{\theta}_{act} =
 \dfrac{\tau}{M} - \dfrac{\tau}{M}
 - \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} + \dfrac{C}{M}\dot{\theta}_{0}
-- \dfrac{(N + N_{err})}{M}  + \dfrac{N}{M}
+- \dfrac{(N + N_{err})sin(\theta)}{M}  + \dfrac{N sin(\theta)}{M}
 \end{equation}
 
 \begin{equation}
 \ddot{\theta}_{err} =
 - C_{err} \dfrac{\dot{\theta}_{0}}{M}
-- N_{err} \dfrac{1}{M}
+- N_{err} \dfrac{sin(\theta)}{M}
 \end{equation}
 
 \begin{equation}
 \ddot{\theta}_{err} = - \dfrac{1}{M}
-(C_{err} \dot{\theta}_{0} + N_{err})
+(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
 \end{equation}
 
 \bbss{Velocity Error}
@@ -260,7 +260,7 @@ components:
 \end{equation}
 
 \begin{equation}
-\dot{\theta}_{1, err} = - \dfrac{\delta t}{M}(C_{err} \dot{\theta}_{0} + N_{err})
+\dot{\theta}_{1, err} = - \dfrac{\delta t}{M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
 \end{equation}
 
 \begin{equation}
@@ -272,7 +272,7 @@ components:
 \end{equation}
 
 \begin{equation}
-\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err}) = \dfrac{\delta t}{2} \ddot{\theta_{err}}
+\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)) = \dfrac{\delta t}{2} \ddot{\theta_{err}}
 \end{equation}
 
 \bbsss{Positional Error}
@@ -282,24 +282,36 @@ components:
 \end{equation}
 
 \begin{equation}
-\theta_{err} = \dot{\theta}_{avg, err} \delta t = \dfrac{\delta t^{2}}{2} \ddot{\theta_{err}} = - \dfrac{\delta t^{2}}{2M}(C_{err} \dot{\theta}_{0} + N_{err})
+\theta_{err} = \dot{\theta}_{avg, err} \delta t = \dfrac{\delta t^{2}}{2} \ddot{\theta_{err}} = - \dfrac{\delta t^{2}}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
 \end{equation}
 
 \begin{equation}
-- \dfrac{2M}{\delta t^{2}} \theta_{err} = C_{err} \dot{\theta}_{0} + N_{err}
+- \dfrac{2M}{\delta t^{2}} \theta_{err} = C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)
 \end{equation}
 
 \begin{equation}
-N_{err} = 
+N_{err} sin(\theta) = 
 - \dot{\theta}_{0} C_{err}
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
 
-When $\dot{\theta}_{0}$ is 0, then $N_{err}$ explains the total error in acceleration. When $\dot{\theta}_{0}$ is large, $N_{err}$ should explain a diminishing amount of the error. This can be thought of as finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$.
+When $\dot{\theta}_{0}$ is 0, then $N_{err} sin(\theta)$ explains the total error in acceleration. When $\dot{\theta}_{0}$ is large, $N_{err} sin(\theta)$ should explain a diminishing amount of the error. This can be thought of as finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$, where $C_{err}$ is the first term and 
+$N_{err} sin(\theta)$ is the second term.
+
+\begin{equation}
+C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
+\end{equation}
 
 \begin{equation}
 \lambda = 
 - \lambda \dot{\theta}_{0}^{2}
+- \dfrac{2M}{\delta t^{2}} \theta_{err}
+\end{equation}
+
+\begin{equation}
+\lambda (1
++ \dot{\theta}_{0}^{2})
+=
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
 
@@ -309,9 +321,7 @@ When $\dot{\theta}_{0}$ is 0, then $N_{err}$ explains the total error in acceler
 - \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
 \end{equation}
 
-\begin{equation}
-C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
-\end{equation}
+This formulation does leave a singular point in the solution. When the joint is stopped and the joint is centered, then there are no damping or loads that apply torque to the joint. In this case, there is a check to pause updating of the internal estimate of joint parameters.
 
 \subsection{Evaluation of asymmetric error concerns}
 
