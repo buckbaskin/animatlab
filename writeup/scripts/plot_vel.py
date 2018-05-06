@@ -24,15 +24,16 @@ setup = [
 linewidth = 2
 
 for name, datasets in setup:
-    fig = plt.figure(figsize=(6,6,), dpi=300)
+    fig = plt.figure(figsize=(6,3,), dpi=300)
     ax = fig.add_subplot('111')
 
     vel, ref = datasets
-    ax.plot(time[200:], vel[200:], linewidth=linewidth, label='est')
-    ax.plot(time[200:], ref[200:], linewidth=linewidth, label='ref')
+    print(len(time))
+    ax.plot(time[20000:40000], vel[20000:40000], linewidth=linewidth, label='Est. Vel.')
+    ax.plot(time[20000:40000], ref[20000:40000], linewidth=linewidth, label='Reference')
     
-    ax.set_xlabel('time (sec)')
-    ax.set_ylabel('Vel (mV)')
+    ax.set_xlabel('Time (sec)')
+    ax.set_ylabel('Velocity (mV)')
 
     ax.set_ylim(-60, -40)
     ax.set_yticks([-60, -40])
@@ -48,5 +49,5 @@ for name, datasets in setup:
 
     plt.legend()
     plt.tight_layout()
-    plt.savefig('images/results/TestVel%s.png' % (name,))
-    plt.show()
+    plt.savefig('images/results/TestVel%s_short.png' % (name,))
+    # plt.show()
