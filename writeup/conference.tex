@@ -9,8 +9,8 @@
 % \usepackage[utf8]{inputenc}
 % \usepackage[english]{babel}
 % \usepackage{csquotes}
-% \usepackage{graphicx}
-% \graphicspath{ {images/} }
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
 
 \usepackage[style=ieee, backend=biber]{biblatex}
@@ -384,23 +384,74 @@ The additional complexity in the neuron network comes from the need to have the 
 
 The two key estimates made within the sensor fusion sub-network: velocity and
 acceleration. Both controllers were tested against sin waves of known
-frequencies: 1 Hz, 2 Hz and 4 Hz. This allows for the easy calculation of
-amplitude of the output.
+frequencies. See \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 
-% TODO*buckbaskin): Figure of neuron controller velocity test
+% TODO(buckbaskin): bode plot? for positive and negative? in discussion?
+
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestVelPos}
+\caption{Positive Velocity Testing (Reference in orange)}
+\label{fig:TestVelPos}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestVelNeg}
+\caption{Negative Velocity Testing (Reference in orange)}
+\label{fig:TestVelNeg}
+\end{figure}
 
 Within the neuron network, acceleration is calculated primarily from actuator
-pressures. The output is plotted compared with expected output.
+pressures. The output is plotted compared with expected output. See \myref{fig:TestAccelPos}.
 
-% TODO*buckbaskin): Figure of neuron controller acceleration test
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestAccelPos}
+\caption{Positive Acceleration Tests (Reference in orange)}
+\label{fig:TestAccelPos}
+\end{figure}
 
 \bbss{Torque Optimization}
 
+The torque optimization network was tested as a complete network. See \myref{fig:TestTorqueOptimization}.
 % TODO*buckbaskin): Figure of neuron controller torque optimization test
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestAccelPos}
+\caption{Torque Optimization (Reference in orange)}
+\label{fig:TestTorqueOptimization}
+\end{figure}
+
+The components for converting the torque to acceleration were also tested separately. See \myref{fig:TestT2A}.
+% TODO*buckbaskin): Figure of neuron controller T2A
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestAccelPos}
+\caption{Torque Optimization (Reference in orange)}
+\label{fig:TestT2A}
+\end{figure}
+
+The components for converting the torque to pressure were also tested separately. See \myref{fig:TestT2P}.
+% TODO*buckbaskin): Figure of neuron controller T2A
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestAccelPos}
+\caption{Torque Optimization (Reference in orange)}
+\label{fig:TestT2P}
+\end{figure}
 
 \bbss{System Modeling}
 
 % TODO*buckbaskin): Figure of neuron controller system model test
+The system modeling network was tested as a complete network. See \myref{fig:SystemModel}.
+% TODO*buckbaskin): Figure of neuron controller torque optimization test
+\begin{figure}
+\centering
+\includegraphics[width=3in]{results/TestAccelPos}
+\caption{Torque Optimization (Reference in orange)}
+\label{fig:SystemModel}
+\end{figure}
 
 \bbss{Overall}
 
