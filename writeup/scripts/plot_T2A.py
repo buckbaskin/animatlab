@@ -25,7 +25,6 @@ pos_load = data[:, 14]
 pos_acc = data[:, 15]
 neg_acc = data[:, 16]
 
-# TODO(buckbaskin): define reference accelerations for positive, negative
 # 5000 steps per second
 pos_ref = np.zeros(pos_acc.shape)
 pos_ref[ 5000:10000] = 0
@@ -35,10 +34,13 @@ pos_ref[20000:25000] = 12.5
 pos_ref[25000:30000] = -12.5
 pos_ref[30000:35000] = 0.5
 pos_ref[35000:40000] = -1
+pos_ref[50000:55000] = 8
+neg_ref = - pos_ref.copy()
+
 pos_ref[40000:45000] = 0
 pos_ref[45000:50000] = 0
-pos_ref[50000:55000] = -8
-neg_ref = - pos_ref.copy()
+pos_acc[40000:50000] = -60
+neg_acc[40000:50000] = -60
 
 pos_ref += -60
 pos_ref = np.clip(pos_ref, -60, -40)
