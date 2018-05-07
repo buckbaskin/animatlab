@@ -407,25 +407,14 @@ The additional complexity in the neuron network comes from the need to have the 
 
 The two key estimates made within the sensor fusion sub-network: velocity and
 acceleration. Both controllers were tested against sin waves of known
-frequencies. See \myref{fig:TestVel}.
-
-% TODO(buckbaskin): bode plot? for positive and negative? in discussion?
-
+frequencies. See \myref{fig:TestVel}. 
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. The output is plotted compared with expected output. See \myref{fig:TestAccel}.
 
 \bbss{Torque Optimization}
 
-The torque optimization network was tested as a complete network. See \myref{fig:TestTorqueOptimization}.
-% TODO(buckbaskin): Figure of neuron controller torque optimization test
-
-% TODO(buckbaskin): fix test data. This is broken back at the animatlab
-
-% TODO(buckbaskin): something about where this figure is inserted is breaking the template
-
-The components for converting the torque to acceleration were also tested 
+The torque optimization network was tested as a complete network. See \myref{fig:TestTorqueOptimization}. The components for converting the torque to acceleration were also tested 
 separately. See \myref{fig:TestT2A}.
-
 The components for converting the torque to pressure were also tested 
 separately. See \myref{fig:TestT2P}.
 
@@ -483,9 +472,6 @@ separately. See \myref{fig:TestT2P}.
 The system modeling network was tested as a complete network because both the 
 damping and load factors are updated from the same $\lambda$ value. See \myref{
 fig:TestSystemC} and \myref{fig:TestSystemN}.
-% TODO(buckbaskin): Figure of neuron controller system model tests (4x)
-
-% TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed estimators)
 
 \bbs{Discussion}
 \label{chap:discussion}
@@ -602,8 +588,6 @@ behavior.
 
 \bbs{Conclusion}
 \label{chap:conclusion}
-
-% TODO(buckbaskin): add pictures of the more interesting networks
 
 In this paper, we propose a new system for controlling joints with biologically inspired actuators, in particular an antagonistic pair of pneumatic artificial muscles. The controller was implemented using a synthetic nervous system approach and demonstrated an ability to effectively implement 3 key design improvements: sensor fusion, internal dynamics modeling and internal error correction optimization. Through comprehensive testing of the functional neuron subnetworks, the design was proven to be effective.
 
