@@ -310,6 +310,27 @@ load. Therefore, there is no information to quantify their update and the intern
 \bbs{Neuron Design}
 \label{chap:neuron_design}
 
+\begin{figure*}
+\centering
+\includegraphics[width=6.5in]{methods/SensorFusion_Ext}
+\caption{Neuron network for sensor processing of the extension actuator. Inputs are in purple, test inputs are in yellow, outputs are in orange}
+\label{fig:NeuronSensorFusion}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\includegraphics[width=6.5in]{methods/TorqueOptimization}
+\caption{Neuron network for torque optimization (load and damping subnetworks not shown)}
+\label{fig:NeuronTorqueOptimization}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\includegraphics[width=6.5in]{methods/SystemModel_Test}
+\caption{Neuron network for system model}
+\label{fig:NeuronSystemModel}
+\end{figure*}
+
 The neuron controller network is made up of a set of engineered synapses
 designed to emulate arithmetic operations. These can be grouped into two
 categories: excitatory neurons and inhibitory neurons. Most neurons were tuned
@@ -330,7 +351,7 @@ sensor fusion network in the prototype controller. In this case, 3 neurons
 represent the 3 sensor inputs available in a joint: position (``Theta"),
 extension muscle pressure (``Ext Pres") and flexion muscle pressure
 (``Flx Pres"). The outputs for the network are the estimates for current 
-position, velocity and acceleration.
+position, velocity and acceleration. The network is shown in \myref{fig:NeuronSensorFusion}.
 
 \bbsss{Velocity Estimation}
 
@@ -346,7 +367,7 @@ The acceleration network uses 4 functional sub-network components. The first com
 
 \bbss{Torque Optimization}
 
-The torque optimization network performs the same function as the torque optimization step in the torque controller; however, it uses Newton's method instead of a bisecting search to estimate the optimal torque.
+The torque optimization network performs the same function as the torque optimization step in the torque controller; however, it uses Newton's method instead of a bisecting search to estimate the optimal torque. The network is shown in \myref{fig:NeuronTorqueOptimization}.
 
 The torque optimization loop is built around a feedback loop similar to the internal feedback loop in the acceleration estimation discussed in \myref{sec:accelerationEstimation}. In this loop, a torque estimate is passed through a velocity modifier and a position modifier to estimate the change in state for the given torque after being converted to acceleration with damping, load and inertial effects. This is compared to the desired state from a central pattern generator (CPG) and the torque is updated to minimize this error.
 
@@ -377,7 +398,7 @@ The key original simplification was that
 dividing by $1 + \dot{\theta}^{2}$ is a good approximation for the signal division synapse discussed in \cite{NickFunctionalSubnetwork}. This allowed for
 just a single step to calculate $\lambda$.
 
-The additional complexity in the neuron network comes from the need to have the $C_{err}$ term change sign with changes in sign of both the positional error term and the state velocity. This was accomplished with the help of the dual-neuron representation of these values. This design pattern allows for all pairs of edges (positive-positive, positive-negative, negative-positive, negative-negative) to be connected, and then these neurons are connected to the correct sign output neurons. This network only works because only one of each pair of inputs will be active (the other will be at or below its resting potential), so only one of the 4 intermediate neurons will be active, activating one of the two output neurons. This 4 way cross achieves the ability to flip the sign of the output based on velocity and position error sign to correctly calculate $C_{err}$.
+The additional complexity in the neuron network comes from the need to have the $C_{err}$ term change sign with changes in sign of both the positional error term and the state velocity. This was accomplished with the help of the dual-neuron representation of these values. This design pattern allows for all pairs of edges (positive-positive, positive-negative, negative-positive, negative-negative) to be connected, and then these neurons are connected to the correct sign output neurons. This network only works because only one of each pair of inputs will be active (the other will be at or below its resting potential), so only one of the 4 intermediate neurons will be active, activating one of the two output neurons. This 4 way cross achieves the ability to flip the sign of the output based on velocity and position error sign to correctly calculate $C_{err}$. The complete neuron network of the System Model is shown in \myref{fig:NeuronSystemModel}.
 
 \bbs{Results}
 \label{chap:results}
@@ -389,6 +410,24 @@ acceleration. Both controllers were tested against sin waves of known
 frequencies. See \myref{fig:TestVel}.
 
 % TODO(buckbaskin): bode plot? for positive and negative? in discussion?
+
+Within the neuron network, acceleration is calculated primarily from actuator
+pressures. The output is plotted compared with expected output. See \myref{fig:TestAccel}.
+
+\bbss{Torque Optimization}
+
+The torque optimization network was tested as a complete network. See \myref{fig:TestTorqueOptimization}.
+% TODO(buckbaskin): Figure of neuron controller torque optimization test
+
+% TODO(buckbaskin): fix test data. This is broken back at the animatlab
+
+% TODO(buckbaskin): something about where this figure is inserted is breaking the template
+
+The components for converting the torque to acceleration were also tested 
+separately. See \myref{fig:TestT2A}.
+
+The components for converting the torque to pressure were also tested 
+separately. See \myref{fig:TestT2P}.
 
 \begin{figure}
 \centering
@@ -432,25 +471,12 @@ frequencies. See \myref{fig:TestVel}.
 \label{fig:TestSystemC}
 \end{figure}
 
-Within the neuron network, acceleration is calculated primarily from actuator
-pressures. The output is plotted compared with expected output. See \myref{fig:TestAccel}.
-
-\bbss{Torque Optimization}
-
-The torque optimization network was tested as a complete network. See \myref{fig:TestTorqueOptimization}.
-% TODO(buckbaskin): Figure of neuron controller torque optimization test
-
-% TODO(buckbaskin): fix test data. This is broken back at the animatlab
-
-% TODO(buckbaskin): something about where this figure is inserted is breaking the template
-
-The components for converting the torque to acceleration were also tested 
-separately. See \myref{fig:TestT2A}.
-
-The components for converting the torque to pressure were also tested 
-separately. See \myref{fig:TestT2P}.
-
-% TODO(buckbaskin): Figure of neuron controller T2P
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestSystemN}
+\caption{Neuron and actual load factor updates}
+\label{fig:TestSystemN}
+\end{figure}
 
 \bbss{System Modeling}
 
@@ -458,13 +484,6 @@ The system modeling network was tested as a complete network because both the
 damping and load factors are updated from the same $\lambda$ value. See \myref{
 fig:TestSystemC} and \myref{fig:TestSystemN}.
 % TODO(buckbaskin): Figure of neuron controller system model tests (4x)
-
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/TestSystemN}
-\caption{Neuron and actual load factor updates}
-\label{fig:TestSystemN}
-\end{figure}
 
 % TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed estimators)
 
@@ -593,6 +612,8 @@ a desired output torque to pressures in the actuator is inaccurate compared with
 directly implementing a model of the actuators presented in \cite{HuntPMuscles}. This suggests that the synthetic nervous system approach may best be combined
 with code in a more bionic approach that leverages the ability to implement a
 closed form implementation of a complex pressure-strain model.
+
+Code source materials and simulation files are available at \url{https://github.com/buckbaskin/animatlab}.
 
 \printbibliography[heading=bibintoc, title={Bibliography}]
 
