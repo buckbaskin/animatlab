@@ -22,18 +22,28 @@ setup = [
 ('Neg', [neg_vel, neg_ref]),
 ]
 
-
+fig = plt.figure(figsize=(3,2.25,), dpi=300)
+ax1 = fig.add_subplot('211')
+ax2 = fig.add_subplot('212')
+count = 0
 for name, datasets in setup:
-    fig = plt.figure(figsize=(3,1.5,), dpi=300)
-    ax = fig.add_subplot('111')
+    if count == 0:
+        ax = ax1
+    else:
+        ax = ax2
+    count += 1
 
     vel, ref = datasets
     print(len(time))
     ax.plot(time[20000:40000], vel[20000:40000], linewidth=linewidth, label='Est. Vel.')
     ax.plot(time[20000:40000], ref[20000:40000], linewidth=linewidth, label='Reference')
     
-    ax.set_xlabel('Time (sec)')
-    ax.set_ylabel('Velocity (mV)')
+    if count == 1:
+        ax.set_ylabel('+ Vel (mV)')
+        ax.set_xticks([])
+    else:
+        ax.set_xlabel('Time (sec)')
+        ax.set_ylabel('- Vel (mV)')
 
     ax.set_ylim(-60, -40)
     ax.set_yticks([-60, -40])
@@ -47,7 +57,7 @@ for name, datasets in setup:
     y0, y1 = ax.get_xlim()
     # ax.set_aspect((x1 - x0)/(y1 - y0))
 
-    # plt.legend()
-    plt.tight_layout()
-    plt.savefig('images/results/TestVel%s.png' % (name,))
-    # plt.show()
+# plt.legend()
+plt.tight_layout()
+plt.savefig('images/results/TestVel.png')
+plt.show()

@@ -86,7 +86,7 @@ for name, datasets in setup:
     y0, y1 = ax.get_xlim()
     # ax.set_aspect((x1 - x0)/(y1 - y0))
 
-    # plt.legend()
+# plt.legend()
 plt.tight_layout()
 plt.savefig('images/results/TestT2A.png')
 plt.show()

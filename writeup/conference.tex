@@ -386,45 +386,26 @@ The additional complexity in the neuron network comes from the need to have the 
 
 The two key estimates made within the sensor fusion sub-network: velocity and
 acceleration. Both controllers were tested against sin waves of known
-frequencies. See \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
+frequencies. See \myref{fig:TestVel}.
 
 % TODO(buckbaskin): bode plot? for positive and negative? in discussion?
 
-\begin{figure*}
-\begin{floatrow}
-\ffigbox{%
-\includegraphics[width=3in]{results/TestVelPos}
-}{%
-\caption{Positive Velocity Testing (Reference in orange)}
-\label{fig:TestVelPos}
-}
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestVel}
+\caption{Velocity Testing}
+\label{fig:TestVel}
+\end{figure}
 
-\ffigbox{%
-\includegraphics[width=3in]{results/TestVelNeg}
-}{%
-\caption{Negative Velocity Testing}
-\label{fig:TestVelNeg}
-}
-\end{floatrow}
-\begin{floatrow}
-\ffigbox{%
-\includegraphics[width=3in]{results/TestAccelPos}
-}{%
-\caption{Positive Acceleration Testing}
-\label{fig:TestAccelPos}
-}
-
-\ffigbox{%
-\includegraphics[width=3in]{results/TestAccelNeg}
-}{%
-\caption{Negative Acceleration Testing}
-\label{fig:TestAccelNeg}
-}
-\end{floatrow}
-\end{figure*}
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestAccel}
+\caption{Acceleration Testing}
+\label{fig:TestAccel}
+\end{figure}
 
 Within the neuron network, acceleration is calculated primarily from actuator
-pressures. The output is plotted compared with expected output. See \myref{fig:TestAccelPos} and \myref{fig:TestAccelNeg}.
+pressures. The output is plotted compared with expected output. See \myref{fig:TestAccel}.
 
 \bbss{Torque Optimization}
 
@@ -432,15 +413,17 @@ The torque optimization network was tested as a complete network. See \myref{fig
 % TODO(buckbaskin): Figure of neuron controller torque optimization test
 
 % TODO(buckbaskin): fix test data. This is broken back at the animatlab
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/TestTorqueOptimization}
-\caption{Torque Optimization (Reference in orange)}
-\label{fig:TestTorqueOptimization}
-\end{figure}
+% \begin{figure}
+% \centering
+% \includegraphics[width=2.25in]{results/TestTorqueOptimization}
+% \caption{Torque Optimization}
+% \label{fig:TestTorqueOptimization}
+% \end{figure}
+
+% TODO(buckbaskin): something about where this figure is inserted is breaking the template
 
 The components for converting the torque to acceleration were also tested separately. See \myref{fig:TestT2A}.
-% TODO(buckbaskin): Figure of neuron controller T2A
+
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestT2A}
@@ -449,10 +432,12 @@ The components for converting the torque to acceleration were also tested separa
 \end{figure}
 
 The components for converting the torque to pressure were also tested separately. See \myref{fig:TestT2P}.
+
 % TODO(buckbaskin): Figure of neuron controller T2P
+
 \begin{figure}
 \centering
-\includegraphics[height=2.25in]{results/TestT2A}
+\includegraphics[height=2.25in]{results/TestT2P}
 \caption{Estimated Pressure from Torque}
 \label{fig:TestT2P}
 \end{figure}
@@ -461,38 +446,6 @@ The components for converting the torque to pressure were also tested separately
 
 The system modeling network was tested as a complete network. See \myref{fig:SystemModel1}.
 % TODO(buckbaskin): Figure of neuron controller system model tests (4x)
-\begin{figure*}
-\begin{floatrow}
-\ffigbox{%
-\includegraphics[width=3in]{results/TestVelPos}
-}{%
-\caption{System Model 1}
-\label{fig:SystemModel1}
-}
-
-\ffigbox{%
-\includegraphics[width=3in]{results/TestVelNeg}
-}{%
-\caption{System Model 2}
-\label{fig:SystemModel2}
-}
-\end{floatrow}
-\begin{floatrow}
-\ffigbox{%
-\includegraphics[width=3in]{results/TestAccelPos}
-}{%
-\caption{System Model 3}
-\label{fig:SystemModel3}
-}
-
-\ffigbox{%
-\includegraphics[width=3in]{results/TestAccelNeg}
-}{%
-\caption{System Model 4}
-\label{fig:SystemModel4}
-}
-\end{floatrow}
-\end{figure*}
 
 \bbss{Overall}
 
