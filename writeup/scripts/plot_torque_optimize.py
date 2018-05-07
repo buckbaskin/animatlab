@@ -50,6 +50,7 @@ neg_ref = - np.copy(pos_ref)
 
 pos_ref += -60
 pos_ref = np.clip(pos_ref, -60, -40)
+
 neg_ref += -60
 neg_ref = np.clip(neg_ref, -60, -40)
 
@@ -96,5 +97,5 @@ for name, datasets in setup:
 
     # plt.legend()
 plt.tight_layout()
-# plt.savefig('images/results/TestTorqueOptimization.png')
+plt.savefig('images/results/TestTorqueOptimization.png')
 plt.show()
