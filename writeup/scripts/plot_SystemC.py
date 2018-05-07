@@ -23,33 +23,33 @@ pos_lam = data[:, 12]
 
 # TODO(buckbaskin): define reference accelerations for positive, negative
 # 5000 steps per second
-C_ref = np.zeros(neg_N.shape)
-C_ref[ 5000:10000] = 0.0
-C_ref[10000:15000] = 0.0
-C_ref[15000:20000] = 0.0
-C_ref[20000:25000] = 0.0
-C_ref[25000:30000] = 3.8
-C_ref[30000:35000] = -3.8
-C_ref[35000:40000] = 0.0
-C_ref[40000:45000] = -3.8
-C_ref[45000:50000] = 3.8
-C_ref[50000:55000] = 0.0
-C_ref[55000:60000] = 1.9
-C_ref[60000:65000] = -1.9
-
-pos_ref = np.zeros(pos_N.shape)
+pos_ref = np.zeros(pos_C.shape)
 pos_ref[ 5000:10000] = 0.0
 pos_ref[10000:15000] = 0.0
 pos_ref[15000:20000] = 0.0
-pos_ref[20000:25000] = 19.6
-pos_ref[25000:30000] = 0.8
-pos_ref[30000:35000] = 0.8
-pos_ref[35000:40000] = -19.6
-pos_ref[40000:45000] = -0.8
-pos_ref[45000:50000] = -0.8
-pos_ref[50000:55000] = 9.8
-pos_ref[55000:60000] = 0.4
-pos_ref[60000:65000] = 0.4
+pos_ref[20000:25000] = 0.0
+pos_ref[25000:30000] = 3.8
+pos_ref[30000:35000] = -3.8
+pos_ref[35000:40000] = 0.0
+pos_ref[40000:45000] = -3.8
+pos_ref[45000:50000] = 3.8
+pos_ref[50000:55000] = 0.0
+pos_ref[55000:60000] = 1.9
+pos_ref[60000:65000] = -1.9
+
+N_ref = np.zeros(pos_N.shape)
+N_ref[ 5000:10000] = 0.0
+N_ref[10000:15000] = 0.0
+N_ref[15000:20000] = 0.0
+N_ref[20000:25000] = 19.6
+N_ref[25000:30000] = 0.8
+N_ref[30000:35000] = 0.8
+N_ref[35000:40000] = -19.6
+N_ref[40000:45000] = -0.8
+N_ref[45000:50000] = -0.8
+N_ref[50000:55000] = 9.8
+N_ref[55000:60000] = 0.4
+N_ref[60000:65000] = 0.4
 
 neg_ref = - pos_ref.copy()
 
@@ -60,8 +60,8 @@ neg_ref += -60
 neg_ref = np.clip(neg_ref, -60, -40)
 
 setup = [
-('Pos', [pos_N, pos_ref]),
-('Neg', [neg_N, neg_ref]),
+('Pos', [pos_C, pos_ref]),
+('Neg', [neg_C, neg_ref]),
 ]
 
 
@@ -82,11 +82,11 @@ for name, datasets in setup:
     ax.plot(time[5000:], ref[5000:], linewidth=linewidth, label='Reference')
     
     if count == 1:
-        ax.set_ylabel('+ Load Shift')
+        ax.set_ylabel('+ Damp Shift')
         ax.set_xticks([])
     else:
         ax.set_xlabel('Time (sec)')
-        ax.set_ylabel('- Load Shift')
+        ax.set_ylabel('- Damp Shift')
 
     ax.set_ylim(-60, -40)
     ax.set_yticks([-60, -40])
@@ -102,5 +102,5 @@ for name, datasets in setup:
 
 # plt.legend()
 plt.tight_layout()
-plt.savefig('images/results/TestSystemN.png')
+plt.savefig('images/results/TestSystemC.png')
 plt.show()

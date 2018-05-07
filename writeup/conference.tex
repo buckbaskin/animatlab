@@ -411,6 +411,27 @@ frequencies. See \myref{fig:TestVel}.
 \label{fig:TestTorqueOptimization}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestT2A}
+\caption{Estimated Acceleration from Torque}
+\label{fig:TestT2A}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestT2P}
+\caption{Estimated Pressure from Torque}
+\label{fig:TestT2P}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestSystemC}
+\caption{Neuron and actual damping factor updates}
+\label{fig:SystemC}
+\end{figure}
+
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. The output is plotted compared with expected output. See \myref{fig:TestAccel}.
 
@@ -423,47 +444,114 @@ The torque optimization network was tested as a complete network. See \myref{fig
 
 % TODO(buckbaskin): something about where this figure is inserted is breaking the template
 
-The components for converting the torque to acceleration were also tested separately. See \myref{fig:TestT2A}.
+The components for converting the torque to acceleration were also tested 
+separately. See \myref{fig:TestT2A}.
 
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/TestT2A}
-\caption{Estimated Acceleration from Torque}
-\label{fig:TestT2A}
-\end{figure}
-
-The components for converting the torque to pressure were also tested separately. See \myref{fig:TestT2P}.
+The components for converting the torque to pressure were also tested 
+separately. See \myref{fig:TestT2P}.
 
 % TODO(buckbaskin): Figure of neuron controller T2P
 
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/TestT2P}
-\caption{Estimated Pressure from Torque}
-\label{fig:TestT2P}
-\end{figure}
-
 \bbss{System Modeling}
 
-The system modeling network was tested as a complete network. See \myref{fig:SystemN}.
+The system modeling network was tested as a complete network because both the 
+damping and load factors are updated from the same $\lambda$ value. See \myref{
+fig:SystemC} and \myref{fig:SystemN}.
 % TODO(buckbaskin): Figure of neuron controller system model tests (4x)
 
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestSystemN}
-\caption{Estimated and actual load updates}
+\caption{Neuron and actual load factor updates}
 \label{fig:SystemN}
 \end{figure}
-
-
-\bbss{Overall}
 
 % TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed estimators)
 
 \bbs{Discussion}
 \label{chap:discussion}
 
-Discuss accuracy of each piece
+\bbss{Sensor Fusion}
+\bbsss{Velocity}
+
+The velocity network in the sensor fusion algorithm varies the most from the 
+reference data. This is a known phneomena addressed in 
+\cite{NickFunctionalSubnetwork}. This variance is observed in two quantities, 
+the phase shift and the magnitude
+
+In this particular network, the magnitude of the positive and negative 
+velocities varied quite widely compared with the reference, especially at 
+higher gains. During the tuning of the network, a balance was chosen between 
+the maximum phase lag, minimized by decreasing the time constant of the slower 
+neuron, and increasing the gain (and therefore the observed difference between 
+positive and negative velocities).
+
+This error suggests that there is an underlying error in the way that positive 
+and negative operations are computed; however, through individual tuning the 
+synapses appear to be relatively accurate. The use of the derivative network 
+varies in each application across different sub-networks and so the engineering 
+solution for the correct balance of accuracy, gain and phase varies. This 
+leaves open the opportunity for biology to inform a single true correct 
+solution or a more complex derivative network that can independently select for 
+gain and phase.
+
+\bbsss{Acceleration}
+
+The acceleration network shows effective convergence a near-correct solution. 
+This demonstrates that the feedback loop concept can be effective; however, it 
+does take a reltively fixed ammount of time to
+converge from solutions that are a significant step away. This may lead to 
+issues with rapidly changing pressures on a hardware system. One potential 
+solution is to modify the time constants of the network
+elements within the loop, in particular the integration network, to allow the 
+internal loop(s) to run faster than the rest of the network
+so they appear to converge to the correct value on the same time scale as the 
+rest of the network.
+
+\bbss{Torque Optimization}
+
+% TODO(buckbaskin): write this with good data
+
+\bbsss{Acceleration from Torque}
+
+% TODO(buckbaskin): zero out the ignored test cases
+
+The 3 stage network for estimating the acceleration from the torque applied to 
+the system appears to work well. There are two test cases, between 7 and 9 
+seconds that were not significant when tested at the resolution that the 
+network incorporates. Otherwise, the acceleration is almost always correct. 
+Given its intended uses, the network is sufficiently accurate and suggests that 
+relatively small sets of neurons can provide a representation of the physics of 
+a biological system. This would suggest that an animal's nervous system can 
+relatively easily understand the dynamics of its environment and its body.
+
+\bbsss{Estimating Pressures from Torques}
+
+The process for calculating pressures from torques is accurate in some
+cases and inaccurate in many others. This suggests that the physical 
+model of the pneumatic artificial muscles proposed in \cite{HuntPMuscles} 
+doesn't convert well to a relatively small network of neurons. This would 
+suggest that a future controller iteration might move the mechanical 
+calculation of this conversion out of neurons and
+to LabView other other code used to interface between synthetic neurons and 
+hardware.
+
+\bbss{System Model}
+
+The network for predicting the weight update is very accurate and suggests that 
+the engineered process of estimating the modeling errors of a synthetic neuron 
+network within the network itself is both feasible and an effective process for 
+the continual improvement of a controller applied to a particular hardware 
+joint under control.
+
+This application is also generally more suitable to neuron networks than say, 
+the calculation of the conversion from pressures to torques following a well 
+prescribed algorithm involving a shifted tangent function. The exact magnitude 
+of the update of the weights, especially at a reduced gain, is not as important 
+as the relative magnitude and sign of each update. This means that the 
+implementation of an arthmetic operation or dynamic calculation by a synapse of 
+a collection of synapses is tolerant to small variances from the expected 
+behavior.
 
 \bbs{Conclusion}
 \label{chap:conclusion}
