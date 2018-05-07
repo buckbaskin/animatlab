@@ -93,7 +93,7 @@ Many robots have looked to biological inspiration to increase the mobility and
 ease of control of robots. In particular, many biological systems have increased
 redundancy to aid in balance with many animals, including dogs and cats, walking
 on 4 or more legs. The inspiration taken varies from imitating gait timing to
-help coordinate simple legs to completely mimicing musculoskeletal layout. The
+help coordinate simple legs to completely mimicking musculoskeletal layout. The
 Puppy robot was designed to mimic the operation of a large canine walking in
 the sagittal plane. \cite{PuppyDesign}
 
@@ -109,7 +109,7 @@ they need to be used in antagonistic pairs. While this increases the complexity
 of the robot, it also allows for further bio-inspiration in the robot design
 and control system.
 
-One of the major tradeoffs for pneumatic muscles is that they exhibit 
+One of the major trade offs for pneumatic muscles is that they exhibit 
 non-linear behavior in both static and dynamic control situations.
 \cite{HuntPMuscles, DynamicPMuscles} This has 
 motivated the designs of new types of controllers to overcome the non-linear
@@ -121,7 +121,7 @@ used to present the control situation in a linearized fashion to an outer PID
 control system. The results suggest that a system model of the nonlinear 
 properties of the actuators decreases positional error. The work was
 applied to controlling a vertical trolley and used a neural network as a black
-box for modelling the system, so there is an opportunity for improving the 
+box for modeling the system, so there is an opportunity for improving the 
 system and its application to controlling Puppy's rotational joints. 
 In \cite{Wang2013}, a model-based controller was used to control the actuation
 of a revolute joint with pneumatic muscles. The author's system allowed for
@@ -133,7 +133,7 @@ robot system that might reduce the effectiveness of the model.
 
 A combination of these two types of controllers offers insight into how to build
 an effective joint controller for Puppy. One further area of potential 
-improvment over existing designs is the incorporation of biological inspiration
+improvement over existing designs is the incorporation of biological inspiration
 within the controller itself. In \cite{NickFunctionalSubnetwork}, the authors
 demonstrate a method for using a dynamic, biologically accurate model of neurons
 to develop models of neurons for controlling physical systems. The work in the 
@@ -257,7 +257,7 @@ then perform a small weight adjustment in that direction. This allows for
 simple, fast calculations and a stable update because there are no large 
 changes made. Additionally, there is an easy option for weighting towards 
 under- or over-estimating a variable. In general, it is preferable to 
-under-estimate a variable such as interia because this lowers the estimated 
+under-estimate a variable such as inertia because this lowers the estimated 
 torque required, leading to some undershooting of a given value but avoiding
 large, underdamped oscillation.
 
@@ -346,11 +346,11 @@ The acceleration network uses 4 functional sub-network components. The first com
 
 \bbss{Torque Optimization}
 
-The torque optimization network performs the same function as the torque optmization step in the torque controller; however, it uses Newton's method instead of a bisecting search to estimate the optimal torque.
+The torque optimization network performs the same function as the torque optimization step in the torque controller; however, it uses Newton's method instead of a bisecting search to estimate the optimal torque.
 
 The torque optimization loop is built around a feedback loop similar to the internal feedback loop in the acceleration estimation discussed in \myref{sec:accelerationEstimation}. In this loop, a torque estimate is passed through a velocity modifier and a position modifier to estimate the change in state for the given torque after being converted to acceleration with damping, load and inertial effects. This is compared to the desired state from a central pattern generator (CPG) and the torque is updated to minimize this error.
 
-Newton's method is not guarunteed to converge; however, in this application with this error function, it will always converge. The derivative of the predicted future position with respect to the initial acceleration estimate is a constant term, so there will only be one root where the feedback loop will terminate.
+Newton's method is not guaranteed to converge; however, in this application with this error function, it will always converge. The derivative of the predicted future position with respect to the initial acceleration estimate is a constant term, so there will only be one root where the feedback loop will terminate.
 
 \begin{equation}
 \dfrac{\partial \theta_{future}}{\partial \ddot{\theta}} = \delta t^{2}
@@ -370,8 +370,8 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 - \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
 \end{equation}
 
-The original assumption was that a gain term can be added that encompases both a translation from an arbitrary range of values to the fixed range available in the neuron (20 mV). This absorbs the $\frac{2}{\delta t^{2}}$ term. This leaves
-the mass term and the divison by $1 + \dot{\theta}^{2}$. The mass term is included with a multiplication synapse. 
+The original assumption was that a gain term can be added that encompasses both a translation from an arbitrary range of values to the fixed range available in the neuron (20 mV). This absorbs the $\frac{2}{\delta t^{2}}$ term. This leaves
+the mass term and the division by $1 + \dot{\theta}^{2}$. The mass term is included with a multiplication synapse. 
 
 The key original simplification was that
 dividing by $1 + \dot{\theta}^{2}$ is a good approximation for the signal division synapse discussed in \cite{NickFunctionalSubnetwork}. This allowed for
@@ -475,7 +475,7 @@ fig:SystemC} and \myref{fig:SystemN}.
 \bbsss{Velocity}
 
 The velocity network in the sensor fusion algorithm varies the most from the 
-reference data. This is a known phneomena addressed in 
+reference data. This is a known phenomena addressed in 
 \cite{NickFunctionalSubnetwork}. This variance is observed in two quantities, 
 the phase shift and the magnitude
 
@@ -499,7 +499,7 @@ gain and phase.
 
 The acceleration network shows effective convergence a near-correct solution. 
 This demonstrates that the feedback loop concept can be effective; however, it 
-does take a reltively fixed ammount of time to
+does take a relatively fixed amount of time to
 converge from solutions that are a significant step away. This may lead to 
 issues with rapidly changing pressures on a hardware system. One potential 
 solution is to modify the time constants of the network
@@ -549,12 +549,16 @@ the calculation of the conversion from pressures to torques following a well
 prescribed algorithm involving a shifted tangent function. The exact magnitude 
 of the update of the weights, especially at a reduced gain, is not as important 
 as the relative magnitude and sign of each update. This means that the 
-implementation of an arthmetic operation or dynamic calculation by a synapse of 
+implementation of an arithmetic operation or dynamic calculation by a synapse of 
 a collection of synapses is tolerant to small variances from the expected 
 behavior.
 
 \bbs{Conclusion}
 \label{chap:conclusion}
+
+% TODO(buckbaskin): add pictures of the more interesting networks
+
+% TODO(buckbaskin): write the conclusion
 
 \newpage
 \label{chap:references}
