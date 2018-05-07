@@ -404,6 +404,13 @@ frequencies. See \myref{fig:TestVel}.
 \label{fig:TestAccel}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width=2.25in]{results/TestTorqueOptimization}
+\caption{Torque Optimization}
+\label{fig:TestTorqueOptimization}
+\end{figure}
+
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. The output is plotted compared with expected output. See \myref{fig:TestAccel}.
 
@@ -413,12 +420,6 @@ The torque optimization network was tested as a complete network. See \myref{fig
 % TODO(buckbaskin): Figure of neuron controller torque optimization test
 
 % TODO(buckbaskin): fix test data. This is broken back at the animatlab
-% \begin{figure}
-% \centering
-% \includegraphics[width=2.25in]{results/TestTorqueOptimization}
-% \caption{Torque Optimization}
-% \label{fig:TestTorqueOptimization}
-% \end{figure}
 
 % TODO(buckbaskin): something about where this figure is inserted is breaking the template
 
@@ -444,8 +445,16 @@ The components for converting the torque to pressure were also tested separately
 
 \bbss{System Modeling}
 
-The system modeling network was tested as a complete network. See \myref{fig:SystemModel1}.
+The system modeling network was tested as a complete network. See \myref{fig:SystemN}.
 % TODO(buckbaskin): Figure of neuron controller system model tests (4x)
+
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/TestSystemN}
+\caption{Estimated and actual load updates}
+\label{fig:SystemN}
+\end{figure}
+
 
 \bbss{Overall}
 
