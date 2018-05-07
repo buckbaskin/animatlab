@@ -429,7 +429,7 @@ frequencies. See \myref{fig:TestVel}.
 \centering
 \includegraphics[height=2.25in]{results/TestSystemC}
 \caption{Neuron and actual damping factor updates}
-\label{fig:SystemC}
+\label{fig:TestSystemC}
 \end{figure}
 
 Within the neuron network, acceleration is calculated primarily from actuator
@@ -456,20 +456,29 @@ separately. See \myref{fig:TestT2P}.
 
 The system modeling network was tested as a complete network because both the 
 damping and load factors are updated from the same $\lambda$ value. See \myref{
-fig:SystemC} and \myref{fig:SystemN}.
+fig:TestSystemC} and \myref{fig:TestSystemN}.
 % TODO(buckbaskin): Figure of neuron controller system model tests (4x)
 
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestSystemN}
 \caption{Neuron and actual load factor updates}
-\label{fig:SystemN}
+\label{fig:TestSystemN}
 \end{figure}
 
 % TODO(buckbaskin): Figure of neuron controller overall in step tests (fixed estimators)
 
 \bbs{Discussion}
 \label{chap:discussion}
+
+In this paper, we propose a new system for controlling joints actuated with 
+pneumatic artificial muscles. The design focuses on improving controller 
+performance through improved sensor processing, an internal optimization step 
+and an observer that continually updates the interal physics model to improve 
+the optimization step. This design was implemented as part of a synthetic 
+nervous system controller, with modifications made to the initial design to aid
+in conversion to a neuron and synapse model and to leverage the benefits of the
+synthetic nervous system approach.
 
 \bbss{Sensor Fusion}
 \bbsss{Velocity}
@@ -510,11 +519,30 @@ rest of the network.
 
 \bbss{Torque Optimization}
 
-% TODO(buckbaskin): write this with good data
+The torque optimization network shows that in many cases it convereges to the 
+correct solution; however, like the feedback in the acceleration network, it can
+take a long time to converge to the correct solution from discontinuous starting
+values. Due to the integrator included in the network, the starting conditions
+for the first test case are based on other tests and didn't show consistent
+behavior.
+
+The concept of the torque optimization network appears to be effective; however,
+its implementation in neurons suffers from both attempting to converge to a
+solution quickly and approximating a physical simulation internally. The network
+uses relatively low time constants and high gains. This can cause overshoot 
+(not seen in \myref{fig:TestTorqueOptimization} due to clipping) where the 
+estimated torque is off the charts for either large positive or negative swings.
+The high gains also reduce accuracy by amplifying small errors made during the
+approximation of the ``physics" implementation. This behavior replicates 
+observations made during the development of the prototype controller in code,
+where an attempt to approximate the physics of the joint in a single step was 
+inaccurate. The solution to this was to make multiple iterations by subdividing 
+the simulated time so that a simpler physics model would have a closer fit to 
+the actual dynamics. This suggests that a longer string of neurons would be 
+necessary within the loop to project dynamics forward; however, this may 
+increase timing issues with the network when interfaced to hardware.
 
 \bbsss{Acceleration from Torque}
-
-% TODO(buckbaskin): zero out the ignored test cases
 
 The 3 stage network for estimating the acceleration from the torque applied to 
 the system appears to work well. There are two test cases, between 7 and 9 
@@ -558,11 +586,14 @@ behavior.
 
 % TODO(buckbaskin): add pictures of the more interesting networks
 
-% TODO(buckbaskin): write the conclusion
+In this paper, we propose a new system for controlling joints with biologically inspired actuators, in particular an antagonistic pair of pneumatic artificial muscles. The controller was implemented using a synthetic nervous system approach and demonstrated an ability to effectively implement 3 key design improvments: sensor fusion, internal dynamics modeling and internal error correction optimization. Through comprehensive testing of the functional neuron subnetworks, the design was proven to be effective.
 
-\newpage
-\label{chap:references}
-%TODO(buckbaskin): clean out extra unnecessary information from references.bib
+The testing results also suggest potential improvements to the network design and its integration with the hardware. In particular, the network for converting
+a desired output torque to pressures in the actuator is inaccurate compared with
+directly implementing a model of the actuators presented in \cite{HuntPMuscles}. This suggests that the synthetic nervous system approach may best be combined
+with code in a more bionic approach that leverages the ability to implement a
+closed form implementation of a complex pressure-strain model.
+
 \printbibliography[heading=bibintoc, title={Bibliography}]
 
 \end{document}
