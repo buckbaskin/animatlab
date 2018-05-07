@@ -29,28 +29,29 @@ pos_tor = np.clip(pos_tor, -60, -40)
 neg_tor = data[:, 18]
 neg_tor = np.clip(neg_tor, -60, -40)
 
-
-# TODO(buckbaskin): define reference accelerations for positive, negative
 # 5000 steps per second
 pos_ref = np.zeros(pos_tor.shape)
-pos_ref[5000:10000] = 19.7
-pos_ref[15000:20000] = 9.9
-pos_ref[25000:30000] = 18.5
-pos_ref[35000:40000] = 9.2
-pos_ref[45000:50000] = 18.1
-pos_ref[55000:60000] = 9.1
+pos_ref[65000:70000] = 0.0
+pos_ref[70000:75000] = 20
+pos_ref[75000:80000] = -20
+pos_ref[80000:85000] = -20
+pos_ref[85000:90000] = 20
+
+pos_ref[90000:95000] = 20
+pos_ref[95000:100000] = -10
+pos_ref[100000:105000] = -11.4
+pos_ref[105000:110000] = 11.4
+
+pos_ref[110000:115000] = -20
+pos_ref[115000:120000] = 10
+pos_ref[120000:125000] = -20
+
+neg_ref = - np.copy(pos_ref)
 
 pos_ref += -60
-
-neg_ref = np.zeros(neg_tor.shape)
-neg_ref[10000:15000] = 19.7
-neg_ref[20000:25000] = 9.9
-neg_ref[30000:35000] = 18.5
-neg_ref[40000:45000] = 9.2
-neg_ref[50000:55000] = 18.1
-neg_ref[60000:65000] = 9.1
-
+pos_ref = np.clip(pos_ref, -60, -40)
 neg_ref += -60
+neg_ref = np.clip(neg_ref, -60, -40)
 
 setup = [
 ('Pos', [pos_tor, pos_ref]),
@@ -71,8 +72,8 @@ for name, datasets in setup:
 
     vel, ref = datasets
     # print(len(time))
-    ax.plot(time[5000:], vel[5000:], linewidth=linewidth, label='Est. Torq.')
-    ax.plot(time[5000:], ref[5000:], linewidth=linewidth, label='Reference')
+    ax.plot(time[65000:], vel[65000:], linewidth=linewidth, label='Est. Torq.')
+    ax.plot(time[65000:], ref[65000:], linewidth=linewidth, label='Reference')
     
     if count == 1:
         ax.set_ylabel('+ Torque (mV)')
@@ -95,5 +96,5 @@ for name, datasets in setup:
 
     # plt.legend()
 plt.tight_layout()
-plt.savefig('images/results/TestTorqueOptimization.png')
+# plt.savefig('images/results/TestTorqueOptimization.png')
 plt.show()
