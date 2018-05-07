@@ -27680,8 +27680,8 @@
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram</ClassName>
 <PageName>Neural Subsystem</PageName>
-<ZoomX>0.6</ZoomX>
-<ZoomY>0.6</ZoomY>
+<ZoomX>0.8</ZoomX>
+<ZoomY>0.8</ZoomY>
 <BackColor Red="1" Green="1" Blue="1" Alpha="1"/>
 <ShowGrid>False</ShowGrid>
 <GridColor Red="0.427451" Green="0.427451" Blue="0.427451" Alpha="1"/>
@@ -33088,28 +33088,6 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Test Vel Theta</Name>
-<ID>d55c1660-2b97-49f5-97d4-ed40732b1d8c</ID>
-<StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="12" Scale="None" Actual="12"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
-<ValueType>Equation</ValueType>
-<Equation>10 * sin(6 * t)</Equation>
-<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>c4b22ab1-3f08-47a7-b883-853a0924e141</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="12" Scale="None" Actual="12"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="12" Scale="None" Actual="12"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
 <Name>Test Adapter Neg Vel 1</Name>
 <ID>c509c155-527f-4b24-9c43-cd980dac093b</ID>
@@ -33128,6 +33106,50 @@
 <CycleOnDuration Value="1" Scale="None" Actual="1"/>
 <CycleOffDuration Value="2" Scale="None" Actual="2"/>
 <BurstOnDuration Value="10" Scale="None" Actual="10"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Test TorG Vel 1</Name>
+<ID>dbf782a0-8ca0-4b50-a2c9-347bb515652d</ID>
+<StartTime Value="19" Scale="None" Actual="19"/>
+<EndTime Value="21" Scale="None" Actual="21"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>f10e49f0-a1a2-464b-adf5-533d9e2d18c9</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
+<CurrentOff Value="-10" Scale="nano" Actual="-1e-008"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="1" Scale="None" Actual="1"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Test Adapter PPE 1</Name>
+<ID>5677b8eb-c8e8-4ddc-82ac-ee06e99d93b7</ID>
+<StartTime Value="3" Scale="None" Actual="3"/>
+<EndTime Value="6" Scale="None" Actual="6"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>e8f2e941-f22f-484e-8738-1bdc4d1ace9d</NodeID>
+<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="3" Scale="None" Actual="3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="3" Scale="None" Actual="3"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33198,28 +33220,6 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
-<Name>Test TorG Theta 1</Name>
-<ID>7b1b5981-18dc-4efe-bc0d-c90f72721542</ID>
-<StartTime Value="15" Scale="None" Actual="15"/>
-<EndTime Value="17" Scale="None" Actual="17"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>ba09916d-8388-4449-b61e-73c22df2ae14</NodeID>
-<CurrentOn Value="2.5" Scale="nano" Actual="2.5e-009"/>
-<CurrentOff Value="-2.5" Scale="nano" Actual="-2.5e-009"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="1" Scale="None" Actual="1"/>
-<CycleOffDuration Value="1" Scale="None" Actual="1"/>
-<BurstOnDuration Value="2" Scale="None" Actual="2"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Test Vel Ref 1</Name>
 <ID>427ffd0b-fccb-4453-9005-9d59367be061</ID>
@@ -33271,7 +33271,7 @@
 <EndTime Value="22" Scale="None" Actual="22"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33304,6 +33304,28 @@
 <CycleOnDuration Value="1" Scale="None" Actual="1"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
 <BurstOnDuration Value="1" Scale="None" Actual="1"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Test TorG Vel 2</Name>
+<ID>f3fe135c-5266-4801-8a41-0a74c2c0824f</ID>
+<StartTime Value="21" Scale="None" Actual="21"/>
+<EndTime Value="23" Scale="None" Actual="23"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>f10e49f0-a1a2-464b-adf5-533d9e2d18c9</NodeID>
+<CurrentOn Value="5" Scale="nano" Actual="5e-009"/>
+<CurrentOff Value="-5" Scale="nano" Actual="-5e-009"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="1" Scale="None" Actual="1"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33359,7 +33381,7 @@
 <EndTime Value="24" Scale="None" Actual="24"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33403,7 +33425,7 @@
 <EndTime Value="24" Scale="None" Actual="24"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33463,28 +33485,6 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Stimulus_1</Name>
-<ID>bd911249-bebb-4599-8b4d-052bd9e93514</ID>
-<StartTime Value="3" Scale="None" Actual="3"/>
-<EndTime Value="5" Scale="None" Actual="5"/>
-<StepInterval Value="0" Scale="milli" Actual="0"/>
-<AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
-<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>b613582e-8537-47f7-918a-5705d547bc1d</NodeID>
-<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
-<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="2" Scale="None" Actual="2"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="2" Scale="None" Actual="2"/>
-<BurstOffDuration Value="0" Scale="None" Actual="0"/>
-</Stimulus>
-<Stimulus>
-<AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
 <Name>Throwaway</Name>
 <ID>ca5d5083-c12b-41d6-871e-c27e834c4a90</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
@@ -33506,24 +33506,24 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
-<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Test Adapter PPE 2</Name>
-<ID>fafa3d67-833f-4ee7-8331-f20fb8eba4e3</ID>
-<StartTime Value="9" Scale="None" Actual="9"/>
-<EndTime Value="12" Scale="None" Actual="12"/>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
+<Name>Test TorG Theta 1</Name>
+<ID>7b1b5981-18dc-4efe-bc0d-c90f72721542</ID>
+<StartTime Value="15" Scale="None" Actual="15"/>
+<EndTime Value="17" Scale="None" Actual="17"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>e8f2e941-f22f-484e-8738-1bdc4d1ace9d</NodeID>
-<CurrentOn Value="4" Scale="nano" Actual="4e-009"/>
-<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<NodeID>ba09916d-8388-4449-b61e-73c22df2ae14</NodeID>
+<CurrentOn Value="2.5" Scale="nano" Actual="2.5e-009"/>
+<CurrentOff Value="-2.5" Scale="nano" Actual="-2.5e-009"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="3" Scale="None" Actual="3"/>
-<CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="3" Scale="None" Actual="3"/>
+<CycleOnDuration Value="1" Scale="None" Actual="1"/>
+<CycleOffDuration Value="1" Scale="None" Actual="1"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33535,7 +33535,7 @@
 <EndTime Value="24" Scale="None" Actual="24"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33595,23 +33595,23 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Test Adapter PPE 1</Name>
-<ID>5677b8eb-c8e8-4ddc-82ac-ee06e99d93b7</ID>
+<Name>Stimulus_1</Name>
+<ID>bd911249-bebb-4599-8b4d-052bd9e93514</ID>
 <StartTime Value="3" Scale="None" Actual="3"/>
-<EndTime Value="6" Scale="None" Actual="6"/>
+<EndTime Value="5" Scale="None" Actual="5"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>True</Enabled>
+<Enabled>False</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>e8f2e941-f22f-484e-8738-1bdc4d1ace9d</NodeID>
-<CurrentOn Value="8" Scale="nano" Actual="8e-009"/>
+<NodeID>b613582e-8537-47f7-918a-5705d547bc1d</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="3" Scale="None" Actual="3"/>
+<CycleOnDuration Value="2" Scale="None" Actual="2"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="3" Scale="None" Actual="3"/>
+<BurstOnDuration Value="2" Scale="None" Actual="2"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 <Stimulus>
@@ -33726,6 +33726,50 @@
 </Stimulus>
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Integrator Start</Name>
+<ID>f145df60-b32e-4f79-99ad-47645864a4da</ID>
+<StartTime Value="0" Scale="None" Actual="0"/>
+<EndTime Value="0.5" Scale="None" Actual="0.5"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>4c10c356-a275-43c1-b968-f7631b650b59</NodeID>
+<CurrentOn Value="1" Scale="nano" Actual="1e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="50" Scale="centi" Actual="0.5"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="50" Scale="centi" Actual="0.5"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
+<Name>Test Adapter PPE 2</Name>
+<ID>fafa3d67-833f-4ee7-8331-f20fb8eba4e3</ID>
+<StartTime Value="9" Scale="None" Actual="9"/>
+<EndTime Value="12" Scale="None" Actual="12"/>
+<StepInterval Value="0" Scale="milli" Actual="0"/>
+<AlwaysActive>False</AlwaysActive>
+<Enabled>True</Enabled>
+<ValueType>Constant</ValueType>
+<Equation>0</Equation>
+<OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
+<NodeID>e8f2e941-f22f-484e-8738-1bdc4d1ace9d</NodeID>
+<CurrentOn Value="4" Scale="nano" Actual="4e-009"/>
+<CurrentOff Value="0" Scale="nano" Actual="0"/>
+<CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
+<CycleOnDuration Value="3" Scale="None" Actual="3"/>
+<CycleOffDuration Value="0" Scale="None" Actual="0"/>
+<BurstOnDuration Value="3" Scale="None" Actual="3"/>
+<BurstOffDuration Value="0" Scale="None" Actual="0"/>
+</Stimulus>
+<Stimulus>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.RepetitiveCurrent</ClassName>
 <Name>Test TorG Theta Des 1</Name>
 <ID>92b54110-98c6-4583-879d-59035e7198ca</ID>
@@ -33733,7 +33777,7 @@
 <EndTime Value="15" Scale="None" Actual="15"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33799,7 +33843,7 @@
 <EndTime Value="19" Scale="None" Actual="19"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
-<Enabled>False</Enabled>
+<Enabled>True</Enabled>
 <ValueType>Constant</ValueType>
 <Equation>0</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
@@ -33837,30 +33881,30 @@
 <Stimulus>
 <AssemblyFile>AnimatGUI.dll</AssemblyFile>
 <ClassName>AnimatGUI.DataObjects.ExternalStimuli.TonicCurrent</ClassName>
-<Name>Integrator Start</Name>
-<ID>f145df60-b32e-4f79-99ad-47645864a4da</ID>
+<Name>Test Vel Theta</Name>
+<ID>d55c1660-2b97-49f5-97d4-ed40732b1d8c</ID>
 <StartTime Value="0" Scale="None" Actual="0"/>
-<EndTime Value="0.5" Scale="None" Actual="0.5"/>
+<EndTime Value="12" Scale="None" Actual="12"/>
 <StepInterval Value="0" Scale="milli" Actual="0"/>
 <AlwaysActive>False</AlwaysActive>
 <Enabled>True</Enabled>
-<ValueType>Constant</ValueType>
-<Equation>0</Equation>
+<ValueType>Equation</ValueType>
+<Equation>10 * sin(6 * t)</Equation>
 <OrganismID>9751d9a2-e7a0-42d2-93b9-dd1337c1d296</OrganismID>
-<NodeID>4c10c356-a275-43c1-b968-f7631b650b59</NodeID>
-<CurrentOn Value="1" Scale="nano" Actual="1e-009"/>
+<NodeID>c4b22ab1-3f08-47a7-b883-853a0924e141</NodeID>
+<CurrentOn Value="10" Scale="nano" Actual="1e-008"/>
 <CurrentOff Value="0" Scale="nano" Actual="0"/>
 <CurrentBurstOff Value="0" Scale="nano" Actual="0"/>
-<CycleOnDuration Value="50" Scale="centi" Actual="0.5"/>
+<CycleOnDuration Value="12" Scale="None" Actual="12"/>
 <CycleOffDuration Value="0" Scale="None" Actual="0"/>
-<BurstOnDuration Value="50" Scale="centi" Actual="0.5"/>
+<BurstOnDuration Value="12" Scale="None" Actual="12"/>
 <BurstOffDuration Value="0" Scale="None" Actual="0"/>
 </Stimulus>
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>fe8ef4d2-eb66-4b9f-b1d4-0468506729d1</Name>
-<ID>fe8ef4d2-eb66-4b9f-b1d4-0468506729d1</ID>
+<Name>000e484d-6e2a-49b1-a789-bcc45ba94006</Name>
+<ID>000e484d-6e2a-49b1-a789-bcc45ba94006</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -33954,7 +33998,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="04/20/2018 18:13:31"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/07/2018 13:16:59"&gt;
   &lt;Content Name="Errors" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="150, 128" DisplayLocation="150, 150" AutoHideSize="150, 125" FloatingSize="150, 150" FullTitle="Errors" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Errors" UniqueName="" /&gt;
@@ -34409,40 +34453,11 @@
 <TabbedGroupsConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;TabbedGroups FormatVersion="1" ActiveLeaf="5"&gt;
+&lt;TabbedGroups FormatVersion="1" ActiveLeaf="8"&gt;
   &lt;CustomGlobalData /&gt;
-  &lt;Sequence Count="2" Unique="0" Space="100" Direction="Horizontal"&gt;
-    &lt;Leaf Count="2" Unique="5" Space="43.900889453621346886912325290"&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;f73986b9-ecf7-4739-83fa-cf7d3c99896b&lt;/ID&gt;
-&lt;Title&gt;Neural Subsystem&lt;/Title&gt;
-&lt;TabPageName&gt;Neural Subsystem&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram&lt;/ClassName&gt;
-&lt;OrganismID&gt;9751d9a2-e7a0-42d2-93b9-dd1337c1d296&lt;/OrganismID&gt;
-&lt;SubSystemID&gt;77ca6013-29a3-411e-9e3a-a3e4d59ff4d4&lt;/SubSystemID&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-      &lt;Page Title="Test Bed" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
-        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
-&lt;Form&gt;
-&lt;ID&gt;bf5aa681-eaf6-43d3-b18e-d08a36f39690&lt;/ID&gt;
-&lt;Title&gt;Test Bed&lt;/Title&gt;
-&lt;TabPageName&gt;Test Bed&lt;/TabPageName&gt;
-&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
-&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
-&lt;ExternalFile&gt;Test_Bed.aform&lt;/ExternalFile&gt;
-&lt;/Form&gt;
-&lt;/TabPage&gt;
-]]&gt;&lt;/CustomPageData&gt;
-      &lt;/Page&gt;
-    &lt;/Leaf&gt;
-    &lt;Leaf Count="8" Unique="8" Space="56.099110546378653113087674710"&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+  &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
+    &lt;Leaf Count="10" Unique="8" Space="100"&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;e9df6c45-c1dd-4a57-a141-727776c53358&lt;/ID&gt;
@@ -34542,6 +34557,33 @@
 &lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
 &lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
 &lt;ExternalFile&gt;DataTool_12.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="Test Bed" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;bf5aa681-eaf6-43d3-b18e-d08a36f39690&lt;/ID&gt;
+&lt;Title&gt;Test Bed&lt;/Title&gt;
+&lt;TabPageName&gt;Test Bed&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Charts.LineChart&lt;/ClassName&gt;
+&lt;ExternalFile&gt;Test_Bed.aform&lt;/ExternalFile&gt;
+&lt;/Form&gt;
+&lt;/TabPage&gt;
+]]&gt;&lt;/CustomPageData&gt;
+      &lt;/Page&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="2" Selected="False" Control="null" UniqueName=""&gt;
+        &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
+&lt;Form&gt;
+&lt;ID&gt;f73986b9-ecf7-4739-83fa-cf7d3c99896b&lt;/ID&gt;
+&lt;Title&gt;Neural Subsystem&lt;/Title&gt;
+&lt;TabPageName&gt;Neural Subsystem&lt;/TabPageName&gt;
+&lt;AssemblyFile&gt;LicensedAnimatGUI.dll&lt;/AssemblyFile&gt;
+&lt;ClassName&gt;LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram&lt;/ClassName&gt;
+&lt;OrganismID&gt;9751d9a2-e7a0-42d2-93b9-dd1337c1d296&lt;/OrganismID&gt;
+&lt;SubSystemID&gt;77ca6013-29a3-411e-9e3a-a3e4d59ff4d4&lt;/SubSystemID&gt;
 &lt;/Form&gt;
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
