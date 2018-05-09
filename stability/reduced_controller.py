@@ -89,8 +89,7 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Estimated vs Actual Accel')
-        ax_pos.set_ylabel('Accel')
+        ax_pos.set_ylabel('Position')
         ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,plt_index], 
             color='tab:blue', label='Desired')
@@ -130,6 +129,7 @@ if __name__ == '__main__':
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
+        plt.tight_layout()
         plt.savefig('State_Estimation.png')
         plt.show()
         print('all done')
