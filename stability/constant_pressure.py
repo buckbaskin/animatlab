@@ -426,10 +426,13 @@ if __name__ == '__main__':
             extp = 500
             torque = S.pressures_to_torque(extp, flxp, state)
             torques[index] = torque
-        plt.plot(pos, torques)
-    plt.title('Position v Torque')
+        plt.plot(pos, torques, label='%d kPa' % (flxp,))
+    plt.title('Position v Torque, Ext. Pressure at %d kPa' % (extp,))
     plt.ylabel('Torque (Nm)')
     plt.xlabel('Position (rad)')
+    plt.legend()
+    plt.tight_layout()
+
     plt.savefig('Pos_v_Torque2.png')
     plt.show()
     1/0

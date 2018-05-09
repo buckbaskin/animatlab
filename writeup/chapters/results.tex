@@ -1,3 +1,21 @@
+\bbs{Simulation}
+
+Antagonistic actuators were simulated at various pressures to better understand
+their behavior. In \myref{fig:AntagonisticPressureTorque}, the extension
+actuator was set to a constant 500 kPa. The pressure in the flexion actuator was
+varied, and the torque was plotted for a range of actuator angles. This model of
+torque generated was used in ongoing work to help better understand joint
+dynamics and improve the performance of the controllers.
+
+\begin{figure}
+\centering
+\includegraphics[width=6.5in]{results/Pos_v_AntagTorque}
+\caption{Relation between joint position, actuator pressures and
+torque applied. Extension actuator pressure was set to 500 kPa and flexion was
+set as indicated}
+\label{fig:AntagonisticPressureTorque}
+\end{figure}
+
 \section{Python Controller}
 
 The prototype controller written in Python was used to demonstrate the stability
@@ -32,6 +50,8 @@ updates}
 % TODO(buckbaskin): Then show results of it working well
 
 \bbss{Test Results}
+
+% TODO(buckbaskin): regenerate these figures as wider versions of the original
 
 \begin{figure}
 \centering
