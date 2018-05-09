@@ -1,16 +1,68 @@
-Walking (especially bipedal) is hard
+Walking robots offer many advantages over wheeled robots or other types
+of locomotion. Wheeled or tracked vehicles are unable to access over half
+of the earth's landmass. \cite{BigDog} Further, many areas in which humans
+operate are designed for walking as opposed to rolling, so a successful walking
+robot has increased mobility in environments designed for human walking. On the
+other hand, walking robots are harder to control than their wheeled
+counterparts.
 
-Animals achieve stability and effective walking through redundancy (ex. 4 legs,
-6 legs, etc) and multi-level neuron control via sensory feedback and descending
-commands. Studies have shown that animals can still exhibit significant portions
-of walking behavior without higher level control from the brain and, in certain
-conditions, without sensory feedback.
+Many robots have looked to biological inspiration to increase the mobility and
+ease of control of robots. In particular, many biological systems have increased
+redundancy to aid in balance with many animals, including dogs and cats, walking
+on 4 or more legs. The inspiration taken varies from imitating gait timing to
+help coordinate simple legs to completely mimicking musculoskeletal layout. The
+Puppy robot was designed to mimic the operation of a large canine walking in
+the sagittal plane. \cite{PuppyDesign}
 
-Animals adapt to their environment through physical structure and compliance as
-well as adapting through a learning process in the nervous system. While the
-simulation or replication of both the physical and neural systems in their
-entirety is a very complex task, lessons can be taken from the neural control of
-muscles to better control a walking robot.
+Another advantage that animals have over most robots is their actuators.
+Biological muscles are compliant and are a key part to how animals walk. Many
+robots use electric motors or hydraulic actuators to actuate joints, which can
+mean that other biologically inspired design decisions aren't necessarily
+optimal. Puppy chose to use pneumatic artificial muscles, which have a higher
+power to weight ratio than other designs and offer similar compliance and
+behavior to biological muscles. \cite{Tavakoli2008} Typically seen as a
+limitation, pneumatic muscles as actuators apply force during contraction, so
+they need to be used in antagonistic pairs. While this increases the complexity
+of the robot, it also allows for further bio-inspiration in the robot design
+and control system.
+
+One of the major trade offs for pneumatic muscles is that they exhibit
+non-linear behavior in both static and dynamic control situations.
+\cite{HuntPMuscles, DynamicPMuscles} This has
+motivated the designs of new types of controllers to overcome the non-linear
+behavior through adaptation in the controller. In \cite{Jahanabadi2009}, the
+authors propose a system called ``Active Force Control" where a neural network
+is used to learn non-linear properties of the actuator and controlled mass.
+The network is run in an inner control loop and the output of the network is
+used to present the control situation in a linearized fashion to an outer PID
+control system. The results suggest that a system model of the nonlinear
+properties of the actuators decreases positional error. The work was
+applied to controlling a vertical trolley and used a neural network as a black
+box for modeling the system, so there is an opportunity for improving the
+system and its application to controlling Puppy's rotational joints.
+In \cite{Wang2013}, a model-based controller was used to control the actuation
+of a revolute joint with pneumatic muscles. The author's system allowed for
+decreased antagonistic muscle overlap at high accelerations combined with a
+high stiffness, high overlap controller for precise position tracking in near
+static situations. This adapting system was shown to be effective in their
+results; however, it doesn't account for estimating changing properties of the
+robot system that might reduce the effectiveness of the model.
+
+A combination of these two types of controllers offers insight into how to build
+an effective joint controller for Puppy. One further area of potential
+improvement over existing designs is the incorporation of biological inspiration
+within the controller itself. In \cite{NickFunctionalSubnetwork}, the authors
+demonstrate a method for using a dynamic, biologically accurate model of neurons
+to develop models of neurons for controlling physical systems. The work in the
+paper describes how to create building blocks such as arithmetic operations,
+differentiation or integration. These components can then be used together to
+recursively create new controller architectures that use biological inspiration
+taken from literature for controlling legged robots and combine it with an
+efficient system for engineering the correct control responses. Together,
+existing literature suggests that a neuron-based controller that adapts to the
+properties of the muscles and the joints that it controls offers a new
+architecture for more efficient and more accurate control of pneumatic muscle-
+actuated robots.
 
 \section{Task Overview}
 
@@ -22,55 +74,11 @@ on the mechanics and skeleton of canines.
 % TODO(buckbaskin): insert figure
 Figure of Puppy
 
-% TODO(buckbaskin): finish this thought
-Pneumatic actuators are used because...
-
-% TODO(buckbaskin): finish this thought
-Canine design is used because...
-
-\section{Why Walking?}
-
-Walking robots, and more specifically quadruped walking robots, offer a number 
-of advantages over wheeled robots. First, walking robots can cover much more 
-varied terrain compared with wheeled vehicles. Second, quadruped and walking
-robots with more than 4 legs offer inherent stability compared with biped robots
-on the same terrain via redundancy and the ability to move one limb at a time
-while keeping the center of mass over a supported area.
-
-
-On the other hand, walking robots have disadvantages that mean they are not
-necessarily the right option for every situation.
-
-Increased energy usage (energy per meter metric?). This comes from the
-requirement that the active control in the robot is required to support the
-weight of the robot with motors or muscles instead of having weight statically
-supported by the structure in the case of wheels.
-
-% TODO(buckbaskin): write about this more
-Lower maximum speed
-
-
-One option that has been explored as an intermediate step are Whegs. These
-designs allow for increased climbing ability on uneven terrain while retaining
-many of the advantages of wheels including ease of control (although additional
-% TODO(buckbaskin): 1-2 citations for Whegs
-work must be done to synchronize a tripod gate) and increased speed.
-
-
-However, canines and other legged animals have adapted to efficient and fast 
-methods for walking using muscles that suggest robotic design inspired by 
-biomechanics of a dog can offer insights into making a more efficient and 
-faster robot that retains the advantages of legged robots for walking on uneven
-% TODO(buckbaskin): incorporate a second reason for walking robots
-terrain and remaining stable in varied environments.
-
 \section{Specifications and Important Challenges}
 
-For control of a walking robot, based on previous challenges
+There are a number of key criteria that are important for improving the behavior
+of the joint controller. Based on previous work, they break down as follows:
 
-% TODO(buckbaskin): break this into subsections and a paragraph for each
-% challenge
-Challenges:
 \begin{itemize}
 \item Peak position during hip actuation isn't accurate (5-15 deg) 
 \item Delays between sensor data off the robot -> lab view -> Animatlab -> lab
@@ -82,25 +90,46 @@ maximum activation
 and intended activation
 \end{itemize}
 
-% TODO(buckbaskin): break this into subsections and a paragraph for each
-% requirement
-Requirements:
+These challenges drive three key requirements for the controller.
 \begin{itemize}
-\item Increase position accuracy to less than 5 degrees from maximum desired position
+\item Increase position accuracy to less than 5 degrees from maximum desired
+position
 \item Minimize phase shift between desired and achieved trajectory
 \item Decrease torque errors between neuron desired model and executed torques
 \end{itemize}
 
-% TODO(buckbaskin): break this into subsections and a paragraph for each
-% design goal
-Internal Design Goals:
-\begin{itemize}
-\item Incorporate and ``understanding" of dynamics
-\item Optimize current control for future position or, stated another way,
-control for the current time/state with delayed sensory information
-\end{itemize}
+These challenges and requirements define two different components and desired
+behaviors for the components within the controller. First, the controller should
+incorporate an internal understanding of the dynamics of the joint. This will
+allow for more optimized control. Also, this will allow for a model-based
+approach where a few key parameters can be used to summarize the behavior of the
+joint so that minimal example data can be used to finely tune the parameters and
+model. Without an understanding of the dynamics, the controller would have to
+use an aribtrarily complex neuron system to model an aribtrary behavior that may
+overfit to the idiosyncracies of a few data points and not generalize
+effectively to continued modeling of the joint.
+
+Second, the controller should perform internal optimization to provide an
+improved output. There are multiple ways that this optimization can occur, but
+an internal optimization step built into the controller will allow for the joint
+to adapt and be more efficient across multiple behaviors where a simple
+controller, such as a proportional controller, is statically tuned for a single
+situation and will either be inefficient or inaccurate as the environment
+changes. Each step on a walking robot is potentially different, so a static
+controller will almost certainly be continually sub-optimal.
+
+Additionally, an optimizing controller with a model of joint dynamics can
+optimize for the estimated position of a joint at a time ahead of the current
+sensor data. This means that, on a system with a known delay for sensor data
+leaving the robot and control commands arriving at the robot, the controller can
+control the robot as if it were already at the time in the future where the
+joint will be instead of at the point in the past where the joint was when the
+sensor data was read.
 
 \section{This Work}
+
+This work continues with a review of surrounding and supporting literature in
+\myref{chap:lit_review}.
 
 \myref{chap:controller_design} 
 discusses the design of a new type 
