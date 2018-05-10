@@ -45,34 +45,34 @@ network. In order to better tune individual networks, a testing rig was set up
 within the larger network to allow for subnetwork verification. The typical
 interface neurons are disabled and special test driver neurons (highlighted in
 yellow) are enabled. This allows for the driving of custom input signals and
-combinations of signals in order to verify the output value and speed.
+combinations of signals in order to verify the output value and speed. 
+See \myref{fig:TestNetworkT2P} for a good example.
 
-% TODO(buckbaskin): Figure show an example network with test and not-test input neurons
+\begin{figure}
+\centering
+\includegraphics[height=3.5in]{methods/TestVisualT2P}
+\caption{Torque to Pressure network with test and actual inputs shown}
+\label{fig:TestNetworkT2P}
+\end{figure}
 
-This particular network is designed to % TODO(buckbaskin): pick one
-With this network, the input neurons (in purple) % TODO(buckbaskin): check this
+This particular network is designed to convert a desired torque from the rest
+of the network to the pressure for the extension and flexion pneumatic actuators.
+With this network, the input neurons (in purple)
 are disabled for testing and the test neurons are enabled. From there, inputs
-are driven, as seen in the following data:
+are driven, as seen in \myref{fig:TestNetworkInputs}. This allows the inputs to 
+be mapped to real world values, the real world inputs to be mapped to outputs, 
+and the real world outputs to be mapped back to neuron voltages. Through this
+a test framework is built where the output can be visually compared to the 
+reference to ensure neuron networks are working as intended. See 
+\myref{chap:results} for the results of the tests that were run.
 
-% TODO(buckbaskin): Figure input data, legend of which neurons are inputs
+\begin{figure}
+\centering
+\includegraphics[height=3.5in]{methods/T2PInput}
+\caption{Drive inputs to test the pressure network}
+\label{fig:TestNetworkInputs}
+\end{figure}
 
-The correct intermediate values are shown in
-% TODO(buckbaskin): Figure neuron output vs expected output
-
-The correct outputs are shown in % TODO(buckbaskin): Figure neuron output vs expected output
-
-% This should show the network, the input levels, intermediate levels and output
-% levels with a ground truth output level alongside the output levels.
-
-These test frameworks can be rigged at multiple levels to enable testing of
+The test frameworks can be rigged at multiple levels to enable testing of
 individual units and the integration of units in the style of unit tests and
 integration tests from a more traditional software background.
-
-\bbsss{Key Tests}
-
-% TODO(buckbaskin): Show and talk about some specific/important unit tests and 1
-% integration test from the network
-
-This section covers in detail important subsections of the network where
-explicit testing played a large role in their success. For a complete listing of
-the tested networks, please see \myref{app:neuron_tests}.
