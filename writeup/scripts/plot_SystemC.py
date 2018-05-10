@@ -80,9 +80,9 @@ for name, datasets in setup:
 
     vel, ref = datasets
     # print(len(time))
-    ax.plot(time[5000:], vel[5000:], linewidth=linewidth, label='Est. Acc.')
+    ax.plot(time[5000:], vel[5000:], linewidth=linewidth, label='Est. Adjustment')
     ax.plot(time[5000:], ref[5000:], linewidth=linewidth, label='Reference')
-    
+
     if count == 1:
         ax.set_ylabel('+ Damp Shift')
     else:
