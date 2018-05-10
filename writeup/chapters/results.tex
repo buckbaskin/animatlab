@@ -16,13 +16,32 @@ set as indicated}
 \label{fig:AntagonisticPressureTorque}
 \end{figure}
 
+During the characterization of the joint, simulations were run to determine the
+dominant effects between intertia, damping and static loads. The relative 
+magnitudes of the acceleration, velocity and position are shown in 
+\myref{fig:MaxTorque}, along with the
+torque. For the simulated joint, the dominant effect was the inertia; however,
+for a robot carrying varying loads, this will not always be the case. The 
+maximum torque required to execute the known trajectory is also later used as a
+metric for measuring the efficiency of the controller. A controller that is too
+aggressive for the trajectory (ex. too high gains on a proportional controller)
+will request larger than needed torques during trajectory execution. An ideal
+controller will always follow the trajectory with the exact torque needed, no 
+more, no less, during steady state operation.
+
+\begin{figure}
+\centering
+\includegraphics[height=3.5in]{results/Max_Torque}
+\caption{Comparing the effects of inertia, damping and static loads. Torque follows acceleration, which suggests that inertia dominates for this simulation}
+\label{fig:MaxTorque}
+\end{figure}
+
 \section{Python Controller}
 
 The prototype controller written in Python was used to demonstrate the stability
 and tracking capabilities of the general algorithm. It was also used to find a
 suitable simplification of the internal model that was sufficiently accurate for
 optimization but had minimal parameters to tune.
-% TODO(buckbaskin): here is where I get to show everything working nicely
 
 % TODO(buckbaskin): start by fixing the weight update to match the math I wrote about
 
@@ -46,7 +65,15 @@ updates}
 
 \bbss{Static Controller}
 
-During testing, the need for an internal model update was verified through tests where the optimization loop was applied with variations on correct parameters. One example was varying mass. For correct values, such as \myref{fig:StateEstimationPerfect}, the system worked within tolerances. When mass was underestimated (see \myref{fig:StateEstimationLowMass}), the tracking performance degrades to smoothly fail required tracking accuracy. On the other hand, over estimating the mass caused aggressive oscillation and underdamping (see \myref{fig:StateEstimationHighMass}).
+During testing, the need for an internal model update was verified through 
+tests where the optimization loop was applied with variations on correct 
+parameters. One example was varying mass. For correct values, such as 
+\myref{fig:StateEstimationPerfect}, the system worked within tolerances. When 
+mass was underestimated (see \myref{fig:StateEstimationLowMass}), the tracking 
+performance degrades to smoothly fail required tracking accuracy. On the other 
+hand, over estimating the mass caused aggressive oscillation and underdamping (
+see \myref{fig:StateEstimationHighMass}). Based on this data, the assumption 
+that the internal model needed to be updated was validated.
 
 \begin{figure}
 \centering
@@ -117,7 +144,7 @@ During testing, the need for an internal model update was verified through tests
 \centering
 \includegraphics[height=2.25in]{results/TestSystemC}
 \caption{Neuron and actual damping factor updates}
-\label{fig:TestSystemC1}
+\label{fig:TestSystemC}
 \end{figure}
 
 \begin{figure}
@@ -149,7 +176,7 @@ separately. See \myref{fig:TestT2P}.
 
 The system modeling network was tested as a complete network because both the
 damping and load factors are updated from the same $\lambda$ value. See \myref{
-fig:TestSystemC1} and \myref{fig:TestSystemN}.
+fig:TestSystemC} and \myref{fig:TestSystemN}.
 
 \bbss{Discussion}
 \label{chap:discussion}
