@@ -65,16 +65,18 @@ setup = [
 ]
 
 
-fig = plt.figure(figsize=(3,2.25,), dpi=300)
-ax1 = fig.add_subplot('211')
-ax2 = fig.add_subplot('212')
+# fig = plt.figure(figsize=(3,2.25,), dpi=300)
+# ax1 = fig.add_subplot('211')
+# ax2 = fig.add_subplot('212')
 count = 0
 for name, datasets in setup:
-    if count == 0:
-        ax = ax1
-    else:
-        ax = ax2
+    # if count == 0:
+    #     ax = ax1
+    # else:
+    #     ax = ax2
     count += 1
+    fig = plt.figure(figsize=(6.5,2.25,), dpi=300)
+    ax = fig.add_subplot('111')
 
     vel, ref = datasets
     # print(len(time))
@@ -83,10 +85,9 @@ for name, datasets in setup:
     
     if count == 1:
         ax.set_ylabel('+ Damp Shift')
-        ax.set_xticks([])
     else:
-        ax.set_xlabel('Time (sec)')
         ax.set_ylabel('- Damp Shift')
+    ax.set_xlabel('Time (sec)')
 
     ax.set_ylim(-60, -40)
     ax.set_yticks([-60, -40])
@@ -100,7 +101,7 @@ for name, datasets in setup:
     y0, y1 = ax.get_xlim()
     # ax.set_aspect((x1 - x0)/(y1 - y0))
 
-# plt.legend()
-plt.tight_layout()
-plt.savefig('images/results/TestSystemC.png')
-plt.show()
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('images/results/TestSystemC%sWide.png' % (name,))
+    plt.show()

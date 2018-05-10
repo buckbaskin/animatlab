@@ -65,28 +65,29 @@ setup = [
 ]
 
 
-fig = plt.figure(figsize=(3,2.25,), dpi=300)
-ax1 = fig.add_subplot('211')
-ax2 = fig.add_subplot('212')
+# fig = plt.figure(figsize=(3,2.25,), dpi=300)
+# ax1 = fig.add_subplot('211')
+# ax2 = fig.add_subplot('212')
 count = 0
 for name, datasets in setup:
-    if count == 0:
-        ax = ax1
-    else:
-        ax = ax2
+    # if count == 0:
+    #     ax = ax1
+    # else:
+    #     ax = ax2
     count += 1
+    fig = plt.figure(figsize=(6.5,2.25,), dpi=300)
+    ax = fig.add_subplot('111')
 
     vel, ref = datasets
     # print(len(time))
-    ax.plot(time[5000:], vel[5000:], linewidth=linewidth, label='Est. Acc.')
+    ax.plot(time[5000:], vel[5000:], linewidth=linewidth, label='Est. Adjustment')
     ax.plot(time[5000:], ref[5000:], linewidth=linewidth, label='Reference')
     
     if count == 1:
         ax.set_ylabel('+ Load Shift')
-        ax.set_xticks([])
     else:
-        ax.set_xlabel('Time (sec)')
         ax.set_ylabel('- Load Shift')
+    ax.set_xlabel('Time (sec)')
 
     ax.set_ylim(-60, -40)
     ax.set_yticks([-60, -40])
@@ -98,9 +99,8 @@ for name, datasets in setup:
 
     x0, x1 = ax.get_xlim()
     y0, y1 = ax.get_xlim()
-    # ax.set_aspect((x1 - x0)/(y1 - y0))
 
-# plt.legend()
-plt.tight_layout()
-plt.savefig('images/results/TestSystemN.png')
-plt.show()
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('images/results/TestSystemN%sWide.png' % (name,))
+    plt.show()
