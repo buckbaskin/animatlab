@@ -768,8 +768,8 @@ if __name__ == '__main__':
     if plot_position:
         fig = plt.figure()
         ax_pos = fig.add_subplot(1, 1, 1)
-        ax_pos.set_title('Estimated vs Actual Accel')
-        ax_pos.set_ylabel('Accel')
+        # ax_pos.set_title('Estimated vs Actual Accel')
+        ax_pos.set_ylabel('Position')
         ax_pos.set_xlabel('Time (sec)')
         ax_pos.plot(time,  desired_state[:,plt_index], 
             color='tab:blue', label='Desired')
@@ -782,12 +782,12 @@ if __name__ == '__main__':
     print('calculating...')
     stiffness = 1.0
     for index, _ in enumerate([0.0]):
-        estimated_S = Simulator(LINK_MASS=0.1)
-    
+        estimated_S = Simulator(LINK_MASS=0.3)
+
         C = OptimizingController(state_start, time[0],
             sim = estimated_S, control_rate=S.CONTROL_RATE,
-            time_horizon=1.5/S.CONTROL_RATE, stiffness=stiffness,
-            optimization_steps=15, iteration_steps=45)
+            time_horizon=1.25/S.CONTROL_RATE, stiffness=stiffness,
+            optimization_steps=20, iteration_steps=60)
 
         full_state, est_state = S.simulate(controller=C, state_start=state_start, desired_state=desired_state)
 
@@ -805,6 +805,7 @@ if __name__ == '__main__':
     if plot_position:
         ax_pos.legend()
         print('show for the dough')
-        plt.savefig('State_Estimation.png')
+        plt.tight_layout()
+        plt.savefig('State_Estimation_HighMass.png')
         plt.show()
         print('all done')

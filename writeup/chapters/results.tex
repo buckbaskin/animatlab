@@ -9,7 +9,7 @@ dynamics and improve the performance of the controllers.
 
 \begin{figure}
 \centering
-\includegraphics[width=6.5in]{results/Pos_v_AntagTorque}
+\includegraphics[height=3.5in]{results/Pos_v_AntagTorque}
 \caption{Relation between joint position, actuator pressures and
 torque applied. Extension actuator pressure was set to 500 kPa and flexion was
 set as indicated}
@@ -38,10 +38,35 @@ estimation.
 
 \begin{figure}
 \centering
-\includegraphics[width=6.5in]{results/State_Estimation}
+\includegraphics[height=4in]{results/State_Estimation}
 \caption{Tracking improves with improved state estimation and internal model
 updates}
 \label{fig:SimplifiedTracking}
+\end{figure}
+
+\bbss{Static Controller}
+
+During testing, the need for an internal model update was verified through tests where the optimization loop was applied with variations on correct parameters. One example was varying mass. For correct values, such as \myref{fig:StateEstimationPerfect}, the system worked within tolerances. When mass was underestimated (see \myref{fig:StateEstimationLowMass}), the tracking performance degrades to smoothly fail required tracking accuracy. On the other hand, over estimating the mass caused aggressive oscillation and underdamping (see \myref{fig:StateEstimationHighMass}).
+
+\begin{figure}
+\centering
+\includegraphics[height=4in]{results/State_Estimation_Perfect}
+\caption{Accurate Tracking with a good internal estimation of mass}
+\label{fig:StateEstimationPerfect}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[height=4in]{results/State_Estimation_LowMass}
+\caption{Overdamped Tracking with a low internal estimation of mass}
+\label{fig:StateEstimationLowMass}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[height=4in]{results/State_Estimation_HighMass}
+\caption{Underdamped failure with a high internal estimation of mass}
+\label{fig:StateEstimationHighMass}
 \end{figure}
 
 \section{Neuron Controller}
