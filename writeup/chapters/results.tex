@@ -96,6 +96,20 @@ that the internal model needed to be updated was validated.
 \label{fig:StateEstimationHighMass}
 \end{figure}
 
+\bbss{Simple Parameter Estimation}
+
+The original model for parameter updates was to calculate the sign of the update
+and make a uniform incremental change in that direction. In practice, this 
+resulted in near-perfect tracking; however, the weight updates themselves were
+not intuitive. See \myref{fig:StateUpdateSimple}.
+
+\begin{figure}
+\centering
+\includegraphics[height=7.5in]{results/State_Model_SimpleUpdate}
+\caption{Successful tracking with simple parameter update}
+\label{fig:StateUpdateSimple}
+\end{figure}
+
 \section{Neuron Controller}
 
 % TODO(buckbaskin): Start by showing it not working well

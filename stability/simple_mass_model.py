@@ -1037,8 +1037,8 @@ if __name__ == '__main__':
     plt_index = 0
 
     if plot_position:
-        fig = plt.figure()
-        ax_pos = fig.add_subplot(4, 1, 1)
+        fig = plt.figure(figsize=(6.5,7.5,), dpi=300)
+        ax_pos = fig.add_subplot(3, 1, 1)
         titlte = 'Estimated vs Actual %s'
         if plt_index == 0:
             titlte = titlte % 'Position'
@@ -1085,20 +1085,20 @@ if __name__ == '__main__':
             ax_pos.plot(time, est_state[:,plt_index],
                 color='tab:green', label='Internal Est. State')
     if plot_position:
-        ax_inertia = fig.add_subplot(4, 1, 2)
-        ax_inertia.plot(time, np.array(C.inertias))
-        ax_inertia.set_ylabel('Inertia')
-        ax_inertia.set_xlabel('Time (sec)')
-        ax_damping = fig.add_subplot(4, 1, 3)
+        # ax_inertia = fig.add_subplot(4, 1, 2)
+        # ax_inertia.plot(time, np.array(C.inertias))
+        # ax_inertia.set_ylabel('Inertia')
+        # ax_inertia.set_xlabel('Time (sec)')
+        ax_damping = fig.add_subplot(3, 1, 2)
         ax_damping.plot(time, np.array(C.dampings))
         ax_damping.set_ylabel('Damping Factor')
-        ax_damping.set_xlabel('Time (sec)')
-        ax_cons = fig.add_subplot(4, 1, 4)
+        # ax_damping.set_xlabel('Time (sec)')
+        ax_cons = fig.add_subplot(3, 1, 3)
         ax_cons.plot(time, np.array(C.cons))
         ax_cons.set_ylabel('Load Factor')
-        ax_cons.set_xlabel('Time (sec)')
+        # ax_cons.set_xlabel('Time (sec)')
         ax_pos.legend()
         print('show for the dough')
-        # plt.savefig('Simple_State_Model_Updating.png')
+        plt.savefig('State_Model_SimpleUpdate.png')
         plt.show()
         print('all done')
