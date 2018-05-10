@@ -53,8 +53,6 @@ The equations that define the centered divided difference are as follows:
 \dot{\theta} = \dfrac{\theta_{t} - \theta_{t - 2}}{2 \delta t}
 \end{equation}
 
-% TODO(buckbaskin): show a plot with the two different estimations side by side to show error
-
 \subsection{Pneumatic Actuator Modeling}
 
 The internal estimation of the current acceleration was primarily based on the 
@@ -112,12 +110,19 @@ done recursively using a binary search algorithm.
 
 This equation and model are designed to present a forward model to convert from 
 a desired torque and force to a pressure. There is not a clean and simple 
-inversion of the model; however, a binary search algorithm was used to invert 
-the process by estimating a maximum and minimum torque to apply and narrowing the
+inversion of the model; however, a binary search algorithm 
+(\myref{fig:BinarySearch}) was used to invert 
+the process by estimating a maximum and minimum torque to apply and narrowing 
+the
 potential window from there. This allows for a estimating a known bound on the 
 potential error and balancing the error with how quickly the algorithm iterates.
 
-% TODO(buckbaskin): include the binary search graphic
+\begin{figure}
+\centering
+\includegraphics[width=5in]{controller_design/BinarySearch}
+\caption{Optimize torque control with binary search}
+\label{fig:BinarySearch}
+\end{figure}
 
 Bounds were selected from estimates
 of the maximum and minimum (maximum negative) torque that can be applied to the
@@ -350,7 +355,7 @@ than the controlled torque so the system will make a larger change in velocity
 than the desired trajectory requires. This behavior can lead to under-damped 
 control, therefore the preference is to underestimate the inertia of the system.
 
-\begin{figure}[h!]
+\begin{figure}
 \centering
 \includegraphics[width=5in]{controller_design/Tracking_Optimizing_LINK_MASS2}
 \caption{Underdamped control due to mass estimate}

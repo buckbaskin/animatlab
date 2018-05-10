@@ -662,8 +662,8 @@ if __name__ == '__main__':
     control_rate = 30
     stiffness = 0.5
     
-    start_state = np.array([0.05, 0.5, 0, 0, 0])
-    desired_end_pos = 0.07
+    start_state = np.array([0.0, 0.0, 0, 0, 0])
+    desired_end_pos = 0.001
     times = np.linspace(0, 1.0 / control_rate, 50)
 
     oc = OptimizingController(control_rate=control_rate, stiffness=stiffness)
@@ -725,9 +725,12 @@ if __name__ == '__main__':
     else:
         print('return %f' % (mid_torque,))
 
-    plt.title('Iterative Guesses')
     plt.plot(np.ones((i+1,)) * desired_end_pos)
     plt.plot(tops[:i+1,-1].flatten())
     plt.plot(guesses[:i+1,-1].flatten())
     plt.plot(bottoms[:i+1,-1].flatten())
+    plt.tight_layout()
+    plt.savefig('BinarySearch.png')
+    plt.title('Iterative Guesses')
+    plt.tight_layout()
     plt.show()
