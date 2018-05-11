@@ -1,3 +1,76 @@
-% TODO(buckbaskin): write the conclusion
+\bbs{Conclusion}
 
-conclude!
+This thesis presents the design of a new style of biologically inspired
+controller for controlling revolute joints with antagonistic pneumatic
+artificial muscles. First, the literature surrounding the characterization of
+the actuators and the methods used to control them is discussed in
+\myref{chap:lit_review}. Second, the
+design of a prototype for a controller is discussed in
+\myref{chap:controller_design}. Third, the implementation of the design in a
+synthetic nervous system is discussed in \myref{chap:neuron_design}. The methods
+for testing the controller are discussed in \myref{chap:methods}. The results of
+the tests are presented in \myref{chap:results}.
+
+The controller implements new features not previously used in synthetic nervous
+system design and not previously used for control of joints actuated by
+pneumatic artificial muscles. The system has a whole has been shown to offer
+increased accuracy in joint position and decreased phase shift. This was
+combined with a better internal model of the actuators themselves to more
+accurately model the forces and torques applied in order to continue successful
+operation even near the maximum output of the actuators. On the other hand, the
+successful operation of the controller is dependent on the tuning of a number of
+internal parameters that are sensitive to slight overestimates that lead to
+oscillation and loss of control of the joint. This has been mitigated by
+asymmetric model updates that favor stable error and starting from known stable
+estimates; however, this leads to tracking that does not meet the accuracy goals
+discussed in the design when the parameters are too conservative.
+
+The implementation of the controller in a synthetic nervous system led to the
+design of unique nervous system functional subnetworks; however, some networks
+were found to be inconsistent with their standard controller output, leading to
+potential deficiencies in observed performance. This would suggest that a more
+bionic approach that leverages mathematical models directly for complicated
+calculations, such as the relation between pressure and torque for pneumatic
+artificial muscles, and the dynamic benefits of a synthetic nervous system for
+aspects of the controller that require less precision and benefit from insights
+gained from a deeper biological understanding of how animal nervous systems
+control joints.
+
+\bbs{Future Work}
+
+The next step for the design of the controller is experimental testing to
+characterize performance on actual hardware. During simulation and testing,
+many aspects of the controller worked well; on the other hand, some did not
+behave as well as expected. On hardware, there is always some variation that may
+show that the design choices made were effective and practical solutions.
+
+There is also some potential for improvement of the design of the controller.
+Further analysis of the stability of the controller may lead to a better model
+update procedure. In particular, algorithms such as an Extended Kalman Filter
+are used in many applications across robotics for estimating parameters from
+sensor data, but the Kalman Filter algorithm itself was not used because it does
+not have an effective way to be implemented within a synthetic nervous system.
+New biological research % TODO(buckbaskin): cite that paper with the toroid structure
+suggests that animals have groups of neurons that estimate orientation and
+% TODO(buckbaskin): and that time and space cells paper thing I found
+position in time and space. This research suggests potential approximations for
+spatial estimation that may be useful for estimation of other parameters to
+emulate or replace the use of a Kalman Filter.
+
+Another area where the neuron controller has room for improvement is
+implementation of certain subnetworks that don't effectively implement their
+counterparts in the prototype. There were approximations made to match neuron
+and synapse behavior at a low level to some of the mathematics; however, taking
+a larger system approach with an aim to design neuron connections to emulate
+behavior of larger pieces of the system made lead to a more successful design.
+The end goal is to design a working controller with similar properties, this
+doesn't need to be achieved by direct copying. The testing methods implemented
+in this thesis offer a good system for iterating on this kind of design. Test
+inputs can be set up once and then higher level component behavior can be
+compared quickly and visually.
+
+Overall, the design of the controller presents a new style of design that can be
+used to create optimal controllers for actuation systems that are highly
+non-linear and tend to perform poorly when simpler controller designs are used.
+There is room for improvement, but the methods used in the thesis offer a
+framework for improvement and determining the areas with the largest impact.
