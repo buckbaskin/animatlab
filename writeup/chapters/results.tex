@@ -225,15 +225,16 @@ The torque optimization network was tested as a complete network. See
 \myref{fig:TestTorqueOptimizationPos} and \myref{fig:TestTorqueOptimizationNeg}.
 The components for converting the torque to
 acceleration were also tested
-separately. See \myref{fig:TestT2A}.
+separately. See \myref{fig:TestT2APos} and \myref{fig:TestT2ANeg}.
 The components for converting the torque to pressure were also tested
-separately. See \myref{fig:TestT2P}.
+separately. See \myref{fig:TestT2PPos} and \myref{fig:TestT2PNeg}.
 
 \bbss{System Modeling}
 
 The system modeling network was tested as a complete network because both the
-damping and load factors are updated from the same $\lambda$ value. See \myref{
-fig:TestSystemC} and \myref{fig:TestSystemN}.
+damping and load factors are updated from the same $\lambda$ value. See 
+\myref{fig:TestSystemCPos}, \myref{fig:TestSystemCNeg},
+\myref{fig:TestSystemNPos} and \myref{fig:TestSystemNNeg}.
 
 \bbss{Discussion}
 \label{chap:discussion}
@@ -297,7 +298,7 @@ The concept of the torque optimization network appears to be effective; however,
 its implementation in neurons suffers from both attempting to converge to a
 solution quickly and approximating a physical simulation internally. The network
 uses relatively low time constants and high gains. This can cause overshoot
-(not seen in \myref{fig:TestTorqueOptimization} due to clipping) where the
+(not seen in \myref{fig:TestTorqueOptimizationPos} due to clipping) where the
 estimated torque is off the charts for either large positive or negative swings.
 The high gains also reduce accuracy by amplifying small errors made during the
 approximation of the ``physics" implementation. This behavior replicates

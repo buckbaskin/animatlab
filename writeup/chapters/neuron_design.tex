@@ -188,18 +188,19 @@ approximate a single step finite difference method. This itself is based
 on a Reichardt detector network as explained in
 \cite{NickFunctionalSubnetwork}.
 
-% TODO(buckbaskin): Figure of differentiator network
-
 \bbss{Velocity Fusion Network}
 
 The velocity network is based on the Differentiator network. 
 The one major change from the network,
 as presented, is the inclusion of a second $U_{post}$ neuron to 
-represent the negative derivative of the position (negative velocity).
+represent the negative derivative of the position (negative velocity). See \myref{fig:SensorFusion}.
 
-% TODO(buckbaskin): Figure of my velocity network
-
-% TODO(buckbaskin): make sure my inhibitory and excitatory synapses are visualized properly
+\begin{figure}
+\centering
+\includegraphics[width=5in]{methods/SensorFusion_Ext}
+\caption{Sensor fusion network for acceleration and velocity (top right)}
+\label{fig:SensorFusion}
+\end{figure}
 
 This represents
 a common pattern used across the network where two neurons are used to represent
@@ -230,8 +231,6 @@ representation falling below resting potential when the other neuron is active.
 This means the signal transfer synapse from the below zero neuron will have no
 effect.
 
-% TODO(buckbaskin): Figure of my absolute value network
-
 \bbsss{Integration Network}
 
 The integration network used throughout the neuron controller is based heavily
@@ -249,7 +248,7 @@ One of the key observations for converting from desired torque to pressure
 within the neuron controller was a pattern observed during simulation. For the
 simulated joint, the maximum torque can be applied at an angle of 0 degrees.
 
-\begin{figure}[h!]
+\begin{figure}
 \centering
 \includegraphics[width=5in]{neuron_design/Pos_v_Torque2.png}
 \caption{Position/Torque relation for pneumatic muscle actuated joint}
@@ -265,8 +264,7 @@ between the two is linear for that position for most desired torques above
 torque, each actuator should fall into the near-linear range. This allows for
 an approximation of the linear section in the neuron model.
 
-% TODO(buckbaskin): regenerate the PressureTorque figure with axis labels
-\begin{figure}[h!]
+\begin{figure}
 \centering
 \includegraphics[width=5in]{neuron_design/FigPressureTorque}
 \caption{Torque/Pressure relation observed in simulation}
@@ -278,9 +276,14 @@ to a signal transfer synapse. The multiplication takes the scaled absolute
 value of the position as input, so that as the position of the joint reaches
 the joint limit, the slope of the torque to pressure curve increases. This
 approximates the observations in simulation with a relatively simple neuron
-network.
+network. See \myref{fig:T2PNetwork} for the assembled network.
 
-% TODO(buckbaskin): Figure of T2P approximation network
+\begin{figure}
+\centering
+\includegraphics[width=5in]{methods/TestVisualT2P}
+\caption{Torque to pressure conversion network}
+\label{fig:T2PNetwork}
+\end{figure}
 
 \bbsss{Pressure Estimation Loop}
 
@@ -291,8 +294,6 @@ torque is converted into extension pressure. Third, the estimated extension
 pressure is compared with the sensed pressure. If there is an delta between the
 two, the extension torque guess is modified in turn and the cycle repeats.
 
-% TODO(buckbaskin): Figure of pressure loops
-
 This architecture is mirrored for flexion torque.
 
 \bbsss{Torque to Acceleration Network}
@@ -302,8 +303,6 @@ term is subtracted or added based on the current velocity and the estimated
 damping factor. Second, the conservative load is applied to the joint. Third,
 the acceleration is attenuated proportional to the mass with a signal divider
 synapse.
-
-% TODO(buckbaskin): Figure for T2A
 
 The scaling of the damping factor is the most complicated component of this
 network. First, the estimated damping factor is scaled based on the velocity 
@@ -316,15 +315,13 @@ non-zero effect. In code, this would be done as an if statement. In neurons,
 all the values and effects are calculated in practice, but only some are passed
 through the network.
 
-% TODO(buckbaskin): check and see how the conservative force is applied...
-
 \bbss{Acceleration Fusion Network}
 
 The acceleration fusion network is a combination of an integrator, absolute
 value network, the pressure estimation loop and a torque to acceleration
 network. In total, the network uses a combination of smaller networks to
 estimate the torque applied from sensed pressure and then combine the extension
-and flexion torques together to get a net torque and acceleration.
+and flexion torques together to get a net torque and acceleration. For the complete network, see \myref{fig:SensorFusion}.
 
 \bbs{Optimizing Torque Control}
 
@@ -332,6 +329,14 @@ The torque control network uses a feedback loop to optimize the
 control torque. The network takes the estimated position and velocity from the 
 sensor fusion network and the desired position from a trajectory generator
 network (ex. a CPG) and outputs the torque to best follow that trajectory.
+See \myref{fig:TorqueOptimizationNetwork} for the complete network.
+
+\begin{figure}
+\centering
+\includegraphics[width=5in]{methods/TorqueOptimization}
+\caption{Feedback loop for determining the desired control torque}
+\label{fig:TorqueOptimizationNetwork}
+\end{figure}
 
 \bbss{Optimizing Torque Control Components}
 
@@ -347,8 +352,6 @@ The principle difference is that the source of torque is an desired control
 torque instead of the estimated applied torque of the actuators.
 
 \bbsss{Velocity Modification}
-
-% TODO(buckbaskin): Figure - velocity modification network
 
 The velocity modification network takes the current velocity in and adjusts for
 the acceleration. Based on the estimated update rate of the controller, the
@@ -374,8 +377,6 @@ network.
 
 \bbsss{Position Comparator}
 
-% TODO(buckbaskin): Figure - position comparator network
-
 The position comparator estimates the error between where the joint will be at
 the future point and time and where the trajectory generator wants the joint
 to be. This error is used as feedback to directly modify the torque estimate.
@@ -389,8 +390,6 @@ minimize an error function over all projected locations.
 The overall feedback loop and torque control network is a combination of pieces
 that joint together to approximate
 Newton's Method for finding the root of the error function.
-
-% TODO(buckbaskin): Figure - torque control network overall
 
 The original 
 controller used a bounded bisection method that proved less suited for 
@@ -449,6 +448,15 @@ conservative load. The equations are as follows:
 C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
 \end{equation}
 
+\begin{figure}
+\centering
+\includegraphics[width=6.5in]{methods/SystemModel_Test}
+\caption{System modeling network}
+\label{fig:SystemModelNetwork}
+\end{figure}
+
+\myref{fig:SystemModelNetwork} shows the complete network.
+
 \bbss{System Modeling Components}
 
 \bbsss{Theta Delay}
@@ -471,7 +479,7 @@ The absolute value of the velocity is used along with a signal divider. This
 matches the second term of the equation to calculate $\lambda$. In practice,
 the divider network is one of the networks that fits closely to a term like
 $\dfrac{1}{1 + x^{2}}$. One potential improvement to the network is to fit
-a custom synapse or sub-network to better fit the term; however, this is not
+a custom synapse or subnetwork to better fit the term; however, this is not
 currently a major source of error.
 
 \bbsss{Lambda Calculation}
@@ -496,9 +504,6 @@ velocity. For example, a positive velocity and positive $\lambda$ means that
 less actual damping occurred than was expected, but a negative velocity with a 
 positive $\lambda$ means that more damping occurred than was expected.
 
-% TODO(buckbaskin): connect up signed velocities to C calculation
-% TODO(buckbaskin): chcek the sign of the C update and make sure it matches written text
-
 To perform this calculation in neurons, the velocity and $\lambda$ are 
 calculated for all sign pairs. From there, the correct outputs are connected.
 Following the example above, a positive velocity and positive $\lambda$ transfer
@@ -512,30 +517,20 @@ will be active meaning that only the correct sign of the output value will be
 active, maintaining the correctness of the dual neuron representation in the 
 output. This implementation replaces a series of if statements that may appear
 in a code-defined controller and shows an additional advantage of using two
-neurons to represent a value in a functional sub-network. When connected 
+neurons to represent a value in a functional subnetwork. When connected 
 correctly, it allows for easier sign flipping, easier validation of correctness
 by checking edge connectivity and easier testing.
 
 \bbs{Combined Controller Network}
 
-% TODO(buckbaskin): figure out how to reference a figure
-% TODO(buckbaskin): I like splitting out subnetwork into sub-network, but idk if it's consistent with Nick's/Alex's work 
 The fully combined network (see Figure how do I reference a figure?) implements
-a controller by combining the 4 large sub-networks. First, sensor data is passed
+a controller by combining the 4 large subnetworks. First, sensor data is passed
 through a sensor fusion network. The state estimation output of the sensor 
 fusion network are then passed into the torque optimization network. The 
-selected torque is then passed through one more sub-network to convert the
+selected torque is then passed through one more subnetwork to convert the
 desired torque into pressures for the actuators.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=5in]{neuron_design/NetworkLayout}
-\caption{Overview of major network components}
-\label{fig:NetworkLayout}
-\end{figure}
-% TODO(buckbaskin): redo this with the complete actual network
-
-This leaves the system model sub-network. This last sub-network is connected to 
+This leaves the system model subnetwork. This last subnetwork is connected to 
 the state estimation values and the internal projection and observes the 
 differences between the forward prediction and reality. This observer then 
 updates key model parameters to improve the controller over time while 
