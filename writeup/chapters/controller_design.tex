@@ -213,7 +213,7 @@ there is not a sensor that directly observes joint acceleration. Instead, error
 is measured in the difference in the estimated position and the measured 
 position.
 
-\bbss{Acceleration Error Calculation}
+\bbss{Acceleration Error}
 
 \begin{equation}
 \ddot{\theta}_{act} = \dfrac{\tau}{M} - \dfrac{C \dot{\theta}_{0}}{M} - \dfrac{N sin(\theta)}{M}
@@ -249,6 +249,8 @@ components:
 - \dfrac{(N + N_{err})sin(\theta)}{M}  + \dfrac{N sin(\theta)}{M}
 \end{equation}
 
+The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms representing the error in the internal estimation of damping and static load.
+
 \begin{equation}
 \ddot{\theta}_{err} =
 - C_{err} \dfrac{\dot{\theta}_{0}}{M}
@@ -261,6 +263,8 @@ components:
 \end{equation}
 
 \bbss{Velocity Error}
+
+Following the assumptions above, errors in internal estimation can be propagated to be measured from errors in velocity.
 
 \begin{equation}
 (\dot{\theta}_{1, act} + \dot{\theta}_{1, err}) = \dot{\theta}_{0} + (\ddot{\theta}_{act} + \ddot{\theta}_{err}) \delta t
@@ -283,10 +287,12 @@ components:
 \end{equation}
 
 \begin{equation}
-\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)) = \dfrac{\delta t}{2} \ddot{\theta_{err}}
+\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)) = \dfrac{\delta t}{2} \ddot{\theta}_{err}
 \end{equation}
 
-\bbsss{Positional Error}
+\bbss{Positional Error}
+
+Following the assumptions above, errors in internal estimation can be propagated to be measured from errors in position. This assumes that the primary source of error comes from the acceleration and velocity and that the estimate of the current position is comparatively accurate.
 
 \begin{equation}
 (\theta_{1, act} + \theta_{err}) = \theta_{0} + (\dot{\theta}_{avg} + \dot{\theta}_{avg, err}) \delta t
