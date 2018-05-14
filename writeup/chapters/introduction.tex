@@ -94,11 +94,12 @@ maximum activation
 \end{itemize}
 
 These challenges drive three key requirements for the controller.
-\begin{itemize}
-\item Decrease position error at maximum amplitude to less than 5 degrees from the desired position
-\item Minimize phase shift between desired and achieved trajectory
+
+\begin{enumerate}
 \item Decrease torque errors between neuron desired model and executed torques
-\end{itemize}
+\item Minimize phase shift between desired and achieved trajectory
+\item Decrease position error during trajectory execution to less than 5 degrees from the desired position
+\end{enumerate}
 
 These challenges and requirements define two different components and desired
 behaviors for the components within the controller. First, the controller should

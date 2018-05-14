@@ -1,18 +1,17 @@
-The controller design had 3 major goals derived from
+The proposed controller design for this work has 3 major goals derived from
 requirements and challenges faced with a neural implementation in
 \cite{HuntPhDThesis}. See \myref{chap:introduction} for more details.
 
 \begin{enumerate}
 \item Decrease torque errors between neuron desired model and executed torques
 \item Minimize phase shift between desired and achieved trajectory
-\item Increase position accuracy to less than 5 degrees from maximum desired
-position
+\item Decrease position error during trajectory execution to less than 5 degrees from the desired position
 \end{enumerate}
 
 Requirement 1 is fulfilled in
 the controller through sensor fusion to estimate state at the time of sensor
 readings (assumed to be ``current" time) and then using an internal model of the
-joint dynamics to predict the evolution of the joint's position and velocity
+joint's dynamics to predict the evolution of the joint's position and velocity
 given a particular controlling torque. From there, an internal optimization loop
 can run to identify a goal torque with sufficient resolution.
 
@@ -25,29 +24,28 @@ example, adding or removing weight from the robot, degrading pneumatic muscles
 or changing positions of other limbs),
 adapting to different joints with the same controller and increasing the
 robustness of the controller to variations from the original estimated
-properties of the robot. This also avoids a phase shift for Requirement 2. 
+properties of the robot. The accurate internal model also avoids a phase shift for Requirement 2. 
 
 Requirement 3 is met by a combination of the design decisions above and
 constitutes a metric by which to measure the effectiveness of the new design
-relative to old designs, regardless of implementation.
+relative to previous designs, regardless of implementation.
 
 \bbs{Sensor Fusion}
 
 Within the controller, state estimation is done in a relatively simplified
-manner. The design trades off accuracy for computation time, where the 
-estimation was designed to have sufficiently small error that it wouldn't 
-break the functionality of the rest of the system. An additional consideration
+manner. The design trades off increased accuracy for reduced computation time. The 
+estimation is designed to have sufficiently small error that it would not adversely impact rest of the system. An additional consideration
 was the ability to implement the algorithm in a neuron system.
 
 \subsection{Central Divided Difference}
 
 The velocity was estimated with a fixed window of the last 3 position readings.
-From there, a Central divided difference formula was used to estimate the
+From there, a central divided difference formula was used to estimate the
 slope and estimate velocity. This was found to be more accurate than a forward
 divided difference method only incorporating two points in practice when run
 against simulated data.
 
-The equations that define the centered divided difference are as follows:
+The equation that defines the centered divided difference:
 
 \begin{equation}
 \dot{\theta} = \dfrac{\theta_{t} - \theta_{t - 2}}{2 \delta t}
@@ -57,7 +55,7 @@ The equations that define the centered divided difference are as follows:
 
 The internal estimation of the current acceleration was primarily based on the 
 pressure sensors on the robot. These readings, combined with a position sensor, 
-allow for a direct measurements of the state of the actuator and therefore the
+allow for direct measurements of the state of the actuator and therefore the
 applied torque. The model comes from \cite{HuntPMuscles}.
 
 To calculate a pressure from a force and position, the following model is used:
@@ -66,17 +64,25 @@ To calculate a pressure from a force and position, the following model is used:
 P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
 \end{equation}
 
+The terms used within the overall model are defined as follows:
+
 \begin{equation}
 k_{max} = \dfrac{L_{rest} - L_{620 kPa}}{L_{rest}}
 \end{equation}
+
+The $k_{max}$ term defines the maximum strain. This occurs at the maximum pressure for the actuator, 620 kPa. The $k$ term defines the strain at the current position.
 
 \begin{equation}
 k = \dfrac{L_{rest} - L_{angle}}{L_{rest}}
 \end{equation}
 
+The length for the current angle $L_{angle}$ is calculated as follows:
+
 \begin{equation}
 L_{angle} = L_{0} - L_{1} cos(\alpha + \theta)
 \end{equation}
+
+The force required by the actuator is calculated from the joint torque at the current joint state.
 
 \begin{equation}
 F = \dfrac{T}{d cos(\beta + \theta)}
@@ -84,7 +90,7 @@ F = \dfrac{T}{d cos(\beta + \theta)}
 
 $\alpha, \beta, d, L_{rest}$ and $L_{620 kPa}$ represent the parameters for a 
 particular actuator. The $a$ values represent optimized parameters
-for the generalized model that adjusts to all actuators.
+for the generalized model that adjusts to all actuators. These values for $a_{1}$ to $a_{6}$ are taken directly from \cite{HuntPMuscles}.
 
 There are 3 key aspects to the model. First, the over model is a shifted and 
 scaled tangent curve. This represents the observed trend that increasing 
@@ -120,22 +126,22 @@ potential error and balancing the error with how quickly the algorithm iterates.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{controller_design/BinarySearch}
-\caption{Optimize torque control with binary search}
+\caption{Optimize torque control with binary search. The orange and red lines are upper and lower bounds respectively, with the current estimate shown in green}
 \label{fig:BinarySearch}
 \end{figure}
 
 Bounds were selected from estimates
 of the maximum and minimum (maximum negative) torque that can be applied to the
-joint and a forward projection mechanism based on the internal physics model was
+joint. From there, a forward projection mechanism based on the internal physics model was
 used to estimate the resulting position. From there, the binary search procedure
 repeatedly shrinks the bounds around the optimal torque. The model can be 
 applied to each actuator in the pair independently (with a fixed antagonistic 
 torque) or as a pair with a variable overlap in torque. 
 
 The final
-step is to convert the desired torque into a pressure control. This involves a 
+step is to convert the desired torque into a pressure control. This conversion takes
 one final forward iteration of the model above, at the current joint angle, to 
-calculate the desired pressures for each of the actuators.
+calculate the desired pressure for each of the actuator.
 
 \subsection{Forward Projection of State}
 
