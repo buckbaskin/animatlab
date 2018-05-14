@@ -6,15 +6,15 @@ imitating the musculoskeletal parameters of an adult greyhound.
 \cite{PuppyDesign} This work is motivated by extensions and potential
 improvements to a control method developed by Alex Hunt in
 \cite{HuntPhDThesis} and \cite{HuntHindLegWalking}. Among other areas identified
-for improvement and future work, the thesis in particular cites accurate torque
+for improvement and future work, the Hunt thesis in particular cites accurate torque
 profiles as a key improvement for increasing the stability and mobility of the
 robot. Related to the accurate torque profiles, the joint peak angles are
-accurate to between 5 and 15 degrees, but improving the accuracy further offers
+accurate to between 5 and 15 degrees, but further improving the accuracy offers
 an avenue for more effective walking. One potential source of error in the
 hardware system is the delay between a sensor reading, communicating the data to
 an off-board computer and then communicating a command back to the robot. The end
-result of the current system is that the hind legs can walk effectively;
-however, the front legs would trip or otherwise get stuck under the body of the
+result of the current Puppy control system is that the hind legs can walk effectively;
+however, the front legs can trip or otherwise get stuck under the body of the
 robot.
 
 \bbs{Similar Robots}
@@ -55,7 +55,7 @@ properties of muscles than are accommodated for in current control designs.
 \cite{HindLegMorphology}
 
 Passive elements and the particular properties of a joint play a strong role in
-the energy required to actuate the joint and the effective frequency at which it
+the energy required to actuate the joint and the effective frequency at which the joint
 can operate. In particular, \cite{Na2015} covers the design of a spring
 mechanism with a high natural frequency to increase the amplitude of joint
 motion during high frequency operation.
@@ -66,16 +66,16 @@ motion during high frequency operation.
 
 In \cite{PAMApplicationSurvey}, many biorobotic applications for pneumatic
 muscles are presented.
-Additionally, the devices are used for medical applications where the actuators
+Additionally, the devices are used for medical applications where the an actuator's
 inherent compliance, lighter weight and higher power output are also important. 
 
 The Pneupard robot is a feline-inspired robot based on a cheetah's
 musculoskeletal design. It is actuated using pneumatic muscles to control each 3
 degree of freedom leg. To control the leg, a rules-based controller is used to switch between
 states where muscle activation in an actual cat are mapped to pressures in each
-muscle. This was aided by taking a biomimetic approach to determining the lever
+muscle. This controller design was aided by taking a biomimetic approach to determining the lever
 arms by which the pneumatic muscles actuate. The results showed that the simple
-control system remained effective even in the face of obstacles in the robot
+control system remained effective even in the face of obstacles in the robot's
 path due to the compliant biomechanical design.
 \cite{Pneupard2013}
 
@@ -85,8 +85,8 @@ power dense design that walks effectively. The control approach focuses on
 a high-impedance control scheme for the stance phase and a second state
 that takes advantage of pneumatic actuator compliance during the swing phase.
 This design does not use pneumatic muscles. Instead, the authors use pneumatic
-cylinders to make the design more compact by using a device that can apply both
-pushing and pulling forces on a joint. 
+cylinders to make the design more compact by using a single rigid pneumatic cylinder that can apply both
+flexion and extension forces on a joint. 
 
 \bbs{Pneumatic Actuators}
 
@@ -94,40 +94,40 @@ Pneumatic artificial muscles typically consist of a high pressure source, a
 flexible polymer section and an exhaust valve. The muscle contracts in length
 when the internal pressure is higher than the surrounding environment. During
 this contraction, the muscle applies a force. One limitation of pneumatic
-muscles is that they are typically unable to apply force during relaxation in
-the same way a rigid pneumatic cylinder can. Instead, they are typically used in
-antagonistic pairs. The nonlinear nature of the muscles combined with the
+muscles is that they typically are unable to apply force during relaxation in
+the same way a rigid pneumatic cylinder can. Instead, pneumatic muscles typically are used in
+antagonistic pairs. The nonlinear nature of the pneumatic muscles combined with the
 antagonistic design means that, in practice, simple linear controllers are
-ineffective. This means that more complex controllers are required; however,
-this also means that the controller design can be more detailed and take
+ineffective at accurately executing a trajectory with pneumatic muscles. This means that more complex controllers are required; however,
+this also means that the controller design can be more tailored and take
 advantage of the unique properties of two antagonistic nonlinear actuators.
 
-Pneumatic actuators less common in robotics compared with electric motors;
+Pneumatic actuators are less common in robotics compared with electric motors;
 however,
 they are often result in a lighter system for controlling a joint than an
 electric motor. There are trade offs to each, but pneumatic actuators offer a
-higher power to weight ratio for smaller displacement at low velocity and are
-often a significant improvement over electric motors at higher velocities.
-\cite{Tavakoli2008} This suggests that they are well suited for applications in
+higher power to weight ratio for smaller displacement at low velocity and
+often are a significant improvement over electric motors at higher velocities.
+\cite{Tavakoli2008} These properties suggests that pneumatic muscles are well suited for applications in
 biological walking robots where an increased power to weight ratio increases
-the efficiency of the walking mechanism, especially at high joint velocities
+the efficiency of the walking mechanism, especially at the high joint velocities
 found in a stepping motion.
 
 \bbss{Characterizing Pneumatic Actuators}
 
 In \cite{Situm2008}, the authors analyze gas flow properties for fluidic muscles
-and experimentally quantifying their performance in an antagonistic coupling
-through a pulley. One of the key conclusions motivating future work is the
-demonstration for a single joint with most external factors removed, the
-proportional-integration control as implemented was unable to fully correct for
+and experimentally quantify the performance of the pneumatic muscles in an antagonistic coupling
+through a pulley. One of the key conclusions in \cite{Situm2008} motivating future work is the
+demonstration for a single joint with most external factors removed. The
+proportional-integral control as implemented was unable to fully correct for
 errors even in a desired trajectory composed of slow steps to a constant value
 where the control system had time to reach a set actuation pressure.
 
-Pneumatic Actuators are used on the Puppy robot. One of the key
+Pneumatic actuators are used on the Puppy robot. One of the key
 benefits of using pneumatic muscles in a biologically-inspired robot design is
 that the muscles have similar properties to the biological muscles that control
 canines. \cite{Tavakoli2008}
-During static analysis, the muscles demonstrated a non-linear response to
+During analysis of the behavior of pneumatic muscles with a static load, the muscles demonstrated a non-linear response to
 changing length and the ability to apply a force. This relationship was
 quantified and generalized in \cite{HuntPMuscles}. This research showed that
 there is a relationship between the strain on the muscle and the pressure
@@ -159,11 +159,11 @@ friction in the actuator design. Additionally, the damping due to friction
 effects in the input and exhaust lines is shown to be minimal compared to
 internal actuator effects. \cite{DynamicPMuscles}
 
-\cite{einstein}
+\bbs{Controller Design}
 
-\bbs{Controllers}
+\bbss{Controller Theory}
 
-Joint position controllers can be treated as a function mapping the current
+Revolute joint position controllers can be treated as a function mapping the current
 state (typically position, velocity and acceleration) to a torque to match the 
 desired trajectory, expressed as position but often constrained to be a twice
 differentiable function.
@@ -173,7 +173,7 @@ M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{
 \end{equation}
 
 If the robot starts at its desired initial state and the model of the robot is
-perfectly known, the robot will track the exact trajectory. Feedback in the 
+perfectly known, the robot will exactly track the trajectory. Feedback in the 
 form of sensory input is used to correct for starting error or error in the 
 formulation of the exact model.
 
@@ -190,10 +190,8 @@ where
 e = \theta - \theta_{d}
 \end{equation}
 
-This results in a control system that is stable, but it doesn't not converge to
-exact tracking for most real systems. A common modification for this is to add
-an integral term that accounts for steady state error; however, this can lead to
-windup or other issues.
+The proportional-derivative (PD) controller results in a system that is stable, but does not converge to
+exact tracking for most real systems. In practice, an integral term is often added that accounts for steady state error to create a proportional-integral-derivative (PID) controller; however, the additional of an integral term can lead to windup or other issues.
 
 One general method for overcoming these limitations is to use a model of the 
 system to perform what is known as computed torque control, where the actuator
@@ -213,8 +211,8 @@ added to the acceleration term:
 
 These additional terms are known as the feedback component. Since these 
 corrections are linear in a system that is linearized by the feed-forward term,
-values for the gains can be easily chosen to make the system stable and converge
-to exactly following the desired trajectory (exponentially stable). \cite{MLS94}
+values for the gains easily can be chosen to make the system stable and converge
+to exactly following the desired trajectory (i.e., make the system exponentially stable). \cite{MLS94}
 
 Control via computed torque 
 is not always practical because it requires the system to have a good model of 
@@ -223,18 +221,18 @@ system. In practice,
 there are many different ways to achieve effective control for a rotational 
 joint.
 
-\bbss{Joint Controllers}
+\bbss{Revolute Joint Position Controllers}
 
 In \cite{EventBasedWalking}, a new controller paradigm is proposed where control
 is done by switching between known phases in a state machine based on sensory
 events to generate an adaptable trajectory similar to purely time-based
 trajectories where stability was achieved by a separate stability adjustment
-system. This paper focuses on control of a biped robot; however, the lessons can
+system. Work in \cite{EventBasedWalking} focuses on control of a biped robot; however, the lessons can
 be applied to a quadruped.
 
 Event-based control through reflexes was also proposed as a way for additional
 improvement of the existing synthetic nervous system in \cite{HuntPhDThesis}.
-The thesis suggest that a particular a reflex known as the elevator reflex,
+The Hunt thesis \cite{HuntPhDThesis} suggests that a particular a reflex known as the elevator reflex,
 where the paw strikes an
 obstacle mid-swing, could be used as the design inspiration for an internal recovery
 mechanism to prevent tripping.
@@ -268,7 +266,7 @@ for high velocity or large error corrections. This work suggests that a system
 that smoothly combines these two behaviors will be highly effective, measured by
 joint tracking accuracy for a steady position, joint tracking at high 
 acceleration and velocity as well as joint efficiency and reduced antagonistic
-waste. On the other hand, this model based system doesn't appear to estimate
+waste. On the other hand, this model based system does not appear to estimate
 parameters of the system that can continually change, which opens up an avenue
 for potential improvement.
 
@@ -283,8 +281,7 @@ bioinspired systems. There have been issues with understanding how
 to tune these neuron networks; however, as presented in 
 \cite{NickFunctionalSubnetwork}, the neuron models can be adapted with 
 relatively few parameters to replicate arithmetic and calculus operations, 
-opening the door for an engineering approach to constructing and optimizing the
-network.
+opening the door for an engineering approach to constructing and optimizing a synthetic nervous system.
 
 \bbss{CPGs}
 
@@ -297,22 +294,22 @@ have been implemented in multiple ways, but the underlying principles and
 biological motivation remain the same.
 \cite{CPGReview}
 In
-practice, CPGs are often connected to muscles through pattern formation or other
+practice, CPGs often are connected to muscles through pattern formation or other
 layers to convert the CPG cycle into muscle activation instead of directly
-activating motor neurons. This can come in the form of single-level,
+activating motor neurons. The pattern formation layers are designed with a variety of topologies. Together with the CPG neurons they are grouped into single-level,
 single-plus-level or two-level CPG models. \cite{MultiLevelCPG}
 
 In insects and other animals, CPGs have been shown to combine with peripheral 
 sensory feedback and
 descending signals to coordinate walking motion between multiple joints and
-limbs. The can come into the system as resetting or non-resetting deletions
+limbs. The effects of sensory input come into the system as resetting or non-resetting deletions
 along with other sensory effects that synchronize the oscillation of the CPG
-with other limbs or mechanical motion, even a decerebrated animal.
+with other limbs or mechanical motion, even in a decerebrated animal.
 \cite{SixLeggedWalking, CPGReview}
 
 \bbss{Neuron Design}
 
-Neuron-based controllers are often designed in a data-driven way, where the
+Neuron-based controllers often are designed in a data-driven way, where the
 neuron system is treated as a black box. Recent work, collected in 
 \cite{NickFunctionalSubnetwork}, shows that a more detailed neuron model can be
 used to build up small subnetworks of neurons that perform a specific task,
@@ -337,5 +334,4 @@ These subnetworks can be recursively combined to form larger and more intricate
 networks that form a controller. This approach allows for the integration of
 existing work in controller design with biological inspiration to increase the
 effectiveness of the controller when controlling a biologically inspired robot.
-This approach also allows for rapid testing and developing new hypothesis on how
-biological systems work in a way that typical controller designs do not.
+This approach also allows for rapid testing and developing new hypotheses about the underlying function of biological systems in a way that typical controller designs do not.
