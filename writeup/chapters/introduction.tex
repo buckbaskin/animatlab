@@ -81,7 +81,7 @@ on the mechanics and skeleton of canines.
 \section{Specifications and Important Challenges}
 
 There are a number of key criteria that are important for improving the behavior
-of the joint controller. Based on previous work, they break down as follows:
+of the joint controller. Based on previous work, these criteria break down as follows:
 
 \begin{itemize}
 \item Peak position during hip actuation isn't accurate (5-15 deg) 
@@ -90,14 +90,12 @@ view -> robot cause tracking problems
 \item Scapula drives forward motion for front legs in the reverse Z orientation
 \item Improve torque profiles to eliminate external support, even close to
 maximum activation
-\item Better internals and internal understanding of dynamics to match desired
-and intended activation
+\item Better internal understanding of dynamics to match desired and intended activation
 \end{itemize}
 
 These challenges drive three key requirements for the controller.
 \begin{itemize}
-\item Increase position accuracy to less than 5 degrees from maximum desired
-position
+\item Decrease position error at maximum amplitude to less than 5 degrees from the desired position
 \item Minimize phase shift between desired and achieved trajectory
 \item Decrease torque errors between neuron desired model and executed torques
 \end{itemize}
@@ -105,10 +103,10 @@ position
 These challenges and requirements define two different components and desired
 behaviors for the components within the controller. First, the controller should
 incorporate an internal understanding of the dynamics of the joint. This will
-allow for more optimized control. Also, this will allow for a model-based
+allow for more optimized control. This also will allow for a model-based
 approach where a few key parameters can be used to summarize the behavior of the
 joint so that minimal example data can be used to finely tune the parameters and
-model. Without an understanding of the dynamics, the controller would have to
+model. Without an internal understanding of the dynamics, the controller would have to
 use an arbitrarily complex neuron system to model an arbitrary behavior that may
 over fit to the idiosyncrasies of a few data points and not generalize
 effectively to continued modeling of the joint.
@@ -122,7 +120,7 @@ situation and will either be inefficient or inaccurate as the environment
 changes. Each step on a walking robot is potentially different, so a static
 controller will almost certainly be continually sub-optimal.
 
-Additionally, an optimizing controller with a model of joint dynamics can
+Additionally, an internally optimizing controller with a model of joint dynamics can
 optimize for the estimated position of a joint at a time ahead of the current
 sensor data. This means that, on a system with a known delay for sensor data
 leaving the robot and control commands arriving at the robot, the controller can
@@ -145,9 +143,9 @@ optimizing the controlled output based on the understanding of dynamics.
 a synthetic nervous system
 simulation. This discussion talks about some simplifications and approximations
 that were made in the process, as well as areas of the network that are more
-complex improvements over the controller design in \Cref{chap:controller_design}.
+complex improvements over the controller design discussed in \Cref{chap:controller_design}.
 
-\myref{chap:methods} discusses the methods use to design, iterate, test and
+\myref{chap:methods} discusses the methods used to design, iterate, test and
 validate the controller designs.
 
 \myref{chap:results} discusses the results of testing the controllers.

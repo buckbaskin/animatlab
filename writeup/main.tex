@@ -1,8 +1,8 @@
 \documentclass[12pt, letterpaper, oneside, onecolumn]{report} % 
-\author{William Baskin}
+\author{William C. Baskin IV}
 \title{Thesis}
 \title{
-  {A Biologically Inspired Controller for Efficient Trajectory Execution with Pneumatic Actuated Joints}\\
+  {A Biologically Inspired Position Controller for Efficient Trajectory Execution with Antagonistic Pneumatic Muscles}\\
   {\large Case Western Reserve University \\
   Department of Mechanical and Aerospace Engineering}%\\
 %	{\includegraphics{university.jpg}}
@@ -78,21 +78,27 @@
 \begin{document}
 \maketitle
 
-% approval pdf
+% TODO(buckbaskin): approval pdf
 
 \tableofcontents
 
 \listoffigures
-% TODO(buckbaskin): verify that figures are the correct size, have axis labels, etc
+% TODO(buckbaskin): verify that all captions are leading caps, otherwise, cap where appropriate
 
 \chapter*{Acknowledgments}
 \label{chap:acknowledgements}
-Acknowledged!
+
+I would like to thank the Biologically Inspired Robotics Lab and the faculty of
+the EMAE and EECS department for their support and help. I would like to thank my advisor Roger Quinn and Nick Szczecinkski for their guidance and inspiration.
+
+Additionally I'd like to thank my family and friends for their continuing support.
 
 \chapter*{Abstract}
 \label{chap:abstract}
 
-This research develops a new synthetic nervous system for control of joints using pneumatic actuators in order to create a more efficient and adaptable walking robot system. This design implements new features not previously seen in a control oriented nervous system. It develops 3 major design components not previously used for control of antagonistic pneumatic actuators. It uses an internal model of the actuators to estimate the state of the joint. It uses internal estimates of the dynamics of the joint to continually optimize the control output. Additionally, it updates its own internal system model with a memory-like loop to allow the controller to adapt to any joint and trajectory. The controller allows for the replacement of proportional or other control designs with a learning system that decreases wasted antagonistic muscle activation and wasted energy, decreases phase lag and increases trajectory tracking accuracy.
+This research develops a new synthetic nervous system controller for control of joints using pneumatic actuators in order to create a more efficient and adaptable walking robot system. This design implements new features not previously seen in a control oriented nervous system. The design develops 3 major components not previously used for control of antagonistic pneumatic actuators. The controller uses an internal model of the actuators to estimate the state of the joint. The controller also uses internal estimates of the dynamics of the joint to continually optimize the control output. Additionally, the controller updates its own internal system model with a memory-like loop to allow the controller to adapt to any joint and trajectory. The controller allows for the replacement of proportional or other control designs with a learning system that decreases wasted antagonistic muscle activation and wasted energy, decreases phase lag and increases trajectory tracking accuracy.
+
+% TODO(buckbaskin): reduce the use of it, they
 
 \chapter{Introduction}
 \label{chap:introduction}
