@@ -1,7 +1,7 @@
 \bbs{Simulation}
 
 Antagonistic actuators were simulated at various pressures to better understand
-their behavior. In \myref{fig:AntagonisticPressureTorque}, the extension
+their behavior using \github{stability/constant\_pressure.py}. In \myref{fig:AntagonisticPressureTorque}, the extension
 actuator was set to a constant 500 kPa. The pressure in the flexion actuator was
 varied, and the torque was plotted for a range of actuator angles. This model of
 torque generated was used in ongoing work to help better understand joint
@@ -12,12 +12,12 @@ dynamics and improve the performance of the controllers.
 \includegraphics[height=3.5in]{results/Pos_v_AntagTorque}
 \caption{Relation between joint position, actuator pressures and
 torque applied. Extension actuator pressure was set to 500 kPa and flexion was
-set as indicated}
+set as indicated.}
 \label{fig:AntagonisticPressureTorque}
 \end{figure}
 
 During the characterization of the joint, simulations were run to determine the
-dominant effects between inertia, damping and static loads. The relative 
+dominant effects between inertia, damping and static loads using \github{stability/max\_torque.py}. The relative 
 magnitudes of the acceleration, velocity and position are shown in 
 \myref{fig:MaxTorque}, along with the
 torque. For the simulated joint, the dominant effect was the inertia; however,
@@ -64,8 +64,8 @@ updates}
 \bbss{Static Controller}
 
 During testing, the need for an internal model update was verified through 
-tests where the optimization loop was applied with variations on correct 
-parameters. One example was varying mass. For correct values, such as 
+tests where the optimization loop was applied with variations on 
+parameters using \github{stability/simple\_mass\_model.py}. One example was varying mass. For correct values, such as 
 \myref{fig:StateEstimationPerfect}, the system worked within tolerances. When 
 mass was underestimated (see \myref{fig:StateEstimationLowMass}), the tracking 
 performance degrades to smoothly fail required tracking accuracy. On the other 
@@ -99,7 +99,7 @@ that the internal model needed to be updated was validated.
 The original model for parameter updates was to calculate the sign of the update
 and make a uniform incremental change in that direction. In practice, this 
 resulted in near-perfect tracking; however, the weight updates themselves were
-not intuitive. See \myref{fig:StateUpdateSimple}.
+not intuitive. See \myref{fig:StateUpdateSimple} and \github{stability/simple\_mass\_model.py}.
 
 \begin{figure}
 \centering
@@ -111,6 +111,8 @@ not intuitive. See \myref{fig:StateUpdateSimple}.
 \section{Neuron Controller}
 
 \bbss{Test Results}
+
+Test results are generated based on data tools in \github{PuppyNeuronPlayground}. Post processing and visualization is done with scripts found in \github{writeup/scripts}.
 
 \begin{figure}
 \centering

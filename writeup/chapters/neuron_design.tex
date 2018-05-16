@@ -277,7 +277,7 @@ simulated joint, the maximum torque can be applied at an angle of 0 degrees.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{neuron_design/Pos_v_Torque2.png}
-\caption{Position/Torque relation for pneumatic muscle actuated joint}
+\caption{Position/torque relation for pneumatic muscle actuated joint. See \github{stability/constant\_pressure.py}}
 \label{fig:PositionTorque}
 \end{figure}
 
@@ -293,7 +293,7 @@ an approximation of the linear section in the neuron model.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{neuron_design/FigPressureTorque}
-\caption{Torque/Pressure relation observed in simulation}
+\caption{Torque/Pressure relation observed in simulation. See \github{stability/pressure\_torque.py}}
 \label{fig:PressureTorque}
 \end{figure}
 
@@ -549,7 +549,7 @@ by checking edge connectivity and easier testing.
 
 \bbs{Combined Controller Network}
 
-The fully combined network (see Figure how do I reference a figure?) implements
+The fully combined network implements
 a controller by combining the 4 large subnetworks. First, sensor data is passed
 through a sensor fusion network. The state estimation output of the sensor 
 fusion network are then passed into the torque optimization network. The 

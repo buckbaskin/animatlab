@@ -24,12 +24,14 @@
 \addbibresource{references.bib}
 
 \usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=true, anchorcolor=black, linkcolor=black, citecolor=black, urlcolor=blue}
 \usepackage{cleveref}
 
 % https://tex.stackexchange.com/questions/119513/cleveref-and-appendix-packages-appendix-referenced-as-section
 \crefname{appsec}{Appendix}{Appendices}
 
 \newcommand{\myref}[1]{\hyperref[#1]{\Cref{#1}}}
+\newcommand{\github}[1]{\href{https://github.com/buckbaskin/animatlab/tree/master/#1}{#1}}
 
 %%% math %%%
 \usepackage{amsmath, amssymb, amsthm}
