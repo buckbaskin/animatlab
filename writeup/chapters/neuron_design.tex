@@ -1,8 +1,34 @@
 The synthetic nervous system controller is developed with a non-spiking Hodgkin-Huxley neuron model, where the membrane voltage is used as a representation of spiking frequency in a comparable spiking model. The neurons are modeled with a resting potential of -60 mV and a maximum potential of -40 mV for a range of 20 mV.
 
+The voltage for the Hodgkin-Huxley model is determined as follows:
+
+\begin{equation}
+C_{m} \dfrac{d V}{d t} = I_{leak} + I_{syn} + I_{app}
+\end{equation}
+
+The $I_{app}$ current is arbitrary, and used with multiple neurons in the controller design.
+The current terms are defined as follows:
+
+\begin{equation}
+I_{leak} = G_{m} * (E_{r} - V)
+\end{equation}
+
+\begin{equation}
+I_{syn} = \sum_{i=1}^{n} G_{s, i} * (E_{s, i} - V)
+\end{equation}
+
+This model does leave out some terms of the Hodgkin-Huxley model. On the other hand, by continuing to follow the work laid out in \cite{NickFunctionalSubnetwork}, the steady state values of a neuron can be arranged in the following equation:
+
+\begin{equation}
+U_{post}^{*} = \dfrac{\frac{g_{s}}{R} * U_{pre} * \Delta E_{s}}{1 + \frac{g_{s}}{R} * U_{pre}}
+\end{equation}
+
+Through the tuning of the conductivity of the synapse ($g_{s}$), one can engineer the behavior of each type of synapse (see \myref{sec:key_synapses}) to match arithmetic operations. The more complicated operations require the interaction of multiple synapses and neurons, but their behavior is still tuned in the same way.
+
 % TODO(buckbaskin): make the capitalization of the networks consistent
 
 \bbs{Key Neurons and Synapses}
+\label{sec:key_synapses}
 
 The neuron controller network is made up of a set of engineered synapses
 designed to emulate arithmetic operations. These can be grouped into two
@@ -11,7 +37,7 @@ categories: excitatory neurons and inhibitory neurons.
 Most neurons were tuned
 via an optimization process to identify the best equilibrium potential and
 synaptic conductance based on equations defined in 
-\cite{NickFunctionalSubnetwork}. 
+\cite{NickFunctionalSubnetwork}. The above equation for determining $U_{post}$ was optimized to match a target dataset that exactly replicated the mathematical operation using a least squares approach.
 Some neurons were tuned by hand for specific behaviors in
 a subsection of the overall controller.
 
