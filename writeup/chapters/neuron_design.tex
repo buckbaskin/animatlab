@@ -176,7 +176,7 @@ saturation is -50 mV and the synaptic conductance is 0.5 microsiemens.
 The signal divider synapse is designed to reduce the effect of another input
 synapse, where the reduction increases with increased input voltage to the
 signal divider synapse. It is distinguished from the signal multiplier synapse
-in that the value never reaches 0. Intuitively, this is a replication of 
+in that the value never reaches 0. Intuitively, the behavior for large inputs is a replication of 
 division where dividing by a large number makes the quantity small but never 0.
 It has a synaptic conductance of 20 microsiemens. The equilibrium potential of
 the synapse is -60 mV (equal to the resting potential of the input and output
@@ -187,7 +187,7 @@ neurons).
 The signal divider synapse is designed to reduce the effect of another input
 synapse, where the reduction decreases with increased input voltage to the
 signal divider synapse. It is distinguished from the signal divider synapse
-behavior in that the value reaches 0. Intuitively, this is a replication of 
+behavior in that the value reaches 0. Intuitively, the implementation is a replication of 
 multiplication where multiplying by 0 will make any value 0.
 It has a synaptic conductance of 19.75 microsiemens. The equilibrium potential 
 of the synapse is -61 mV.
@@ -195,7 +195,7 @@ of the synapse is -61 mV.
 \bbs{Sensor Fusion}
 
 The sensor fusion neuron network performs essentially the same function as the
-sensor fusion network in the prototype controller. In this case, 3 neurons
+sensor fusion network in the prototype controller. In the synthetic neuron implementation, 3 neurons
 represent the 3 sensor inputs available in a joint: position (``Theta"),
 extension muscle pressure (``Ext Pres") and flexion muscle pressure
 (``Flx Pres"). The outputs for the network are the estimates for current 
@@ -282,7 +282,7 @@ simulated joint, the maximum torque can be applied at an angle of 0 degrees.
 
 With increasing deflection, there is decreasing torque applied for a given
 pressure, or phrased another way, a greater pressure differential is required
-for the same desired torque. When the calculation is rearranged to calculate
+for the same desired torque (\myref{fig:PressureTorque} and \github{stability/pressure\_torque.py}). When the calculation is rearranged to calculate
 a control pressure from a desired torque at a given position, the relationship
 between the two is linear for that position for most desired torques above
 0.25 Nm in the simulated joint. Assuming there is some non-zero antagonistic
@@ -292,11 +292,11 @@ an approximation of the linear section in the neuron model.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{neuron_design/FigPressureTorque}
-\caption{Torque/Pressure relation observed in simulation. See \github{stability/pressure\_torque.py}}
+\caption{Torque/Pressure relation observed in simulation}
 \label{fig:PressureTorque}
 \end{figure}
 
-The neurons approximate this relationship using a multiplication synapse added
+The neurons approximate the torque/pressure relationship using a multiplication synapse added
 to a signal transfer synapse. The multiplication takes the scaled absolute 
 value of the position as input, so that as the position of the joint reaches
 the joint limit, the slope of the torque to pressure curve increases. This
@@ -335,8 +335,8 @@ with a multiplication synapse to ensure that damping has no effect on accelerati
 when the velocity is zero. Second, the damping factor is then applied with both positive and
 negative velocities (in a split representation) to the positive and negative
 acceleration terms. Due to the design choice of representing the velocity as two
-neurons, this means that one term will be 0 and the other will either have a 
-non-zero effect. In code, this would be done as an if statement. In neurons,
+neurons, one term will be 0 and the other will either have a 
+non-zero effect. In code, the comparable calculation would be done as an if statement. In neurons,
 all the values and effects are calculated in practice, but only some are passed
 through the network.
 
@@ -435,7 +435,7 @@ position fell outside the bounds.
 \end{equation}
 
 The derivative of the position is constant with respect to the controlled value
-$\ddot{\theta}$. Therefore, Newton's Method should also always converge and it is a suitable replacement for the bisection method in this neuron
+$\ddot{\theta}$. Therefore, Newton's Method should also always converge and it is a suitable replacement for the bisection method in the synthetic neuron
 controller. In practice, Newton's Method should work well with many error functions; however,
 a more complicated error function involving multiple independent error 
 components may exhibit local minima and a more complex root finding feedback
@@ -503,7 +503,7 @@ The absolute value of the velocity is used along with a signal divider. This
 matches the second term of the equation to calculate $\lambda$. In practice,
 the divider network is one of the networks that fits closely to a term like
 $\dfrac{1}{1 + x^{2}}$. One potential improvement to the network is to fit
-a custom synapse or subnetwork to better fit the term; however, this is not
+a custom synapse or subnetwork to better fit the term; however, the velocity estimate is not
 currently a major source of error.
 
 \bbsss{Lambda Calculation}
@@ -522,17 +522,17 @@ The calculation for the conservative load is simply a signal transfer from the s
 
 The calculation for the damping factor update is more involved. In particular,
 the complexity comes from the fact that the sign of the update changes with the
-sign of the velocity and the positional error. Intuitively, this happens because
-damping opposes velocity, but conservative loads (as modeled) don't depend on
+sign of the velocity and the positional error. Intuitively, the change in sign occcurs when
+damping opposes velocity, but conservative loads (as modelled) don't depend on
 velocity. For example, a positive velocity and positive $\lambda$ means that 
 less actual damping occurred than was expected, but a negative velocity with a 
 positive $\lambda$ means that more damping occurred than was expected.
 
-To perform this calculation in neurons, the velocity and $\lambda$ are 
+To perform the damping factor calculation in neurons, the velocity and $\lambda$ are 
 calculated for all sign pairs. From there, the correct outputs are connected.
 Following the example above, a positive velocity and positive $\lambda$ transfer
 their signal to the positive C delta, which then connects to the damping factor 
-to drive the stored value down. For a positive lambda and a negative velocity, the ``C Err -+" neuron is active and this transfers to the negative C Delta output.
+to drive the stored value down. For a positive lambda and a negative velocity, the ``C Err -+" neuron activates and transfers activation to the negative C Delta output.
 
 This implementation relies on the dual neuron representation for values to drive
 the correct output. Either the positive or negative neuron will be active in the

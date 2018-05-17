@@ -207,7 +207,7 @@ From there, the velocity and position are estimated as follows:
 \theta_{1} = \theta_{0} + \dot{\theta}_{avg} \delta t
 \end{equation}
 
-Using this model, the estimated acceleration between now and the next controller 
+Using the reduced system model, the estimated acceleration between now and the next controller 
 step is predicted and compared with the observed acceleration. On the other hand,
 there is not a sensor that directly observes joint acceleration. Instead, error
 is measured in the difference in the estimated position and the measured 
@@ -338,7 +338,7 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 - \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
 \end{equation}
 
-This formulation does leave a singular point in the solution. When the joint is stopped and the joint is centered, then there are no damping or loads that apply torque to the joint. In this case, there is a check to pause updating of the internal estimate of joint parameters.
+This formulation does leave a singular point in the solution. When the joint is stopped and the joint is centered, then there are no damping or loads that apply torque to the joint. In the region of the singular case, there is a check to pause updating of the internal estimate of joint parameters.
 
 \subsection{Evaluation of asymmetric error concerns}
 

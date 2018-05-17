@@ -21,7 +21,7 @@ dominant effects between inertia, damping and static loads using \github{stabili
 magnitudes of the acceleration, velocity and position are shown in 
 \myref{fig:MaxTorque}, along with the
 torque. For the simulated joint, the dominant effect was the inertia; however,
-for a robot carrying varying loads, this will not always be the case. The 
+for a robot carrying varying loads, the inertia will not always be the dominant factor. The 
 maximum torque required to execute the known trajectory is also later used as a
 metric for measuring the efficiency of the controller. A controller that is too
 aggressive for the trajectory (ex. too high gains on a proportional controller)
@@ -70,8 +70,8 @@ parameters using \github{stability/simple\_mass\_model.py}. One example was vary
 mass was underestimated (see \myref{fig:StateEstimationLowMass}), the tracking 
 performance degrades to smoothly fail required tracking accuracy. On the other 
 hand, over estimating the mass caused aggressive oscillation and underdamping (
-see \myref{fig:StateEstimationHighMass}). Based on this data, the assumption 
-that the internal model needed to be updated was validated.
+see \myref{fig:StateEstimationHighMass}). Based on these tests, the assumption 
+that the internal model needs to update was validated.
 
 \begin{figure}
 \centering
@@ -97,7 +97,7 @@ that the internal model needed to be updated was validated.
 \bbss{Simple Parameter Estimation}
 
 The original model for parameter updates was to calculate the sign of the update
-and make a uniform incremental change in that direction. In practice, this 
+and make a uniform incremental change in that direction. In practice, the constant uniform update
 resulted in near-perfect tracking; however, the weight updates themselves were
 not intuitive. See \myref{fig:StateUpdateSimple} and \github{stability/simple\_mass\_model.py}.
 
@@ -241,7 +241,7 @@ damping and load factors are updated from the same $\lambda$ value. See
 \bbss{Discussion}
 \label{chap:discussion}
 
-In this paper, we propose a new system for controlling joints actuated with
+In this thesis, we propose a new system for controlling joints actuated with
 pneumatic artificial muscles. The design focuses on improving controller
 performance through improved sensor processing, an internal optimization step
 and an observer that continually updates the internal physics model to improve
@@ -258,7 +258,7 @@ reference data. This is a known phenomena addressed in
 \cite{NickFunctionalSubnetwork}. This variance is observed in two quantities,
 the phase shift and the magnitude
 
-In this particular network, the magnitude of the positive and negative
+In the velocity network, the magnitude of the positive and negative
 velocities varied quite widely compared with the reference, especially at
 higher gains. During the tuning of the network, a balance was chosen between
 the maximum phase lag, minimized by decreasing the time constant of the slower
@@ -284,7 +284,7 @@ issues with rapidly changing pressures on a hardware system. One potential
 solution is to modify the time constants of the network
 elements within the loop, in particular the integration network, to allow the
 internal loop(s) to run faster than the rest of the network
-so they appear to converge to the correct value on the same time scale as the
+so the outputs of the internal loop appear to converge to the correct value on the same time scale as the
 rest of the network.
 
 \bbsss{Torque Optimization}
@@ -306,11 +306,10 @@ The high gains also reduce accuracy by amplifying small errors made during the
 approximation of the ``physics" implementation. This behavior replicates
 observations made during the development of the prototype controller in code,
 where an attempt to approximate the physics of the joint in a single step was
-inaccurate. The solution to this was to make multiple iterations by subdividing
+inaccurate. The solution to the simulation error was to make multiple iterations by subdividing
 the simulated time so that a simpler physics model would have a closer fit to
-the actual dynamics. This suggests that a longer string of neurons would be
-necessary within the loop to project dynamics forward; however, this may
-increase timing issues with the network when interfaced to hardware.
+the actual dynamics. The iteration in the prototype controller suggests that a longer string of neurons would be
+necessary within the loop to project dynamics forward; however, increasing the length of the feedback loop may accentuate existing delays when interfaced to hardware.
 
 \bbssss{Acceleration from Torque}
 
@@ -328,8 +327,7 @@ relatively easily understand the dynamics of its environment and its body.
 The process for calculating pressures from torques is accurate in some
 cases and inaccurate in many others. This suggests that the physical
 model of the pneumatic artificial muscles proposed in \cite{HuntPMuscles}
-doesn't convert well to a relatively small network of neurons. This would
-suggest that a future controller iteration might move the mechanical
+doesn't convert well to a relatively small network of neurons. A future controller iteration may elect to move the
 calculation of this conversion out of neurons and
 to LabView other other code used to interface between synthetic neurons and
 hardware.

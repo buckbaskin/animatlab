@@ -20,9 +20,9 @@ accurately model the forces and torques applied in order to continue successful
 operation even near the maximum output of the actuators. On the other hand, the
 successful operation of the controller is dependent on the tuning of a number of
 internal parameters that are sensitive to slight overestimates that lead to
-oscillation and loss of control of the joint. This has been mitigated by
+oscillation and loss of control of the joint. The oscillatory behavior has been mitigated by
 asymmetric model updates that favor stable error and starting from known stable
-estimates; however, this leads to tracking that does not meet the accuracy goals
+estimates; however, these mitigations lead to tracking that does not meet the accuracy goals
 discussed in the design when the parameters are too conservative.
 
 The implementation of the controller in a synthetic nervous system led to the
@@ -65,7 +65,7 @@ a larger system approach with an aim to design neuron connections to emulate
 behavior of larger pieces of the system made lead to a more successful design.
 The end goal is to design a working controller with similar properties, this
 doesn't need to be achieved by direct copying. The testing methods implemented
-in this thesis offer a good system for iterating on this kind of design. Test
+in this thesis offer a good system for iterating on a synthetic nervous system design. Test
 inputs can be set up once and then higher level component behavior can be
 compared quickly and visually.
 
