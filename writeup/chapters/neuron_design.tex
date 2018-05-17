@@ -58,9 +58,8 @@ conductance of 0.115 microsiemens.
 \bbsss{Inverted Signal Transfer}
 
 By combining two signal inversions, a more accurate signal transfer synapse was
-created. This involves an extra neuron; however, it leads to a more precise
-transfer of the voltage level of the input neuron to the output neuron. In
-general, the synapse was implemented with two Signal Inverter (Stimulated)
+created. This involves an extra neuron; however, adding the neuron leads to a more precise
+transfer of the voltage level of the input neuron to the output neuron. This tradeoff was used primarily between larger subnetworks. It also helps define boundaries for testing the larger subnetworks. The combined synapse was implemented with two Signal Inverter (Stimulated)
 synapses.
 
 \bbsss{Signal Amplifier 2x}
@@ -236,7 +235,7 @@ above resting potential for negative values and is at or below resting potential
 when the value is positive. 
 
 The motivation for increasing the complexity of the
-network (often making it more than twice as complicated) is to increase the
+network (often doubling the number of neurons and more than doubling the number of synapses) is to increase the
 effective range of values that the neuron can represent at the same fidelity and
 to increase the accuracy of zero. When a single neuron represents positive and
 negative values of equal magnitude, the value of 0 is represented at 50 mV; 
@@ -332,8 +331,8 @@ synapse.
 
 The scaling of the damping factor is the most complicated component of this
 network. First, the estimated damping factor is scaled based on the velocity 
-with a multiplication synapse to ensure that it has no effect on acceleration
-when the velocity is zero. Second, it is then applied with both positive and
+with a multiplication synapse to ensure that damping has no effect on acceleration
+when the velocity is zero. Second, the damping factor is then applied with both positive and
 negative velocities (in a split representation) to the positive and negative
 acceleration terms. Due to the design choice of representing the velocity as two
 neurons, this means that one term will be 0 and the other will either have a 
@@ -436,9 +435,8 @@ position fell outside the bounds.
 \end{equation}
 
 The derivative of the position is constant with respect to the controlled value
-$\ddot{\theta}$. Therefore, Newton's Method should also always converges.
-Therefore it is a suitable replacement for the bisection method in this neuron
-controller. In practice, it should work well with many error functions; however,
+$\ddot{\theta}$. Therefore, Newton's Method should also always converge and it is a suitable replacement for the bisection method in this neuron
+controller. In practice, Newton's Method should work well with many error functions; however,
 a more complicated error function involving multiple independent error 
 components may exhibit local minima and a more complex root finding feedback
 method may be required.
@@ -534,7 +532,7 @@ To perform this calculation in neurons, the velocity and $\lambda$ are
 calculated for all sign pairs. From there, the correct outputs are connected.
 Following the example above, a positive velocity and positive $\lambda$ transfer
 their signal to the positive C delta, which then connects to the damping factor 
-to drive it down. For a positive lambda and a negative velocity, the ``C Err -+" neuron is active and this transfers to the negative C Delta output.
+to drive the stored value down. For a positive lambda and a negative velocity, the ``C Err -+" neuron is active and this transfers to the negative C Delta output.
 
 This implementation relies on the dual neuron representation for values to drive
 the correct output. Either the positive or negative neuron will be active in the
@@ -544,8 +542,8 @@ active, maintaining the correctness of the dual neuron representation in the
 output. This implementation replaces a series of if statements that may appear
 in a code-defined controller and shows an additional advantage of using two
 neurons to represent a value in a functional subnetwork. When connected 
-correctly, it allows for easier sign flipping, easier validation of correctness
-by checking edge connectivity and easier testing.
+correctly, the dual neuron representation of single values allows for easier sign flipping, easier validation of correctness
+by checking edge connectivity, and easier testing.
 
 \bbs{Combined Controller Network}
 
