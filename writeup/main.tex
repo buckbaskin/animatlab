@@ -1,14 +1,20 @@
 \documentclass[12pt, letterpaper, oneside, onecolumn]{report} % 
-\author{William C. Baskin IV}
+% \author{William C. Baskin IV}
 \title{Thesis}
 \title{
   {A Biologically Inspired Position Controller for Efficient Trajectory Execution with Antagonistic Pneumatic Muscles}\\
-  {\large Case Western Reserve University \\
-  Department of Mechanical and Aerospace Engineering}%\\
+  {\large by \\
+  WILLIAM BASKIN}\\
+  {\large Submitted in partial fulfillment of the requirements\\
+  For the degree of Master of Science in Mechanical Engineering\\
+  Advisor: Dr. Roger Quinn}\\
+  {\large Department of Mechanical and Aerospace Engineering\\
+  CASE WESTERN RESERVE UNIVERSITY}\\
+  {\large August 2018}
 %	{\includegraphics{university.jpg}}
 }
 % \date{Day Month Year}
-\date{\today}
+% \date{\today}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -17,7 +23,7 @@
 \graphicspath{ {images/} }
 % \includegraphics[height=6.75in,angle=270]{HW25}
 
-\usepackage[margin=1in]{geometry}
+\usepackage[lmargin=1in, rmargin=1in, tmargin=1.5in, bmargin=1.5in]{geometry}
 \usepackage{setspace}
 \doublespacing
 \usepackage[style=ieee, backend=biber]{biblatex}
@@ -129,19 +135,15 @@ This research develops a new synthetic nervous system controller for control of 
 \input{chapters/conclusion}
 
 \newpage
-\label{chap:references}
-%TODO(buckbaskin): clean out extra unnecessary information from references.bib
-\printbibliography[heading=bibintoc, title={Bibliography}]
-
-\newpage
 \appendix
 \crefalias{section}{appsec}
 \chapter{Code and Resources}
 \label{app:resources}
 \input{chapters/appendix}
 
-% \chapter{Neuron Tests}
-% \label{app:neuron_tests}
-% \input{chapters/app_neuron_tests}
+\newpage
+\label{chap:references}
+%TODO(buckbaskin): clean out extra unnecessary information from references.bib
+\printbibliography[heading=bibintoc, title={Bibliography}]
 
 \end{document}
