@@ -12,16 +12,16 @@ to the success of the new controller design.
 \subsection{Python Numerical Simulation}
 
 During the development of the original controller design, an additional
-simulation environment was created in Python. Due to the complicated nature of
+simulation environment was created in Python. Due to the complex nature of
 the controller design, it is impractical to prove the stability and other
 properties of the controller analytically, especially with changing internal
 parameters. Instead, the Python simulation environment was used to gradually add
-in expected physical effects to see how the algorithm behaved and demonstrate
+in expected physical effects to observe how the algorithm behaved and demonstrate
 stability in practice.
 
 The pneumatic actuators and their existing pressure controller were simulated 
 at varying degrees of fidelity. Originally, a simple model of the actuators
-was used that emulated their non-linear behavior for applying torque, but didn't
+was used that emulated their non-linear behavior for applying torque, but did not
 include damping effects, load or limitations of the underlying pressure
 controller. Over time these effects were added in until a high fidelity model of
 a joint was controlled with the algorithm. This simulation environment also
@@ -36,7 +36,7 @@ One of the key steps for verifying the neuron controller was a series of tests
 using the DataTool functionality of Animatlab. By simulating inputs to subsets
 of the network, the output can be verified against the Python controller
 implementation or other pre-computed values. This independent testing further
-reinforces the value of the functional sub-network approach.
+reinforces the value of the functional subnetwork approach.
 
 \subsection{Neurons}
 
@@ -45,7 +45,7 @@ individual subnetworks can be tuned, verified and then combined with the larger
 network. In order to better tune individual networks, a testing rig was set up
 within the larger network to allow for subnetwork verification. The typical
 interface neurons are disabled and special test driver neurons (highlighted in
-yellow) are enabled. This allows for the driving of custom input signals and
+yellow) are enabled. This technique allows for the driving of custom input signals and
 combinations of signals in order to verify the output value and speed. 
 See \myref{fig:TestNetworkT2P} for a good example.
 
@@ -60,10 +60,10 @@ This particular network is designed to convert a desired torque from the rest
 of the network to the pressure for the extension and flexion pneumatic actuators.
 With this network, the input neurons (in purple)
 are disabled for testing and the test neurons are enabled. From there, inputs
-are driven, as seen in \myref{fig:TestNetworkInputs}. This allows the inputs to 
+are driven, as seen in \myref{fig:TestNetworkInputs}. This technieque allows the inputs to 
 be mapped to real world values, the real world inputs to be mapped to outputs, 
 and the real world outputs to be mapped back to neuron voltages. Through this
-a test framework is built where the output can be visually compared to the 
+process a test framework is built where the output can be visually compared to the 
 reference to ensure neuron networks are working as intended. See 
 \myref{chap:results} for the results of the tests that were run.
 
