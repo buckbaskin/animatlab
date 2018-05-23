@@ -189,7 +189,7 @@ model uses the following equation to determine the acceleration of the joint:
 M * \ddot{\theta} + C * \dot{\theta} + N * sin(\theta) = \tau
 \end{equation}
 
-\begin{equation}
+\begin{equation} \label{eq:accel}
 \ddot{\theta} = \dfrac{\tau - C * \dot{\theta} - N * sin(\theta)}{M}
 \end{equation}
 
@@ -207,33 +207,37 @@ From there, the velocity and position are estimated as follows:
 \theta_{1} = \theta_{0} + \dot{\theta}_{avg} \delta t
 \end{equation}
 
-Using the reduced system model, the estimated acceleration between now and the next controller 
+Using the reduced system model, the estimated acceleration between the current time and the next controller 
 step is predicted and compared with the observed acceleration. On the other hand,
 there is not a sensor that directly observes joint acceleration. Instead, error
-is measured in the difference in the estimated position and the measured 
+is measured in the difference between the estimated position and the measured 
 position.
 
 \bbss{Acceleration Error}
+
+Using equation \ref{eq:accel}, the actual acceleration of the joint is assumed to derive from three sources: applied torque, damping and a conservative load.
 
 \begin{equation}
 \ddot{\theta}_{act} = \dfrac{\tau}{M} - \dfrac{C \dot{\theta}_{0}}{M} - \dfrac{N sin(\theta)}{M}
 \end{equation}
 
-\begin{equation}
+Error in the observed value can arise from many sources, including errors in applied torque, mass estimation, damping estimation, load estimation or other state estimation such as velocity.
+
+\begin{equation} \label{eq:complete_error}
 (\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{(\tau + \tau_{err})}{(M + M_{err})} - \dfrac{(C + C_{err}) (\dot{\theta}_{0} + \dot{\theta}_{err})}{(M + M_{err})} - \dfrac{((N + N_{err})sin(\theta + \theta_{err}))}{(M + M_{err})}
 \end{equation}
 
-This equation includes some sources of error that are assumed to be small. In 
-this analysis, the mass error $M_{err}$ is assumed to be small because it can
-be measured directly from the robot. $\tau_{err}$ is assumed to be small because
+Equation \ref{eq:complete_error} includes some sources of acceleration error that are assumed to be small. In 
+this analysis, the mass error ($M_{err}$) is assumed to be small because it can
+be measured directly from the robot. The error in applied torque ($\tau_{err}$) is assumed to be small because
 the underlying pressure controller is assumed to correctly apply pressures to
-match the calculated desired torque. In general, the assumption is that the error
+match the calculated desired torque. In general, the assumption is that the acceleration error
 comes primarily from errors in the damping and conservative load estimate. This 
 assumption may not be correct, but continued effort on estimation (in particular 
-velocity estimation) will hope to minimize estimation errors (potentially by 
+velocity estimation) will help minimize error in estimation (potentially by 
 including concepts from Kalman filtering).
 
-The revised, simplified equation that assumes error comes from parameter estimation is as follows:
+The revised, simplified equation that assumes acceleration error comes from parameter estimation is as follows:
 
 \begin{equation}
 (\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{\tau}{M} - \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} - \dfrac{(N + N_{err})sin(\theta)}{M}
@@ -249,7 +253,7 @@ components:
 - \dfrac{(N + N_{err})sin(\theta)}{M}  + \dfrac{N sin(\theta)}{M}
 \end{equation}
 
-The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms representing the error in the internal estimation of damping and static load.
+The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms representing the error in the internal estimation of damping and static load, respectively.
 
 \begin{equation}
 \ddot{\theta}_{err} =
@@ -257,14 +261,14 @@ The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms rep
 - N_{err} \dfrac{sin(\theta)}{M}
 \end{equation}
 
-\begin{equation}
+\begin{equation} \label{eq:accel_error}
 \ddot{\theta}_{err} = - \dfrac{1}{M}
 (C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
 \end{equation}
 
 \bbss{Velocity Error}
 
-Following the assumptions above, errors in internal estimation can be propagated to be measured from errors in velocity.
+Using the assumptions above, acceleration errors resulting from internal estimation can be to be measured as velocity errors. $\dot{\theta}_{0}$ is the starting velocity and $\dot{\theta}_{1}$ is the ending velocity after 1 time step.
 
 \begin{equation}
 (\dot{\theta}_{1, act} + \dot{\theta}_{1, err}) = \dot{\theta}_{0} + (\ddot{\theta}_{act} + \ddot{\theta}_{err}) \delta t
@@ -274,9 +278,13 @@ Following the assumptions above, errors in internal estimation can be propagated
 \dot{\theta}_{1, err} = \ddot{\theta}_{err} \delta t
 \end{equation}
 
-\begin{equation}
+By substituting in equation \ref{eq:accel_error}, the error terms for damping and conservative load can now be related directly to errors in the ending velocity.
+
+\begin{equation} \label{eq:end_vel}
 \dot{\theta}_{1, err} = - \dfrac{\delta t}{M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
 \end{equation}
+
+Assuming that the acceleration is constant for a short time step, the average velocity for the time step is the unweighted mean of the starting and ending velocities. Assuming the error in the average velocity comes from error in the acceleration and ending velocity:
 
 \begin{equation}
 (\dot{\theta}_{avg, act} + \dot{\theta}_{avg, err}) = \dfrac{\dot{\theta}_{0} + (\dot{\theta}_{1, act} + \dot{\theta}_{1, err})}{2}
@@ -286,13 +294,15 @@ Following the assumptions above, errors in internal estimation can be propagated
 \dot{\theta}_{avg, err} = \dfrac{\dot{\theta}_{1, err}}{2}
 \end{equation}
 
+By substituting in equation \ref{eq:end_vel}, the error terms for damping and conservative load can now be related directly to errors in the average velocity during the last time step.
+
 \begin{equation}
 \dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)) = \dfrac{\delta t}{2} \ddot{\theta}_{err}
 \end{equation}
 
 \bbss{Positional Error}
 
-Following the assumptions above, errors in internal estimation can be propagated to be measured from errors in position. This assumes that the primary source of error comes from the acceleration and velocity and that the estimate of the current position is comparatively accurate.
+Using the assumptions above, errors in internal estimation can be propagated to be measured from errors in position. This approach assumes that the primary source of positional error comes from the acceleration and velocity and that the estimate of the current position is comparatively accurate.
 
 \begin{equation}
 (\theta_{1, act} + \theta_{err}) = \theta_{0} + (\dot{\theta}_{avg} + \dot{\theta}_{avg, err}) \delta t
@@ -306,13 +316,13 @@ Following the assumptions above, errors in internal estimation can be propagated
 - \dfrac{2M}{\delta t^{2}} \theta_{err} = C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)
 \end{equation}
 
-\begin{equation}
+\begin{equation} \label{eq:positional_error}
 N_{err} sin(\theta) = 
 - \dot{\theta}_{0} C_{err}
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
 
-When $\dot{\theta}_{0}$ is 0, then $N_{err} sin(\theta)$ explains the total error in acceleration. When $\dot{\theta}_{0}$ is large, $N_{err} sin(\theta)$ should explain a diminishing amount of the error. This can be thought of as finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$, where $C_{err}$ is the first term and 
+When the initial velocity ($\dot{\theta}_{0}$) is 0, then damping effects are minimal and the conservative load ($N_{err} * sin(\theta)$) explains the total error in position. When the initial velocity is large, the effect of errors in the estimated damping dominate the effects of the estimation conservative load on positional error. This intuition for the relative magnitude of $C_{err}$ and $N_{err}$ provides a constraint to solve equation \ref{eq:positional_error}. This constraint is equivalent to finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$, where $C_{err}$ is the first term and 
 $N_{err} sin(\theta)$ is the second term.
 
 \begin{equation}
@@ -338,31 +348,31 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 - \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
 \end{equation}
 
-This formulation does leave a singular point in the solution. When the joint is stopped and the joint is centered, then there are no damping or loads that apply torque to the joint. In the region of the singular case, there is a check to pause updating of the internal estimate of joint parameters.
+This formulation leaves a singular point in the solution. When the joint is stopped and the joint is centered, then there are no damping or loads that apply torque to the joint. Therefore, there is a check to pause updating of the internal estimate of joint parameters when the joint is stopped.
 
 \subsection{Evaluation of asymmetric error concerns}
 
-One additional consideration for the design of the controller is the asymmetric
+One additional consideration for the design of the controller prototype is the asymmetric
 effect that estimation error has on the over or under-damping behavior of the
 controller. Intuitively,
 underestimating the inertia of the controlled link leads to a decreased control
-torque, which will make a smaller adjustment to velocity than required. On the
-other hand, overestimating the mass will cause an over-application of torque
+torque, which will cause the controller to make a smaller adjustment to velocity than is actually required. This will lead to the controller exhibiting overdamped behavior. On the
+other hand, overestimating the inertia will cause an over-application of torque
 that can't be corrected until the next control iteration, potentially causing
-extreme motions that go uncorrected in an under-damped control scenario.
+extreme motions that go uncorrected in an underdamped control scenario. Overdamping is preferable to underdamping; therefore, underestimating the mass is preferred to overestimating the mass.
 
 Going back to the calculation of the acceleration from torque:
 
-\begin{equation}
+\begin{equation} \label{eq:simple_mass_model3}
 M * \ddot{\theta} = \tau - C * \dot{\theta} - N * sin(\theta)
 \end{equation}
 
 Given the desire to over-damp the system instead of under-damp the system, the
-above equation informs the relative penalty of positive or negative error for
-each internal parameter (including mass).
+equation \ref{eq:simple_mass_model3} informs the relative penalty of positive or negative error for
+each internal parameter (including inertia).
 
-For a constant $C$ and $N$, an increased mass estimate leads to increased torque
-applied. If the actual inertia is lower, the actual required torque is lower 
+For constant internal estimations $C$ and $N$, an increased inertia estimate leads to increased torque
+applied. When the actual inertia is lower than the estimated inertia, the actual required torque is lower 
 than the controlled torque so the system will make a larger change in velocity 
 than the desired trajectory requires. This behavior can lead to under-damped 
 control, therefore the preference is to underestimate the inertia of the system.
@@ -370,13 +380,13 @@ control, therefore the preference is to underestimate the inertia of the system.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{controller_design/Tracking_Optimizing_LINK_MASS2}
-\caption{Underdamped control due to mass estimate}
+\caption{Underdamped control due to overestimate of inertia}
 \label{fig:UnderdampedControl}
 \end{figure}
 
 
 For a constant $M$ and $N$, an increased estimate of the damping leads to 
-increased torque applied. If the actual damping is lower, the actual required
-torque is lower than the controlled torque, again leading to an over-correcting
-system. Varying $N$ behaves the same way, except that the effects of $N$ may be
+increased torque applied for equivalent trajectories. If the actual damping in the physical system is lower than the estimated damping, the required
+torque is lower than the controlled torque. This leads to an over-correcting
+system. As a result, the preference is to underestimate damping. Varying $N$ behaves the same way, except that the effects of $N$ may be
 minimal when $sin(\theta)$ is small.
