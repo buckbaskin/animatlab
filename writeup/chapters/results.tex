@@ -26,8 +26,7 @@ maximum torque required to execute the known trajectory is also later used as a
 metric for measuring the efficiency of the controller. A controller that is too
 aggressive for the trajectory (ex. too high gains on a proportional controller)
 will request larger than needed torques during trajectory execution. An ideal
-controller will always follow the trajectory with the exact torque needed, no 
-more, no less, during steady state operation.
+controller will always follow the trajectory with the exact torque needed during steady state operation.
 
 \begin{figure}
 \centering
@@ -39,18 +38,18 @@ more, no less, during steady state operation.
 \section{Python Controller}
 
 The prototype controller written in Python was used to demonstrate the stability
-and tracking capabilities of the general algorithm. It was also used to find a
+and tracking capabilities of the general algorithm. The prototype controller also was used to find a
 suitable simplification of the internal model that was sufficiently accurate for
 optimization but had minimal parameters to tune.
 
 \bbss{Simplified Controller}
 
-The simplified controller demonstrates effective control once the weight updates
+The simplified controller demonstrated effective control once the weight updates
 were combined with a suitable starting state. \myref{fig:SimplifiedTracking}
 demonstrates the progression from original state to a stable and accurate
 control of joint position. The blue line is the desired trajectory, with purple
 used to highlight error bounds of $\pm$ 1 degree. Orange indicates the actual
-position of the joint and the green line indicates the internal state
+position of the joint, and the green line indicates the internal state
 estimation.
 
 \begin{figure}
@@ -69,8 +68,7 @@ parameters using \github{stability/simple\_mass\_model.py}. One example was vary
 \myref{fig:StateEstimationPerfect}, the system worked within tolerances. When 
 mass was underestimated (see \myref{fig:StateEstimationLowMass}), the tracking 
 performance degrades to smoothly fail required tracking accuracy. On the other 
-hand, over estimating the mass caused aggressive oscillation and underdamping (
-see \myref{fig:StateEstimationHighMass}). Based on these tests, the assumption 
+hand, over-estimating the inertia caused aggressive oscillation and underdamping (see \myref{fig:StateEstimationHighMass}). Based on these tests, the assumption 
 that the internal model needs to update was validated.
 
 \begin{figure}
@@ -98,8 +96,7 @@ that the internal model needs to update was validated.
 
 The original model for parameter updates was to calculate the sign of the update
 and make a uniform incremental change in that direction. In practice, the constant uniform update
-resulted in near-perfect tracking; however, the weight updates themselves were
-not intuitive. See \myref{fig:StateUpdateSimple} and \github{stability/simple\_mass\_model.py}.
+resulted in near-perfect tracking; however, the weight updates themselves were continually varying instead of stabilizing to a true value. See \myref{fig:StateUpdateSimple} and \github{stability/simple\_mass\_model.py}.
 
 \begin{figure}
 \centering
@@ -187,36 +184,36 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestSystemCPosWide}
-\caption{Neuron and actual damping factor updates}
+\caption{Positive neuron and actual damping factor updates}
 \label{fig:TestSystemCPos}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestSystemCNegWide}
-\caption{Neuron and actual damping factor updates}
+\caption{Negative neuron and actual damping factor updates}
 \label{fig:TestSystemCNeg}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestSystemNPosWide}
-\caption{Neuron and actual load factor updates}
+\caption{Positive neuron and actual load factor updates}
 \label{fig:TestSystemNPos}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[height=2.25in]{results/TestSystemNNegWide}
-\caption{Neuron and actual load factor updates}
+\caption{Negative neuron and actual load factor updates}
 \label{fig:TestSystemNNeg}
 \end{figure}
 
 \bbsss{Sensor Fusion}
 
-The two key estimates made within the sensor fusion sub-network: velocity and
-acceleration. Both controllers were tested against sin waves of known
-frequencies. See \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
+Two key estimates are made within the sensor fusion subnetwork: velocity and
+acceleration. The synthetic nervous system controller was tested against sin waves of known
+frequencies. The positive and negative estimated are compared to the ground truth in \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. The output is plotted compared with expected output. See
 \myref{fig:TestAccelPos} and \myref{fig:TestAccelNeg}.
@@ -226,9 +223,9 @@ pressures. The output is plotted compared with expected output. See
 The torque optimization network was tested as a complete network. See
 \myref{fig:TestTorqueOptimizationPos} and \myref{fig:TestTorqueOptimizationNeg}.
 The components for converting the torque to
-acceleration were also tested
+acceleration also were tested
 separately. See \myref{fig:TestT2APos} and \myref{fig:TestT2ANeg}.
-The components for converting the torque to pressure were also tested
+The components for converting the torque to pressure also were tested
 separately. See \myref{fig:TestT2PPos} and \myref{fig:TestT2PNeg}.
 
 \bbss{System Modeling}
@@ -247,7 +244,7 @@ performance through improved sensor processing, an internal optimization step
 and an observer that continually updates the internal physics model to improve
 the optimization step. This design was implemented as part of a synthetic
 nervous system controller, with modifications made to the initial design to aid
-in conversion to a neuron and synapse model and to leverage the benefits of the
+in conversion to a neuron and synapse model and to take advantage of the benefits of the
 synthetic nervous system approach.
 
 \bbsss{Sensor Fusion}
@@ -256,7 +253,7 @@ synthetic nervous system approach.
 The velocity network in the sensor fusion algorithm varies the most from the
 reference data. This is a known phenomena addressed in
 \cite{NickFunctionalSubnetwork}. This variance is observed in two quantities,
-the phase shift and the magnitude
+the phase shift and the magnitude.
 
 In the velocity network, the magnitude of the positive and negative
 velocities varied quite widely compared with the reference, especially at
@@ -268,18 +265,17 @@ positive and negative velocities).
 This error suggests that there is an underlying error in the way that positive
 and negative operations are computed; however, through individual tuning the
 synapses appear to be relatively accurate. The use of the derivative network
-varies in each application across different sub-networks and so the engineering
+varies in each application across different subnetworks. The engineering
 solution for the correct balance of accuracy, gain and phase varies. This
-leaves open the opportunity for biology to inform a single true correct
+variance leaves open the opportunity for biology to inform a single true correct
 solution or a more complex derivative network that can independently select for
 gain and phase.
 
 \bbssss{Acceleration}
 
 The acceleration network shows effective convergence a near-correct solution.
-This demonstrates that the feedback loop concept can be effective; however, it
-does take a relatively fixed amount of time to
-converge from solutions that are a significant step away. This may lead to
+This convergence demonstrates that the feedback loop concept can be effective; however, the process takes a relatively long, fixed amount of time to
+converge from solutions that are a significant step away. This time delay may lead to
 issues with rapidly changing pressures on a hardware system. One potential
 solution is to modify the time constants of the network
 elements within the loop, in particular the integration network, to allow the
@@ -289,16 +285,16 @@ rest of the network.
 
 \bbsss{Torque Optimization}
 
-The torque optimization network, in many cases, converges to the
+In many cases the torque optimization network converges to the
 correct solution; however, like the feedback in the acceleration network, the torque optimization process can
-take a long time to converge to the correct solution from discontinuous starting
-values. Due to the integrator included in the network, the starting conditions
-for the first test case are based on other tests and didn't show consistent
+take a relatively long time to converge to the correct solution from discontinuous starting
+values. Due to the integrator included in the torque optimization network, the starting conditions
+for the first test case are based on other tests and did not show consistent
 behavior.
 
 The concept of the torque optimization network appears to be effective; however,
 its implementation in neurons suffers from both attempting to converge to a
-solution quickly and approximating a physical simulation internally. The network
+solution quickly and approximating a physical simulation internally. The torque optimization network
 uses relatively low time constants and high gains. This can cause overshoot
 (not seen in \myref{fig:TestTorqueOptimizationPos} due to clipping) where the
 estimated torque is off the charts for either large positive or negative swings.
@@ -325,7 +321,7 @@ relatively easily understand the dynamics of its environment and its body.
 \bbssss{Estimating Pressures from Torques}
 
 The process for calculating pressures from torques is accurate in some
-cases and inaccurate in many others. This suggests that the physical
+cases and inaccurate in many others. This varying accuracy suggests that the physical
 model of the pneumatic artificial muscles proposed in \cite{HuntPMuscles}
 does not convert well to a relatively small network of neurons. A future controller iteration may elect to move the
 calculation of this conversion out of neurons and
@@ -340,11 +336,11 @@ network within the network itself is both feasible and an effective process for
 the continual improvement of a controller applied to a particular hardware
 joint under control.
 
-This application is also generally more suitable to neuron networks than say,
+This synthetic nervous system application also is generally more suitable to neuron networks than say,
 the calculation of the conversion from pressures to torques following a well
 prescribed algorithm involving a shifted tangent function. The exact magnitude
 of the update of the weights, especially at a reduced gain, is not as important
-as the relative magnitude and sign of each update. This means that the
+as the relative magnitude and sign of each update. This characterisitic means that the
 implementation of an arithmetic operation or dynamic calculation by a synapse of
 a collection of synapses is tolerant to small variances from the expected
 behavior.
