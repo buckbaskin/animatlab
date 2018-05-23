@@ -325,7 +325,7 @@ N_{err} sin(\theta) =
 When the initial velocity ($\dot{\theta}_{0}$) is 0, then damping effects are minimal and the conservative load ($N_{err} * sin(\theta)$) explains the total error in position. When the initial velocity is large, the effect of errors in the estimated damping dominate the effects of the estimation conservative load on positional error. This intuition for the relative magnitude of $C_{err}$ and $N_{err}$ provides a constraint to solve equation \ref{eq:positional_error}. This constraint is equivalent to finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$, where $C_{err}$ is the first term and 
 $N_{err} sin(\theta)$ is the second term.
 
-\begin{equation}
+\begin{equation} \label{eq:find_C}
 C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 \end{equation}
 
@@ -342,7 +342,7 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
 
-\begin{equation}
+\begin{equation} \label{eq:lambda_def}
 \lambda 
 =
 - \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}

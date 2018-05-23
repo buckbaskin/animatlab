@@ -172,23 +172,25 @@ saturation of this synapse is -50 mV and its synaptic conductance is 0.5 microsi
 \bbsss{Signal Divider}
 
 The signal divider synapse is designed to reduce the effect of another input
-synapse, where the reduction increases with increased input voltage to the
+synapse on a mutual output neuron, where the reduction increases with increased input voltage to the
 signal divider synapse. It is distinguished from the signal multiplier synapse
 in that the value never reaches 0. Intuitively, the behavior for large inputs is a replication of 
 division where dividing by a large number makes the quantity small but never 0.
-It has a synaptic conductance of 20 microsiemens. The equilibrium potential of
-the synapse is -60 mV (equal to the resting potential of the input and output
+The signal divider synapse has a synaptic conductance of 20 microsiemens. The equilibrium potential of
+this synapse is -60 mV (equal to the resting potential of the input and output
 neurons).
 
 \bbsss{Signal Multiplier}
 
-The signal divider synapse is designed to reduce the effect of another input
-synapse, where the reduction decreases with increased input voltage to the
-signal divider synapse. It is distinguished from the signal divider synapse
+The signal multiplier synapse is designed to reduce the effect of another input
+synapse, where the reduction decreases with decreased input voltage to the
+signal multiplier synapse.  This is achieved by combining two signal division synapses in series.
+
+The signal multiplier group is distinguished from the signal divider synapse
 behavior in that the value reaches 0. Intuitively, the implementation is a replication of 
 multiplication where multiplying by 0 will make any value 0.
-It has a synaptic conductance of 19.75 microsiemens. The equilibrium potential 
-of the synapse is -61 mV.
+The signal multiplier synapses have a synaptic conductance of 19.75 microsiemens. The equilibrium potential 
+of these synapses is -61 mV.
 
 \bbs{Sensor Fusion}
 
@@ -207,15 +209,15 @@ The velocity network is based on the differentiator network presented in
 \cite{NickFunctionalSubnetwork}. The key insight into making a network
 of neurons that can estimate the derivative of an input signal is that
 the time constants of individual neurons can be independently tuned to 
-approximate a single step finite difference method. This itself is based
+approximate a single step finite difference method. This insight is based
 on a Reichardt detector network as explained in
 \cite{NickFunctionalSubnetwork}.
 
 \bbss{Velocity Fusion Network}
 
-The velocity network is based on the Differentiator network. 
-The one major change from the network,
-as presented, is the inclusion of a second $U_{post}$ neuron to 
+The velocity network is based on the differentiator network. 
+The one major change from the differentiaotr network,
+as presented, is the inclusion of a second output ($U_{post}$) neuron to 
 represent the negative derivative of the position (negative velocity). See \myref{fig:SensorFusion}.
 
 \begin{figure}
@@ -225,7 +227,7 @@ represent the negative derivative of the position (negative velocity). See \myre
 \label{fig:SensorFusion}
 \end{figure}
 
-This represents
+The use of a second neuron represents
 a common pattern used across the network where two neurons are used to represent
 a single value. One neuron represents positive levels of the variable and is 
 at or below resting potential when the value is negative. The other neuron is
@@ -249,9 +251,9 @@ instead of near zero error.
 Within the acceleration fusion network, the absolute value of the position is
 used. This is calculated by first splitting the position into its two neuron
 representation. From there, the sum of the two neurons is used as the absolute
-value. This takes advantage of the definition of each side of the two neuron
+value. This approach takes advantage of the definition of each side of the two neuron
 representation falling below resting potential when the other neuron is active.
-This means the signal transfer synapse from the below zero neuron will have no
+This approach means the signal transfer synapse from the below zero neuron will have no
 effect.
 
 \bbsss{Integration Network}
@@ -269,7 +271,7 @@ current.
 
 One of the key observations for converting from desired torque to pressure 
 within the neuron controller was a pattern observed during simulation. For the
-simulated joint, the maximum torque can be applied at an angle of 0 degrees.
+simulated joint, the maximum torque can be applied at an angle of 0 degrees. See \myref{fig:PositionTorque}.
 
 \begin{figure}
 \centering
@@ -283,8 +285,8 @@ pressure, or phrased another way, a greater pressure differential is required
 for the same desired torque (\myref{fig:PressureTorque} and \github{stability/pressure\_torque.py}). When the calculation is rearranged to calculate
 a control pressure from a desired torque at a given position, the relationship
 between the two is linear for that position for most desired torques above
-0.25 Nm in the simulated joint. Assuming there is some non-zero antagonistic
-torque, each actuator should fall into the near-linear range. This allows for
+0.25 Nm in the simulated joint (see \myref{fig:PressureTorque}. Assuming there is some non-zero antagonistic
+torque, each actuator should fall into the near-linear range. This assumption allows for
 an approximation of the linear section in the neuron model.
 
 \begin{figure}
@@ -294,7 +296,7 @@ an approximation of the linear section in the neuron model.
 \label{fig:PressureTorque}
 \end{figure}
 
-The neurons approximate the torque/pressure relationship using a multiplication synapse added
+The neurons in the controller approximate the torque/pressure relationship using a multiplication synapse added
 to a signal transfer synapse. The multiplication takes the scaled absolute 
 value of the position as input, so that as the position of the joint reaches
 the joint limit, the slope of the torque to pressure curve increases. This
@@ -310,11 +312,11 @@ network. See \myref{fig:T2PNetwork} for the assembled network.
 
 \bbsss{Pressure Estimation Loop}
 
-Within the Acceleration Network, there is a feedback loop that is used to 
+Within the acceleration network, there is a feedback loop that is used to 
 estimate the torque applied by a given pressure. First, the loop ``initializes"
 with an extension torque guess from the integrator. Second, the extension
 torque is converted into extension pressure. Third, the estimated extension
-pressure is compared with the sensed pressure. If there is an delta between the
+pressure is compared with the sensed pressure. If there is any difference between the
 two, the extension torque guess is modified in turn and the cycle repeats.
 
 This architecture is mirrored for flexion torque.
@@ -330,10 +332,10 @@ synapse.
 The scaling of the damping factor is the most complicated component of this
 network. First, the estimated damping factor is scaled based on the velocity 
 with a multiplication synapse to ensure that damping has no effect on acceleration
-when the velocity is zero. Second, the damping factor is then applied with both positive and
+when the velocity is zero. Second, the estimated damping factor is then applied with both positive and
 negative velocities (in a split representation) to the positive and negative
 acceleration terms. Due to the design choice of representing the velocity as two
-neurons, one term will be 0 and the other will either have a 
+neurons, one term will be 0 and the other will have a 
 non-zero effect. In code, the comparable calculation would be done as an if statement. In neurons,
 all the values and effects are calculated in practice, but only some are passed
 through the network.
@@ -371,12 +373,12 @@ as an integration network.
 \bbsss{Torque to Acceleration}
 
 This torque to acceleration network is calculated in the same manner as above.
-The principle difference is that the source of torque is an desired control
+The principle difference is that the source of torque is a desired control
 torque instead of the estimated applied torque of the actuators.
 
 \bbsss{Velocity Modification}
 
-The velocity modification network takes the current velocity in and adjusts for
+The velocity modification network takes the current velocity as an input and adjusts for
 the acceleration. Based on the estimated update rate of the controller, the
 change in velocity is linear in acceleration.
 
@@ -389,7 +391,7 @@ into to the velocity voltages.
 
 \bbsss{Position Modification}
 
-The position modification network takes the modified velocity in and adjusts the
+The position modification network takes the modified velocity as an input and adjusts the
 future position for a time step in the same method as the velocity modification
 network.
 
@@ -411,7 +413,7 @@ minimize an error function over all projected locations.
 \bbss{Torque Control Network}
 
 The overall feedback loop and torque control network is a combination of pieces
-that joint together to approximate
+that join together to approximate
 Newton's Method for finding the root of the error function.
 
 The original 
@@ -445,11 +447,11 @@ The torque to pressure section of the network is smaller than the rest of the
 major components. It is built in the same way as the torque to pressure inside
 the sensor fusion pressure to torque network. In the sensor fusion application,
 the network is used in a forward capacity inside of a feedback loop that ends
-up performing an inverse. This network is much more simple because the network
+up performing an inverse. The torque to pressure network is much simpler because this network
 is used only in a forward capacity to compute the desired pressures.
 
-One additional modification to the network is the inclusion of a stiffness
-parameter neuron. This controls any desired overlap in the antagonistic control
+One additional modification to this network is the inclusion of a stiffness
+parameter neuron. This neuron controls any desired overlap in the antagonistic control
 to increase or decrease joint stiffness manually.
 
 \bbs{System Modeling}
@@ -484,21 +486,21 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
 \bbsss{Theta Delay}
 
 The most unique component of the system is the delayed neuron that approximates
-the estimated position of the joint. This is done with a signal transfer
+the estimated position of the joint. The delayed neuron is implemented with a signal transfer
 synapse and a single neuron with a time constant that is tuned to the controller
 update rate.
 
 \bbsss{Prediction Error}
 
-The prediction error is calculated in both a dual neuron representation. The
+The prediction error is calculated in a dual neuron representation. The
 error is then multiplied with the inertia, again resulting in a dual 
 representation of the positive and negative quantity. This matches the behavior
-expressed in the first term of the update equation to calculate $\lambda$.
+expressed in the first term of the update equation to calculate $\lambda$ (equation \ref{eq:lambda_def}).
 
 \bbsss{Velocity Correction}
 
 The absolute value of the velocity is used along with a signal divider. This
-matches the second term of the equation to calculate $\lambda$. In practice,
+matches the second term of the equation to calculate $\lambda$ from equation \ref{eq:lambda_def}. In practice,
 the divider network is one of the networks that fits closely to a term like
 $\dfrac{1}{1 + x^{2}}$. One potential improvement to the network is to fit
 a custom synapse or subnetwork to better fit the term; however, the velocity estimate is not
@@ -506,7 +508,7 @@ currently a major source of error.
 
 \bbsss{Lambda Calculation}
 
-The calculation of $\lambda$ is completed with the addition of a gain term. This
+The calculation of $\lambda$ is completed with the inclusion of a gain term. This extra neuron and synapse
 allows for the scaling of the updates and behaves in a similar way to the 
 learning rate in a neural network. A single data point may be noisy, but if a 
 series of updates suggest the same parameter update, the network will adjust the
@@ -514,14 +516,14 @@ parameter.
 
 \bbsss{Calculating $\Delta N$}
 
-The calculation for the conservative load is simply a signal transfer from the scaled lambda, following the given equation.
+The calculation for the conservative load is simply a signal transfer from the scaled lambda, following equation \ref{eq:find_C}.
 
 \bbsss{Calculating $\Delta C$}
 
 The calculation for the damping factor update is more involved. In particular,
 the complexity comes from the fact that the sign of the update changes with the
 sign of the velocity and the positional error. Intuitively, the change in sign occurs when
-damping opposes velocity, but conservative loads (as modelled) don't depend on
+damping opposes velocity, but conservative loads (as modelled) do not depend on
 velocity. For example, a positive velocity and positive $\lambda$ means that 
 less actual damping occurred than was expected, but a negative velocity with a 
 positive $\lambda$ means that more damping occurred than was expected.
@@ -529,8 +531,8 @@ positive $\lambda$ means that more damping occurred than was expected.
 To perform the damping factor calculation in neurons, the velocity and $\lambda$ are 
 calculated for all sign pairs. From there, the correct outputs are connected.
 Following the example above, a positive velocity and positive $\lambda$ transfer
-their signal to the positive C delta, which then connects to the damping factor 
-to drive the stored value down. For a positive lambda and a negative velocity, the ``C Err -+" neuron activates and transfers activation to the negative C Delta output.
+their signal to the positive C Delta output, which then connects to the damping factor 
+to drive the stored value down. For a negative velocity and positive $\lambda$, the ``C Err -+" neuron activates and transfers activation to the negative C Delta output.
 
 This implementation relies on the dual neuron representation for values to drive
 the correct output. Either the positive or negative neuron will be active in the
@@ -548,12 +550,12 @@ by checking edge connectivity, and easier testing.
 The fully combined network implements
 a controller by combining the 4 large subnetworks. First, sensor data is passed
 through a sensor fusion network. The state estimation output of the sensor 
-fusion network are then passed into the torque optimization network. The 
+fusion network is then passed into the torque optimization network. The 
 selected torque is then passed through one more subnetwork to convert the
 desired torque into pressures for the actuators.
 
 This leaves the system model subnetwork. This last subnetwork is connected to 
 the state estimation values and the internal projection and observes the 
-differences between the forward prediction and reality. This observer then 
-updates key model parameters to improve the controller over time while 
+differences between the forward prediction and reality. This network then 
+updates key model parameters based on its observations to improve the controller over time while 
 maintaining a controller that avoids excessive oscillation. 
