@@ -12,10 +12,7 @@ robot. Related to the accurate torque profiles, the joint peak angles are
 accurate to between 5 and 15 degrees, but further improving the accuracy offers
 an avenue for more effective walking. One potential source of error in the
 hardware system is the delay between a sensor reading, communicating the data to
-an off-board computer and then communicating a command back to the robot. The end
-result of the current Puppy control system is that the hind legs can walk effectively;
-however, the front legs can trip or otherwise get stuck under the body of the
-robot.
+an off-board computer and then communicating a command back to the robot. For the geometry of the hind legs, this error did not lead to tripping; however, with the mirrored geometry of the front legs, tripping could occur. For the hind legs, if the hip swings back too far, their is sufficient range of motion in the other joints to lift the paw off the ground to initiate swing. For the front legs, which are in a mirrored orientation from the hind legs, if the shoulder swings too far back due to a delayed control signal, the elbow and ankle joints can reach a point where their combined vertical range of motion is insufficient to lift the front paw off the ground, resulting in tripping.
 
 \bbs{Similar Robots}
 
@@ -44,13 +41,7 @@ independent of the flexion or extension of the leg \cite{Narioka2012}.
 
 \bbsss{Dynamics of Canine Robots}
 
-The dynamics of robots, even those that attempt to accurately mimic biological
-mechanisms, can vary significantly in performance from their biological
-counterparts. For example, mirroring the standard Z configuration of a canine-
-inspired robot can actually increase its efficiency by better utilizing passive
-spring elements. This suggests that animals may have adapted gaits and
-stimulation patterns for redundant muscles that take better advantage of passive
-properties of muscles than are accommodated for in current control designs \cite{HindLegMorphology}.
+The dynamics of robots, even those that attempt to accurately mimic biological mechanisms, can vary significantly in performance from their biological counterparts. For example, in \cite{HindLegMorphology}, the authors found that their biomimetic leg design walked with a more efficient gate when it was oriented backwards on the robot. A biological canine's leg is oriented in a Z configuration; however, in an attempt to mimic the properties of muscles, the passive elements in the joint led to a reversed Z configuration being more efficient. This suggests that animals may have adapted gaits and stimulation patterns for redundant muscles that take better advantage of passive properties of muscles than are accommodated for in current control designs \cite{HindLegMorphology}. This work suggests that directly utilizing the passive properties or designing a controller that can adapt to its specific robot hardware could lead to a dramatic increase in efficiency.
 
 Passive elements and the particular properties of a joint play a strong role in
 the energy required to actuate the joint and the effective frequency at which the joint
@@ -85,9 +76,9 @@ This design does not use pneumatic muscles. Instead, the authors use pneumatic
 cylinders to make the design more compact by using a single rigid pneumatic cylinder that can apply both
 flexion and extension forces on a joint. 
 
-\bbs{Pneumatic Actuators}
+\bbs{Braided Pneumatic Actuators}
 
-Pneumatic artificial muscles typically consist of a high pressure source, a
+Braided pneumatic actuators, also referred to as pneumatic artificial muscles or just pneumatic muscles, typically consist of a high pressure source, a
 flexible polymer section and an exhaust valve. The muscle contracts in length
 when the internal pressure is higher than the surrounding environment. During
 this contraction, the muscle applies a force. One limitation of pneumatic
@@ -99,7 +90,7 @@ ineffective at accurately executing a trajectory with pneumatic muscles. This me
 this also means that the controller design can be more tailored and take
 advantage of the unique properties of two antagonistic nonlinear actuators.
 
-Pneumatic actuators are less common in robotics compared with electric motors;
+Pneumatic muscles are less common in robotics compared with electric motors;
 however,
 they often result in a lighter system for controlling a joint than an
 electric motor. There are trade offs to each, but pneumatic actuators offer a
@@ -109,11 +100,11 @@ biological walking robots where an increased power to weight ratio increases
 the efficiency of the walking mechanism, especially at the high joint velocities
 found in a stepping motion.
 
-\bbss{Characterizing Pneumatic Actuators}
+\bbss{Characterizing Pneumatic Muscles}
 
 In \cite{Situm2008}, the authors analyze gas flow properties for fluidic muscles
 and experimentally quantify the performance of the pneumatic muscles in an antagonistic coupling
-through a pulley. One of the key conclusions in \cite{Situm2008} motivating future work is the
+through a pulley. One of the key results in \cite{Situm2008} motivating future work is the
 demonstration for a single joint with most external factors removed. The
 proportional-integral control as implemented was unable to fully correct for
 errors even in a desired trajectory composed of slow steps to a constant value
@@ -167,6 +158,8 @@ differentiable function.
 M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{\theta}) = \tau
 \end{equation}
 
+In this equation, $\theta$ represents the position of the joint. $\dot{\theta}$ and $\ddot{\theta}$ represent the velocity and acceleration of the joint, respectively. $\tau$ represents the torque applied to the joint. For a single joint, $M(\theta)$ represents the mapping from the current position to the rotational inertia at the current position based on the geometry of the joint and the link it controls. In a controller for multiple joints, the link geometry may also vary based on the position of other joints. $C(\theta, \dot{\theta})$ represents the mapping from the current joint position and velocity to the damping forces on the joint. When controlling pneumatic muscles, this damping can come from external sources as well as losses from internal friction as the muscles flexes. $N(\theta, \dot{\theta})$ represents the mapping from the current joint position and velocity to conservative torque that are applied to the joint. In a robotic system, this torque can result from a weight placed on the robot or springs in the design.
+
 If the robot starts at its desired initial state and the model of the robot is
 perfectly known, the robot will exactly track the trajectory. Feedback in the 
 form of sensory input is used to correct for starting error or error in the 
@@ -185,7 +178,9 @@ where
 e = \theta - \theta_{d}
 \end{equation}
 
-The proportional-derivative (PD) controller results in a system that is stable, but does not converge to
+In these equations, $\theta$ represents the current position of the joint and $\theta_{d}$ represents the desired position of the joint. The difference between these two values is captured in the error term $e$ and the derivative of this error with respect to time is represented as $\dot{e}$. $K_{v}$ and $K_{p}$ are gain terms that are chosen based on the system to modulate the control response to error. A higher gain increases the applied torque to counteract the error (either in position or to counteract increasing error); however, gains that are too high can destabilize the system.
+
+The proportional-derivative (PD) controller provides a relatively simple controller design where the gain terms can be tuned such that the behavior of the overall system that is stable. On the other hand, a PD controller does not converge to
 exact tracking for most real systems. In practice, an integral term is often added that accounts for steady state error to create a proportional-integral-derivative (PID) controller; however, the additional of an integral term can lead to windup or other issues.
 
 One general method for overcoming these limitations is to use a model of the 
@@ -216,7 +211,7 @@ system. In practice,
 there are many different ways to achieve effective control for a rotational 
 joint.
 
-\bbss{Revolute Joint Position Controllers}
+\bbss{Biological Position Controllers}
 
 In \cite{EventBasedWalking}, a new controller paradigm is proposed where control
 is done by switching between known phases in a state machine based on sensory
@@ -232,12 +227,16 @@ where the paw strikes an
 obstacle mid-swing, could be used as the design inspiration for an internal recovery
 mechanism to prevent tripping.
 
+\bbss{Internal Model Adaptive Controller}
+
+% TODO(buckbaskin): vpn in, download, cite this, add to refs, cite here
+In \url{https://www.sciencedirect.com/science/article/pii/S1474667017527093}, the authors describe an internal model control system and analyze the robustness of a non-adaptive and adaptive control scheme. The paper goes on to describe the stability analysis performed, which was then used to develop a binary control algorithm.
+
+% TODO(buckbaskin): talk more about their result, and something along the lines of their research suggests that this approach may have potential for use with pneumatic muscles 
+
 \bbss{Controllers for Pneumatic Muscles}
 
-Multiple different methods have been proposed specifically for controlling 
-pneumatic muscles.
-
-In \cite{Jahanabadi2009}, the authors use Active Force Control
+Multiple different methods have been proposed specifically for controlling pneumatic muscles. In \cite{Jahanabadi2009}, the authors use Active Force Control
 to control a pneumatic muscle for a prismatic joint. The system was designed to
 use a PID control system as an outer loop with an inner loop based around an
 artificial neural network to adapt to disturbances and other dynamic phenomena.
@@ -303,12 +302,16 @@ with other limbs or mechanical motion, even in a decerebrated animal
 
 \bbss{Neuron Design}
 
+% TODO(buckbaskin): move description of neuron model here
+
 Neuron-based controllers often are designed in a data-driven way, where the
 neuron system is treated as a black box. Recent work, collected in 
 \cite{NickFunctionalSubnetwork}, shows that a more detailed neuron model can be
 used to build up small subnetworks of neurons that perform a specific task,
 including arithmetic operations like addition, subtraction, multiplication and
 division, as well as operations such as integration and differentiation.
+
+% TODO(buckbaskin): draw out U0, U1
 
 \begin{figure}
 \centering
@@ -320,7 +323,7 @@ division, as well as operations such as integration and differentiation.
 \includegraphics[width=3in]{lit_review/FigDiv} \\
 (c) Multiplication & (d) Division \\
 \end{tabular}
-\caption{Neuron outputs tuned to arithmetic operations}
+\caption{Neuron outputs tuned to arithmetic operations adapted from \cite{NickFunctionalSubnetwork}}
 \label{fig:MathOutputs}
 \end{figure}
 
