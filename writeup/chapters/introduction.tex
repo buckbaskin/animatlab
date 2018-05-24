@@ -1,34 +1,30 @@
 Walking robots offer many advantages over wheeled robots or other types
 of locomotion. Wheeled or tracked vehicles are unable to access over half
 of the earth's landmass \cite{BigDog}. Further, many areas in which humans
-operate are designed for walking as opposed to rolling, so a successful walking
-robot has increased mobility in environments designed for human walking. On the
+operate are designed for walking as opposed to rolling, e.g. stairs, curbs or at a construction site, so a successful walking
+robot would increase mobility in environments designed for human walking. On the
 other hand, walking robots are harder to control than their wheeled
 counterparts.
 
-Many robots have looked to biological inspiration to increase the mobility and
+Many robot designers have looked to biological inspiration to increase the mobility and
 ease of control of robots. In particular, many biological systems have increased
 redundancy to aid in balance with many animals, including dogs and cats, walking
-on 4 or more legs. The inspiration taken varies from imitating gait timing to
+on 4 or more legs. The inspiration taken varies from imitating gait timing \cite{Raibert1986} to
 help coordinate simple legs to completely mimicking musculoskeletal layout. The
 Puppy robot (\myref{fig:Puppy}) was designed to mimic the operation of a large 
-canine walking in the sagittal plane \cite{PuppyDesign}.
+canine walking in the sagittal plane using pneumatic muscles and the \cite{PuppyDesign}.
 
 Another advantage that animals have over most robots is their actuators.
 Biological muscles are compliant and are a key part to how animals walk. Many
-robots use electric motors or hydraulic actuators to actuate joints, which can
-mean that other biologically inspired design decisions aren't necessarily
-optimal. Puppy chose to use pneumatic artificial muscles, which have a higher
+robots use electric motors or hydraulic actuators to actuate joints, which are stiffer than muscles and tendons, which can
+mean that other biologically inspired design decisions cannot be applied directly. During the design of Puppy \cite[PuppyDesign], pneumatic artificial muscles were chosen, which have a higher
 power to weight ratio than other designs and offer similar compliance and
-behavior to biological muscles \cite{Tavakoli2008}. Typically seen as a
-limitation, pneumatic muscles as actuators apply force during contraction, so
-they need to be used in antagonistic pairs. While designing around pneumatic muscles increases the complexity
-of the robot, the muscles also allow for further bio-inspiration in the robot design
+behavior to biological muscles \cite{Tavakoli2008}. Pneumatic muscles have a unique design constraint: they only apply force during contraction. Therefore,
+they are often used in antagonistic pairs. This is typically seen as a disadvantage because it increases the complexity of the robot; however, the muscles also allow for further bio-inspiration in the robot design
 and control system.
 
 One of the major trade offs for pneumatic muscles is that they exhibit
-non-linear behavior in both static and dynamic control situations.
-\cite{HuntPMuscles, DynamicPMuscles} This has
+non-linear behavior in both static and dynamic control situations \cite{HuntPMuscles, DynamicPMuscles}. This has
 motivated the designs of new types of controllers to overcome the non-linear
 behavior through adaptation in the controller. In \cite{Jahanabadi2009}, the
 authors propose a system called ``Active Force Control" where a neural network
@@ -38,8 +34,7 @@ used to present the control situation in a linearized fashion to an outer PID
 control system. The results suggest that a system model of the nonlinear
 properties of the actuators decreases positional error. The work was
 applied to controlling a vertical trolley and used a neural network as a black
-box for modeling the system, so there is an opportunity for improving the
-system and its application to controlling Puppy's rotational joints.
+box for modeling the system, so there is an opportunity to engineer a more transparent system that is easier to interpret and optimize for controlling Puppy's rotational joints.
 In \cite{Wang2013}, a model-based controller was used to control the actuation
 of a revolute joint with pneumatic muscles. The author's system allowed for
 decreased antagonistic muscle overlap at high accelerations combined with a
@@ -60,7 +55,7 @@ recursively create new controller architectures that use biological inspiration
 taken from literature for controlling legged robots and combine these components with an
 efficient system for engineering the correct control responses. Together,
 existing literature suggests that a neuron-based controller that adapts to the
-properties of the muscles and the joints that it controls offers a new
+properties of the muscles and the joints that it controls may offer a new
 architecture for more efficient and more accurate control of pneumatic muscle-
 actuated robots.
 
@@ -84,7 +79,7 @@ There are a number of key criteria that are important for improving the behavior
 of the joint controller. Based on previous work, these criteria break down as follows:
 
 \begin{itemize}
-\item Peak position during hip actuation isn't accurate (5-15 deg) 
+\item Peak position during hip actuation is not accurate (5-15 deg) 
 \item Delays between sensor data off the robot -> lab view -> Animatlab -> lab
 view -> robot cause tracking problems
 \item Scapula drives forward motion for front legs in the reverse Z orientation
