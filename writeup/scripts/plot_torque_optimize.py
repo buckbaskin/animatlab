@@ -8,6 +8,7 @@ index = data[:, 0]
 time = data[:, 1]
 
 data[:, 2:] *= 1000
+ylimit = -30
 
 theta_des = data[:, 2]
 theta = data[:, 3]
@@ -25,9 +26,9 @@ neg_vel = data[:, 14]
 pos_acc_fut = data[:, 15]
 neg_acc_fut = data[:, 16]
 pos_tor = data[:, 17]
-pos_tor = np.clip(pos_tor, -60, -40)
+pos_tor = np.clip(pos_tor, -60, ylimit)
 neg_tor = data[:, 18]
-neg_tor = np.clip(neg_tor, -60, -40)
+neg_tor = np.clip(neg_tor, -60, ylimit)
 
 # 5000 steps per second
 pos_ref = np.zeros(pos_tor.shape)
@@ -49,10 +50,10 @@ pos_ref[120000:125000] = -20
 neg_ref = - np.copy(pos_ref)
 
 pos_ref += -60
-pos_ref = np.clip(pos_ref, -60, -40)
+pos_ref = np.clip(pos_ref, -60, ylimit)
 
 neg_ref += -60
-neg_ref = np.clip(neg_ref, -60, -40)
+neg_ref = np.clip(neg_ref, -60, ylimit)
 
 setup = [
 ('Pos', [pos_tor, pos_ref]),
@@ -77,7 +78,8 @@ for name, datasets in setup:
     vel, ref = datasets
     # print(len(time))
     ax.plot(time[65000:], vel[65000:], linewidth=linewidth, label='Est. Torq.')
-    ax.plot(time[65000:], ref[65000:], linewidth=linewidth, label='Reference')
+    ax.plot(time[65000:], ref[65000:], linewidth=linewidth, linestyle='dashed',
+        label='Reference')
     
     if count == 1:
         ax.set_ylabel('+ Torque (mV)')
@@ -86,7 +88,7 @@ for name, datasets in setup:
         ax.set_ylabel('- Torque (mV)')
     ax.set_xlabel('Time (sec)')
 
-    ax.set_ylim(-60, -40)
+    ax.set_ylim(-60, ylimit)
     ax.set_yticks([-60, -40])
 
     ax.spines['right'].set_color('none')
@@ -95,7 +97,7 @@ for name, datasets in setup:
     ax.spines['bottom'].set_linewidth(linewidth)
 
     x0, x1 = ax.get_xlim()
-    y0, y1 = ax.get_xlim()
+    y0, y1 = ax.get_ylim()
     # ax.set_aspect((x1 - x0)/(y1 - y0))
 
     plt.legend()
