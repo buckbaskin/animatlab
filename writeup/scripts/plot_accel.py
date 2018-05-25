@@ -52,12 +52,12 @@ for name, datasets in setup:
     # else:
     #     ax = ax2
     count += 1
-    fig = plt.figure(figsize=(6.5,2.25,), dpi=300)
+    fig = plt.figure(figsize=(6,2.25,), dpi=300)
     ax = fig.add_subplot('111')
 
     vel, ref = datasets
     ax.plot(time[5000:], vel[5000:], linewidth=linewidth, label='Est. Acc.')
-    ax.plot(time[5000:], ref[5000:], linewidth=linewidth, label='Reference')
+    ax.plot(time[5000:], ref[5000:], linewidth=linewidth, linestyle='dashed', label='Reference')
     
     if count == 1:
         ax.set_ylabel('+ Accel (mV)')
