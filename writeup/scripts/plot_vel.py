@@ -38,7 +38,7 @@ for name, datasets in setup:
     vel, ref = datasets
     print(len(time))
     ax.plot(time[20000:40000], vel[20000:40000], linewidth=linewidth, label='Est. Vel.')
-    ax.plot(time[20000:40000], ref[20000:40000], linewidth=linewidth, label='Reference')
+    ax.plot(time[20000:40000], ref[20000:40000], linewidth=linewidth, linestyle='dashed', label='Reference')
     
     if count == 1:
         ax.set_ylabel('+ Vel (mV)')

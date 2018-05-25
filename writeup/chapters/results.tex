@@ -301,8 +301,7 @@ The concept of the torque optimization network appears to be effective; however,
 its implementation in neurons suffers from both attempting to converge to a
 solution quickly and approximating a physical simulation internally. The torque optimization network
 uses relatively low time constants and high gains. This can cause overshoot
-% TODO(buckbaskin): consider rescaling axis on the figure
-(not seen in \myref{fig:TestTorqueOptimizationPos} due to clipping) where the
+(seen in \myref{fig:TestTorqueOptimizationPos}) where the
 estimated torque is off the charts for either large positive or negative swings.
 The high gains also reduce accuracy by amplifying small errors made during the
 approximation of the ``physics" implementation. This behavior replicates
