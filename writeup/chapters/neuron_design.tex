@@ -289,18 +289,14 @@ an approximation of the linear section in the neuron model.
 \label{fig:PressureTorque}
 \end{figure}
 
-% TODO(buckbaskin): add some labels to clarify which area of networks I'm talking about (see comment page 46)
-
 The neurons in the controller approximate the torque/pressure relationship using a multiplication synapse added
-to a signal transfer synapse. The multiplication takes the scaled absolute 
+to a signal transfer synapse (see the Pressure Estimation block in \myref{fig:SensorFusion}). The multiplication takes the scaled absolute 
 value of the position as input, so that as the position of the joint reaches
 the joint limit, the slope of the torque to pressure curve increases. This
 approximates the observations in simulation with a relatively simple neuron
 network. The network is highlighted in  \myref{fig:SensorFusion} for the assembled network.
 
 \bbsss{Pressure Estimation}
-
-% TODO(buckbaskin): update each image with a box around a section that I call out in a heading
 
 Within the acceleration network in \myref{fig:SensorFusion}, there is a feedback loop that is used to 
 estimate the torque applied by a given pressure. First, the loop ``initializes"
@@ -399,7 +395,6 @@ The voltage of the modified velocity neuron has a gain of 0.2x and is added to t
 The position comparator estimates the error between where the joint will be at
 the future point and time and where the trajectory generator wants the joint
 to be. This error is used as feedback to modify the torque estimate.
-% TODO(buckbaskin): call out this comparator in the images
 This network geometry allows for easy incorporation of other metrics as well.
 For example, if the position estimation is noisy, multiple forward projections
 can be made for upper and lower bounds and the torque can be optimized to 

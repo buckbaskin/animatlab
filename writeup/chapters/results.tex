@@ -282,9 +282,9 @@ solution is to modify the time constants of the network
 elements within the loop, in particular the integration network, to allow the
 internal loop(s) to run faster than the rest of the network
 so the outputs of the internal loop appear to converge to the correct value on the same time scale as the
-rest of the network.
+rest of the network. 
 
-% TODO(buckbaskin): Cite Nick's leg-local mechanisms paper that (reaches the same conclusion?)
+This feedback loop design pattern behavior matches the behavior of a synthetic nervous system implementation of adapting force walking in \cite{LegLocal}. This feedback pattern is effective for local learning of control adaptations in synthetic nervous systems and also represents an adaptation of feedback behavior observed in insects \cite{LegLocal}.
 
 \bbsss{Torque Optimization}
 
