@@ -1,11 +1,20 @@
-Through the tuning of the conductivity of the synapse ($g_{s}$), one can engineer the behavior of each type of synapse (see \myref{sec:key_synapses}) to match arithmetic operations. The more complicated operations require the interaction of multiple synapses and neurons, but their behavior is still tuned in the same way.
+The neuron controller was built in 4 large subnetworks. First, sensor data is passed through a sensor fusion network that estimates the velocity and acceleration of the joint from the input position and pressures. Second, this data is used to select an output torque through an iterative optimization process. Third, the torque is converted back into pressures used to control the pneumatic actuators. This process is shown in \myref{fig:HighLevelBlock} as solid blue lines. The internal model is continually updated based on incoming sensor data and the predictions from the torque optimization step. This data is used to adjust parameters of the internal model, which then feed back into how the torque optimization block makes its predictions. The model update is shown in \myref{fig:HighLevelBlock} as dashed orange lines.
+
+\begin{figure}
+\centering
+\includegraphics[width=6in]{neuron_design/HighLevelBlock3}
+\caption{Block diagram of the overall network organization}
+\label{fig:HighLevelBlock}
+\end{figure}
 
 \bbs{Key Neurons and Synapses}
 \label{sec:key_synapses}
 
 The neuron controller network is made up of a set of engineered synapses
 designed to emulate arithmetic operations. These synapses can be grouped into two
-categories: excitatory neurons and inhibitory neurons. 
+categories: excitatory neurons and inhibitory neurons.
+
+Through the tuning of the conductivity of the synapse ($g_{s}$), one can engineer the behavior of each type of synapse (see \myref{sec:key_synapses}) to match arithmetic operations. The more complicated operations require the interaction of multiple synapses and neurons, but their behavior is still tuned in the same way.
 
 Most neurons were tuned
 via an optimization process to identify the best equilibrium potential and
@@ -176,6 +185,18 @@ extension muscle pressure (``Ext Pres") and flexion muscle pressure
 (``Flx Pres"). The outputs for the network are the estimates for current 
 position, velocity and acceleration.
 
+\begin{figure}
+\centering
+\includegraphics[width=6in]{neuron_design/SensorFusionBlock}
+\caption{Block diagram of the sensor fusion network}
+\label{fig:SensorFusionBlock}
+\end{figure}
+
+The sensor fusion network is made up of a velocity fusion network and an acceleration fusion network.
+\myref{fig:SensorFusionBlock} shows the block diagram for the high level components in the sensor fusion network.
+The acceleration fusion network is made up of an absolute value network, an integrator, a pressure estimation network and a network that converts the torque to acceleration. The integrator and pressure estimation networks together form a feedback loop that reduces error in the conversion from actuator pressure to applied torque. This loop is highlighted by dashed orange lines in \myref{fig:SensorFusionBlock}.
+\myref{fig:SensorFusion} shows the neurons with the sections highlighted.
+
 \bbss{Velocity Fusion Network Components}
 
 \bbsss{Differentiator Network}
@@ -273,18 +294,11 @@ an approximation of the linear section in the neuron model.
 % TODO(buckbaskin): add some labels to clarify which area of networks I'm talking about (see comment page 46)
 
 The neurons in the controller approximate the torque/pressure relationship using a multiplication synapse added
-to a signal transfer synapse (\myref{fig:T2PNetwork}). The multiplication takes the scaled absolute 
+to a signal transfer synapse. The multiplication takes the scaled absolute 
 value of the position as input, so that as the position of the joint reaches
 the joint limit, the slope of the torque to pressure curve increases. This
 approximates the observations in simulation with a relatively simple neuron
-network. See \myref{fig:T2PNetwork} for the assembled network.
-
-\begin{figure}
-\centering
-\includegraphics[width=4in]{methods/TestVisualT2P}
-\caption{Torque to pressure conversion network}
-\label{fig:T2PNetwork}
-\end{figure}
+network. The network is highlighted in  \myref{fig:SensorFusion} for the assembled network.
 
 \bbsss{Pressure Estimation}
 
@@ -332,8 +346,15 @@ and flexion torques together to get a net torque and acceleration. For the compl
 The torque control network uses a feedback loop to select the
 control torque that minimizes the ending positional error. The network takes the estimated position and velocity from the 
 sensor fusion network and the desired position from a trajectory generator
-network (ex. a CPG) and outputs the torque to best follow that trajectory.
+network (ex. a CPG) and outputs the torque to best follow that trajectory. Conceptually, an initial torque estimate is generated, which is then converted into an acceleration. This is used to update the ending velocity and position. From there, the error in position, when compared with the desired position, is used to update the torque estimate. This loop is highlighted with dashed orange lines in the block diagram shown in \myref{fig:TorqueOptimizationBlock}.
 See \myref{fig:TorqueOptimizationNetwork} for the complete network.
+
+\begin{figure}
+\centering
+\includegraphics[width=6in]{neuron_design/TorqueOptimizationBlock}
+\caption{Block diagram showing the key components of the torque optimization network}
+\label{fig:TorqueOptimizationBlock}
+\end{figure}
 
 \begin{figure}
 \centering
@@ -423,10 +444,19 @@ method may be required.
 
 The torque to pressure section of the network is smaller than the rest of the 
 major components. It is built in the same way as the torque to pressure inside
-the sensor fusion pressure to torque network. In the sensor fusion application,
+the sensor fusion pressure to torque network. First the absolute value of the position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that controls the ammount of antagonistic overlap of the two actuators.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=4in]{methods/TestVisualT2P}
+\caption{Torque to pressure conversion network}
+\label{fig:T2PNetwork}
+\end{figure}
+
+In the sensor fusion application,
 the network is used in a forward capacity inside of a feedback loop that ends
 up performing an inverse. The torque to pressure network is much simpler because this network
-is used only in a forward capacity to compute the desired pressures.
+is used only in a forward capacity to compute the desired pressures. The complete network is show in \myref{fig:T2PNetwork}.
 
 One additional modification to this network is the inclusion of a stiffness
 parameter neuron. This neuron controls any desired overlap in the antagonistic control
@@ -450,14 +480,21 @@ conservative load. The equations are as follows:
 C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
 \end{equation}
 
+The block diagram for performing this calculation in neurons is shown in \myref{fig:SystemModelBlock}. The neuron network is shown in \myref{fig:SystemModelNetwork}.
+
+\begin{figure}
+\centering
+\includegraphics[width=6in]{neuron_design/SystemModelBlock2}
+\caption{Block diagram of the system model and update calculation}
+\label{fig:SystemModelBlock}
+\end{figure}
+
 \begin{figure}
 \centering
 \includegraphics[width=6in]{methods/SystemModel_Test}
 \caption{System modeling network}
 \label{fig:SystemModelNetwork}
 \end{figure}
-
-\myref{fig:SystemModelNetwork} shows the complete network.
 
 \bbss{System Modeling Components}
 
