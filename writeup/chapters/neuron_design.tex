@@ -26,7 +26,7 @@ a subsection of the overall controller.
 \bbss{Excitatory Synapses}
 
 Except where otherwise noted, a value of 134 mV was used for the equilibrium
-potential of excitatory synapses. The pre-synaptic threshold is -60 mV and the pre-synaptic saturation
+potential of excitatory synapses. The presynaptic threshold is -60 mV and the presynaptic saturation
 level is -40 mV.
 
 \bbsss{Signal Transfer}
@@ -75,7 +75,7 @@ The convert forward positive synapse is designed to convert the representation
 of a value in a single neuron, for example the neuron that represents the 
 position of the joint, to the same value represented in two neurons. This
 synapse converts the value when the value is above -50 mV to a positive value between 0 
-and 20 mV. The pre-synaptic
+and 20 mV. The presynaptic
 threshold of this synapse is -50 mV and its synaptic conductance is 0.115 microsiemens.
 
 \bbsss{Torque Pressure Converter}
@@ -88,7 +88,7 @@ conductance of 0.048 microsiemens.
 
 Except where otherwise noted, the equilibrium potential of inhibitory neurons
 is simulated as -100 mV. This is the lowest value possible in the simulation.
-The pre-synaptic threshold is -60 mV. The pre-synaptic saturation level is -40
+The presynaptic threshold is -60 mV. The presynaptic saturation level is -40
 mV.
 
 \bbsss{Signal Inverter}
@@ -148,7 +148,7 @@ The convert forward negative synapse is designed to convert the representation
 of a value in a single neuron, for example the neuron that represents the 
 position of the joint, to the same value represented in two neurons. This
 synapse converts the value when the value is below -50 mV to a positive value 
-between 0 and 20 mV. The pre-synaptic
+between 0 and 20 mV. The presynaptic
 saturation of this synapse is -50 mV and its synaptic conductance is 0.5 microsiemens.
 
 \bbsss{Signal Divider}
@@ -210,7 +210,7 @@ on a Reichardt detector network as explained in
 \bbss{Velocity Fusion Network}
 
 The velocity network is based on the differentiator network. 
-The one major change from the differentiaotr network,
+The one major change from the differentiator network,
 as presented, is the inclusion of a second output ($U_{post}$) neuron to 
 represent the negative derivative of the position (negative velocity). See \myref{fig:SensorFusion}.
 
@@ -435,7 +435,7 @@ method may be required.
 
 The torque to pressure section of the network is smaller than the rest of the 
 major components. It is built in the same way as the torque to pressure inside
-the sensor fusion pressure to torque network. First the absolute value of the position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that controls the ammount of antagonistic overlap of the two actuators.
+the sensor fusion pressure to torque network. First the absolute value of the position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that controls the amount of antagonistic overlap of the two actuators.
 
 \begin{figure}[htb!]
 \centering

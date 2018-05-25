@@ -312,7 +312,7 @@ The change in voltage over time for the Hodgkin-Huxley model is determined as fo
 C_{m} \dfrac{d V}{d t} = I_{leak} + I_{syn} + I_{app}
 \end{equation}
 
-$C_{m}$ is the membrance capacitance.
+$C_{m}$ is the membrane capacitance.
 The applied current ($I_{app}$) is arbitrary, and used with multiple neurons in the controller design.
 The current terms are defined as follows:
 
@@ -337,7 +337,7 @@ U_{post}^{*} = \dfrac{\frac{g_{s}}{R} \cdot U_{pre} \cdot \Delta E_{s}}{1 + \fra
 \end{equation}
 
 $U_{post}^{*}$ is the steady state voltage of the output neuron, relative to its resting potential. $U_{pre}$ is the voltage of input neuron relative to its resting potential. $g_{s}$ is the conductivity of the synapse.
-$R$ is the range between the designed maximum potential and resting potential of the presynpatic neuron. $\Delta E$ is defined as 
+$R$ is the range between the designed maximum potential and resting potential of the presynaptic neuron. $\Delta E$ is defined as 
 
 \begin{equation}
 \Delta E_{s} = E_{s} - E_{r, post}
@@ -345,7 +345,7 @@ $R$ is the range between the designed maximum potential and resting potential of
 
 where $E_{s}$ is the reversal potential of the synapse and $E_{r, post}$ is the resting potential of the postsynaptic neuron.
 This equation and the terms within it are used to tune the steady state behavior of the neuron network. In \myref{fig:MathOutputs}
-$U_{0}$ is the presynaptic neuron and $U_{1}$ is the postsynapic neuron.
+$U_{0}$ is the presynaptic neuron and $U_{1}$ is the postsynaptic neuron.
 
 \begin{figure}
 \centering
