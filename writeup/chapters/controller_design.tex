@@ -61,7 +61,7 @@ applied torque. The model comes from \cite{HuntPMuscles}.
 To calculate a pressure from a force and position, the following model is used:
 
 \begin{equation}
-P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
+P = a_{0} + a_{1} * tan \left(a_{2} \left(\dfrac{k}{a_{4} * F + k_{max}} + a_{3} \right) \right) + a_{5} * F + a_{6} * S
 \end{equation}
 
 The terms used within the overall model are defined as follows:
@@ -79,32 +79,27 @@ k = \dfrac{L_{rest} - L_{angle}}{L_{rest}}
 The length for the current angle $L_{angle}$ is calculated as follows:
 
 \begin{equation}
-L_{angle} = L_{0} - L_{1} cos(\alpha + \theta)
+L_{angle} = L_{0} - L_{1} cos \left(\alpha + \theta \right)
 \end{equation}
 
 The force required by the actuator is calculated from the joint torque at the current joint state.
 
 \begin{equation}
-F = \dfrac{T}{d cos(\beta + \theta)}
+F = \dfrac{T}{d cos \left(\beta + \theta \right)}
 \end{equation}
 
 $\alpha, \beta, d, L_{rest}$ and $L_{620 kPa}$ represent the parameters for a 
 particular actuator. The $a$ values represent optimized parameters
 for the generalized model that adjusts to all actuators. These values for $a_{1}$ to $a_{6}$ are taken directly from \cite{HuntPMuscles}.
 
-There are 3 key aspects to the model. First, the over model is a shifted and 
+There are 3 key aspects to the model. First, the over-arching model is a shifted and 
 scaled tangent curve. This represents the observed trend that increasing 
 pressure has less strain effects for short changes in length or large changes in 
 length, with an stronger effect for medium changes in length. This is similar to 
-the behavior of biological muscles.
-
-Second, The scaling effect comes from the observed
+the behavior of biological muscles. Second, The scaling effect comes from the observed
 effect that increased end effector force leads to a shrinking of the tangent 
-curve.
-
-Third, there is a hysteresis term ($a_{6} * S$) that represents the internal
-friction observed in the filling and emptying process.
-
+curve. Third, there is a hysteresis term ($a_{6} * S$) that represents the internal
+friction observed in the filling and emptying process. $S$ takes on a value of $\pm 1$ based on the direction of airflow.
 From there, the estimation of acceleration comes from the mass, 
 damping and conservative forces and the torque model specified in
 \myref{chap:lit_review}.
@@ -134,7 +129,7 @@ Bounds were selected from estimates
 of the maximum and minimum (maximum negative) torque that can be applied to the
 joint. From there, a forward projection mechanism based on the internal physics model was
 used to estimate the resulting position. From there, the binary search procedure
-repeatedly shrinks the bounds around the optimal torque. The model can be 
+repeatedly shrinks the bounds around the optimal torque by bounding the maximum and minimum torques that provide the upper and lower bounds to the ending position, respectively. The model can be 
 applied to each actuator in the pair independently (with a fixed antagonistic 
 torque) or as a pair with a variable overlap in torque. 
 
@@ -148,11 +143,8 @@ calculate the desired pressure for each of the actuator.
 Given the current state and an applied torque, the joint model in 
 \myref{chap:lit_review} can be used to predict the motion of the joint.
 This was done at multiple time resolutions, with increased time resolution 
-increasing the accuracy of the internal prediction. This is a direct trade-off;
-however, a more accurate internal prediction directly increases the tracking
-performance of the algorithm.
-
-One aspect of the current algorithm that allows for reduced fidelity is the 
+increasing the accuracy of the internal prediction. A more accurate internal prediction directly increases the tracking
+performance of the algorithm; however, in a real time control implementation, the time before a control needs to be sent back to the controller limits the maximum accuracy of the forward projection process. One aspect of the current algorithm that allows for reduced fidelity is the 
 opportunity to make estimates for an upper and lower bound. This allows the 
 controller to bound the maximum possible positional error and iterate further
 if there is insufficient accuracy at particular steps.
@@ -163,7 +155,7 @@ Converting from a desired torque to pressure for a single actuator follows
 the model expressed above:
 
 \begin{equation}
-P = a_{0} + a_{1} * tan(a_{2} (\dfrac{k}{a_{4} * F + k_{max}} + a_{3})) + a_{5} * F + a_{6} * S
+P = a_{0} + a_{1} * tan \left(a_{2} \left(\dfrac{k}{a_{4} * F + k_{max}} + a_{3} \right) \right) + a_{5} * F + a_{6} * S
 \end{equation}
 
 One complicated aspect of implementing conversion from the desired torque to 
@@ -186,11 +178,13 @@ joint parameters. These have been simplified down to 3 key parameters: inertia
 model uses the following equation to determine the acceleration of the joint:
 
 \begin{equation}
-M * \ddot{\theta} + C * \dot{\theta} + N * sin(\theta) = \tau
+M * \ddot{\theta} + C * \dot{\theta} + N sin \left(\theta \right) = \tau
 \end{equation}
 
+In this case, $M$, $C$ and $N$ are scalars that are estimated for a single joint at a time. The $M$ parameter estimates the effects that rotational inertia have on the joint. The $C$ parameter estimates the effects that damping have on the joint. $N$ estimates the effects of a static load placed on the joint (or robot).
+
 \begin{equation} \label{eq:accel}
-\ddot{\theta} = \dfrac{\tau - C * \dot{\theta} - N * sin(\theta)}{M}
+\ddot{\theta} = \dfrac{\tau - C * \dot{\theta} - N sin \left(\theta \right)}{M}
 \end{equation}
 
 From there, the velocity and position are estimated as follows:
@@ -218,7 +212,7 @@ position.
 Using equation \ref{eq:accel}, the actual acceleration of the joint is assumed to derive from three sources: applied torque, damping and a conservative load.
 
 \begin{equation}
-\ddot{\theta}_{act} = \dfrac{\tau}{M} - \dfrac{C \dot{\theta}_{0}}{M} - \dfrac{N sin(\theta)}{M}
+\ddot{\theta}_{act} = \dfrac{\tau}{M} - \dfrac{C \dot{\theta}_{0}}{M} - \dfrac{N sin \left(\theta \right)}{M}
 \end{equation}
 
 Error in the observed value can arise from many sources, including errors in applied torque, mass estimation, damping estimation, load estimation or other state estimation such as velocity.
@@ -240,17 +234,17 @@ including concepts from Kalman filtering).
 The revised, simplified equation that assumes acceleration error comes from parameter estimation is as follows:
 
 \begin{equation}
-(\ddot{\theta}_{act} + \ddot{\theta}_{err}) = \dfrac{\tau}{M} - \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} - \dfrac{(N + N_{err})sin(\theta)}{M}
+\left(\ddot{\theta}_{act} + \ddot{\theta}_{err} \right) = \dfrac{\tau}{M} - \dfrac{ \left(C + C_{err} \right)}{M}\dot{\theta}_{0} - \dfrac{ \left(N + N_{err} \right)sin \left(\theta \right)}{M}
 \end{equation}
 
 The error components can be identified by subtracting out the non-error 
 components:
 
 \begin{equation}
-(\ddot{\theta}_{act} + \ddot{\theta}_{err}) - \ddot{\theta}_{act} =
+\left(\ddot{\theta}_{act} + \ddot{\theta}_{err} \right) - \ddot{\theta}_{act} =
 \dfrac{\tau}{M} - \dfrac{\tau}{M}
-- \dfrac{(C + C_{err})}{M}\dot{\theta}_{0} + \dfrac{C}{M}\dot{\theta}_{0}
-- \dfrac{(N + N_{err})sin(\theta)}{M}  + \dfrac{N sin(\theta)}{M}
+- \dfrac{ \left(C + C_{err} \right)}{M}\dot{\theta}_{0} + \dfrac{C}{M}\dot{\theta}_{0}
+- \dfrac{ \left(N + N_{err} \right)sin \left(\theta \right)}{M}  + \dfrac{N sin \left(\theta \right)}{M}
 \end{equation}
 
 The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms representing the error in the internal estimation of damping and static load, respectively.
@@ -258,12 +252,12 @@ The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms rep
 \begin{equation}
 \ddot{\theta}_{err} =
 - C_{err} \dfrac{\dot{\theta}_{0}}{M}
-- N_{err} \dfrac{sin(\theta)}{M}
+- N_{err} \dfrac{sin \left(\theta \right)}{M}
 \end{equation}
 
 \begin{equation} \label{eq:accel_error}
 \ddot{\theta}_{err} = - \dfrac{1}{M}
-(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
+\left(C_{err} \dot{\theta}_{0} + N_{err} sin \left(\theta \right) \right)
 \end{equation}
 
 \bbss{Velocity Error}
@@ -271,7 +265,7 @@ The terms above are gathered to highlight $C_{err}$ and $N_{err}$, the terms rep
 Using the assumptions above, acceleration errors resulting from internal estimation can be to be measured as velocity errors. $\dot{\theta}_{0}$ is the starting velocity and $\dot{\theta}_{1}$ is the ending velocity after 1 time step.
 
 \begin{equation}
-(\dot{\theta}_{1, act} + \dot{\theta}_{1, err}) = \dot{\theta}_{0} + (\ddot{\theta}_{act} + \ddot{\theta}_{err}) \delta t
+\left(\dot{\theta}_{1, act} + \dot{\theta}_{1, err} \right) = \dot{\theta}_{0} + \left(\ddot{\theta}_{act} + \ddot{\theta}_{err} \right) \delta t
 \end{equation}
 
 \begin{equation}
@@ -281,13 +275,13 @@ Using the assumptions above, acceleration errors resulting from internal estimat
 By substituting in equation \ref{eq:accel_error}, the error terms for damping and conservative load can now be related directly to errors in the ending velocity.
 
 \begin{equation} \label{eq:end_vel}
-\dot{\theta}_{1, err} = - \dfrac{\delta t}{M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
+\dot{\theta}_{1, err} = - \dfrac{\delta t}{M} \left(C_{err} \dot{\theta}_{0} + N_{err} sin \left(\theta \right) \right)
 \end{equation}
 
 Assuming that the acceleration is constant for a short time step, the average velocity for the time step is the unweighted mean of the starting and ending velocities. Assuming the error in the average velocity comes from error in the acceleration and ending velocity:
 
 \begin{equation}
-(\dot{\theta}_{avg, act} + \dot{\theta}_{avg, err}) = \dfrac{\dot{\theta}_{0} + (\dot{\theta}_{1, act} + \dot{\theta}_{1, err})}{2}
+\left(\dot{\theta}_{avg, act} + \dot{\theta}_{avg, err} \right) = \dfrac{\dot{\theta}_{0} + \left(\dot{\theta}_{1, act} + \dot{\theta}_{1, err} \right)}{2}
 \end{equation}
 
 \begin{equation}
@@ -297,7 +291,7 @@ Assuming that the acceleration is constant for a short time step, the average ve
 By substituting in equation \ref{eq:end_vel}, the error terms for damping and conservative load can now be related directly to errors in the average velocity during the last time step.
 
 \begin{equation}
-\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)) = \dfrac{\delta t}{2} \ddot{\theta}_{err}
+\dot{\theta}_{avg, err} = - \dfrac{\delta t}{2M} \left(C_{err} \dot{\theta}_{0} + N_{err} sin \left(\theta \right) \right) = \dfrac{\delta t}{2} \ddot{\theta}_{err}
 \end{equation}
 
 \bbss{Positional Error}
@@ -305,19 +299,19 @@ By substituting in equation \ref{eq:end_vel}, the error terms for damping and co
 Using the assumptions above, errors in internal estimation can be propagated to be measured from errors in position. This approach assumes that the primary source of positional error comes from the acceleration and velocity and that the estimate of the current position is comparatively accurate.
 
 \begin{equation}
-(\theta_{1, act} + \theta_{err}) = \theta_{0} + (\dot{\theta}_{avg} + \dot{\theta}_{avg, err}) \delta t
+\left(\theta_{1, act} + \theta_{err} \right) = \theta_{0} + \left(\dot{\theta}_{avg} + \dot{\theta}_{avg, err} \right) \delta t
 \end{equation}
 
 \begin{equation}
-\theta_{err} = \dot{\theta}_{avg, err} \delta t = \dfrac{\delta t^{2}}{2} \ddot{\theta_{err}} = - \dfrac{\delta t^{2}}{2M}(C_{err} \dot{\theta}_{0} + N_{err} sin(\theta))
+\theta_{err} = \dot{\theta}_{avg, err} \delta t = \dfrac{\delta t^{2}}{2} \ddot{\theta_{err}} = - \dfrac{\delta t^{2}}{2M} \left(C_{err} \dot{\theta}_{0} + N_{err} sin \left(\theta \right) \right)
 \end{equation}
 
 \begin{equation}
-- \dfrac{2M}{\delta t^{2}} \theta_{err} = C_{err} \dot{\theta}_{0} + N_{err} sin(\theta)
+- \dfrac{2M}{\delta t^{2}} \theta_{err} = C_{err} \dot{\theta}_{0} + N_{err} sin \left(\theta \right)
 \end{equation}
 
 \begin{equation} \label{eq:positional_error}
-N_{err} sin(\theta) = 
+N_{err} sin \left(\theta \right) = 
 - \dot{\theta}_{0} C_{err}
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
@@ -326,7 +320,7 @@ When the initial velocity ($\dot{\theta}_{0}$) is 0, then damping effects are mi
 $N_{err} sin(\theta)$ is the second term.
 
 \begin{equation} \label{eq:find_C}
-C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
+C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin \left(\theta \right)}
 \end{equation}
 
 \begin{equation}
@@ -336,8 +330,8 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 \end{equation}
 
 \begin{equation}
-\lambda (1
-+ \dot{\theta}_{0}^{2})
+\lambda \left(1
++ \dot{\theta}_{0}^{2} \right)
 =
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
@@ -345,7 +339,7 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \dfrac{\lambda}{sin(\theta)}
 \begin{equation} \label{eq:lambda_def}
 \lambda 
 =
-- \dfrac{2M}{\delta t^{2} (1 + \dot{\theta}_{0}^{2})} \theta_{err}
+- \dfrac{2M}{\delta t^{2} \left(1 + \dot{\theta}_{0}^{2} \right)} \theta_{err}
 \end{equation}
 
 This formulation leaves a singular point in the solution. When the joint is stopped and the joint is centered, then there are no damping or loads that apply torque to the joint. Therefore, there is a check to pause updating of the internal estimate of joint parameters when the joint is stopped.
@@ -364,18 +358,12 @@ extreme motions that go uncorrected in an underdamped control scenario. Overdamp
 Going back to the calculation of the acceleration from torque:
 
 \begin{equation} \label{eq:simple_mass_model3}
-M * \ddot{\theta} = \tau - C * \dot{\theta} - N * sin(\theta)
+M \ddot{\theta} = \tau - C \dot{\theta} - N sin \left(\theta \right)
 \end{equation}
 
 Given the desire to over-damp the system instead of under-damp the system, the
 equation \ref{eq:simple_mass_model3} informs the relative penalty of positive or negative error for
 each internal parameter (including inertia).
-
-For constant internal estimations $C$ and $N$, an increased inertia estimate leads to increased torque
-applied. When the actual inertia is lower than the estimated inertia, the actual required torque is lower 
-than the controlled torque so the system will make a larger change in velocity 
-than the desired trajectory requires. This behavior can lead to under-damped 
-control, therefore the preference is to underestimate the inertia of the system.
 
 \begin{figure}
 \centering

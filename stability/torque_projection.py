@@ -668,8 +668,8 @@ if __name__ == '__main__':
 
     oc = OptimizingController(control_rate=control_rate, stiffness=stiffness)
     title = 'Position (Torque Optimization %d)'
-    plt.ylabel('Angle (rad)')
-    plt.xlabel('Time (sec)')
+    plt.ylabel('Ending Angle (rad)')
+    plt.xlabel('Iteration')
 
     max_torque = 2.5
     mid_torque = 0.0
