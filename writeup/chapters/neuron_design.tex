@@ -202,6 +202,8 @@ of these synapses is -61 mV.
 
 \bbs{Sensor Fusion}
 
+% TODO(buckbaskin): add block diagram for overall, each major section
+
 The sensor fusion neuron network performs essentially the same function as the
 sensor fusion network in the prototype controller. In the synthetic neuron implementation, 3 neurons
 represent the 3 sensor inputs available in a joint: position (``Theta"),
@@ -230,7 +232,7 @@ represent the negative derivative of the position (negative velocity). See \myre
 
 \begin{figure}
 \centering
-\includegraphics[width=5in]{methods/SensorFusion_Ext}
+\includegraphics[width=6in]{methods/SensorFusion_Ext}
 \caption{Sensor fusion network for acceleration (bottom left) and velocity (top right)}
 \label{fig:SensorFusion}
 \end{figure}
@@ -257,11 +259,10 @@ instead of near zero error.
 \bbsss{Absolute Value Network}
 
 Within the acceleration fusion network, the absolute value of the position is
-used. This is calculated by first splitting the position into its two neuron
-representation. From there, the sum of the two neurons is used as the absolute
+used. This is calculated by first splitting the position into its dual neuron
+representation. Typically, a neuron is treated as storing the value of a variable; however, in many areas of the network a variable is stored in two neurons, one representing the variable in a positive range and one representing the value in a negative range. When the positive and negative quantities are both represented as positive voltages in either the positive or negative neuron, the sum of the two neurons is used as the absolute
 value. This approach takes advantage of the definition of each side of the two neuron
-representation falling below resting potential when the other neuron is active.
-This approach means the signal transfer synapse from the below zero neuron will have no
+representation falling below resting potential when the other neuron is active, so the transfer synapse from the inactive neuron will have no
 effect.
 
 \bbsss{Integration Network}
@@ -269,8 +270,8 @@ effect.
 The integration network used throughout the neuron controller is based heavily
 on the Integrator Network in \cite{NickFunctionalSubnetwork}. Two neurons are
 designed to mutually inhibit each other so that the combined pair hold their
-values. Individual neurons can be treated as a leaky integrator; however, their
-voltage tails off over time if there is no maintenance current. The integration
+values. Individual neurons can be treated as a leaky integrator or a point attractor. A mutually inhibiting pair of neurons can be tuned to prevent leaking and maintain a value as a line attractor.
+ The integration
 network itself is tuned by changing the time constant of the component neurons
 to adjust how much the voltage of the integrator network changes for an input
 current.
@@ -304,8 +305,10 @@ an approximation of the linear section in the neuron model.
 \label{fig:PressureTorque}
 \end{figure}
 
+% TODO(buckbaskin): add some labels to clarify which area of networks I'm talking about (see comment page 46)
+
 The neurons in the controller approximate the torque/pressure relationship using a multiplication synapse added
-to a signal transfer synapse. The multiplication takes the scaled absolute 
+to a signal transfer synapse (\myref{fig:T2PNetwork}). The multiplication takes the scaled absolute 
 value of the position as input, so that as the position of the joint reaches
 the joint limit, the slope of the torque to pressure curve increases. This
 approximates the observations in simulation with a relatively simple neuron
@@ -313,14 +316,16 @@ network. See \myref{fig:T2PNetwork} for the assembled network.
 
 \begin{figure}
 \centering
-\includegraphics[width=5in]{methods/TestVisualT2P}
+\includegraphics[width=4in]{methods/TestVisualT2P}
 \caption{Torque to pressure conversion network}
 \label{fig:T2PNetwork}
 \end{figure}
 
-\bbsss{Pressure Estimation Loop}
+\bbsss{Pressure Estimation}
 
-Within the acceleration network, there is a feedback loop that is used to 
+% TODO(buckbaskin): update each image with a box around a section that I call out in a heading
+
+Within the acceleration network in \myref{fig:SensorFusion}, there is a feedback loop that is used to 
 estimate the torque applied by a given pressure. First, the loop ``initializes"
 with an extension torque guess from the integrator. Second, the extension
 torque is converted into extension pressure. Third, the estimated extension
@@ -330,6 +335,7 @@ two, the extension torque guess is modified in turn and the cycle repeats.
 This architecture is mirrored for flexion torque.
 
 \bbsss{Torque to Acceleration Network}
+\label{sec:torque2accel}
 
 The torque to acceleration network is built up in 3 stages. First, a damping 
 term is subtracted or added based on the current velocity and the estimated
@@ -358,29 +364,25 @@ and flexion torques together to get a net torque and acceleration. For the compl
 
 \bbs{Optimizing Torque Control}
 
-The torque control network uses a feedback loop to optimize the
-control torque. The network takes the estimated position and velocity from the 
+The torque control network uses a feedback loop to select the
+control torque that minimizes the ending positional error. The network takes the estimated position and velocity from the 
 sensor fusion network and the desired position from a trajectory generator
 network (ex. a CPG) and outputs the torque to best follow that trajectory.
 See \myref{fig:TorqueOptimizationNetwork} for the complete network.
 
 \begin{figure}
 \centering
-\includegraphics[width=5in]{methods/TorqueOptimization}
+\includegraphics[width=6in]{methods/TorqueOptimization}
 \caption{Feedback loop for determining the desired control torque}
 \label{fig:TorqueOptimizationNetwork}
 \end{figure}
 
 \bbss{Optimizing Torque Control Components}
 
-\bbsss{Torque Estimation}
-
-The first step in the torque control network is a torque estimate. This is built
-as an integration network.
-
 \bbsss{Torque to Acceleration}
 
-This torque to acceleration network is calculated in the same manner as above.
+This torque to acceleration network is calculated in the same manner as above in the sensor fusion network
+(\myref{sec:torque2accel}).
 The principle difference is that the source of torque is a desired control
 torque instead of the estimated applied torque of the actuators.
 
@@ -394,8 +396,7 @@ change in velocity is linear in acceleration.
 \dot{\theta}_{future} = \dot{\theta}_{current} + \ddot{\theta} \delta t
 \end{equation}
 
-This is encoded as a constant gain (calculated to be 0.2x) to be incorporated 
-into to the velocity voltages.
+This velocity modification relationship is enacted in neurons and synapses as a constant gain of 0.2x applied to the acceleration neuron's voltage and then added to the current velocity estimation.
 
 \bbsss{Position Modification}
 
@@ -407,18 +408,22 @@ network.
 \theta_{future} = \theta_{current} + \dot{\theta}_{future} \delta t
 \end{equation}
 
+The voltage of the modified velocity neuron has a gain of 0.2x and is added to the current position.
 
 \bbsss{Position Comparator}
 
 The position comparator estimates the error between where the joint will be at
 the future point and time and where the trajectory generator wants the joint
-to be. This error is used as feedback to directly modify the torque estimate.
+to be. This error is used as feedback to modify the torque estimate.
+% TODO(buckbaskin): call out this comparator in the images
 This network geometry allows for easy incorporation of other metrics as well.
 For example, if the position estimation is noisy, multiple forward projections
 can be made for upper and lower bounds and the torque can be optimized to 
 minimize an error function over all projected locations.
 
 \bbss{Torque Control Network}
+
+% TODO(buckbaskin): block diagram of the torque control network too
 
 The overall feedback loop and torque control network is a combination of pieces
 that join together to approximate
@@ -482,7 +487,7 @@ C_{err} = \lambda \dot{\theta}, N_{err} = \lambda
 
 \begin{figure}
 \centering
-\includegraphics[width=6.5in]{methods/SystemModel_Test}
+\includegraphics[width=6in]{methods/SystemModel_Test}
 \caption{System modeling network}
 \label{fig:SystemModelNetwork}
 \end{figure}
