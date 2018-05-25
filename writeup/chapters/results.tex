@@ -35,7 +35,7 @@ controller will always follow the trajectory with the exact torque needed during
 \label{fig:MaxTorque}
 \end{figure}
 
-\section{Python Controller}
+\bbs{Python Controller}
 
 The prototype controller written in Python was used to demonstrate the stability
 and tracking capabilities of the general algorithm. The prototype controller also was used to find a
@@ -105,11 +105,15 @@ resulted in near-perfect tracking; however, the weight updates themselves were c
 \label{fig:StateUpdateSimple}
 \end{figure}
 
-\section{Neuron Controller}
+\bbs{Neuron Controller}
+
+Animatlab does not offer a good model of pneumatic muscles for use in closed loop testing. In place of this testing, the Python simulation was used to simulate the behavior of the pneumatic actuators and the neuron model was tuned to try and match the output of the Python controller from the small component subnetworks up to the overall controller behavior.
 
 \bbss{Test Results}
 
 Test results are generated based on data tools in \github{PuppyNeuronPlayground}. Post processing and visualization is done with scripts found in \github{writeup/scripts}.
+
+% TODO(buckbaskin): redo figures, using a dashed line for the orange values
 
 \begin{figure}
 \centering
@@ -212,7 +216,7 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 \bbsss{Sensor Fusion}
 
 Two key estimates are made within the sensor fusion subnetwork: velocity and
-acceleration. The synthetic nervous system controller was tested against sin waves of known
+acceleration. The synthetic nervous system controller was tested against sine waves of known
 frequencies. The positive and negative estimated are compared to the ground truth in \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. The output is plotted compared with expected output. See
@@ -220,8 +224,7 @@ pressures. The output is plotted compared with expected output. See
 
 \bbsss{Torque Optimization}
 
-The torque optimization network was tested as a complete network. See
-\myref{fig:TestTorqueOptimizationPos} and \myref{fig:TestTorqueOptimizationNeg}.
+The torque optimization network was tested as a complete network. Taking the entire network as a whole, the inputs (position, velocity and desired position) are driven to input values and the outputs are compared with the torque predictions of the prototype controller. In the same way that unit tests may not catch all types of software bugs, this kind of higher level test is designed to comprehensively test the connectivity between smaller subnetworks examined in other tests. The results of the tests are shown in \myref{fig:TestTorqueOptimizationPos} and \myref{fig:TestTorqueOptimizationNeg}.
 The components for converting the torque to
 acceleration also were tested
 separately. See \myref{fig:TestT2APos} and \myref{fig:TestT2ANeg}.
@@ -251,7 +254,7 @@ synthetic nervous system approach.
 \bbssss{Velocity}
 
 The velocity network in the sensor fusion algorithm varies the most from the
-reference data. This is a known phenomena addressed in
+reference data (see \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}). This is a known phenomena addressed in
 \cite{NickFunctionalSubnetwork}. This variance is observed in two quantities,
 the phase shift and the magnitude.
 
@@ -259,7 +262,7 @@ In the velocity network, the magnitude of the positive and negative
 velocities varied quite widely compared with the reference, especially at
 higher gains. During the tuning of the network, a balance was chosen between
 the maximum phase lag, minimized by decreasing the time constant of the slower
-neuron, and increasing the gain (and therefore the observed difference between
+neuron, and increasing the synaptic gain (and therefore the observed difference between
 positive and negative velocities).
 
 This error suggests that there is an underlying error in the way that positive
@@ -273,7 +276,7 @@ gain and phase.
 
 \bbssss{Acceleration}
 
-The acceleration network shows effective convergence a near-correct solution.
+The acceleration network converges to a near-correct solution.
 This convergence demonstrates that the feedback loop concept can be effective; however, the process takes a relatively long, fixed amount of time to
 converge from solutions that are a significant step away. This time delay may lead to
 issues with rapidly changing pressures on a hardware system. One potential
@@ -282,6 +285,8 @@ elements within the loop, in particular the integration network, to allow the
 internal loop(s) to run faster than the rest of the network
 so the outputs of the internal loop appear to converge to the correct value on the same time scale as the
 rest of the network.
+
+% TODO(buckbaskin): Cite Nick's leg-local mechanisms paper that (reaches the same conclusion?)
 
 \bbsss{Torque Optimization}
 
@@ -296,6 +301,7 @@ The concept of the torque optimization network appears to be effective; however,
 its implementation in neurons suffers from both attempting to converge to a
 solution quickly and approximating a physical simulation internally. The torque optimization network
 uses relatively low time constants and high gains. This can cause overshoot
+% TODO(buckbaskin): consider rescaling axis on the figure
 (not seen in \myref{fig:TestTorqueOptimizationPos} due to clipping) where the
 estimated torque is off the charts for either large positive or negative swings.
 The high gains also reduce accuracy by amplifying small errors made during the
@@ -312,11 +318,10 @@ necessary within the loop to project dynamics forward; however, increasing the l
 The 3 stage network for estimating the acceleration from the torque applied to
 the system appears to work well. There are two test cases, between 7 and 9
 seconds that were not significant when tested at the resolution that the
-network incorporates. Otherwise, the acceleration is almost always correct.
+network incorporates (shown in \myref{TestT2APos} and \myref{TestT2ANeg}). Otherwise, the acceleration is almost always correct.
 Given its intended uses, the network is sufficiently accurate and suggests that
 relatively small sets of neurons can provide a representation of the physics of
-a biological system. This would suggest that an animal's nervous system can
-relatively easily understand the dynamics of its environment and its body.
+a biological system. This would suggest that an animal's nervous system can understand the dynamics of its environment and its body.
 
 \bbssss{Estimating Pressures from Torques}
 
