@@ -312,7 +312,7 @@ The change in voltage over time for the Hodgkin-Huxley model is determined as fo
 C_{m} \dfrac{d V}{d t} = I_{leak} + I_{syn} + I_{app}
 \end{equation}
 
-% TODO(buckbaskin): What is C_{m}?
+$C_{m}$ is the membrance capacitance.
 The applied current ($I_{app}$) is arbitrary, and used with multiple neurons in the controller design.
 The current terms are defined as follows:
 
@@ -321,7 +321,7 @@ I_{leak} = G_{m} (E_{r} - V)
 \end{equation}
 
 % TODO(buckbaskin): define terms in I_{leak} equation
-The leak current ($I_{leak}$) moves the voltage towards its resting potential over time.
+The leak current ($I_{leak}$) moves the voltage towards its resting potential over time. $G_{m}$ is the membrane capacitance. $E_{r}$ is the resting potential. $V$ is the neuron's membrane voltage.
 
 \begin{equation}
 I_{syn} = \sum_{i=1}^{n} G_{s, i} (E_{s, i} - V)
@@ -329,26 +329,37 @@ I_{syn} = \sum_{i=1}^{n} G_{s, i} (E_{s, i} - V)
 
 % TODO(buckbaskin): define terms in I_{syn} equation
 The synaptic current ($I_{syn}$) is the current conducted from incoming synapses from other neurons based on their activation.
+$G_{s, i}$ is the conductance of the $i$th inbound synapse. $E_{s, i}$ is the reversal potential of the $i$th inbound synapse.
+$V$ is the neuron's membrane voltage.
 
 This model does leave out some terms of the Hodgkin-Huxley model. By continuing to follow the work laid out in \cite{NickFunctionalSubnetwork}, the steady state voltages of a neuron can be arranged in the following equation:
 
 \begin{equation}
-U_{post}^{*} = \dfrac{\frac{g_{s}}{R} U_{pre} \Delta E_{s}}{1 + \frac{g_{s}}{R} U_{pre}}
+U_{post}^{*} = \dfrac{\frac{g_{s}}{R} \cdot U_{pre} \cdot \Delta E_{s}}{1 + \frac{g_{s}}{R} \cdot U_{pre}}
 \end{equation}
 
-$U_{post}^{*}$ is the steady state voltage of the output neuron, relative to its resting potential. $U_{pre}$ is the voltage of input neuron relative to its resting potential. $g_{s}$ is the conductivity of the synapse. This equation and the terms within it are used to tune the steady state behavior of the neuron network.
-% TODO(buckbaskin): define terms in the U_{post} equation
+$U_{post}^{*}$ is the steady state voltage of the output neuron, relative to its resting potential. $U_{pre}$ is the voltage of input neuron relative to its resting potential. $g_{s}$ is the conductivity of the synapse.
+$R$ is the range between the designed maximum potential and resting potential of the presynpatic neuron. $\Delta E$ is defined as 
 
-% TODO(buckbaskin): draw out U0, U1
+\begin{equation}
+\Delta E_{s} = E_{s} - E_{r, post}
+\end{equation}
+
+where $E_{s}$ is the reversal potential of the synapse and $E_{r, post}$ is the resting potential of the postsynaptic neuron.
+This equation and the terms within it are used to tune the steady state behavior of the neuron network. In \myref{fig:MathOutputs}
+$U_{0}$ is the presynaptic neuron and $U_{1}$ is the postsynapic neuron.
 
 \begin{figure}
 \centering
+
+\includegraphics[width=3in]{lit_review/U0U1}
+
 \begin{tabular}{cc}
-\includegraphics[width=3in]{lit_review/FigAdd} &
-\includegraphics[width=3in]{lit_review/FigSub} \\
+\includegraphics[width=2.75in]{lit_review/FigAdd} &
+\includegraphics[width=2.75in]{lit_review/FigSub} \\
 (a) Addition & (b) Subtraction \\
-\includegraphics[width=3in]{lit_review/FigMul} &
-\includegraphics[width=3in]{lit_review/FigDiv} \\
+\includegraphics[width=2.75in]{lit_review/FigMul} &
+\includegraphics[width=2.75in]{lit_review/FigDiv} \\
 (c) Multiplication & (d) Division \\
 \end{tabular}
 \caption{Neuron outputs tuned to arithmetic operations adapted from \cite{NickFunctionalSubnetwork}}
