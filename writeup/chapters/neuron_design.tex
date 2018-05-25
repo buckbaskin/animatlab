@@ -1,38 +1,3 @@
-The synthetic nervous system controller is developed with a non-spiking Hodgkin-Huxley neuron model, where the membrane voltage is used as a representation of spiking frequency of an interconnected population of spiking neurons. The neurons are modeled with a resting potential of -60 mV and a maximum potential of -40 mV for a range of 20 mV.
-
-The change in voltage over time for the Hodgkin-Huxley model is determined as follows:
-
-\begin{equation}
-C_{m} \dfrac{d V}{d t} = I_{leak} + I_{syn} + I_{app}
-\end{equation}
-
-% TODO(buckbaskin): What is C_{m}?
-The applied current ($I_{app}$) is arbitrary, and used with multiple neurons in the controller design.
-The current terms are defined as follows:
-
-\begin{equation}
-I_{leak} = G_{m} (E_{r} - V)
-\end{equation}
-
-% TODO(buckbaskin): define terms in I_{leak} equation
-The leak current ($I_{leak}$) moves the voltage towards its resting potential over time.
-
-\begin{equation}
-I_{syn} = \sum_{i=1}^{n} G_{s, i} (E_{s, i} - V)
-\end{equation}
-
-% TODO(buckbaskin): define terms in I_{syn} equation
-The synaptic current ($I_{syn}$) is the current conducted from incoming synapses from other neurons based on their activation.
-
-This model does leave out some terms of the Hodgkin-Huxley model. By continuing to follow the work laid out in \cite{NickFunctionalSubnetwork}, the steady state values of a neuron can be arranged in the following equation:
-
-\begin{equation}
-U_{post}^{*} = \dfrac{\frac{g_{s}}{R} U_{pre} \Delta E_{s}}{1 + \frac{g_{s}}{R} U_{pre}}
-\end{equation}
-
-$U_{post}^{*}$ is the steady state voltage of the output neuron, relative to its resting potential. $U_{pre}$ is the voltage of input neuron relative to its resting potential. $g_{s}$ is the conductivity of the synapse.
-% TODO(buckbaskin): define terms in the U_{post} equation
-
 Through the tuning of the conductivity of the synapse ($g_{s}$), one can engineer the behavior of each type of synapse (see \myref{sec:key_synapses}) to match arithmetic operations. The more complicated operations require the interaction of multiple synapses and neurons, but their behavior is still tuned in the same way.
 
 \bbs{Key Neurons and Synapses}
