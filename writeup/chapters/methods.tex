@@ -1,14 +1,5 @@
 \section{Simulation}
 
-\subsection{Animatlab}
-
-Animatlab is a simulation environment that combines a physics engine with a
-neuron simulation tool. It is very helpful for integrating physical systems
-and sensor information easily into a synthetic nervous system.
-
-The design tools for defining and testing a nervous system were also instrumental
-to the success of the new controller design.
-
 \subsection{Python Numerical Simulation}
 
 During the development of the original controller design, an additional
@@ -29,6 +20,19 @@ enabled the testing and verification of a simplified internal model for
 replication within the neuron controller. Without the Python simulation
 environment, the evidence-based design of models would not have been as easy to
 iterate.
+
+Overall testing of the Python controller was done in a closed loop style. The controller was given a starting state and desired trajectory and its commands were fed into a joint actuated by simulated pneumatic muscles. ``Sensory" information was then collected and fed back into the Python controller. The primary performance metric used was tracking accuracy. 
+
+\subsection{Animatlab}
+
+Animatlab is a simulation environment that combines a physics engine with a
+neuron simulation tool. It is very helpful for integrating physical systems
+and sensor information easily into a synthetic nervous system.
+
+The design tools for defining and testing a nervous system were also instrumental
+to the success of the new controller design.
+
+Within Animatlab, testing was done in an open loop style. Inputs were driven to match inputs passed to the Python controller and outputs were matched against the outputs of the Python controller; however, the synthetic nervous system was not tested in Animatlab with a model of pneumatic artificial muscles in the loop. The primary performance metric was error (in mV) when the synthetic nervous system output was compared with the Python output.
 
 \section{Testing and Verification}
 
