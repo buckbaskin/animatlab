@@ -12,18 +12,18 @@ redundancy to aid in balance with many animals, including dogs and cats, walking
 on 4 or more legs. The inspiration taken varies from imitating gait timing \cite{Raibert1986} to
 help coordinate simple legs to completely mimicking musculoskeletal layout. The
 Puppy robot (\myref{fig:Puppy}) was designed to mimic the operation of a large 
-canine walking in the sagittal plane using pneumatic muscles and the \cite{PuppyDesign}.
+canine walking in the sagittal plane using pneumatic muscles \cite{PuppyDesign}.
 
 Another advantage that animals have over most robots is their actuators.
 Biological muscles are compliant and are a key part to how animals walk. Many
-robots use electric motors or hydraulic actuators to actuate joints, which are stiffer than muscles and tendons, which can
-mean that other biologically inspired design decisions cannot be applied directly. During the design of Puppy \cite{PuppyDesign}, pneumatic artificial muscles were chosen, which have a higher
+robots use electric motors with transmissions or hydraulic actuators to actuate joints, which are stiffer than muscles and tendons, which can
+mean that some biologically inspired designs cannot be applied directly. During the design of Puppy \cite{PuppyDesign}, pneumatic artificial muscles were chosen, which have a higher
 power to weight ratio than other designs and offer similar compliance and
-behavior to biological muscles \cite{Tavakoli2008}. Pneumatic muscles have a unique design constraint: they only apply force during contraction. Therefore,
-they are often used in antagonistic pairs. This is typically seen as a disadvantage because it increases the complexity of the robot; however, the muscles also allow for further bio-inspiration in the robot design
+behavior to biological muscles \cite{Tavakoli2008}. Pneumatic muscles have a unique design constraint: they only apply tensile force during contraction. Therefore,
+they are often used in antagonistic pairs. This is typically seen as a disadvantage because it increases the complexity of the robot; however, the muscles also allow for more direct bio-mimicry in the design of the robot's mechanics
 and control system.
 
-One of the major trade offs for pneumatic muscles is that they exhibit
+One of the major design trade offs for pneumatic muscles is that they exhibit
 non-linear behavior in both static and dynamic control situations \cite{HuntPMuscles, DynamicPMuscles}. This has
 motivated the designs of new types of controllers to overcome the non-linear
 behavior through adaptation in the controller. In \cite{Jahanabadi2009}, the
@@ -47,8 +47,7 @@ A combination of these two types of controllers offers insight into how to build
 an effective joint controller for Puppy. One further area of potential
 improvement over existing designs is the incorporation of biological inspiration
 within the controller itself. In \cite{NickFunctionalSubnetwork}, the authors
-demonstrate a method for using a dynamic, biologically accurate model of neurons
-to develop models of neurons for controlling physical systems. The work in the
+demonstrate a method for using a dynamic, biologically relevant model of neurons for controlling physical systems. The work in the
 paper describes how to create building blocks such as arithmetic operations,
 differentiation or integration. These components can then be used together to
 recursively create new controller architectures that use biological inspiration
@@ -63,8 +62,7 @@ actuated robots.
 
 This thesis focuses on control of joints for the canine-inspired
 Puppy robot in a walking scenario. The two distinguishing physical features of 
-the robot are its pneumatic muscle actuators and a design that leans heavily
-on the mechanics and skeleton of canines.
+the robot are its pneumatic muscle actuators and a design that mimics the mechanics and skeleton of canines.
 
 \begin{figure}
 \centering
@@ -130,7 +128,7 @@ This work continues with a review of surrounding and supporting literature in
 a internal model adaptive controller that incorporates the design goals of 
 understanding the dynamics, projecting forward in time and optimizing the 
 controlled output based on the understanding of dynamics. \myref{chap:neuron_design} discusses the implementation of the controller within a 
-synthetic nervous system simulation. This discussion talks about some 
+synthetic nervous system simulation. This discussion addresses some 
 simplifications and approximations that were made in the process, as well as 
 areas of the network that are more complex improvements over the controller 
 design discussed in \myref{chap:controller_design}. \myref{chap:methods} 
