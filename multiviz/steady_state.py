@@ -13,13 +13,26 @@ from matplotlib import pyplot as plt
 
 # mapping from neuron name to voltage
 og_neurons = {
-    'output': {
-        'voltage': -60, # mV
-        'resting': -60,
-        'visited': 0,
-        'size': 1,
-        'applied_current': 0
-    },
+    'fusion accel +': {},
+    'inertia (test)': {},
+    'load (test)': {},
+    'damping (test)': {},
+    'tcn+': {},
+    'tc+': {},
+    'inv pos net torque': {},
+    'pos net torque': {},
+    'ext torque guess': {},
+    'ext torque': {},
+    'ext torque also': {},
+    'ext pres (guess)': {},
+    'ext pres (test)': {},
+    'ext +P err': {},
+    'ext -P err': {},
+    'theta mult 1': {},
+    'abs theta': {},
+    'pos theta': {},
+    'neg theta': {},
+    'theta (test)': {},
 }
 
 # mapping from synapse name to properties
