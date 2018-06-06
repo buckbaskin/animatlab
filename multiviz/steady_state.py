@@ -15,11 +15,17 @@ from matplotlib import pyplot as plt
 og_neurons = {
     'fusion accel +': {},
     'inertia (test)': {},
-    'load (test)': {},
-    'damping (test)': {},
+    'neg load effect (test)': {},
+    'pos load effect (test)': {},
+    'neg damp effect (test)': {},
+    'pos damp effect (test)': {},
     'tcn+': {},
-    'tc+': {},
-    'inv pos net torque': {},
+    'tc+': {
+        'applied_current': 20,
+    },
+    'inv pos net torque': {
+        'applied_current': 20,
+    },
     'pos net torque': {},
     'ext torque guess': {},
     'ext torque': {},
@@ -28,7 +34,9 @@ og_neurons = {
     'ext pres (test)': {},
     'ext +P err': {},
     'ext -P err': {},
-    'theta mult 1': {},
+    'theta mult 1': {
+        'applied_current': 20,
+    },
     'abs theta': {},
     'pos theta': {},
     'neg theta': {},
@@ -134,10 +142,61 @@ print('Wow, you made %d synapse types.' % (len(synapse_types),))
 
 # mapping from ending neuron to starting neuron, synapse type
 edges = {
-    'output': {
-        'different name': 'signal transfer',
-        'other': 'signal transfer',
-        'output': 'signal transfer'
+    'pos theta': {
+        'theta (test)': 'conv forward pos',
+    },
+    'neg theta': {
+        'theta (test)': 'conv forward neg',
+    },
+    'abs theta': {
+        'pos theta': 'signal transfer',
+        'neg theta': 'signal transfer',
+    },
+    'theta mult 1': {
+        'abs theta': 'signal multiplier',
+    },
+    'ext torque also': {
+        'theta mult 1': 'signal multiplier',
+        'ext torque': 'signal transfer',
+    },
+    'ext pres (guess)': {
+        'ext torque also': 'torque pres converter',
+        'ext torque': 'signal transfer',
+    },
+    'ext +p err': {
+        'ext pres (test)': 'signal transfer',
+        'ext pres (guess)': 'signal inverter',
+    },
+    'ext -p err': {
+        'ext pres (test)': 'signal inverter',
+        'ext pres (guess)': 'signal transfer',
+    },
+    'ext torque guess': {
+        'ext +p err': 'signal amp 2x',
+        'ext -p err': 'signal inv amp 2x',
+    },
+    'ext torque': {
+        'ext torque guess': 'signal transfer',
+    },
+    'pos net torque': {
+        'ext torque guess': 'signal transfer',
+    },
+    'inv pos net torque': {
+        'pos net torque': 'signal inv stim',
+    },
+    'tc+': {
+        'inv pos net torque': 'signal inv stim',
+        'pos damp effect (test)': 'signal transfer',
+        'neg damp effect (test)': 'signal inverter',
+    },
+    'tcn+': {
+        'tc+': 'signal transfer',
+        'pos load effect (test)': 'signal transfer',
+        'neg load effect (test)': 'signal inverter',
+    },
+    'fusion accel +': {
+        'tcn+': 'signal transfer',
+        'inertia (test)': 'signal divider',
     }
 }
 
@@ -145,7 +204,7 @@ neurons = deepcopy(og_neurons)
 
 def steady_state(neuron_name, neurons):
     neuron_props = neurons[neuron_name]
-    I_app = 0
+    I_app = ne
     if 'applied_current' in neuron_props:
         I_app = neuron_props['applied_current']
     G_m = 1
