@@ -29,8 +29,95 @@ synapse_types = {
         'conductance': 0.115, # micro siemens
         'lo': -60,
         'hi': -40,
-    }
+        'id': '74912d0e-6d4c-48f7-99a6-a2c0c541976e',
+    },
+    'conv forward neg': {
+        'potential': -100,
+        'conductance': 0.5,
+        'lo': -60,
+        'hi': -50,
+        'id': '788aa18b-93f5-4fba-bda7-82152b501a1f',
+    },
+    'conv forward pos': {
+        'potential': 134,
+        'conductance': 0.115,
+        'lo': -50,
+        'hi': -40,
+        'id': '11b3d9fa-3a52-4643-bbd2-a40eb07eb1be',
+    },
+    'signal amp 2x': {
+        'potential': 134,
+        'conductance': 0.23,
+        'id': '3056ff98-05c0-486c-a10d-e651df31f875',
+    },
+    'signal amp 4x': {
+        'potential': 134,
+        'conductance': 0.46,
+        'id': '85578db7-e355-434e-9891-9b64689ed69b'
+    },
+    'signal inv amp 2x': {
+        'potential': -100,
+        'conductance': 1.11,
+        'id': '34ea07c1-cbbe-4250-951a-67e8d1da21a1',
+    },
+    'signal inv amp 4x': {
+        'potential': -100,
+        'conductance': 2.3,
+        'id': '3696ce27-55b2-456c-b829-0cd0fb446ee8',
+    },
+    'torque pres converter': {
+        'potential': 134,
+        'conductance': 0.048,
+        'id': '368e485a-679b-4564-ac8c-c63b05940926',
+    },
+    'integral inibitor': {
+        'potential': -100,
+        'conductance': 0.5,
+        'id': '39a453be-9294-4306-a057-7f69d53a47c9',
+    },
+    'signal inverter': {
+        'potential': -100,
+        'conductance': 0.55,
+        'id': '5975749f-f8e6-46b0-bb4d-7d06da043ca2',
+    },
+    'signal multiplier': {
+        'potential': -61,
+        'conductance': 19.75,
+        'id': '61156786-e99e-4b95-bbb0-4f672b607a2b',
+    },
+    'signal inv red 0.2x': {
+        'potential': -100,
+        'conductance': 0.093,
+        'id': '8664f6ec-686a-4aa8-96d1-8b1ca8114ec7',
+    },
+    'signal inv red 0.5x': {
+        'potential': -100,
+        'conductance': 0.22,
+        'id': 'a0a658aa-f090-4014-9a73-30c46c1fb55c',
+    },
+    'signal inv stim': {
+        'potential': -100,
+        'conductance': 0.5,
+        'id': 'a1a55801-a811-41f2-8700-1ed269834c93',
+    },
+    'signal divider': {
+        'potential': -60,
+        'conductance': 20,
+        'id': 'cd07ff49-d279-4cdc-900a-70d4062baf2d',
+    },
+    'signal red 0.2x': {
+        'potential': 134,
+        'conductance': 0.021,
+        'id': 'd43aabad-74c5-479e-a5b7-d837f7b17ea3',
+    },
+    'signal red 0.5x': {
+        'potential': 134,
+        'conductance': 0.054,
+        'id': 'e3f40f4e-72fc-42e4-89e8-86210bbe817e',
+    },
 }
+
+print('Wow, you made %d synapse types.' % (len(synapse_types),))
 
 # mapping from ending neuron to starting neuron, synapse type
 edges = {
@@ -86,7 +173,6 @@ def steady_state(neuron_name, neurons):
     return V
 
 def iterate_recursively(neuron_name, neurons):
-    print('iterate_recursively(%s, ...)' % (neuron_name,))
     if neurons[neuron_name]['visited'] >= 1:
         '''
         Cycle detection!
@@ -132,7 +218,7 @@ def reference_sum(inputs, output):
     return accum - 60
 
 if __name__ == '__main__':
-    resolution = 3
+    resolution = 11
     output_neuron = 'output'
 
     # All these variables get producted together so all combinations are tested
