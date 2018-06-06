@@ -108,6 +108,12 @@ def try_1_inputs(inputs, output):
     iterate_recursively(output, neurons)
     return neurons[output]['voltage']
 
+def reference_sum(inputs, output):
+    accum = 0
+    for input_ in inputs:
+        accum += input_[1] - (-60)
+
+    return accum - 60
 
 if __name__ == '__main__':
     output_neuron = 'output'
@@ -141,14 +147,15 @@ if __name__ == '__main__':
     input_combos = list(product(*combine_this))
 
     data = np.zeros((len(list(input_combos)), len(inputs) + 1,))
+    data_ref = np.zeros((len(list(input_combos)), len(inputs) + 1,))
 
     for iteration, input_combo in enumerate(input_combos):
         for index, value in enumerate(input_combo):
             data[iteration, index] = value[1] # mV
+            data_ref[iteration, index] = value[1]
         output = try_1_inputs(input_combo, output_neuron)
         data[iteration, -1] = output
-
-    # print(data)
+        data_ref[iteration, -1] = reference_sum(input_combo, output_neuron)
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
@@ -159,8 +166,18 @@ if __name__ == '__main__':
     Z = data[:,-1]
     Z = Z.reshape((input_length0, input_length1))
 
-    surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False)
+    Z_ref = data_ref[:,-1]
+    Z_ref = Z_ref.reshape((input_length0, input_length1))
+
+    surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
+    surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
     ax.set_xticks([-60, -50, -40])
     ax.set_yticks([-60, -50, -40])
     ax.set_zticks([-60, -50, -40])
+
+    mean_error = np.mean(np.abs(Z - Z_ref))
+    print('Mean Error from Reference')
+    print('%.1f mV' % (mean_error,))
+    # plt.legend()
+    plt.tight_layout()
     plt.show()
