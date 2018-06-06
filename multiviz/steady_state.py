@@ -37,6 +37,7 @@ edges = {
     'output': {
         'different name': 'signal transfer',
         'other': 'signal transfer',
+        'output': 'signal transfer'
     }
 }
 
@@ -85,11 +86,26 @@ def steady_state(neuron_name, neurons):
     return V
 
 def iterate_recursively(neuron_name, neurons):
+    print('iterate_recursively(%s, ...)' % (neuron_name,))
+    if neurons[neuron_name]['visited'] >= 1:
+        '''
+        Cycle detection!
+
+        If I've already been here once, don't update "steady state" again
+        '''
+        # TODO(buckbaskin): need to reset visited count for multiple iterations
+        return None
     neurons[neuron_name]['visited'] += 1
     if neuron_name in edges:
         for input_name in edges[neuron_name]:
-            iterate_recursively(input_name, neurons
-                )
+            if neurons[input_name]['visited'] >= 1:
+                '''
+                Cycle detection!
+
+                If I've already been there once, don't update "steady state" again
+                '''
+                continue
+            iterate_recursively(input_name, neurons)
 
     neurons[neuron_name]['voltage'] = steady_state(neuron_name, neurons)
 
@@ -116,15 +132,16 @@ def reference_sum(inputs, output):
     return accum - 60
 
 if __name__ == '__main__':
+    resolution = 3
     output_neuron = 'output'
 
     # All these variables get producted together so all combinations are tested
 
-    different_name = np.zeros((11, 2,))
-    different_name[:,0] = np.linspace(-60, -40, 11)
+    different_name = np.zeros((resolution, 2,))
+    different_name[:,0] = np.linspace(-60, -40, resolution)
 
-    other = np.zeros((11, 2))
-    other[:, 0] = np.linspace(-60, -40, 11)
+    other = np.zeros((resolution, 2))
+    other[:, 0] = np.linspace(-60, -40, resolution)
 
     inputs = {
         'different name': list(different_name),
