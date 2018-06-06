@@ -32,8 +32,8 @@ og_neurons = {
     'ext torque also': {},
     'ext pres (guess)': {},
     'ext pres (test)': {},
-    'ext +P err': {},
-    'ext -P err': {},
+    'ext +p err': {},
+    'ext -p err': {},
     'theta mult 1': {
         'applied_current': 20,
     },
@@ -204,7 +204,7 @@ neurons = deepcopy(og_neurons)
 
 def steady_state(neuron_name, neurons):
     neuron_props = neurons[neuron_name]
-    I_app = ne
+    I_app = 0
     if 'applied_current' in neuron_props:
         I_app = neuron_props['applied_current']
     G_m = 1
@@ -229,7 +229,9 @@ def steady_state(neuron_name, neurons):
             if 'hi' in synapse_types[synapse_type]:
                 E_hi = synapse_types[synapse_type]['hi']
 
-            V_pre = neurons[input_name]['voltage']
+            V_pre = -60
+            if 'voltage' in neurons[input_name]:
+                V_pre = neurons[input_name]['voltage']
             G_s = synapse_types[synapse_type]['conductance']
             if V_pre < E_lo:
                 G_s = 0
@@ -267,19 +269,20 @@ def iterate_recursively(neuron_name, neurons):
 
     neurons[neuron_name]['voltage'] = steady_state(neuron_name, neurons)
 
-def try_1_inputs(inputs, output):
+def try_1_inputs(inputs, output, iterations = 3):
     neurons = deepcopy(og_neurons)
+    for _ in range(iterations):
+        for neuron_name in neurons:
+            neurons[neuron_name]['visited'] = 0
 
-    output = 'output'
-
-    for input_name, voltage, applied_current in inputs:
-        neurons[input_name] = {
-            'voltage': voltage, # mV
-            'visited': 0,
-            'size': 0,
-            'applied_current': applied_current,
-        }
-    iterate_recursively(output, neurons)
+        for input_name, voltage, applied_current in inputs:
+            neurons[input_name] = {
+                'voltage': voltage, # mV
+                'visited': 0,
+                'size': 0,
+                'applied_current': applied_current,
+            }
+        iterate_recursively(output, neurons)
     return neurons[output]['voltage']
 
 def reference_sum(inputs, output):
@@ -291,25 +294,27 @@ def reference_sum(inputs, output):
 
 if __name__ == '__main__':
     resolution = 11
-    output_neuron = 'output'
+    output_neuron = 'fusion accel +'
 
     # All these variables get producted together so all combinations are tested
 
-    different_name = np.zeros((resolution, 2,))
-    different_name[:,0] = np.linspace(-60, -40, resolution)
+    position = np.zeros((resolution, 2,))
+    position[:,0] = np.linspace(-60, -40, resolution)
 
-    other = np.zeros((resolution, 2))
-    other[:, 0] = np.linspace(-60, -40, resolution)
+    ext_pres = np.zeros((resolution, 2))
+    ext_pres[:, 0] = np.linspace(-60, -40, resolution)
 
     inputs = {
-        'different name': list(different_name),
-        'other': list(other),
+        'theta (test)': list(position),
+        'ext pres (test)': list(ext_pres),
     }
 
     # Step 1: Select two variables to have visualized against output
+    input0 = 'theta (test)'
+    input1 = 'ext pres (test)'
 
-    input_length0 = len(inputs['different name'])
-    input_length1 = len(inputs['other'])
+    input_length0 = len(inputs[input0])
+    input_length1 = len(inputs[input1])
 
     combine_this = []
     for input_neuron in inputs:
@@ -326,8 +331,14 @@ if __name__ == '__main__':
 
     for iteration, input_combo in enumerate(input_combos):
         for index, value in enumerate(input_combo):
-            data[iteration, index] = value[1] # mV
-            data_ref[iteration, index] = value[1]
+            if value[0] == input0:
+                data[iteration, 0] = value[1] # mV
+            if value[0] == input1:
+                data[iteration, 1] = value[1]
+            if value[0] == input0:
+                data_ref[iteration, 0] = value[1] # mV
+            if value[0] == input1:
+                data_ref[iteration, 1] = value[1]
         output = try_1_inputs(input_combo, output_neuron)
         data[iteration, -1] = output
         data_ref[iteration, -1] = reference_sum(input_combo, output_neuron)
@@ -345,7 +356,9 @@ if __name__ == '__main__':
     Z_ref = Z_ref.reshape((input_length0, input_length1))
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
-    surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
+    # surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
+    ax.set_xlabel(input0)
+    ax.set_ylabel(input1)
     ax.set_xticks([-60, -50, -40])
     ax.set_yticks([-60, -50, -40])
     ax.set_zticks([-60, -50, -40])
