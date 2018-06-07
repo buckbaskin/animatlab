@@ -37,16 +37,19 @@ og_neurons = {
         'voltage': -45,
         'lock': True,
     },
-    'fusion accel +': {},
+    'future accel +': {},
+    'future accel -': {},
     'inertia (test)': {},
     'neg load effect (test)': {},
     'pos load effect (test)': {},
     'neg damp effect (test)': {},
     'pos damp effect (test)': {},
     'tcn+': {},
+    'tcn-': {},
     'tc+': {
         # 'applied_current': 20, # uncomment for inverted transfer pathway
     },
+    'tc-': {},
     'inv pos net torque': {
         'applied_current': 20,
     },
@@ -78,6 +81,26 @@ og_neurons = {
         'voltage': -60,
         'lock': True,
     }
+    'pos torque guess': {
+        'applied_current': 20,
+    },
+    'neg torque guess': {
+        'applied_current': 20,
+    },
+    'pos torque guess int': {
+        'applied_current': 20,
+    },
+    'neg torque guess int': {
+        'applied_current': 20,
+    },
+    'pos vel': {},
+    'pos vel mod': {},
+    'neg vel': {},
+    'neg vel mod': {},
+    'theta future': {},
+    'theta des (test)': {},
+    'pos theta err': {},
+    'neg theta err': {},
 }
 
 # mapping from synapse name to properties
@@ -256,7 +279,7 @@ edges = {
         'pos load effect (test)': 'signal transfer',
         'neg load effect (test)': 'signal inverter',
     },
-    'fusion accel +': {
+    'future accel +': {
         'tcn+': 'signal transfer',
         'inertia (test)': 'signal divider',
     },
