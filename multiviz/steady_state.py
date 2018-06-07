@@ -37,19 +37,7 @@ og_neurons = {
         'voltage': -45,
         'lock': True,
     },
-    'future accel +': {},
-    'future accel -': {},
-    'inertia (test)': {},
-    'neg load effect (test)': {},
-    'pos load effect (test)': {},
-    'neg damp effect (test)': {},
-    'pos damp effect (test)': {},
-    'tcn+': {},
-    'tcn-': {},
-    'tc+': {
-        # 'applied_current': 20, # uncomment for inverted transfer pathway
-    },
-    'tc-': {},
+    
     'inv pos net torque': {
         'applied_current': 20,
     },
@@ -74,13 +62,13 @@ og_neurons = {
     'neg theta': {
         'applied_current': 20,
     },
-    'theta (test)': {},
     'pos torque (test)': {},
     'stiffness': {
 
         'voltage': -60,
         'lock': True,
     }
+
     'pos torque guess': {
         'applied_current': 20,
     },
@@ -93,15 +81,154 @@ og_neurons = {
     'neg torque guess int': {
         'applied_current': 20,
     },
+    'tc+': {
+        # 'applied_current': 20, # uncomment for inverted transfer pathway
+    },
+    'tc-': {},
+    'neg damp effect (test)': {},
+    'pos damp effect (test)': {},
+    'tcn+': {},
+    'tcn-': {},
+    'neg load effect (test)': {},
+    'pos load effect (test)': {},
+    'future accel +': {},
+    'future accel -': {},
+    'inertia (test)': {},
     'pos vel': {},
     'pos vel mod': {},
     'neg vel': {},
     'neg vel mod': {},
+    'theta (test)': {},
     'theta future': {},
     'theta des (test)': {},
-    'pos theta err': {},
-    'neg theta err': {},
+    'theta pos err': {},
+    'theta neg err': {},
 }
+
+
+# mapping from ending neuron to starting neuron, synapse type
+edges = {
+    'pos torque guess': {
+        'pos torque guess int': 'integral inhibitor',
+        'theta neg err': 'signal inverter',
+        'theta pos err': 'signal transfer',
+    },
+    'neg torque guess': {
+        'neg torque guess int': 'integral inhibitor',
+        'theta neg err': 'signal transfer',
+        'theta pos err': 'signal inverter',
+    },
+    'tc+': {
+        'pos torque guess': 'signal transfer',
+        'neg torque guess': 'signal inverter',
+        'pos damp effect (test)': 'signal transfer',
+        'neg damp effect (test)': 'signal inverter',
+    },
+    'tc-': {
+        'pos torque guess': 'signal inverter',
+        'neg torque guess': 'signal transfer',
+        'pos damp effect (test)': 'signal inverter',
+        'neg damp effect (test)': 'signal transfer',
+    },
+    'tcn+': {
+        'tc+': 'signal transfer',
+        'pos load effect (test)': 'signal transfer',
+        'neg load effect (test)': 'signal inverter',
+    },
+    'tcn-': {
+        'tc-': 'signal transfer',
+        'pos load effect (test)': 'signal inverter',
+        'neg load effect (test)': 'signal transfer',
+    },
+    'future accel +': {
+        'tcn+': 'signal transfer',
+        'inertia (test)': 'signal divider',
+    },
+    'future accel -': {
+        'tcn-': 'signal transfer',
+        'inertia (test)': 'signal divider',
+    },
+    'pos vel mod': {
+        'pos vel (test)': 'signal transfer',
+        'future accel +': 'signal red 0.2x',
+        'future accel -': 'signal inv red 0.2x',
+    }
+    'neg vel mod': {
+        'neg vel (test)': 'signal transfer',
+        'future accel +': 'signal inv red 0.2x',
+        'future accel -': 'signal red 0.2x',
+    }
+
+    'left': {
+        'top': 'signal transfer',
+    },
+    'right-': {
+        'top': 'signal transfer',
+        'ref': 'signal inverter',
+    },
+    'right+': {
+        'top': 'signal inverter',
+        'ref': 'signal transfer',
+    },
+    'top': {
+        'right-': 'signal inverter',
+        'right+': 'signal transfer',
+        'top int': 'integral inhibitor',
+    },
+    'top int': {
+        'top': 'integral inhibitor',
+    },
+    'pos theta': {
+        'theta (test)': 'conv forward pos',
+    },
+    'neg theta': {
+        'theta (test)': 'conv forward neg',
+    },
+    'abs theta': {
+        'pos theta': 'signal transfer',
+        'neg theta': 'signal transfer',
+    },
+    'theta mult 1': {
+        'abs theta': 'signal multiplier',
+    },
+    'ext torque also': {
+        'theta mult 1': 'signal multiplier',
+        'ext torque': 'signal transfer',
+    },
+    'ext pres (guess)': {
+        'ext torque also': 'torque pres converter',
+        'ext torque': 'signal transfer',
+        'stiffness': 'signal transfer',
+    },
+    'ext +p err': {
+        'ext pres (test)': 'signal transfer',
+        # 'ext pres (guess)': 'signal inverter', # uncomment for pressure to torque loop
+    },
+    'ext -p err': {
+        'ext pres (test)': 'signal inverter',
+        # 'ext pres (guess)': 'signal transfer', # uncomment for pressure to torque loop
+    },
+    'ext torque guess': {
+        'ext +p err': 'signal transfer',
+        'ext -p err': 'signal inverter',
+        'ext torque guess int': 'integral inhibitor',
+    },
+    'ext torque guess int': {
+        'ext torque guess': 'integral inhibitor',
+    },
+    'ext torque': {
+        'pos torque (test)': 'signal transfer',
+        # 'ext torque guess': 'signal transfer', # uncomment for pressure to torque loop
+    },
+    'pos net torque': {
+        'ext torque guess': 'signal transfer',
+    },
+    'inv pos net torque': {
+        'pos net torque': 'signal inv stim',
+    },
+    
+}
+
 
 # mapping from synapse name to properties
 synapse_types = {
@@ -199,91 +326,6 @@ synapse_types = {
 }
 
 print('Wow, you made %d synapse types.' % (len(synapse_types),))
-
-# mapping from ending neuron to starting neuron, synapse type
-edges = {
-    'left': {
-        'top': 'signal transfer',
-    },
-    'right-': {
-        'top': 'signal transfer',
-        'ref': 'signal inverter',
-    },
-    'right+': {
-        'top': 'signal inverter',
-        'ref': 'signal transfer',
-    },
-    'top': {
-        'right-': 'signal inverter',
-        'right+': 'signal transfer',
-        'top int': 'integral inhibitor',
-    },
-    'top int': {
-        'top': 'integral inhibitor',
-    },
-    'pos theta': {
-        'theta (test)': 'conv forward pos',
-    },
-    'neg theta': {
-        'theta (test)': 'conv forward neg',
-    },
-    'abs theta': {
-        'pos theta': 'signal transfer',
-        'neg theta': 'signal transfer',
-    },
-    'theta mult 1': {
-        'abs theta': 'signal multiplier',
-    },
-    'ext torque also': {
-        'theta mult 1': 'signal multiplier',
-        'ext torque': 'signal transfer',
-    },
-    'ext pres (guess)': {
-        'ext torque also': 'torque pres converter',
-        'ext torque': 'signal transfer',
-        'stiffness': 'signal transfer',
-    },
-    'ext +p err': {
-        'ext pres (test)': 'signal transfer',
-        # 'ext pres (guess)': 'signal inverter', # uncomment for pressure to torque loop
-    },
-    'ext -p err': {
-        'ext pres (test)': 'signal inverter',
-        # 'ext pres (guess)': 'signal transfer', # uncomment for pressure to torque loop
-    },
-    'ext torque guess': {
-        'ext +p err': 'signal transfer',
-        'ext -p err': 'signal inverter',
-        'ext torque guess int': 'integral inhibitor',
-    },
-    'ext torque guess int': {
-        'ext torque guess': 'integral inhibitor',
-    },
-    'ext torque': {
-        'pos torque (test)': 'signal transfer',
-        # 'ext torque guess': 'signal transfer', # uncomment for pressure to torque loop
-    },
-    'pos net torque': {
-        'ext torque guess': 'signal transfer',
-    },
-    'inv pos net torque': {
-        'pos net torque': 'signal inv stim',
-    },
-    'tc+': {
-        'pos torque (test)': 'signal transfer',
-        'pos damp effect (test)': 'signal transfer',
-        'neg damp effect (test)': 'signal inverter',
-    },
-    'tcn+': {
-        'tc+': 'signal transfer',
-        'pos load effect (test)': 'signal transfer',
-        'neg load effect (test)': 'signal inverter',
-    },
-    'future accel +': {
-        'tcn+': 'signal transfer',
-        'inertia (test)': 'signal divider',
-    },
-}
 
 neurons = deepcopy(og_neurons)
 
