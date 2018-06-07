@@ -247,7 +247,7 @@ edges = {
         'pos net torque': 'signal inv stim',
     },
     'tc+': {
-        'pos torque (test)': 'signal transfer',
+        'inv pos net torque': 'signal inv stim',
         'pos damp effect (test)': 'signal transfer',
         'neg damp effect (test)': 'signal inverter',
     },
@@ -447,13 +447,16 @@ class Simulator(object):
 
 def reference_pressure(inputs, output):
     for input_ in inputs:
-        if input_[0] == 'inerta (test)':
-            inertia_mV = input_[1]
         if input_[0] == 'pos torque (test)':
-            torque_mV = input_[1]
+            T_mV = input_[1]
+            if T_mV < -60 + 2:
+                return 0
+        if input_[0] == 'theta (test)':
+            theta_mV = input_[1]
 
     # theta conversion (-60 -> -pi/4, 60 -> pi/4)
-    torque = (torque_mV + 60) / 20 * 2.5
+    theta = (theta_mV + 50) / 10 * (pi/4)
+    torque = (T_mV + 60) / 20 * 2.5
 
     actual_pressure = Simulator().ext_torque_to_pressure(torque, theta)
     pressure_mV = actual_pressure / 620 * 20
@@ -471,7 +474,7 @@ if __name__ == '__main__':
     '''
     RESOLUTION = 11
     ITERATIONS = 5
-    output_neuron = 'fusion accel +'
+    output_neuron = 'ext pres (guess)'
 
     # All these variables get producted together so all combinations are tested
 
@@ -483,17 +486,16 @@ if __name__ == '__main__':
     ext_pres = np.zeros((RESOLUTION, 2))
     ext_pres[:, 0] = np.linspace(-60, -40, RESOLUTION)
 
-    # Step 1: Select two variables to have visualized against output
-    input0 = 'inertia (test)'
-    input1 = 'pos torque (test)'
-
     inputs = {
-        input0: list(position),
+        'theta (test)': list(position),
         # 'null': list(ext_pres),
         'pos torque (test)': list(ext_pres),
         # 'theta (test)': [[-60, 0]], # mV
     }
 
+    # Step 1: Select two variables to have visualized against output
+    input0 = 'theta (test)'
+    input1 = 'pos torque (test)'
 
     input_length0 = len(inputs[input0])
     input_length1 = len(inputs[input1])
@@ -527,7 +529,7 @@ if __name__ == '__main__':
         data[iteration, -1] = specific_output
         data_ref[iteration, -1] = reference_pressure(input_combo, output_neuron)
 
-    fig = plt.figure(figsize=(4,3,), dpi=300)
+    fig = plt.figure(dpi=300) # figsize=(4,3,), 
     ax = fig.gca(projection='3d')
     X = data[:,0]
     X = X.reshape((input_length0, input_length1)) + 60
@@ -543,9 +545,9 @@ if __name__ == '__main__':
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
     surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
-    ax.set_xlabel(input0 + ' mV')
-    ax.set_ylabel(input1 + ' mV')
-    ax.set_zlabel(output_neuron + ' mV')
+    ax.set_xlabel('Position' + '(mV)')
+    ax.set_ylabel('Torque' + ' (mV)')
+    ax.set_zlabel('Pressure' + '(mV)')
     ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
@@ -558,5 +560,5 @@ if __name__ == '__main__':
     print('%.1f mV' % (mean_error,))
     # plt.legend()
     # plt.tight_layout()
-    plt.savefig('images/results/new_T2P.png')
+    plt.savefig('images/results/New_T2P.png')
     plt.show()

@@ -171,17 +171,17 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 
 \begin{figure}
 \centering
-\includegraphics[height=2.25in]{results/TestT2PExtWide}
-\caption{Estimated extension pressure from desired torque}
+\includegraphics[height=2.25in]{results/New_T2P}
+\caption{Estimated extension pressure from desired torque. Mean error is 1.6 mV}
 \label{fig:TestT2PPos}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/TestT2PFlxWide}
-\caption{Estimated flexion pressure from desired torque}
-\label{fig:TestT2PNeg}
-\end{figure}
+% \begin{figure}
+% \centering
+% \includegraphics[height=2.25in]{results/TestT2PFlxWide}
+% \caption{Estimated flexion pressure from desired torque}
+% \label{fig:TestT2PNeg}
+% \end{figure}
 
 \begin{figure}
 \centering
@@ -217,8 +217,11 @@ Two key estimates are made within the sensor fusion subnetwork: velocity and
 acceleration. The synthetic nervous system controller was tested against sine waves of known
 frequencies. The positive and negative estimated are compared to the ground truth in \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 Within the neuron network, acceleration is calculated primarily from actuator
-pressures. The output is plotted compared with expected output. See
-\myref{fig:TestAccelPos} and \myref{fig:TestAccelNeg}.
+pressures. For testing, this network was split into two components: estimating
+torque based on actuator pressure and estimating acceleration from torque. The
+output of the neuron model is compared to the expected output in
+\myref{fig:TestAccelPos}. The testing showed an average error of 
+% TODO(buckbaskin): finish this sentence with data.
 
 \bbsss{Torque Optimization}
 
@@ -227,7 +230,9 @@ The components for converting the torque to
 acceleration also were tested
 separately. See \myref{fig:TestT2APos} and \myref{fig:TestT2ANeg}.
 The components for converting the torque to pressure also were tested
-separately. See \myref{fig:TestT2PPos} and \myref{fig:TestT2PNeg}.
+separately. See \myref{fig:TestT2PPos}. % and \myref{fig:TestT2PNeg}.
+The test results indicated an average error of about 1.6 mV across the entire
+working range of the joint.
 
 \bbss{System Modeling}
 
