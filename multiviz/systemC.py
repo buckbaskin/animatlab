@@ -716,8 +716,8 @@ if __name__ == '__main__':
     Z = np.clip(Z, 0, 20)
     Z_ref = np.clip(Z_ref, 0, 20)
 
-    surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
-    surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
+    surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron', zorder=2)
+    surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False, zorder=1)
     ax.set_xlabel('Vel (mV)')
     ax.set_ylabel('Err (mV)')
     ax.set_zlabel('Update (mV)')

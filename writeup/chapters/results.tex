@@ -136,19 +136,17 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 
 \begin{figure}
 \centering
-\includegraphics[height=3.5in]{results/New_T2A_2} % TODO(buckbaskin): complete this thought with a picture and data
+\includegraphics[height=3.5in]{results/New_T2A_2}
 \caption{Testing conversion from torque to acceleration, with varying joint damping. Mean error is 0.7 mV}
 \label{fig:TestAccelDamping}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[height=3.5in]{results/New_P2T} % TODO(buckbaskin): complete this thought with a picture and data
+\includegraphics[height=3.5in]{results/New_P2T}
 \caption{Testing conversion from actuator pressure to torque. Mean error is 1.4 mV}
 \label{fig:TestP2T}
 \end{figure}
-
-% TODO(buckbaskin): does it make sense to add a damping graphic in here?
 
 \begin{figure}
 \centering
@@ -173,21 +171,14 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 
 \begin{figure}
 \centering
-\includegraphics[height=2.25in]{results/TestSystemCPosWide}
-\caption{Positive neuron and actual damping factor updates}
+\includegraphics[height=3.5in]{results/New_SystemC}
+\caption{Neuron and actual damping factor update. Mean error is 0.7 mV. The reference surface isn't rendered completely, but it primarily lies above the neuron estimate}
 \label{fig:TestSystemCPos}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[height=2.25in]{results/TestSystemCNegWide}
-\caption{Negative neuron and actual damping factor updates}
-\label{fig:TestSystemCNeg}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/New_SystemN}
+\includegraphics[height=3.5in]{results/New_SystemN}
 \caption{Compare neuron system model update for conservative forces to reference. Mean error is 1.7 mV}
 \label{fig:TestSystemNPos}
 \end{figure}
@@ -203,8 +194,6 @@ torque based on actuator pressure (\myref{fig:TestP2T}) and estimating accelerat
 output of the neuron model is compared to the expected output in
 \myref{fig:TestAccelInertia} and \myref{fig:TestAccelDamping}. All 3 tests met the standard, with
 mean errors of 1.4 mV, 0.6 mV and 0.7 mV.
-
-% TODO(buckbaskin): check figures in here
 
 \bbsss{Torque Optimization}
 
@@ -226,9 +215,8 @@ The system modeling network was tested as a complete network because both the
 damping and load factors are updated from the same $\lambda$ value. See 
 \myref{fig:TestSystemCPos} and \myref{fig:TestSystemNPos}
 for visualizations of 3D cross sections of the update surface. In the tests shown,
-the damping update had an average error of % TODO(buckbaskin): update with data
+the damping update had an average error of 0.7 mV
 and the conservative forces update had mean error of 1.7 mV.
-.
 
 \bbss{Discussion}
 \label{chap:discussion}
