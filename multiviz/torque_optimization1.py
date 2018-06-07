@@ -621,9 +621,9 @@ if __name__ == '__main__':
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
     surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
-    ax.set_xlabel(input0 + ' mV')
-    ax.set_ylabel(input1 + ' mV')
-    ax.set_zlabel(output_neuron + ' mV')
+    ax.set_xlabel('Position (mV)')
+    ax.set_ylabel('Desired Position (mV)')
+    ax.set_zlabel('Torque (mV)')
     ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
