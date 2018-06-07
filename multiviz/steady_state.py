@@ -45,7 +45,7 @@ og_neurons = {
     'pos damp effect (test)': {},
     'tcn+': {},
     'tc+': {
-        'applied_current': 20,
+        # 'applied_current': 20, # uncomment for inverted transfer pathway
     },
     'inv pos net torque': {
         'applied_current': 20,
@@ -445,24 +445,27 @@ class Simulator(object):
             + self.a5 * F) # kpa
         return np.clip(P, self.PRESSURE_MIN, self.PRESSURE_MAX)
 
-def reference_pressure(inputs, output):
+def reference_accel(inputs, output):
     for input_ in inputs:
-        if input_[0] == 'inerta (test)':
+        if input_[0] == 'inertia (test)':
             inertia_mV = input_[1]
         if input_[0] == 'pos torque (test)':
             torque_mV = input_[1]
 
     # theta conversion (-60 -> -pi/4, 60 -> pi/4)
     torque = (torque_mV + 60) / 20 * 2.5
+    # other components are zeroed
+    inertia_factor = (inertia_mV + 60) / 20 * 2 + 0.1 # baseline inertia
 
-    actual_pressure = Simulator().ext_torque_to_pressure(torque, theta)
-    pressure_mV = actual_pressure / 620 * 20
-    # print(T_mV, theta_mV)
-    # print(torque, theta)
-    # print(actual_pressure)
-    # print(pressure_mV)
+    accel = torque / inertia_factor
+
+    accel_mV = accel / 30 * 20
+    # print(torque_mV, inertia_mV)
+    # print(torque, inertia_factor)
+    # print(accel)
+    # print(accel_mV)
     # 1/0
-    return pressure_mV
+    return accel_mV
 
 if __name__ == '__main__':
     '''
@@ -470,7 +473,7 @@ if __name__ == '__main__':
     torque -> pressure model
     '''
     RESOLUTION = 11
-    ITERATIONS = 5
+    ITERATIONS = 1
     output_neuron = 'fusion accel +'
 
     # All these variables get producted together so all combinations are tested
@@ -490,7 +493,7 @@ if __name__ == '__main__':
     inputs = {
         input0: list(position),
         # 'null': list(ext_pres),
-        'pos torque (test)': list(ext_pres),
+        input1: list(ext_pres),
         # 'theta (test)': [[-60, 0]], # mV
     }
 
@@ -525,7 +528,7 @@ if __name__ == '__main__':
         pprint(general_output)
         specific_output = general_output[output_neuron]
         data[iteration, -1] = specific_output
-        data_ref[iteration, -1] = reference_pressure(input_combo, output_neuron)
+        data_ref[iteration, -1] = reference_accel(input_combo, output_neuron)
 
     fig = plt.figure(figsize=(4,3,), dpi=300)
     ax = fig.gca(projection='3d')
@@ -558,5 +561,5 @@ if __name__ == '__main__':
     print('%.1f mV' % (mean_error,))
     # plt.legend()
     # plt.tight_layout()
-    plt.savefig('images/results/new_T2P.png')
+    plt.savefig('images/results/New_T2A.png')
     plt.show()

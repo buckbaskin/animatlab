@@ -10,10 +10,11 @@ import numpy as np
 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import pyplot as plt
+plt.rc('font', **{'size': 12})
 
 from pprint import pprint
 
-from math import pi, sin, cos
+from numpy import pi, sqrt, floor, arctan
 
 # mapping from neuron name to voltage
 og_neurons = {
@@ -44,7 +45,7 @@ og_neurons = {
     'pos damp effect (test)': {},
     'tcn+': {},
     'tc+': {
-        'applied_current': 20,
+        # 'applied_current': 20, # uncomment for inverted transfer pathway
     },
     'inv pos net torque': {
         'applied_current': 20,
@@ -71,6 +72,12 @@ og_neurons = {
         'applied_current': 20,
     },
     'theta (test)': {},
+    'pos torque (test)': {},
+    'stiffness': {
+
+        'voltage': -60,
+        'lock': True,
+    }
 }
 
 # mapping from synapse name to properties
@@ -211,14 +218,15 @@ edges = {
     'ext pres (guess)': {
         'ext torque also': 'torque pres converter',
         'ext torque': 'signal transfer',
+        'stiffness': 'signal transfer',
     },
     'ext +p err': {
         'ext pres (test)': 'signal transfer',
-        'ext pres (guess)': 'signal inverter',
+        # 'ext pres (guess)': 'signal inverter', # uncomment for pressure to torque loop
     },
     'ext -p err': {
         'ext pres (test)': 'signal inverter',
-        'ext pres (guess)': 'signal transfer',
+        # 'ext pres (guess)': 'signal transfer', # uncomment for pressure to torque loop
     },
     'ext torque guess': {
         'ext +p err': 'signal transfer',
@@ -229,7 +237,8 @@ edges = {
         'ext torque guess': 'integral inhibitor',
     },
     'ext torque': {
-        'ext torque guess': 'signal transfer',
+        'pos torque (test)': 'signal transfer',
+        # 'ext torque guess': 'signal transfer', # uncomment for pressure to torque loop
     },
     'pos net torque': {
         'ext torque guess': 'signal transfer',
@@ -238,7 +247,7 @@ edges = {
         'pos net torque': 'signal inv stim',
     },
     'tc+': {
-        'inv pos net torque': 'signal inv stim',
+        'pos torque (test)': 'signal transfer',
         'pos damp effect (test)': 'signal transfer',
         'neg damp effect (test)': 'signal inverter',
     },
@@ -369,17 +378,95 @@ def reference_sum(inputs, output):
 
     return accum - 60
 
-def reference_torque(inputs, output):
+class Simulator(object):
+    MAX_AMPLITUDE = pi / 16
+
+    ### Simulation Parameters and Constants ###
+    LINK_LENGTH = 0.25 # meters
+    LINK_MASS = 0.25 # kg
+    ROBOT_MASS = 0.3 # kg
+
+    INTERNAL_DAMPING = 0.1
+
+    JOINT_LIMIT_MAX = pi / 4
+    JOINT_LIMIT_MIN = -pi / 4
+
+    TORQUE_MAX = 2.5
+    TORQUE_MIN = 0.25
+
+    PRESSURE_MAX = 620
+    PRESSURE_MIN = 0
+
+    PRESSURE_RATE_MAX = 1000 # 200 kPa per sec works
+
+    TIME_RESOLUTION = 0.001
+    TIME_START = 0
+    TIME_END = 10.0
+
+    CONTROL_RATE = 30
+
+    ## Actuator Model Parameters ##
+    a0 = 254.3 # kpa
+    a1 = 192.0 # kpa
+    a2 = 2.0625
+    a3 = -0.461
+    a4 = -0.331 # 1 / Nm
+    a5 = 1.230
+    a6 = 15.6 # kpa
+
+    ## Mutual Actuator Parameters ##
+    l_rest = .189 # m
+    l_620 = round(-((.17 * l_rest) - l_rest), 3)
+    k_max = 0.17
+    l_max = l_rest
+    l_min = l_620
+
+    d = 0.005 # m
+    offset = 0.015 # m
+    l1 = round(sqrt(d**2 + offset**2), 3)
+    l0 = floor((l_max - l1) * 1000.0) / 1000.0
+
+    alpha_l = arctan(offset / d) # radians
+    beta_l = -pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+    beta_l = 0 # for now
+
+    alpha_r = -arctan(offset / d) # radians
+    beta_r = pi / 2 # radians, TODO(buckbaskin): assumes that muscle mounted d meters off mount
+    beta_r = 0 # for now
+    def ext_torque_to_pressure(self, torque, angle):
+        T = torque
+        A = angle
+        F = T / (self.d * np.cos(self.beta_r + A))
+        L_angle = self.l0 + self.l1 * np.cos(self.alpha_r + A)
+        K = (self.l_rest - L_angle) / self.l_rest
+        assert np.all(0 <= K) and np.all(K <= 1)
+        P = (self.a0 + self.a1 *
+            np.tan(self.a2 * (K / (self.a4 * F + self.k_max)+ self.a3))
+            + self.a5 * F) # kpa
+        return np.clip(P, self.PRESSURE_MIN, self.PRESSURE_MAX)
+
+def reference_accel(inputs, output):
     for input_ in inputs:
-        if input_[0] == 'ext pres (test)':
-            ext_pres_mV = input_[1]
-        if input_[0] == 'theta (test)':
-            theta_mV = input_[1]
+        if input_[0] == 'neg damp effect (test)':
+            damping_mV = input_[1]
+        if input_[0] == 'pos torque (test)':
+            torque_mV = input_[1]
 
-    theta = (theta_mV + 50) / 20 * (pi / 4)
+    # theta conversion (-60 -> -pi/4, 60 -> pi/4)
+    torque = (torque_mV + 60) / 20 * 2.5
+    # other components are zeroed
+    inertia_factor = 0.1
+    damping_factor = (damping_mV + 60) / 20 * 2.5
 
-    out_mV = ext_pres_mV + ext_pres_mV * (1 - cos(theta)) + 60
-    return min(max(out_mV, 0), 20)
+    accel = (torque - damping_factor) / inertia_factor
+
+    accel_mV = accel / 30 * 20
+    # print(torque_mV, inertia_mV)
+    # print(torque, inertia_factor)
+    # print(accel)
+    # print(accel_mV)
+    # 1/0
+    return accel_mV
 
 if __name__ == '__main__':
     '''
@@ -387,8 +474,8 @@ if __name__ == '__main__':
     torque -> pressure model
     '''
     RESOLUTION = 11
-    ITERATIONS = 5
-    output_neuron = 'ext torque guess'
+    ITERATIONS = 1
+    output_neuron = 'fusion accel +'
 
     # All these variables get producted together so all combinations are tested
 
@@ -400,16 +487,17 @@ if __name__ == '__main__':
     ext_pres = np.zeros((RESOLUTION, 2))
     ext_pres[:, 0] = np.linspace(-60, -40, RESOLUTION)
 
+    # Step 1: Select two variables to have visualized against output
+    input0 = 'neg damp effect (test)'
+    input1 = 'pos torque (test)'
+
     inputs = {
-        'theta (test)': list(position),
+        input0: list(position),
         # 'null': list(ext_pres),
-        'ext pres (test)': list(ext_pres),
+        input1: list(ext_pres),
         # 'theta (test)': [[-60, 0]], # mV
     }
 
-    # Step 1: Select two variables to have visualized against output
-    input0 = 'theta (test)'
-    input1 = 'ext pres (test)'
 
     input_length0 = len(inputs[input0])
     input_length1 = len(inputs[input1])
@@ -441,9 +529,9 @@ if __name__ == '__main__':
         pprint(general_output)
         specific_output = general_output[output_neuron]
         data[iteration, -1] = specific_output
-        data_ref[iteration, -1] = reference_torque(input_combo, output_neuron)
+        data_ref[iteration, -1] = reference_accel(input_combo, output_neuron)
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(4,3,), dpi=300)
     ax = fig.gca(projection='3d')
     X = data[:,0]
     X = X.reshape((input_length0, input_length1)) + 60
@@ -455,23 +543,25 @@ if __name__ == '__main__':
     Z_ref = data_ref[:,-1]
     Z_ref = Z_ref.reshape((input_length0, input_length1))
 
+    Z = np.clip(Z, np.min([0, np.min(Z_ref)]), np.max([20, np.max(Z_ref)]))
+    Z_ref = np.clip(Z_ref, 0, None)
+
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
     surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
-    ax.set_xlabel(input0 + ' mV')
-    ax.set_ylabel(input1 + ' mV')
-    ax.set_zlabel(output_neuron + ' mV')
+    ax.set_xlabel('Damping (mV)')
+    ax.set_ylabel('Torque (mV)')
+    ax.set_zlabel('Acceleration (mV)')
     ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
-    # ax.set_zticks(ticks)
+    ax.set_zticks(ticks)
 
     # print(Z)
     # print(Z_ref)
-
     mean_error = np.mean(np.abs(Z - Z_ref))
     print('Mean Error from Reference')
     print('%.1f mV' % (mean_error,))
     # plt.legend()
-    plt.tight_layout()
-    plt.savefig('images/results/New_P2T.png')
+    # plt.tight_layout()
+    plt.savefig('images/results/New_T2A_2.png')
     plt.show()
