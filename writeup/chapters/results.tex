@@ -192,7 +192,7 @@ Within the neuron network, acceleration is calculated primarily from actuator
 pressures. For testing, this network was split into two components: estimating
 torque based on actuator pressure (\myref{fig:TestP2T}) and estimating acceleration from torque. The
 output of the neuron model is compared to the expected output in
-\myref{fig:TestAccelInertia} and \myref{fig:TestAccelDamping}. All 3 tests met the standard, with
+\myref{fig:TestAccelInertia} and \myref{fig:TestAccelDamping}. All 3 test sets met the standard, with
 mean errors of 1.4 mV, 0.6 mV and 0.7 mV.
 
 \bbsss{Torque Optimization}
@@ -258,15 +258,10 @@ gain and phase.
 
 \bbssss{Acceleration}
 
-The acceleration network converges to a near-correct solution.
-This convergence demonstrates that the feedback loop concept can be effective; however, the process takes a relatively long, fixed amount of time to
-converge from solutions that are a significant step away. This time delay may lead to
-issues with rapidly changing pressures on a hardware system. One potential
-solution is to modify the time constants of the network
-elements within the loop, in particular the integration network, to allow the
-internal loop(s) to run faster than the rest of the network
-so the outputs of the internal loop appear to converge to the correct value on the same time scale as the
-rest of the network. 
+The acceleration network tests have steady state solutions that meet the standard of less than 2 mV error.
+This convergence demonstrates that the feedback loop concept can be effective; however, the process takes a relatively long, simulated time to
+converge to the steady state solutions described by the surfaces. This time delay may lead to
+issues with rapidly changing pressures on a hardware system; however, the time constants in the simulated neurons in the network can be decreased to match the pace of the physical system. This change could be particularly impactful to the looping components of the network. 
 
 This feedback loop design pattern behavior matches the behavior of a synthetic nervous system implementation of adapting force walking in \cite{LegLocal}. This feedback pattern is effective for local learning of control adaptations in synthetic nervous systems and also represents an adaptation of feedback behavior observed in insects \cite{LegLocal}.
 
@@ -275,18 +270,16 @@ This feedback loop design pattern behavior matches the behavior of a synthetic n
 In many cases the torque optimization network converges to the
 correct solution; however, like the feedback in the acceleration network, the torque optimization process can
 take a relatively long time to converge to the correct solution from discontinuous starting
-values. Due to the integrator included in the torque optimization network, the starting conditions
-for the first test case are based on other tests and did not show consistent
-behavior.
+values.
 
 The concept of the torque optimization network appears to be effective; however,
 its implementation in neurons suffers from both attempting to converge to a
 solution quickly and approximating a physical simulation internally. The torque optimization network
-uses relatively low time constants and high gains. This can cause overshoot
-(seen in \myref{fig:TestTorqueOptimizationPos}) where the
-estimated torque is off the charts for either large positive or negative swings.
+uses relatively low time constants and high gains. This can cause overshoot in continuous time simulations; however,
+when analyzing the steady state solution, the network converges to within tolerance.
 The high gains also reduce accuracy by amplifying small errors made during the
-approximation of the ``physics" implementation. This behavior replicates
+approximation of the ``physics" implementation and can be replaced by lower gain edges in a simulation with faster time constants.
+This behavior replicates
 observations made during the development of the prototype controller in code,
 where an attempt to approximate the physics of the joint in a single step was
 inaccurate. The solution to the simulation error was to make multiple iterations by subdividing
@@ -297,26 +290,26 @@ necessary within the loop to project dynamics forward; however, increasing the l
 \bbssss{Acceleration from Torque}
 
 The 3 stage network for estimating the acceleration from the torque applied to
-the system appears to work well. There are two test cases, between 7 and 9
-seconds that were not significant when tested at the resolution that the
-network incorporates (shown in \myref{fig:TestT2APos} and \myref{fig:TestT2ANeg}). Otherwise, the acceleration is almost always correct.
+the system appears to work well (shown in \myref{fig:TestAccelInertia} and \myref{fig:TestAccelInertia}). The acceleration estimation had a mean error of 
+0.6 mV and 0.7 mV respectively.
+
 Given its intended uses, the network is sufficiently accurate and suggests that
 relatively small sets of neurons can provide a representation of the physics of
 a biological system. This would suggest that an animal's nervous system can understand the dynamics of its environment and its body.
 
 \bbssss{Estimating Pressures from Torques}
 
-The process for calculating pressures from torques is accurate in some
-cases and inaccurate in many others. This varying accuracy suggests that the physical
+The process for calculating pressures from torques is accurate in most cases. The test data shown in \myref{fig:TestT2PPos} had a mean error of 1.6 mV. This varying accuracy suggests that the physical
 model of the pneumatic artificial muscles proposed in \cite{HuntPMuscles}
-does not convert well to a relatively small network of neurons. A future controller iteration may elect to move the
+can convert well to a relatively small network of neurons if the required tolerance of 10 percent is suitable.
+A future controller iteration may elect to move the
 calculation of this conversion out of neurons and
 to LabView other other code used to interface between synthetic neurons and
-hardware.
+hardware in order to use the closed form model given in \cite{HuntPMuscles} to further reduce error on a hardware system.
 
 \bbsss{System Model}
 
-The network for predicting the weight update is very accurate and suggests that
+The network for predicting the weight update meets the accuracy standard and suggests that
 the engineered process of estimating the modeling errors of a synthetic neuron
 network within the network itself is both feasible and an effective process for
 the continual improvement of a controller applied to a particular hardware
