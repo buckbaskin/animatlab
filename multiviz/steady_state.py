@@ -39,7 +39,9 @@ og_neurons = {
     },
     'abs theta': {},
     'pos theta': {},
-    'neg theta': {},
+    'neg theta': {
+        'applied_current': 20,
+    },
     'theta (test)': {},
 }
 
@@ -219,9 +221,14 @@ def steady_state(neuron_name, neurons):
 
     top = G_m * E_r + I_app
     bottom = G_m
+    if neuron_name == 'abs theta':
+        print('---')
+        print(neuron_name)
+    
     if neuron_name in edges:
         for input_name in edges[neuron_name]:
             synapse_type = edges[neuron_name][input_name]
+
             E_lo = -60
             if 'lo' in synapse_types[synapse_type]:
                 E_lo = synapse_types[synapse_type]['lo']
@@ -229,21 +236,37 @@ def steady_state(neuron_name, neurons):
             if 'hi' in synapse_types[synapse_type]:
                 E_hi = synapse_types[synapse_type]['hi']
 
+
             V_pre = -60
             if 'voltage' in neurons[input_name]:
                 V_pre = neurons[input_name]['voltage']
+                if neuron_name == 'abs theta':
+                    print('%s -> %.1f mV' % (input_name, V_pre,))
+
+
             G_s = synapse_types[synapse_type]['conductance']
-            if V_pre < E_lo:
+            if V_pre <= E_lo:
                 G_s = 0
-            elif V_pre > E_hi:
+            elif V_pre >= E_hi:
                 G_s = G_s
             else:
                 G_s = G_s * (V_pre - E_lo) / (E_hi - E_lo)
+
+            if synapse_type == 'conv forward neg':
+                # print(synapse_types[synapse_type])
+                # print(E_hi, '>= >=', E_lo)
+                # print(V_pre)
+                # print(G_s, 'vs', synapse_types[synapse_type]['conductance'])
+                # input('Hi')
+                pass
+
             E_s = synapse_types[synapse_type]['potential']
             top += G_s * E_s
             bottom += G_s
-        
+
     V = top / bottom
+    if neuron_name == 'abs theta':
+        print('resulting voltage is... %.1f' % (V,))
     return V
 
 def iterate_recursively(neuron_name, neurons):
@@ -256,7 +279,10 @@ def iterate_recursively(neuron_name, neurons):
         # TODO(buckbaskin): need to reset visited count for multiple iterations
         return None
     neurons[neuron_name]['visited'] += 1
+    print('visiting %s' % (neuron_name,))
     if neuron_name in edges:
+        # input('following edges to %s' % (edges[neuron_name],))
+
         for input_name in edges[neuron_name]:
             if neurons[input_name]['visited'] >= 1:
                 '''
@@ -265,6 +291,7 @@ def iterate_recursively(neuron_name, neurons):
                 If I've already been there once, don't update "steady state" again
                 '''
                 continue
+
             iterate_recursively(input_name, neurons)
 
     neurons[neuron_name]['voltage'] = steady_state(neuron_name, neurons)
@@ -292,9 +319,12 @@ def reference_sum(inputs, output):
 
     return accum - 60
 
+def reference_torque(inputs, output):
+    pass
+
 if __name__ == '__main__':
-    resolution = 11
-    output_neuron = 'fusion accel +'
+    resolution = 5
+    output_neuron = 'abs theta'
 
     # All these variables get producted together so all combinations are tested
 
@@ -306,12 +336,14 @@ if __name__ == '__main__':
 
     inputs = {
         'theta (test)': list(position),
-        'ext pres (test)': list(ext_pres),
+        'null': list(ext_pres),
+        # 'ext pres (test)': list(ext_pres),
+        # 'theta (test)': [[-60, 0]], # mV
     }
 
     # Step 1: Select two variables to have visualized against output
     input0 = 'theta (test)'
-    input1 = 'ext pres (test)'
+    input1 = 'null'
 
     input_length0 = len(inputs[input0])
     input_length1 = len(inputs[input1])
@@ -346,22 +378,24 @@ if __name__ == '__main__':
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     X = data[:,0]
-    X = X.reshape((input_length0, input_length1))
+    X = X.reshape((input_length0, input_length1)) + 60
     Y = data[:,1]
-    Y = Y.reshape((input_length0, input_length1))
+    Y = Y.reshape((input_length0, input_length1)) + 60
     Z = data[:,-1]
-    Z = Z.reshape((input_length0, input_length1))
+    Z = Z.reshape((input_length0, input_length1)) + 60
 
     Z_ref = data_ref[:,-1]
     Z_ref = Z_ref.reshape((input_length0, input_length1))
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
     # surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
-    ax.set_xlabel(input0)
-    ax.set_ylabel(input1)
-    ax.set_xticks([-60, -50, -40])
-    ax.set_yticks([-60, -50, -40])
-    ax.set_zticks([-60, -50, -40])
+    ax.set_xlabel(input0 + ' mV')
+    ax.set_ylabel(input1 + ' mV')
+    ax.set_zlabel(output_neuron + ' mV')
+    ticks = np.linspace(0, 20, 3)
+    ax.set_xticks(ticks)
+    ax.set_yticks(ticks)
+    ax.set_zticks(ticks)
 
     mean_error = np.mean(np.abs(Z - Z_ref))
     print('Mean Error from Reference')
