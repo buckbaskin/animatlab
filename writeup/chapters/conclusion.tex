@@ -24,12 +24,9 @@ estimates; however, these mitigations lead to tracking that does not meet the ac
 discussed in the design when the parameters are too conservative.
 
 The implementation of the controller in a synthetic nervous system led to the
-design of unique nervous system functional subnetworks; however, some networks
-were found to be inconsistent with their standard controller output, leading to
-potential deficiencies in observed performance. This result would suggest that a more
-bionic approach that uses mathematical models directly for complicated
-calculations, such as the relation between pressure and torque for pneumatic
-artificial muscles would offer a more accurate controller. Including a synthetic nervous system based controller enhances the flexibility and adaptability of the controller when there is less precision required and a insights gained from a deeper biological understanding of how animal nervous systems control joints are required.
+design of unique nervous system functional subnetworks. Most networks
+were found to be consistent with their standard controller output.
+Including a synthetic nervous system based controller enhances the flexibility and adaptability of the controller when there is less precision required and a insights gained from a deeper biological understanding of how animal nervous systems control joints are required.
 
 \bbs{Future Work}
 
@@ -53,19 +50,22 @@ spatial estimation that may be useful for estimation of other parameters to
 emulate or replace the use of a Kalman Filter.
 
 Another area where the neuron controller has room for improvement is
-implementation of certain subnetworks that do not effectively implement their
-counterparts in the prototype. There were approximations made to match neuron
+implementation of certain subnetworks. In particular, the conversion from desired torque to pressure has a closed form, so
+when implementing the neuron on hardware, it may make sense to make the system more bionic to mix the synthetic nervous system
+with code that efficiently and accurately implements closed form conversions between neuron voltages and physical quantities.
+There were approximations made to match neuron
 and synapse behavior at a low level to some of the mathematics; however, taking
 a larger system approach with the goal of designing neuron connections to emulate
-behavior of larger pieces of the system may lead to a more successful design.
+behavior of larger pieces of the system may lead to a further improved design.
 The end goal is to design a working controller with similar properties and behaviors to the prototype, this
-does not need to be achieved by direct copying of the internal mechanisms. The testing methods implemented
-in this thesis offer a good system for iterating on a synthetic nervous system controller design. Test
+does not necessarily need to be achieved by direct copying of the internal mechanisms. The testing methods implemented
+in this thesis offer a good system for iterating on a synthetic nervous system controller design where multiple methods
+can be tested with the same framework. Test
 inputs can be set up once and then higher level component behavior can be
-compared quickly and visually.
+compared analytically and visually for more complicated surfaces.
 
 Overall, the design of the controller presents a new style of design that can be
 used to create optimal controllers for actuation systems that are highly
 non-linear and tend to perform poorly when simpler controller designs are used.
-There is room for improvement, but the methods used in this thesis offer a
-framework for improvement and determining the areas of improvement with the largest impact.
+There is room for additional improvement, but the methods used in this thesis offer a
+framework determining the areas of improvement with the largest impact.
