@@ -324,7 +324,7 @@ def reference_torque(inputs, output):
 
 if __name__ == '__main__':
     resolution = 5
-    output_neuron = 'abs theta'
+    output_neuron = 'ext pres (guess)'
 
     # All these variables get producted together so all combinations are tested
 
@@ -336,14 +336,14 @@ if __name__ == '__main__':
 
     inputs = {
         'theta (test)': list(position),
-        'null': list(ext_pres),
-        # 'ext pres (test)': list(ext_pres),
+        # 'null': list(ext_pres),
+        'ext pres (test)': list(ext_pres),
         # 'theta (test)': [[-60, 0]], # mV
     }
 
     # Step 1: Select two variables to have visualized against output
     input0 = 'theta (test)'
-    input1 = 'null'
+    input1 = 'ext pres (test)'
 
     input_length0 = len(inputs[input0])
     input_length1 = len(inputs[input1])
@@ -371,7 +371,7 @@ if __name__ == '__main__':
                 data_ref[iteration, 0] = value[1] # mV
             if value[0] == input1:
                 data_ref[iteration, 1] = value[1]
-        output = try_1_inputs(input_combo, output_neuron)
+        output = try_1_inputs(input_combo, output_neuron, iterations=7)
         data[iteration, -1] = output
         data_ref[iteration, -1] = reference_sum(input_combo, output_neuron)
 
