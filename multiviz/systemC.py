@@ -718,13 +718,13 @@ if __name__ == '__main__':
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
     surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
-    ax.set_xlabel(input0 + ' mV')
-    ax.set_ylabel(input1 + ' mV')
-    ax.set_zlabel(output_neuron + ' mV')
+    ax.set_xlabel('Vel (mV)')
+    ax.set_ylabel('Err (mV)')
+    ax.set_zlabel('Update (mV)')
     ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
-    ax.set_zticks(ticks)
+    # ax.set_zticks(ticks)
 
     # print(Z)
     # print(Z_ref)

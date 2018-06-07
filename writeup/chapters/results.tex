@@ -187,16 +187,9 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 
 \begin{figure}
 \centering
-\includegraphics[height=2.25in]{results/TestSystemNPosWide}
-\caption{Positive neuron and actual load factor updates}
+\includegraphics[height=2.25in]{results/New_SystemN}
+\caption{Compare neuron system model update for conservative forces to reference. Mean error is 1.7 mV}
 \label{fig:TestSystemNPos}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[height=2.25in]{results/TestSystemNNegWide}
-\caption{Negative neuron and actual load factor updates}
-\label{fig:TestSystemNNeg}
 \end{figure}
 
 \bbsss{Sensor Fusion}
@@ -231,8 +224,11 @@ working range of the joint.
 
 The system modeling network was tested as a complete network because both the
 damping and load factors are updated from the same $\lambda$ value. See 
-\myref{fig:TestSystemCPos}, \myref{fig:TestSystemCNeg},
-\myref{fig:TestSystemNPos} and \myref{fig:TestSystemNNeg}.
+\myref{fig:TestSystemCPos} and \myref{fig:TestSystemNPos}
+for visualizations of 3D cross sections of the update surface. In the tests shown,
+the damping update had an average error of % TODO(buckbaskin): update with data
+and the conservative forces update had mean error of 1.7 mV.
+.
 
 \bbss{Discussion}
 \label{chap:discussion}
