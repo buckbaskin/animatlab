@@ -107,7 +107,7 @@ resulted in near-perfect tracking; however, the weight updates themselves were c
 
 \bbs{Neuron Controller}
 
-Animatlab does not offer a good model of pneumatic muscles for use in closed loop testing. In place of this testing, the Python simulation was used to simulate the behavior of the pneumatic actuators and the neuron model was tuned to try and match the output of the Python controller from the small component subnetworks up to the overall controller behavior.
+Animatlab does not offer a good model of pneumatic muscles for use in closed loop testing. In place of this testing, the Python simulation was used to simulate the behavior of the pneumatic actuators and the neuron model was tuned to try and match the output of the Python controller from the small component subnetworks up to the overall controller behavior. The standard for a good match was less than 10 percent error across the simulated range of neuron inputs. For neurons with an active range between -60 mV and -40 mV, the determination for a good network is an average error of less than 2 mV. 
 
 \bbss{Test Results}
 
@@ -139,6 +139,13 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 \includegraphics[height=2.25in]{results/New_T2A_2} % TODO(buckbaskin): complete this thought with a picture and data
 \caption{Testing conversion from torque to acceleration, with varying joint damping. Mean error is 0.7 mV}
 \label{fig:TestAccelDamping}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[height=2.25in]{results/New_P2T} % TODO(buckbaskin): complete this thought with a picture and data
+\caption{Testing conversion from actuator pressure to torque. Mean error is 1.4 mV}
+\label{fig:TestP2T}
 \end{figure}
 
 % TODO(buckbaskin): does it make sense to add a damping graphic in here?
@@ -220,10 +227,12 @@ acceleration. The synthetic nervous system controller was tested against sine wa
 frequencies. The positive and negative estimated are compared to the ground truth in \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. For testing, this network was split into two components: estimating
-torque based on actuator pressure and estimating acceleration from torque. The
+torque based on actuator pressure (\myref{fig:TestP2T}) and estimating acceleration from torque. The
 output of the neuron model is compared to the expected output in
-\myref{fig:TestAccelPos}. The testing showed an average error of 
-% TODO(buckbaskin): finish this sentence with data.
+\myref{fig:TestAccelInertia} and \myref{fig:TestAccelDamping}. All 3 tests met the standard, with
+mean errors of 1.4 mV, 0.6 mV and 0.7 mV.
+
+% TODO(buckbaskin): check figures in here
 
 \bbsss{Torque Optimization}
 
@@ -245,6 +254,8 @@ damping and load factors are updated from the same $\lambda$ value. See
 
 \bbss{Discussion}
 \label{chap:discussion}
+
+% TODO(buckbaskin): edit discussion to reflect "new" data
 
 In this thesis, we propose a new system for controlling joints actuated with
 pneumatic artificial muscles. The design focuses on improving controller
