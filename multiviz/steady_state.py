@@ -15,6 +15,12 @@ from pprint import pprint
 
 # mapping from neuron name to voltage
 og_neurons = {
+    'high': {
+        'voltage': -40,
+        'lock': True,
+    },
+    'test in': {},
+    'test out': {},
     'fusion accel +': {},
     'inertia (test)': {},
     'neg load effect (test)': {},
@@ -32,6 +38,7 @@ og_neurons = {
     'ext torque guess': {
         'voltage': -50,
         'visited': 1,
+        'conductance': 0,
     },
     'ext torque': {},
     'ext torque also': {},
@@ -204,7 +211,7 @@ edges = {
     'fusion accel +': {
         'tcn+': 'signal transfer',
         'inertia (test)': 'signal divider',
-    }
+    },
 }
 
 neurons = deepcopy(og_neurons)
@@ -290,7 +297,8 @@ def iterate_recursively(neuron_name, neurons):
 
             iterate_recursively(input_name, neurons)
 
-    neurons[neuron_name]['voltage'] = steady_state(neuron_name, neurons)
+    if 'lock' not in neurons[neuron_name] or not neurons[neuron_name]['lock']:
+        neurons[neuron_name]['voltage'] = steady_state(neuron_name, neurons)
 
 def try_1_inputs(inputs, output, iterations = 3):
     neurons = deepcopy(og_neurons)
@@ -326,9 +334,9 @@ def reference_torque(inputs, output):
     return -60
 
 if __name__ == '__main__':
-    RESOLUTION = 5
+    RESOLUTION = 11
     ITERATIONS = 1
-    output_neuron = 'ext torque guess'
+    output_neuron = 'test out'
 
     # All these variables get producted together so all combinations are tested
 
@@ -341,15 +349,15 @@ if __name__ == '__main__':
     ext_pres[:, 0] = np.linspace(-60, -40, RESOLUTION)
 
     inputs = {
-        'theta (test)': list(position),
+        'test in': list(position),
         # 'null': list(ext_pres),
-        'ext pres (test)': list(ext_pres),
+        'null': list(ext_pres),
         # 'theta (test)': [[-60, 0]], # mV
     }
 
     # Step 1: Select two variables to have visualized against output
-    input0 = 'theta (test)'
-    input1 = 'ext pres (test)'
+    input0 = 'test in'
+    input1 = 'null'
 
     input_length0 = len(inputs[input0])
     input_length1 = len(inputs[input1])
@@ -400,7 +408,7 @@ if __name__ == '__main__':
     ax.set_xlabel(input0 + ' mV')
     ax.set_ylabel(input1 + ' mV')
     ax.set_zlabel(output_neuron + ' mV')
-    ticks = np.linspace(0, 20, 3)
+    ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
     ax.set_zticks(ticks)
