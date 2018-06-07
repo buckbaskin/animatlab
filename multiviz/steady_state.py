@@ -15,12 +15,25 @@ from pprint import pprint
 
 # mapping from neuron name to voltage
 og_neurons = {
-    'high': {
-        'voltage': -40,
+    # 'high': {
+    #     'voltage': -40,
+    #     'lock': True,
+    # },
+    # 'test in': {},
+    # 'test out': {},
+    'top': {
+        'applied_current': 20,
+    },
+    'top int': {
+        'applied_current': 20,
+    },
+    'left': {},
+    'right+': {},
+    'right-': {},
+    'ref': {
+        'voltage': -45,
         'lock': True,
     },
-    'test in': {},
-    'test out': {},
     'fusion accel +': {},
     'inertia (test)': {},
     'neg load effect (test)': {},
@@ -36,9 +49,10 @@ og_neurons = {
     },
     'pos net torque': {},
     'ext torque guess': {
-        'voltage': -50,
-        'visited': 1,
-        'conductance': 0,
+        'applied_current': 20,
+    },
+    'ext torque guess int': {
+        'applied_current': 20,
     },
     'ext torque': {},
     'ext torque also': {},
@@ -105,7 +119,7 @@ synapse_types = {
         'conductance': 0.048,
         'id': '368e485a-679b-4564-ac8c-c63b05940926',
     },
-    'integral inibitor': {
+    'integral inhibitor': {
         'potential': -100,
         'conductance': 0.5,
         'id': '39a453be-9294-4306-a057-7f69d53a47c9',
@@ -156,6 +170,25 @@ print('Wow, you made %d synapse types.' % (len(synapse_types),))
 
 # mapping from ending neuron to starting neuron, synapse type
 edges = {
+    'left': {
+        'top': 'signal transfer',
+    },
+    'right-': {
+        'top': 'signal transfer',
+        'ref': 'signal inverter',
+    },
+    'right+': {
+        'top': 'signal inverter',
+        'ref': 'signal transfer',
+    },
+    'top': {
+        'right-': 'signal inverter',
+        'right+': 'signal transfer',
+        'top int': 'integral inhibitor',
+    },
+    'top int': {
+        'top': 'integral inhibitor',
+    },
     'pos theta': {
         'theta (test)': 'conv forward pos',
     },
@@ -186,8 +219,12 @@ edges = {
         'ext pres (guess)': 'signal transfer',
     },
     'ext torque guess': {
-        'ext +p err': 'signal amp 2x',
-        'ext -p err': 'signal inv amp 2x',
+        'ext +p err': 'signal transfer',
+        'ext -p err': 'signal inverter',
+        'ext torque guess int': 'integral inhibitor',
+    },
+    'ext torque guess int': {
+        'ext torque guess': 'integral inhibitor',
     },
     'ext torque': {
         'ext torque guess': 'signal transfer',
@@ -331,33 +368,36 @@ def reference_sum(inputs, output):
     return accum - 60
 
 def reference_torque(inputs, output):
-    return -60
+    for input_ in inputs:
+        if input_[0] == 'ext pres (test)':
+            return input_[1] + 60
+    return 0
 
 if __name__ == '__main__':
-    RESOLUTION = 11
-    ITERATIONS = 1
-    output_neuron = 'test out'
+    RESOLUTION = 3
+    ITERATIONS = 5
+    output_neuron = 'ext pres (guess)'
 
     # All these variables get producted together so all combinations are tested
 
     position = np.zeros((RESOLUTION, 2,))
-    position[:,0] = np.linspace(-60, -40, RESOLUTION)
+    position[:,0] = np.linspace(-55, -45, RESOLUTION)
     # position[:, 0] = np.ones((RESOLUTION,)) * -50
 
 
     ext_pres = np.zeros((RESOLUTION, 2))
-    ext_pres[:, 0] = np.linspace(-60, -40, RESOLUTION)
+    ext_pres[:, 0] = np.linspace(-55, -45, RESOLUTION)
 
     inputs = {
-        'test in': list(position),
+        'theta (test)': list(position),
         # 'null': list(ext_pres),
-        'null': list(ext_pres),
+        'ext pres (test)': list(ext_pres),
         # 'theta (test)': [[-60, 0]], # mV
     }
 
     # Step 1: Select two variables to have visualized against output
-    input0 = 'test in'
-    input1 = 'null'
+    input0 = 'theta (test)'
+    input1 = 'ext pres (test)'
 
     input_length0 = len(inputs[input0])
     input_length1 = len(inputs[input1])
@@ -404,14 +444,17 @@ if __name__ == '__main__':
     Z_ref = Z_ref.reshape((input_length0, input_length1))
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
-    # surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
+    surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
     ax.set_xlabel(input0 + ' mV')
     ax.set_ylabel(input1 + ' mV')
     ax.set_zlabel(output_neuron + ' mV')
     ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
-    ax.set_zticks(ticks)
+    # ax.set_zticks(ticks)
+
+    # print(Z)
+    # print(Z_ref)
 
     mean_error = np.mean(np.abs(Z - Z_ref))
     print('Mean Error from Reference')
