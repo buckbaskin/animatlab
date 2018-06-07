@@ -11,6 +11,8 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import pyplot as plt
 
+from pprint import pprint
+
 # mapping from neuron name to voltage
 og_neurons = {
     'fusion accel +': {},
@@ -27,7 +29,10 @@ og_neurons = {
         'applied_current': 20,
     },
     'pos net torque': {},
-    'ext torque guess': {},
+    'ext torque guess': {
+        'voltage': -50,
+        'visited': 1,
+    },
     'ext torque': {},
     'ext torque also': {},
     'ext pres (guess)': {},
@@ -221,9 +226,6 @@ def steady_state(neuron_name, neurons):
 
     top = G_m * E_r + I_app
     bottom = G_m
-    if neuron_name == 'abs theta':
-        print('---')
-        print(neuron_name)
     
     if neuron_name in edges:
         for input_name in edges[neuron_name]:
@@ -240,9 +242,6 @@ def steady_state(neuron_name, neurons):
             V_pre = -60
             if 'voltage' in neurons[input_name]:
                 V_pre = neurons[input_name]['voltage']
-                if neuron_name == 'abs theta':
-                    print('%s -> %.1f mV' % (input_name, V_pre,))
-
 
             G_s = synapse_types[synapse_type]['conductance']
             if V_pre <= E_lo:
@@ -265,8 +264,6 @@ def steady_state(neuron_name, neurons):
             bottom += G_s
 
     V = top / bottom
-    if neuron_name == 'abs theta':
-        print('resulting voltage is... %.1f' % (V,))
     return V
 
 def iterate_recursively(neuron_name, neurons):
@@ -279,7 +276,6 @@ def iterate_recursively(neuron_name, neurons):
         # TODO(buckbaskin): need to reset visited count for multiple iterations
         return None
     neurons[neuron_name]['visited'] += 1
-    print('visiting %s' % (neuron_name,))
     if neuron_name in edges:
         # input('following edges to %s' % (edges[neuron_name],))
 
@@ -310,7 +306,14 @@ def try_1_inputs(inputs, output, iterations = 3):
                 'applied_current': applied_current,
             }
         iterate_recursively(output, neurons)
-    return neurons[output]['voltage']
+
+    voltages = {}
+    for neuron_name in neurons:
+        if 'voltage' in neurons[neuron_name]:
+            voltages[neuron_name] = neurons[neuron_name]['voltage']
+        else:
+            voltages[neuron_name] = None
+    return voltages
 
 def reference_sum(inputs, output):
     accum = 0
@@ -320,19 +323,22 @@ def reference_sum(inputs, output):
     return accum - 60
 
 def reference_torque(inputs, output):
-    pass
+    return -60
 
 if __name__ == '__main__':
-    resolution = 5
-    output_neuron = 'ext pres (guess)'
+    RESOLUTION = 5
+    ITERATIONS = 1
+    output_neuron = 'ext torque guess'
 
     # All these variables get producted together so all combinations are tested
 
-    position = np.zeros((resolution, 2,))
-    position[:,0] = np.linspace(-60, -40, resolution)
+    position = np.zeros((RESOLUTION, 2,))
+    position[:,0] = np.linspace(-60, -40, RESOLUTION)
+    # position[:, 0] = np.ones((RESOLUTION,)) * -50
 
-    ext_pres = np.zeros((resolution, 2))
-    ext_pres[:, 0] = np.linspace(-60, -40, resolution)
+
+    ext_pres = np.zeros((RESOLUTION, 2))
+    ext_pres[:, 0] = np.linspace(-60, -40, RESOLUTION)
 
     inputs = {
         'theta (test)': list(position),
@@ -371,9 +377,11 @@ if __name__ == '__main__':
                 data_ref[iteration, 0] = value[1] # mV
             if value[0] == input1:
                 data_ref[iteration, 1] = value[1]
-        output = try_1_inputs(input_combo, output_neuron, iterations=7)
-        data[iteration, -1] = output
-        data_ref[iteration, -1] = reference_sum(input_combo, output_neuron)
+        general_output = try_1_inputs(input_combo, output_neuron, iterations=ITERATIONS)
+        pprint(general_output)
+        specific_output = general_output[output_neuron]
+        data[iteration, -1] = specific_output
+        data_ref[iteration, -1] = reference_torque(input_combo, output_neuron)
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
