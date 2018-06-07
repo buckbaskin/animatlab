@@ -374,19 +374,23 @@ def reference_torque(inputs, output):
     return 0
 
 if __name__ == '__main__':
-    RESOLUTION = 3
+    '''
+    With the current loop, the pressure -> torque conversion is as good as the
+    torque -> pressure model
+    '''
+    RESOLUTION = 11
     ITERATIONS = 5
     output_neuron = 'ext pres (guess)'
 
     # All these variables get producted together so all combinations are tested
 
     position = np.zeros((RESOLUTION, 2,))
-    position[:,0] = np.linspace(-55, -45, RESOLUTION)
+    position[:,0] = np.linspace(-60, -40, RESOLUTION)
     # position[:, 0] = np.ones((RESOLUTION,)) * -50
 
 
     ext_pres = np.zeros((RESOLUTION, 2))
-    ext_pres[:, 0] = np.linspace(-55, -45, RESOLUTION)
+    ext_pres[:, 0] = np.linspace(-60, -40, RESOLUTION)
 
     inputs = {
         'theta (test)': list(position),
