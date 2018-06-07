@@ -536,8 +536,8 @@ def reference_torque(inputs, output):
     delta_vel = vel_mod - vel
     accel = delta_vel / dt
 
-    inertia = 0.00125 # essentially 0 mV on the division inertia neuron
-    torque = accel * inertia
+    inertia_factor = 0.00125
+    torque = accel * inertia_factor
     torque_mV = torque / 2.5 * 20
     return torque_mV
 
@@ -548,7 +548,7 @@ if __name__ == '__main__':
     '''
     RESOLUTION = 11
     ITERATIONS = 1
-    output_neuron = 'pos torque guess'
+    output_neuron = 'neg torque guess'
 
     # All these variables get producted together so all combinations are tested
 
@@ -616,14 +616,14 @@ if __name__ == '__main__':
     Z_ref = data_ref[:,-1]
     Z_ref = Z_ref.reshape((input_length0, input_length1))
 
-    Z = np.clip(Z, 0, 20)
+    Z = np.clip(-Z, 0, 20)
     Z_ref = np.clip(Z_ref, 0, 20)
 
     surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
     surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
-    ax.set_xlabel(input0 + ' mV')
-    ax.set_ylabel(input1 + ' mV')
-    ax.set_zlabel(output_neuron + ' mV')
+    ax.set_xlabel('Position (mV)')
+    ax.set_ylabel('Desired Position (mV)')
+    ax.set_zlabel('Torque (mV)')
     ticks = np.linspace(0, 20, 5)
     ax.set_xticks(ticks)
     ax.set_yticks(ticks)
@@ -636,5 +636,5 @@ if __name__ == '__main__':
     print('%.1f mV' % (mean_error,))
     # plt.legend()
     # plt.tight_layout()
-    plt.savefig('images/results/New_TO.png')
+    plt.savefig('images/results/New_TO_2.png')
     plt.show()
