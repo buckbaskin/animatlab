@@ -10,7 +10,7 @@ import numpy as np
 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import pyplot as plt
-plt.rc('font', **{'size': 12})
+# plt.rc('font', **{'size': 12})
 
 from pprint import pprint
 

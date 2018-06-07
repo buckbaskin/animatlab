@@ -10,7 +10,7 @@ import numpy as np
 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import pyplot as plt
-plt.rc('font', **{'size': 12})
+# plt.rc('font', **{'size': 12})
 
 from pprint import pprint
 
@@ -530,7 +530,7 @@ if __name__ == '__main__':
         data[iteration, -1] = specific_output
         data_ref[iteration, -1] = reference_accel(input_combo, output_neuron)
 
-    fig = plt.figure(figsize=(4,3,), dpi=300)
+    fig = plt.figure()
     ax = fig.gca(projection='3d')
     X = data[:,0]
     X = X.reshape((input_length0, input_length1)) + 60
