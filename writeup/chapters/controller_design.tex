@@ -114,7 +114,7 @@ inversion of the model; however, a binary search algorithm
 (\myref{fig:BinarySearch}, \github{stability/torque\_projection.py}) was used to invert 
 the process by estimating a maximum and minimum torque to apply and narrowing 
 the
-potential window from there. This allows for a estimating a known bound on the 
+potential window from there. This allows for estimating a known bound on the 
 potential error and balancing the error with how quickly the algorithm iterates.
 
 \begin{figure}
@@ -135,18 +135,21 @@ torque) or as a pair with a variable overlap in torque.
 The final
 step is to convert the desired torque into a pressure control. This conversion takes
 one final forward iteration of the model above, at the current joint angle, to 
-calculate the desired pressure for each of the actuator.
+calculate the desired pressure for each of the actuators.
 
 \subsection{Forward Projection of State}
 
 Given the current state and an applied torque, the joint model in 
 \myref{chap:lit_review} can be used to predict the motion of the joint.
 This was done at multiple time resolutions, with increased time resolution 
-increasing the accuracy of the internal prediction. A more accurate internal prediction directly increases the tracking
-performance of the algorithm; however, in a real time control implementation, the time before a control needs to be sent back to the controller limits the maximum accuracy of the forward projection process. One aspect of the current algorithm that allows for reduced fidelity is the 
+increasing the accuracy of the internal prediction. A more accurate internal
+prediction directly increases the tracking performance of the algorithm;
+however, in a real time control implementation, the time before a control needs
+to be sent back to the controller limits the maximum accuracy of the forward
+projection process. One benefit in parti of using binary search is the
 opportunity to make estimates for an upper and lower bound. This allows the 
 controller to bound the maximum possible positional error and iterate further
-if there is insufficient accuracy at particular steps.
+if there is insufficient accuracy.
 
 \subsection{Torque to Pressure}
 
@@ -157,13 +160,13 @@ the model expressed above:
 P = a_{0} + a_{1} * tan \left(a_{2} \left(\dfrac{k}{a_{4} * F + k_{max}} + a_{3} \right) \right) + a_{5} * F + a_{6} * S
 \end{equation}
 
-One complicated aspect of implementing conversion from the desired torque to 
+One complicating aspect of implementing conversion from the desired torque to 
 pressures for
 the joint is incorporating the antagonistic overlap of the actuation of the two 
 muscles. It is often sufficient to pick a fixed overlap for the joints; however,
 there is room for improvement for varying the overlap and stiffness of the joint.
 
-Another complicated aspect of designing desired pressure in the system is the
+Another complicating aspect of designing desired pressure in the system is the
 knowledge of the underlying control scheme. As mentioned in \cite{HuntPMuscles},
 the underlying controller implements a bang-bang algorithm. This means that 
 there is some uncontrolled variation; however, a more complicated algorithm
@@ -315,7 +318,7 @@ N_{err} sin \left(\theta \right) =
 - \dfrac{2M}{\delta t^{2}} \theta_{err}
 \end{equation}
 
-When the initial velocity ($\dot{\theta}_{0}$) is 0, then damping effects are minimal and the conservative load ($N_{err} * sin(\theta)$) explains the total error in position. When the initial velocity is large, the effect of errors in the estimated damping dominate the effects of the estimation conservative load on positional error. This intuition for the relative magnitude of $C_{err}$ and $N_{err}$ provides a constraint to solve equation \ref{eq:positional_error}. This constraint is equivalent to finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$, where $C_{err}$ is the first term and 
+When the initial velocity ($\dot{\theta}_{0}$) is 0, then damping effects are minimal and the conservative load ($N_{err} * sin(\theta)$) explains the total error in position. When the initial velocity is large, the effect of errors in the estimated damping dominate the effects of the estimated conservative load on positional error. This intuition for the relative magnitude of $C_{err}$ and $N_{err}$ provides a constraint to solve equation \ref{eq:positional_error}. This constraint is equivalent to finding the intersection between the given linear function and the vector $[\dot{\theta}_{0}, 1]$ scaled by a factor $\lambda$, where $C_{err}$ is the first term and 
 $N_{err} sin(\theta)$ is the second term.
 
 \begin{equation} \label{eq:find_C}
