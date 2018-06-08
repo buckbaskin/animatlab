@@ -1,4 +1,14 @@
-The neuron controller was built in 4 large subnetworks. First, sensor data is passed through a sensor fusion network that estimates the velocity and acceleration of the joint from the input position and pressures. Second, this data is used to select an output torque through an iterative optimization process. Third, the torque is converted back into pressures used to control the pneumatic muscles. This process is shown in \myref{fig:HighLevelBlock} as solid blue lines. The internal model is continually updated based on incoming sensor data and the predictions from the torque optimization step. This data is used to adjust parameters of the internal model, which then feed back into how the torque optimization block makes its predictions. The model update is shown in \myref{fig:HighLevelBlock} as dashed orange lines.
+The neuron controller was built in four large subnetworks. First, sensor data is
+passed through a sensor fusion network that estimates the velocity and
+acceleration of the joint from the input position and pressures. Second, this
+data is used to select an output torque through an iterative optimization
+process. Third, the torque is converted back into pressures used to control the
+pneumatic muscles. This process is shown in \myref{fig:HighLevelBlock} as solid
+blue lines. The internal model is continually updated based on incoming sensor
+data and the predictions from the torque optimization step. This data is used to
+adjust parameters of the internal model, which then feed back into how the
+torque optimization block makes its predictions. The model update is shown in
+\myref{fig:HighLevelBlock} as dashed orange lines.
 
 \begin{figure}
 \centering
@@ -251,7 +261,7 @@ effect.
 
 \bbsss{Integration Network}
 
-The integration network used throughout the neuron controller is based heavily
+The integration network used throughout the neuron controller is based strongly
 on the Integrator Network in \cite{NickFunctionalSubnetwork}. Two neurons are
 designed to mutually inhibit each other so that the combined pair hold their
 values. Individual neurons can be treated as a leaky integrator or a point attractor. A mutually inhibiting pair of neurons can be tuned to prevent leaking and maintain a value as a line attractor.
@@ -340,7 +350,7 @@ and flexion torques together to get a net torque and acceleration. For the compl
 The torque control network uses a feedback loop to select the
 control torque that minimizes the ending positional error. The network takes the estimated position and velocity from the 
 sensor fusion network and the desired position from a trajectory generator
-network (ex. a CPG) and outputs the torque to best follow that trajectory. Conceptually, an initial torque estimate is generated, which is then converted into an acceleration. This is used to update the ending velocity and position. From there, the error in position, when compared with the desired position, is used to update the torque estimate. This loop is highlighted with dashed orange lines in the block diagram shown in \myref{fig:TorqueOptimizationBlock}.
+network (e.g. a CPG) and outputs the torque to best follow that trajectory. Conceptually, an initial torque estimate is generated, which is then converted into an acceleration. This is used to update the ending velocity and position. From there, the error in position, when compared with the desired position, is used to update the torque estimate. This loop is highlighted with dashed orange lines in the block diagram shown in \myref{fig:TorqueOptimizationBlock}.
 See \myref{fig:TorqueOptimizationNetwork} for the complete network.
 
 \begin{figure}
@@ -435,7 +445,7 @@ method may be required.
 
 The torque to pressure section of the network is smaller than the rest of the 
 major components. It is built in the same way as the torque to pressure inside
-the sensor fusion pressure to torque network. First the absolute value of the position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that controls the amount of antagonistic overlap of the two actuators.
+the sensor fusion pressure to torque network. First the absolute value of the position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into the torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that controls the amount of antagonistic overlap of the two actuators.
 
 \begin{figure}[htb!]
 \centering
