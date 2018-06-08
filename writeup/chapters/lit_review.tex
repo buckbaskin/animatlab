@@ -69,7 +69,7 @@ In \cite{Wait2014}, the authors show that a simpler controller design can be
 used on a quadruped robot with biologically inspired design to achieve a highly
 power dense design that walks effectively. The control approach focuses on
 a high-impedance control scheme for the stance phase and a second state
-that takes advantage of pneumatic actuator compliance during the swing phase.
+that takes advantage of pneumatic muscles compliance during the swing phase.
 This design does not use pneumatic muscles. Instead, the authors use pneumatic
 cylinders to make the design more compact by using a single rigid pneumatic cylinder that can apply both
 flexion and extension forces on a joint. 
@@ -91,7 +91,7 @@ advantage of the unique properties of two antagonistic nonlinear actuators.
 Pneumatic muscles are less common in robotics compared with electric motors;
 however,
 they often result in a lighter system for controlling a joint than an
-electric motor. There are trade offs to each, but pneumatic actuators offer a
+electric motor. There are trade offs to each, but pneumatic muscles offer a
 higher power to weight ratio for smaller displacement at low velocity and
 often are a significant improvement over electric motors at higher velocities \cite{Tavakoli2008}. These properties suggests that pneumatic muscles are well suited for applications in
 biological walking robots where an increased power to weight ratio increases
@@ -108,9 +108,9 @@ proportional-integral control as implemented was unable to fully correct for
 errors even in a desired trajectory composed of slow steps to a constant value
 where the control system had time to reach a set actuation pressure.
 
-Pneumatic actuators are used on the Puppy robot. One of the key
+Pneumatic muscles are used on the Puppy robot. One of the key
 benefits of using pneumatic muscles in a biologically-inspired robot design is
-that the muscles have similar properties to the biological muscles that control
+that the muscles have some similar properties to the biological muscles that control
 canines \cite{Tavakoli2008}.
 During analysis of the behavior of pneumatic muscles with a static load, the muscles demonstrated a non-linear response to
 changing length and the ability to apply a force. This relationship was
@@ -156,7 +156,7 @@ differentiable function.
 M(\theta) \ddot{\theta} + C(\theta, \dot{\theta}) \dot{\theta} + N(\theta, \dot{\theta}) = \tau
 \end{equation}
 
-In this equation, $\theta$ represents the position of the joint. $\dot{\theta}$ and $\ddot{\theta}$ represent the velocity and acceleration of the joint, respectively. $\tau$ represents the torque applied to the joint. For a single joint, $M(\theta)$ represents the mapping from the current position to the rotational inertia at the current position based on the geometry of the joint and the link it controls. In a controller for multiple joints, the link geometry may also vary based on the position of other joints. $C(\theta, \dot{\theta})$ represents the mapping from the current joint position and velocity to the damping forces on the joint. When controlling pneumatic muscles, this damping can come from external sources as well as losses from internal friction as the muscles flexes. $N(\theta, \dot{\theta})$ represents the mapping from the current joint position and velocity to conservative torque that are applied to the joint. In a robotic system, this torque can result from a weight placed on the robot or springs in the design.
+In this equation, $\theta$ represents the position of the joint. $\dot{\theta}$ and $\ddot{\theta}$ represent the velocity and acceleration of the joint, respectively. $\tau$ represents the torque applied to the joint. For a single joint, $M(\theta)$ represents the mapping from the current position to the rotational inertia at the current position based on the geometry of the joint and the link it controls. In a controller for multiple joints, the link geometry may also vary based on the position of other joints. $C(\theta, \dot{\theta})$ represents the mapping from the current joint position and velocity to the damping forces on the joint. When controlling pneumatic muscles, this damping can come from external sources as well as losses from internal friction as the muscles flex. $N(\theta, \dot{\theta})$ represents the mapping from the current joint position and velocity to a conservative torque that is applied to the joint. In a robotic system, this torque can result from a weight placed on the robot or springs in the design.
 
 If the robot starts at its desired initial state and the model of the robot is
 perfectly known, the robot will exactly track the trajectory. Feedback in the 
@@ -178,8 +178,8 @@ e = \theta - \theta_{d}
 
 In these equations, $\theta$ represents the current position of the joint and $\theta_{d}$ represents the desired position of the joint. The difference between these two values is captured in the error term $e$ and the derivative of this error with respect to time is represented as $\dot{e}$. $K_{v}$ and $K_{p}$ are gain terms that are chosen based on the system to modulate the control response to error. A higher gain increases the applied torque to counteract the error (either in position or to counteract increasing error); however, gains that are too high can destabilize the system.
 
-The proportional-derivative (PD) controller provides a relatively simple controller design where the gain terms can be tuned such that the behavior of the overall system that is stable. On the other hand, a PD controller does not converge to
-exact tracking for most real systems. In practice, an integral term is often added that accounts for steady state error to create a proportional-integral-derivative (PID) controller; however, the additional of an integral term can lead to windup or other issues.
+The proportional-derivative (PD) controller provides a relatively simple controller design where the gain terms can be tuned such that the behavior of the overall system is stable. On the other hand, a PD controller does not converge to
+exact tracking for most real systems. In practice, an integral term is often added that accounts for steady state error to create a proportional-integral-derivative (PID) controller; however, the addition of an integral term can lead to windup or other issues.
 
 One general method for overcoming these limitations is to use a model of the 
 system to perform what is known as computed torque control, where the actuator
@@ -200,7 +200,7 @@ added to the acceleration term:
 These additional terms are known as the feedback component. Since these 
 corrections are linear in a system that is linearized by the feed-forward term,
 values for the gains easily can be chosen to make the system stable and converge
-to exactly following the desired trajectory (i.e., make the system exponentially stable) \cite{MLS94}.
+to exactly follow the desired trajectory (i.e., make the system exponentially stable) \cite{MLS94}.
 
 Control via computed torque 
 is not always practical because it requires the system to have a good model of 
@@ -220,7 +220,7 @@ be applied to a quadruped.
 
 Event-based control through reflexes was also proposed as a way for additional
 improvement of the existing synthetic nervous system in \cite{HuntPhDThesis}.
-The Hunt thesis \cite{HuntPhDThesis} suggests that a particular a reflex known as the elevator reflex,
+The Hunt thesis \cite{HuntPhDThesis} suggests that a particular reflex known as the elevator reflex,
 where the paw strikes an
 obstacle mid-swing, could be used as the design inspiration for an internal recovery
 mechanism to prevent tripping.
@@ -238,7 +238,7 @@ artificial neural network to adapt to disturbances and other dynamic phenomena.
 In practice, the system used a neural network to learn the nonlinear parameters
 seen in the feed-forward term of the computed torque controller to provide a
 nearly linear system to the PID controller. This system used a very simple
-artificial neuron network to learn the system model, which is approximated as an
+artificial neural network to learn the system model, which is approximated as an
 effective mass. The results of the paper show that the PID controller alone did
 not track a square or saw-tooth wave well, and the system was improved by
 incorporating a nonlinear system model. This work suggests that a pneumatic 
@@ -330,7 +330,13 @@ The synaptic current ($I_{syn}$) is the current conducted from incoming synapses
 $G_{s, i}$ is the conductance of the $i$th inbound synapse. $E_{s, i}$ is the reversal potential of the $i$th inbound synapse.
 $V$ is the neuron's membrane voltage.
 
-This model does leave out some terms of the Hodgkin-Huxley model. By continuing to follow the work laid out in \cite{NickFunctionalSubnetwork}, the steady state voltages of a neuron can be arranged in the following equation:
+This model does leave out some terms of the Hodgkin-Huxley model \cite{gerstner2014neuronal}.
+The model used in simulation drops the explicit representation of ion
+channels tied to specific ions. Instead, the synaptic current ($I_{syn}$)
+represents the behavior of the ion channels as the conductivity ($G_{s}$) and
+reversal potential ($E_{s}$) for each incoming synapse.
+
+By continuing to follow the work laid out in \cite{NickFunctionalSubnetwork}, the steady state voltages of a neuron can be arranged in the following equation:
 
 \begin{equation}
 U_{post}^{*} = \dfrac{\frac{g_{s}}{R} \cdot U_{pre} \cdot \Delta E_{s}}{1 + \frac{g_{s}}{R} \cdot U_{pre}}
