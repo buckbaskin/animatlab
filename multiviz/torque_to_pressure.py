@@ -543,8 +543,12 @@ if __name__ == '__main__':
 
     Z = np.clip(Z, np.min([0, np.min(Z_ref)]), np.max([20, np.max(Z_ref)]))
 
-    surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
-    surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
+    # surf = ax.plot_surface(X, Y, Z, linewidth=0, antialiased=False, label='Neuron')
+    # surf2 = ax.plot_surface(X, Y, Z_ref, linewidth=0, antialiased=False)
+
+    surf = ax.plot_surface(X, Y, Z, color=(66/255.0, 134/255.0, 244/255.0, 0.5), linewidth=1, antialiased=False, label='Neuron', zorder=2)
+    surf2 = ax.plot_surface(X, Y, Z_ref, color=(244/255.0, 158/255.0, 66/255.0, 0.5), linewidth=1, antialiased=False, zorder=1)
+
     ax.set_xlabel('Position' + '(mV)')
     ax.set_ylabel('Torque' + ' (mV)')
     ax.set_zlabel('Pressure' + '(mV)')

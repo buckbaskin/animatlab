@@ -107,7 +107,7 @@ resulted in near-perfect tracking; however, the weight updates themselves were c
 
 \bbs{Neuron Controller}
 
-Animatlab does not offer a good model of pneumatic muscles for use in closed loop testing. In place of this testing, the Python simulation was used to simulate the behavior of the pneumatic actuators and the neuron model was tuned to try and match the output of the Python controller from the small component subnetworks up to the overall controller behavior. The standard for a good match was less than 10 percent error across the simulated range of neuron inputs. For neurons with an active range between -60 mV and -40 mV, the determination for a good network is an average error of less than 2 mV. 
+Animatlab does not offer a good model of pneumatic muscles for use in closed loop testing. In place of this testing, the Python simulation was used to simulate the behavior of the pneumatic actuators and the neuron model was tuned to try and match the output of the Python controller from the small component subnetworks up to the overall controller behavior. The standard for a good match was less than 10 percent mean error across the simulated range of neuron inputs. For neurons with an active range between -60 mV and -40 mV, the determination for a good network is an average error of less than 2 mV.
 
 \bbss{Test Results}
 
