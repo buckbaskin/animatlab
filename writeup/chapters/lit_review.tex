@@ -2,7 +2,7 @@
 
 The canine-inspired robot Puppy was designed to prove the feasibility of using
 pneumatic muscles for actuating a quadruped robot. The design focuses on 
-imitating the musculoskeletal parameters of an adult greyhound 
+modeling the musculoskeletal parameters of an adult greyhound 
 \cite{PuppyDesign}. This work is motivated by extensions and potential
 improvements to a control method developed by Alex Hunt in
 \cite{HuntPhDThesis} and \cite{HuntHindLegWalking}. Among other areas identified
@@ -33,20 +33,20 @@ to offer unparalleled mobility.
 The robot ``Ken" is based on canine kinematics with a focus on designing for
 high frequency operation. The design is focused on being lightweight while also
 being biomimetic. One key design decision was the use of pneumatic muscles over
-electric motors. This facilitates high speed and high frequency operation
-without the typical heating and/or cooling issues. Another interesting design
+electric motors to facilitates high speed and high frequency operation.
+Another interesting design
 decision for the Ken robot was the incorporation of a contractor muscle at the
 hip. Its placement and operation shorten or lengthen the leg mechanism
 independent of the flexion or extension of the leg \cite{Narioka2012}.
 
 \bbsss{Dynamics of Canine Robots}
 
-The dynamics of robots, even those that attempt to accurately mimic biological mechanisms, can vary significantly in performance from their biological counterparts. For example, in \cite{HindLegMorphology}, the authors found that their biomimetic leg design walked with a more efficient gate when it was oriented backwards on the robot. A biological canine's leg is oriented in a Z configuration; however, in an attempt to mimic the properties of muscles, the passive elements in the joint led to a reversed Z configuration being more efficient. This suggests that animals may have adapted gaits and stimulation patterns for redundant muscles that take better advantage of passive properties of muscles than are accommodated for in current control designs \cite{HindLegMorphology}. This work suggests that directly utilizing the passive properties or designing a controller that can adapt to its specific robot hardware could lead to a dramatic increase in efficiency.
+The dynamics of robots, even those that attempt to accurately mimic biological mechanisms, can vary significantly in performance from their biological counterparts. For example, in \cite{HindLegMorphology}, the authors found that their biomimetic leg design walked with a more efficient gait when it was oriented backwards on the robot. A canine's leg is oriented in a Z configuration; however, in an attempt to mimic the properties of muscles, the passive elements in the joint led to a reversed Z configuration being more efficient. This suggests that animals may have adapted gaits and stimulation patterns for redundant muscles that take better advantage of passive properties of muscles than are accommodated for in current control designs \cite{HindLegMorphology}. This work suggests that directly utilizing the passive properties or designing a controller that can adapt to its specific robot hardware could lead to a dramatic increase in efficiency.
 
 Passive elements and the particular properties of a joint play a strong role in
 the energy required to actuate the joint and the effective frequency at which the joint
 can operate. In particular, \cite{Na2015} covers the design of a spring
-mechanism with a high natural frequency to increase the amplitude of joint
+mechanism that gives the leg a high natural frequency to increase the amplitude of joint
 motion during high frequency operation.
 
 \bbss{Other Robots with Pneumatic Muscles}
