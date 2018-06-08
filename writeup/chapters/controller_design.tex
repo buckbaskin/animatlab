@@ -29,12 +29,11 @@ properties of the robot. The accurate internal model also avoids a phase shift f
 Requirement 3 is met by a combination of the design decisions above and
 constitutes a metric by which to measure the effectiveness of the new design
 relative to previous designs, regardless of implementation.
-
 \bbs{Sensor Fusion}
 
 Within the controller, state estimation is done in a relatively simplified
 manner. The design trades off increased accuracy for reduced computation time. The 
-estimation is designed to have sufficiently small error that it would not adversely impact rest of the system. An additional consideration
+estimation is designed to have sufficiently small error that it would not adversely impact the rest of the system. An additional consideration
 was the ability to implement the algorithm in a neuron system.
 
 \subsection{Central Divided Difference}
@@ -51,7 +50,7 @@ The equation that defines the centered divided difference:
 \dot{\theta} = \dfrac{\theta_{t} - \theta_{t - 2}}{2 \delta t}
 \end{equation}
 
-\subsection{Pneumatic Actuator Modeling}
+\subsection{Pneumatic Muscle Modeling}
 
 The internal estimation of the current acceleration was primarily based on the 
 pressure sensors on the robot. These readings, combined with a position sensor, 
