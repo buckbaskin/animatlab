@@ -10,7 +10,7 @@ parameters. Instead, the Python simulation environment was used to gradually add
 in expected physical effects to observe how the algorithm behaved and demonstrate
 stability in practice.
 
-The pneumatic actuators and their existing pressure controller were simulated 
+The pneumatic muscles and their existing pressure controller were simulated 
 at varying degrees of fidelity. Originally, a simple model of the actuators
 was used that emulated their non-linear behavior for applying torque, but did not
 include damping effects, load or limitations of the underlying pressure
@@ -61,7 +61,7 @@ See \myref{fig:TestNetworkT2P} for a good example.
 \end{figure}
 
 This particular network is designed to convert a desired torque from the rest
-of the network to the pressure for the extension and flexion pneumatic actuators.
+of the network to the pressure for the extension and flexion pneumatic muscles.
 With this network, the input neurons (in purple)
 are disabled for testing and the test neurons are enabled. From there, inputs
 are driven, as seen in \myref{fig:TestNetworkInputs}. This technique allows the inputs to 
