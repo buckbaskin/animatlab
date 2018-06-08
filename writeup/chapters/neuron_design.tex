@@ -445,7 +445,11 @@ method may be required.
 
 The torque to pressure section of the network is smaller than the rest of the 
 major components. It is built in the same way as the torque to pressure inside
-the sensor fusion pressure to torque network. First the absolute value of the position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into the torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that controls the amount of antagonistic overlap of the two actuators.
+the sensor fusion pressure to torque network. First the absolute value of the
+position is calculated (top of \myref{fig:T2PNetwork}). This is then fed into
+the torque to pressure subnetwork (bottom of \myref{fig:T2PNetwork}). There is
+one additional stiffness term (green neuron in \myref{fig:T2PNetwork}) that
+controls the amount of antagonistic overlap of the two actuators.
 
 \begin{figure}[htb!]
 \centering

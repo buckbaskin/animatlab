@@ -24,7 +24,7 @@ torque. For the simulated joint, the dominant effect was the inertia; however,
 for a robot carrying varying loads, the inertia will not always be the dominant factor. The 
 maximum torque required to execute the known trajectory is also later used as a
 metric for measuring the efficiency of the controller. A controller that is too
-aggressive for the trajectory (ex. too high gains on a proportional controller)
+aggressive for the trajectory (e.g. too high gains on a proportional controller)
 will request larger than needed torques during trajectory execution. An ideal
 controller will always follow the trajectory with the exact torque needed during steady state operation.
 
@@ -187,7 +187,7 @@ Test results are generated based on data tools in \github{PuppyNeuronPlayground}
 
 Two key estimates are made within the sensor fusion subnetwork: velocity and
 acceleration. The synthetic nervous system controller was tested against sine waves of known
-frequencies. The positive and negative estimated are compared to the ground truth in \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
+frequencies. The positive and negative estimates are compared to the ground truth in \myref{fig:TestVelPos} and \myref{fig:TestVelNeg}.
 Within the neuron network, acceleration is calculated primarily from actuator
 pressures. For testing, this network was split into two components: estimating
 torque based on actuator pressure (\myref{fig:TestP2T}) and estimating acceleration from torque. The
@@ -304,7 +304,7 @@ model of the pneumatic artificial muscles proposed in \cite{HuntPMuscles}
 can convert well to a relatively small network of neurons if the required tolerance of 10 percent is suitable.
 A future controller iteration may elect to move the
 calculation of this conversion out of neurons and
-to LabView other other code used to interface between synthetic neurons and
+to LabView or other code used to interface between synthetic neurons and
 hardware in order to use the closed form model given in \cite{HuntPMuscles} to further reduce error on a hardware system.
 
 \bbsss{System Model}
