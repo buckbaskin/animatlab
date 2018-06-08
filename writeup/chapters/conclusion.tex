@@ -26,7 +26,7 @@ discussed in the design when the parameters are too conservative.
 The implementation of the controller in a synthetic nervous system led to the
 design of unique nervous system functional subnetworks. Most networks
 were found to be consistent with their standard controller output.
-Including a synthetic nervous system based controller enhances the flexibility and adaptability of the controller when there is less precision required and insights gained from a deeper biological understanding of how animal nervous systems control joints are required.
+Including a synthetic nervous system based controller enhances the flexibility and adaptability of the controller when there is less precision required and insights gained from a deeper biological understanding of how animal nervous systems control joints are desired.
 
 \bbs{Future Work}
 
@@ -41,7 +41,7 @@ Further analysis of the stability of the controller may lead to a better model
 update procedure. In particular, algorithms such as an Extended Kalman Filter
 are used in many applications across robotics for estimating parameters from
 sensor data; however, the Kalman Filter algorithm was not used because the matrix math operations (including an inversion) do
-not have a good parallel implementation within a synthetic nervous system.
+not have a known parallel implementation within a synthetic nervous system.
 New biological research % TODO(buckbaskin): cite that paper with the toroid structure
 suggests that animals have groups of neurons that estimate orientation and
 % TODO(buckbaskin): and that time and space cells paper thing I found
@@ -51,7 +51,7 @@ emulate or replace the use of a Kalman Filter.
 
 Another area where the neuron controller has room for improvement is
 implementation of certain subnetworks. In particular, the conversion from desired torque to pressure has a closed form, so
-when implementing the neuron on hardware, it may make sense to make the system more bionic to mix the synthetic nervous system
+when implementing the synthetic nervous system on hardware, it may make sense to make the system more bionic to mix the synthetic nervous system
 with code that efficiently and accurately implements closed form conversions between neuron voltages and physical quantities.
 There were approximations made to match neuron
 and synapse behavior at a low level to some of the mathematics; however, taking
@@ -68,4 +68,4 @@ Overall, the design of the controller presents a new style of design that can be
 used to create optimal controllers for actuation systems that are highly
 non-linear and tend to perform poorly when simpler controller designs are used.
 There is room for additional improvement, but the methods used in this thesis offer a
-framework determining the areas of improvement with the largest impact.
+framework for determining the areas of improvement with the largest impact.
